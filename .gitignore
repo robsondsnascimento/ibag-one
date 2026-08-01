@@ -1,0 +1,35 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Node
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+
+# Android
+android/.gradle/
+android/app/build/
+
+# iOS
+ios/Pods/
+ios/Runner.xcworkspace/
+
+# Ambiente
+.env
+.env.local
+
+# Docker
+docker-data/
