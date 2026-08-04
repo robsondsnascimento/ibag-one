@@ -127,31 +127,37 @@ Resposta:
   "codename": "Project Nehemiah",
   "version": "0.1.0"
 }
-📂 Estrutura Atual
-ibag-one
+# 📂 Estrutura Atual
 
+O projeto segue uma arquitetura de monorepo, onde diferentes aplicações e serviços convivem dentro do mesmo repositório.
+
+```text
+ibag-one
+│
 ├── apps
+│   ├── mobile        # Aplicativo dos membros
+│   └── admin         # Painel administrativo
 │
 ├── backend
-│   └── api
+│   └── api           # API principal do sistema
 │       └── src
 │           └── modules
 │               └── health
 │
-├── docs
+├── docs              # Documentação do projeto
 │
-├── packages
+├── packages          # Pacotes compartilhados
 │
-├── shared
+├── shared            # Recursos compartilhados
 │
-└── infrastructure
-🧩 Domínios Planejados
+└── infrastructure    # Configurações de infraestrutura
+# 🧩 Domínios Planejados
 O sistema será organizado pelos principais contextos da igreja:
 👥 Pessoas
 Cadastro, histórico, jornada espiritual e relacionamento.
-⛪ Campi
+# ⛪ Campi
 Gestão da estrutura da igreja em diferentes locais.
-🏠 Células
+# 🏠 Células
 O principal domínio do sistema:
 Redes;
 Supervisores;
@@ -159,7 +165,7 @@ Líderes;
 Líderes em treinamento;
 Multiplicações;
 Histórico das células.
-🎵 Ministérios
+# 🎵 Ministérios
 Gestão de equipes e áreas de serviço.
 Exemplos:
 Louvor;
@@ -167,15 +173,15 @@ Recepção;
 Dança;
 Comunicação;
 Outros ministérios.
-📅 Eventos
+# 📅 Eventos
 Planejamento, agenda e acompanhamento.
-📊 Dashboard Pastoral
+# 📊 Dashboard Pastoral
 Visão estratégica para liderança:
 Saúde das células;
 Crescimento;
 Indicadores;
 Acompanhamento pastoral.
-📍 Status do Projeto
+# 📍 Status do Projeto
 🚧 Em desenvolvimento
 Fases
 ✅ Descoberta do Domínio (Domain Discovery)
@@ -186,10 +192,10 @@ Fases
 ⌛ Desenvolvimento dos módulos principais
 ⌛ Aplicativo Mobile
 ⌛ Dashboard Administrativo
-🏛️ Project Nehemiah
+# 🏛️ Project Nehemiah
 O nome do projeto representa a visão de reconstrução.
 Assim como Neemias liderou a reconstrução dos muros de Jerusalém, o Project Nehemiah busca construir uma base sólida para fortalecer o cuidado, a liderança e a missão da igreja através da tecnologia.
-🤝 Desenvolvimento
+# 🤝 Desenvolvimento
 Este projeto está sendo construído com foco em:
 Qualidade;
 Simplicidade;
@@ -198,7 +204,7 @@ Sustentabilidade.
 Cada decisão técnica deve responder uma pergunta:
 "Isso ajuda a igreja a cuidar melhor das pessoas?"
 
-📜 Histórico Inicial
+# 📜 Histórico Inicial
 Primeiros marcos:
 7d28bd8
 Inicialização do repositório Project Nehemiah
@@ -214,5 +220,5 @@ Primeira API Backend criada
 ↓
 
 Health Module implementado
-💙 Nosso Norte
+# 💙 Nosso Norte
 "Toda linha de código escrita neste projeto deve facilitar o cuidado com pessoas, fortalecer líderes e apoiar a missão da igreja."
