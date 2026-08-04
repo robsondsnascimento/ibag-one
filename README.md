@@ -1,15 +1,20 @@
 # 🏛️ IBAG One
 
-> **Project Nehemiah**
-> Uma plataforma de inteligência e cuidado pastoral para igrejas em células.
+<p align="center">
+
+**Project Nehemiah**
+
+Uma plataforma de inteligência e cuidado pastoral para igrejas em células.
+
+</p>
 
 ---
 
-## 📖 Sobre o Projeto
+# 📖 Sobre o Projeto
 
-O IBAG One nasce com o propósito de fortalecer o cuidado pastoral, o discipulado e o crescimento saudável da igreja através da tecnologia.
+O **IBAG One** nasce com o propósito de fortalecer o cuidado pastoral, o discipulado e o crescimento saudável da igreja através da tecnologia.
 
-Mais do que um sistema de gestão, o IBAG One será uma plataforma construída para apoiar líderes, pastores e membros, colocando pessoas acima de cadastros e relacionamentos acima de processos.
+Mais do que um sistema de gestão, o IBAG One será uma plataforma construída para conectar pessoas, líderes e ministérios, transformando informações em ações de cuidado.
 
 O projeto tem como base a visão:
 
@@ -23,65 +28,66 @@ E a missão:
 
 # 🎯 Propósito
 
-O IBAG One busca transformar informações em ações de cuidado.
+O IBAG One tem como objetivo auxiliar igrejas que trabalham com o modelo de células a:
 
-A plataforma permitirá que líderes tenham uma visão clara sobre:
-
-- Saúde das células;
-- Desenvolvimento de líderes;
-- Acompanhamento de pessoas;
-- Eventos;
-- Ministérios;
-- Crescimento da igreja.
+- acompanhar a saúde das células;
+- fortalecer líderes;
+- melhorar o cuidado pastoral;
+- acompanhar a jornada das pessoas;
+- organizar ministérios;
+- transformar dados em decisões.
 
 ---
 
-# 🏠 O Coração da Plataforma
+# 🏠 O Coração do IBAG One
 
 As células são o centro da visão da IBAG.
 
-Por isso, o IBAG One será construído tendo como principal domínio:
+Por isso, a plataforma é construída tendo como principal domínio:
 
-Pessoas
+```
+Pessoa
    ↓
-Células
+Célula
    ↓
 Liderança
    ↓
 Cuidado Pastoral
    ↓
 Multiplicação
+```
 
-A tecnologia deve servir a visão da igreja, e não o contrário.
+O software deve servir a visão da igreja, nunca o contrário.
 
 ---
 
 # 🧭 Princípios do Projeto
 
 - 👥 Pessoas acima de cadastros.
-- 🏠 As células são o coração da plataforma.
-- 🙏 O software deve fortalecer o cuidado pastoral.
+- 🏠 Células são o coração da plataforma.
+- 🙏 Tecnologia a serviço do cuidado pastoral.
 - 📊 Informação deve gerar ação.
 - 🧩 Simplicidade acima da complexidade.
-- 🌱 Toda funcionalidade deve contribuir para o discipulado.
+- 🌱 Toda funcionalidade deve fortalecer o discipulado.
+- 🏛️ Construir uma base sólida para muitos anos.
 
 ---
 
-# 🏗️ Arquitetura do Sistema
+# 🏗️ Arquitetura
 
-O IBAG One está sendo desenvolvido seguindo princípios de arquitetura escalável e modular.
+O IBAG One está sendo desenvolvido utilizando uma arquitetura modular e escalável.
 
 ## Estratégia
 
 - Monorepo
 - Organização por domínios
 - Arquitetura modular
-- Evolução incremental
 - Documentação antes do código
+- Evolução incremental
 
 ---
 
-# 🛠️ Stack Atual
+# 🛠️ Stack Tecnológica
 
 ## Backend
 
@@ -89,16 +95,52 @@ O IBAG One está sendo desenvolvido seguindo princípios de arquitetura escaláv
 - TypeScript
 - Node.js
 
-## Controle de versão
+## Mobile
+
+Planejado:
+
+- Flutter
+
+## Administração
+
+Planejado:
+
+- Painel Web Administrativo
+
+## Versionamento
 
 - Git
 - GitHub
 
-## Futuras aplicações
+---
 
-- Aplicativo Mobile
-- Painel Administrativo
-- Dashboard Pastoral
+# 📂 Estrutura do Projeto
+
+O IBAG One utiliza uma estrutura de monorepo:
+
+```text
+ibag-one
+│
+├── apps
+│   ├── mobile              # Aplicativo mobile
+│   └── admin               # Painel administrativo
+│
+├── backend
+│   └── api                 # API principal
+│       └── src
+│           └── modules
+│               └── health
+│
+├── docs                    # Documentação do projeto
+│
+├── packages                # Pacotes compartilhados
+│
+├── shared                  # Recursos compartilhados
+│
+├── infrastructure           # Infraestrutura e deploy
+│
+└── tools                   # Ferramentas auxiliares
+```
 
 ---
 
@@ -106,17 +148,34 @@ O IBAG One está sendo desenvolvido seguindo princípios de arquitetura escaláv
 
 ## Backend API
 
-✅ Projeto NestJS criado
+### ✅ Projeto NestJS criado
 
-✅ Estrutura modular implementada
+O backend inicial foi criado utilizando NestJS seguindo uma arquitetura modular.
 
-✅ Primeiro módulo criado:
+---
 
-Health Module
+### ✅ Primeiro módulo implementado
 
-✅ Primeiro endpoint funcional:
+## Health Module
 
+Responsável por verificar a saúde da aplicação.
+
+Estrutura:
+
+```text
+health
+├── health.controller.ts
+├── health.module.ts
+└── health.service.ts
+```
+
+---
+
+### ✅ Primeiro Endpoint Funcional
+
+```
 GET /health
+```
 
 Resposta:
 
@@ -127,91 +186,210 @@ Resposta:
   "codename": "Project Nehemiah",
   "version": "0.1.0"
 }
-# 📂 Estrutura Atual
+```
 
-O projeto segue uma arquitetura de monorepo, onde diferentes aplicações e serviços convivem dentro do mesmo repositório.
+---
 
-```text
-ibag-one
-│
-├── apps
-│   ├── mobile        # Aplicativo dos membros
-│   └── admin         # Painel administrativo
-│
-├── backend
-│   └── api           # API principal do sistema
-│       └── src
-│           └── modules
-│               └── health
-│
-├── docs              # Documentação do projeto
-│
-├── packages          # Pacotes compartilhados
-│
-├── shared            # Recursos compartilhados
-│
-└── infrastructure    # Configurações de infraestrutura
 # 🧩 Domínios Planejados
-O sistema será organizado pelos principais contextos da igreja:
-👥 Pessoas
-Cadastro, histórico, jornada espiritual e relacionamento.
-# ⛪ Campi
-Gestão da estrutura da igreja em diferentes locais.
+
+A plataforma será construída através dos principais domínios da igreja.
+
+---
+
+# 👥 Pessoas
+
+O principal elemento do sistema.
+
+Responsável por:
+
+- cadastro;
+- histórico;
+- jornada na igreja;
+- relacionamento;
+- participação em células;
+- ministérios;
+- mudanças de Campus.
+
+---
+
 # 🏠 Células
-O principal domínio do sistema:
-Redes;
-Supervisores;
-Líderes;
-Líderes em treinamento;
-Multiplicações;
-Histórico das células.
+
+O principal domínio da IBAG.
+
+Contemplará:
+
+- Campus;
+- Redes;
+- Supervisores;
+- Líderes;
+- Líderes em treinamento (LT);
+- Anfitriões;
+- Multiplicações;
+- Encontros;
+- Visitantes;
+- Saúde da célula.
+
+---
+
+# ⛪ Campus
+
+Gestão das diferentes localidades da igreja.
+
+Inclui:
+
+- membros;
+- líderes;
+- ministérios;
+- células;
+- histórico da pessoa.
+
+---
+
 # 🎵 Ministérios
-Gestão de equipes e áreas de serviço.
+
+Gestão das áreas de serviço.
+
 Exemplos:
-Louvor;
-Recepção;
-Dança;
-Comunicação;
-Outros ministérios.
+
+- Louvor;
+- Recepção;
+- Dança;
+- Comunicação;
+- Mídia;
+- Outros ministérios.
+
+Uma pessoa poderá servir em múltiplos ministérios.
+
+---
+
 # 📅 Eventos
-Planejamento, agenda e acompanhamento.
+
+Gestão de:
+
+- agenda;
+- solicitações;
+- disponibilidade;
+- registros;
+- histórico.
+
+---
+
 # 📊 Dashboard Pastoral
-Visão estratégica para liderança:
-Saúde das células;
-Crescimento;
-Indicadores;
-Acompanhamento pastoral.
+
+Visão estratégica para liderança.
+
+Possíveis indicadores:
+
+- saúde das células;
+- crescimento;
+- visitantes;
+- líderes ativos;
+- multiplicações;
+- acompanhamento pastoral.
+
+---
+
 # 📍 Status do Projeto
-🚧 Em desenvolvimento
-Fases
+
+🚧 **Em desenvolvimento**
+
+## Fases
+
 ✅ Descoberta do Domínio (Domain Discovery)
+
 ✅ Documentação da visão do produto
+
 ✅ Fundação da arquitetura
+
 ✅ Primeiro Backend funcional
+
 ⌛ Modelagem de Domínio (DDD)
-⌛ Desenvolvimento dos módulos principais
+
+⌛ Banco de dados
+
+⌛ Autenticação
+
+⌛ Módulo de Pessoas
+
+⌛ Módulo de Células
+
 ⌛ Aplicativo Mobile
-⌛ Dashboard Administrativo
+
+⌛ Dashboard Pastoral
+
+---
+
+# 🗺️ Roadmap Inicial
+
+## Fase 1 - Fundação
+
+✅ Repositório criado
+
+✅ Documentação inicial
+
+✅ Backend configurado
+
+✅ Health Module
+
+
+## Fase 2 - Pessoas
+
+Planejado:
+
+- cadastro;
+- identidade;
+- histórico;
+- relacionamento.
+
+
+## Fase 3 - Células
+
+Planejado:
+
+- estrutura de redes;
+- acompanhamento;
+- registros;
+- indicadores.
+
+
+## Fase 4 - Plataforma Completa
+
+Planejado:
+
+- Mobile;
+- Administração;
+- Dashboards;
+- Inteligência pastoral.
+
+---
+
 # 🏛️ Project Nehemiah
-O nome do projeto representa a visão de reconstrução.
-Assim como Neemias liderou a reconstrução dos muros de Jerusalém, o Project Nehemiah busca construir uma base sólida para fortalecer o cuidado, a liderança e a missão da igreja através da tecnologia.
-# 🤝 Desenvolvimento
-Este projeto está sendo construído com foco em:
-Qualidade;
-Simplicidade;
-Escalabilidade;
-Sustentabilidade.
-Cada decisão técnica deve responder uma pergunta:
-"Isso ajuda a igreja a cuidar melhor das pessoas?"
+
+O nome representa a visão de reconstrução.
+
+Assim como Neemias liderou a reconstrução dos muros de Jerusalém, o Project Nehemiah busca construir uma base tecnológica sólida para fortalecer o cuidado, a liderança e a missão da igreja.
+
+---
 
 # 📜 Histórico Inicial
+
 Primeiros marcos:
+
+```
 7d28bd8
-Inicialização do repositório Project Nehemiah
+Inicialização do repositório
 
 ↓
 
-Documentação da visão e arquitetura
+Documentação da visão
+
+↓
+
+Arquitetura inicial
+
+↓
+
+Contexto do sistema IBAG One
 
 ↓
 
@@ -220,5 +398,25 @@ Primeira API Backend criada
 ↓
 
 Health Module implementado
+```
+
+---
+
+# 🤝 Desenvolvimento
+
+Este projeto é construído com foco em:
+
+- qualidade;
+- simplicidade;
+- escalabilidade;
+- manutenção de longo prazo.
+
+Cada decisão técnica deve responder:
+
+> "Isso ajuda a igreja a cuidar melhor das pessoas?"
+
+---
+
 # 💙 Nosso Norte
-"Toda linha de código escrita neste projeto deve facilitar o cuidado com pessoas, fortalecer líderes e apoiar a missão da igreja."
+
+> **"Toda linha de código escrita neste projeto deve facilitar o cuidado com pessoas, fortalecer líderes e apoiar a missão da igreja."**
