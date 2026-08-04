@@ -1,32 +1,28 @@
-# 🏛️ IBAG One
+🏛️ IBAG One
 
-<p align="center">
-
-**Project Nehemiah**
+<p align="center">Project Nehemiah
 
 Uma plataforma de inteligência e cuidado pastoral para igrejas em células.
 
-</p>
+</p>---
 
----
+📖 Sobre o Projeto
 
-# 📖 Sobre o Projeto
-
-O **IBAG One** nasce com o propósito de fortalecer o cuidado pastoral, o discipulado e o crescimento saudável da igreja através da tecnologia.
+O IBAG One nasce com o propósito de fortalecer o cuidado pastoral, o discipulado e o crescimento saudável da igreja através da tecnologia.
 
 Mais do que um sistema de gestão, o IBAG One será uma plataforma construída para conectar pessoas, líderes e ministérios, transformando informações em ações de cuidado.
 
 O projeto tem como base a visão:
 
-> **"Cada casa uma extensão da igreja e cada líder uma extensão do cuidado pastoral."**
+«"Cada casa uma extensão da igreja e cada líder uma extensão do cuidado pastoral."»
 
 E a missão:
 
-> **"Transformar pessoas simples em verdadeiros discípulos de Jesus."**
+«"Transformar pessoas simples em verdadeiros discípulos de Jesus."»
 
 ---
 
-# 🎯 Propósito
+🎯 Propósito
 
 O IBAG One tem como objetivo auxiliar igrejas que trabalham com o modelo de células a:
 
@@ -39,13 +35,12 @@ O IBAG One tem como objetivo auxiliar igrejas que trabalham com o modelo de cél
 
 ---
 
-# 🏠 O Coração do IBAG One
+🏠 O Coração do IBAG One
 
 As células são o centro da visão da IBAG.
 
 Por isso, a plataforma é construída tendo como principal domínio:
 
-```
 Pessoa
    ↓
 Célula
@@ -55,13 +50,12 @@ Liderança
 Cuidado Pastoral
    ↓
 Multiplicação
-```
 
 O software deve servir a visão da igreja, nunca o contrário.
 
 ---
 
-# 🧭 Princípios do Projeto
+🧭 Princípios do Projeto
 
 - 👥 Pessoas acima de cadastros.
 - 🏠 Células são o coração da plataforma.
@@ -73,52 +67,56 @@ O software deve servir a visão da igreja, nunca o contrário.
 
 ---
 
-# 🏗️ Arquitetura
+🏗️ Arquitetura
 
 O IBAG One está sendo desenvolvido utilizando uma arquitetura modular e escalável.
 
-## Estratégia
+Estratégia
 
-- Monorepo
-- Organização por domínios
-- Arquitetura modular
-- Documentação antes do código
-- Evolução incremental
+- Monorepo;
+- Organização por domínios;
+- Arquitetura modular;
+- Documentação antes do código;
+- Evolução incremental.
 
 ---
 
-# 🛠️ Stack Tecnológica
+🛠️ Stack Tecnológica
 
-## Backend
+Backend
 
 - NestJS
 - TypeScript
 - Node.js
+- Prisma ORM
 
-## Mobile
+Banco de Dados
+
+- PostgreSQL 18
+
+Mobile
 
 Planejado:
 
 - Flutter
 
-## Administração
+Administração
 
 Planejado:
 
 - Painel Web Administrativo
 
-## Versionamento
+Versionamento
 
 - Git
 - GitHub
 
 ---
 
-# 📂 Estrutura do Projeto
+📂 Estrutura do Projeto
 
 O IBAG One utiliza uma estrutura de monorepo:
 
-```text
 ibag-one
 │
 ├── apps
@@ -127,9 +125,13 @@ ibag-one
 │
 ├── backend
 │   └── api                 # API principal
-│       └── src
-│           └── modules
-│               └── health
+│       ├── src
+│       │   └── modules
+│       │       └── health
+│       │
+│       └── prisma
+│           ├── schema.prisma
+│           └── migrations
 │
 ├── docs                    # Documentação do projeto
 │
@@ -137,66 +139,117 @@ ibag-one
 │
 ├── shared                  # Recursos compartilhados
 │
-├── infrastructure           # Infraestrutura e deploy
+├── infrastructure          # Infraestrutura e deploy
 │
 └── tools                   # Ferramentas auxiliares
-```
 
 ---
 
-# 🚀 Primeiras Entregas
+🚀 Primeiras Entregas
 
-## Backend API
+Backend API
 
-### ✅ Projeto NestJS criado
+✅ Projeto NestJS criado
 
 O backend inicial foi criado utilizando NestJS seguindo uma arquitetura modular.
 
 ---
 
-### ✅ Primeiro módulo implementado
+✅ Primeiro módulo implementado
 
-## Health Module
+Health Module
 
 Responsável por verificar a saúde da aplicação.
 
 Estrutura:
 
-```text
 health
 ├── health.controller.ts
 ├── health.module.ts
 └── health.service.ts
-```
 
 ---
 
-### ✅ Primeiro Endpoint Funcional
+✅ Primeiro Endpoint Funcional
 
-```
 GET /health
-```
 
 Resposta:
 
-```json
 {
   "status": "ok",
   "service": "IBAG One API",
   "codename": "Project Nehemiah",
   "version": "0.1.0"
 }
-```
 
 ---
 
-# 🧩 Domínios Planejados
+🗄️ Banco de Dados
+
+✅ PostgreSQL configurado
+
+O banco principal do projeto foi criado utilizando PostgreSQL 18.
+
+Banco:
+
+ibag_one
+
+---
+
+✅ Prisma ORM configurado
+
+O Prisma foi integrado ao backend para gerenciamento do banco de dados.
+
+Implementado:
+
+- conexão PostgreSQL;
+- schema Prisma;
+- sistema de migrations;
+- versionamento das alterações do banco.
+
+---
+
+🏛️ Primeiro Modelo de Domínio
+
+✅ Campus
+
+O primeiro domínio criado representa as unidades da igreja dentro da estrutura multicampus.
+
+O conceito de Campus permite que o IBAG One acompanhe diferentes localidades mantendo uma visão única da igreja.
+
+Responsável por:
+
+- identificação do Campus;
+- localização;
+- status;
+- histórico organizacional.
+
+Modelo inicial:
+
+model Campus {
+  id        String   @id @default(uuid())
+  nome      String
+  cidade    String
+  estado    String
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+Migration criada:
+
+create_campus
+
+---
+
+🧩 Domínios Planejados
 
 A plataforma será construída através dos principais domínios da igreja.
 
 ---
 
-# 👥 Pessoas
+👥 Pessoas
 
 O principal elemento do sistema.
 
@@ -212,7 +265,7 @@ Responsável por:
 
 ---
 
-# 🏠 Células
+🏠 Células
 
 O principal domínio da IBAG.
 
@@ -231,7 +284,7 @@ Contemplará:
 
 ---
 
-# ⛪ Campus
+⛪ Campus
 
 Gestão das diferentes localidades da igreja.
 
@@ -245,7 +298,7 @@ Inclui:
 
 ---
 
-# 🎵 Ministérios
+🎵 Ministérios
 
 Gestão das áreas de serviço.
 
@@ -262,7 +315,7 @@ Uma pessoa poderá servir em múltiplos ministérios.
 
 ---
 
-# 📅 Eventos
+📅 Eventos
 
 Gestão de:
 
@@ -274,7 +327,7 @@ Gestão de:
 
 ---
 
-# 📊 Dashboard Pastoral
+📊 Dashboard Pastoral
 
 Visão estratégica para liderança.
 
@@ -289,11 +342,11 @@ Possíveis indicadores:
 
 ---
 
-# 📍 Status do Projeto
+📍 Status do Projeto
 
-🚧 **Em desenvolvimento**
+🚧 Em desenvolvimento
 
-## Fases
+Fases
 
 ✅ Descoberta do Domínio (Domain Discovery)
 
@@ -303,9 +356,13 @@ Possíveis indicadores:
 
 ✅ Primeiro Backend funcional
 
-⌛ Modelagem de Domínio (DDD)
+✅ Banco de dados configurado
 
-⌛ Banco de dados
+✅ Prisma ORM configurado
+
+✅ Primeiro modelo de domínio criado (Campus)
+
+⌛ Modelagem de Domínio (DDD)
 
 ⌛ Autenticação
 
@@ -319,9 +376,9 @@ Possíveis indicadores:
 
 ---
 
-# 🗺️ Roadmap Inicial
+🗺️ Roadmap Inicial
 
-## Fase 1 - Fundação
+Fase 1 - Fundação
 
 ✅ Repositório criado
 
@@ -331,8 +388,13 @@ Possíveis indicadores:
 
 ✅ Health Module
 
+✅ PostgreSQL configurado
 
-## Fase 2 - Pessoas
+✅ Prisma configurado
+
+✅ Modelo Campus criado
+
+Fase 2 - Pessoas
 
 Planejado:
 
@@ -341,8 +403,7 @@ Planejado:
 - histórico;
 - relacionamento.
 
-
-## Fase 3 - Células
+Fase 3 - Células
 
 Planejado:
 
@@ -351,8 +412,7 @@ Planejado:
 - registros;
 - indicadores.
 
-
-## Fase 4 - Plataforma Completa
+Fase 4 - Plataforma Completa
 
 Planejado:
 
@@ -363,7 +423,7 @@ Planejado:
 
 ---
 
-# 🏛️ Project Nehemiah
+🏛️ Project Nehemiah
 
 O nome representa a visão de reconstrução.
 
@@ -371,11 +431,10 @@ Assim como Neemias liderou a reconstrução dos muros de Jerusalém, o Project N
 
 ---
 
-# 📜 Histórico Inicial
+📜 Histórico Inicial
 
 Primeiros marcos:
 
-```
 7d28bd8
 Inicialização do repositório
 
@@ -398,11 +457,31 @@ Primeira API Backend criada
 ↓
 
 Health Module implementado
-```
+
+↓
+
+Prisma ORM configurado
+
+↓
+
+PostgreSQL conectado
+
+↓
+
+Banco IBAG One criado
+
+↓
+
+Primeiro modelo de domínio criado:
+Campus
+
+↓
+
+Primeira migration aplicada
 
 ---
 
-# 🤝 Desenvolvimento
+🤝 Desenvolvimento
 
 Este projeto é construído com foco em:
 
@@ -413,10 +492,10 @@ Este projeto é construído com foco em:
 
 Cada decisão técnica deve responder:
 
-> "Isso ajuda a igreja a cuidar melhor das pessoas?"
+«"Isso ajuda a igreja a cuidar melhor das pessoas?"»
 
 ---
 
-# 💙 Nosso Norte
+💙 Nosso Norte
 
-> **"Toda linha de código escrita neste projeto deve facilitar o cuidado com pessoas, fortalecer líderes e apoiar a missão da igreja."**
+«"Toda linha de código escrita neste projeto deve facilitar o cuidado com pessoas, fortalecer líderes e apoiar a missão da igreja."»
