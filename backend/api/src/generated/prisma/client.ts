@@ -49,3 +49,8 @@ export type Campus = Prisma.CampusModel
  * 
  */
 export type Person = Prisma.PersonModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel

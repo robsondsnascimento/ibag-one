@@ -10,4 +10,5 @@
  */
 export type * from './models/Campus'
 export type * from './models/Person'
+export type * from './models/User'
 export type * from './commonInputTypes'
