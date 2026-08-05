@@ -1,38 +1,22 @@
-# Sistema
-.DS_Store
-Thumbs.db
-
-# VS Code
-.vscode/
-
-# Node
+# Dependências
 node_modules/
 
-# Logs
-logs/
-*.log
-
-# Flutter
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
+# Build
+dist/
 build/
 
-# Android
-android/.gradle/
-android/app/build/
-
-# iOS
-ios/Pods/
-ios/Runner.xcworkspace/
+# Prisma generated
+generated/
 
 # Ambiente
 .env
-.env.local
+.env.*
 
-# Docker
-docker-data/
+# IDE
+.vscode/
 
-# Repositório do Bruno
+# Bruno workspace
 tools/
+
+# Logs
+*.log
