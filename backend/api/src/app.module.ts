@@ -7,6 +7,7 @@ import { CampusModule } from './modules/campus/campus.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { HealthModule } from './modules/health/health.module';
+import { OrganizationModule } from './modules/organization/organization.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { HealthModule } from './modules/health/health.module';
     CampusModule,
     AuthModule,
     UserModule,
+    OrganizationModule,
   ],
   providers: [CampusService],
 })
