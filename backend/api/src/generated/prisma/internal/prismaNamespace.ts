@@ -715,6 +715,7 @@ export type PersonScalarFieldEnum = (typeof PersonScalarFieldEnum)[keyof typeof 
 
 export const UserScalarFieldEnum = {
   id: 'id',
+  loginEmail: 'loginEmail',
   passwordHash: 'passwordHash',
   ativo: 'ativo',
   ultimoLogin: 'ultimoLogin',
