@@ -12,34 +12,67 @@ export class UserService {
 
   async create(dto: CreateUserDto) {
 
-    const person = await this.prisma.person.findUnique({
-      where: {
-        id: dto.personId,
-      },
-    });
+    const person =
+      await this.prisma.person.findUnique({
+        where: {
+          id: dto.personId,
+        },
+        include: {
+          organization: true,
+        },
+      });
+
 
     if (!person) {
-      throw new Error('Pessoa não encontrada');
+      throw new Error(
+        'Pessoa não encontrada',
+      );
     }
 
-    const loginEmail = this.generateLogin(person.nome);
 
-    const passwordHash = await bcrypt.hash(
-      dto.password,
-      10,
-    );
+    if (!person.organization) {
+      throw new Error(
+        'Pessoa sem organização vinculada',
+      );
+    }
+
+
+    const loginEmail =
+      this.generateLogin(
+        person.nome,
+        person.organization.dominio,
+      );
+
+
+    const passwordHash =
+      await bcrypt.hash(
+        dto.password,
+        10,
+      );
+
 
     return this.prisma.user.create({
       data: {
+
         loginEmail,
+
         passwordHash,
-        personId: person.id,
+
+        personId:
+          person.id,
+
+        organizationId:
+          person.organization.id,
+
       },
     });
   }
 
 
-  private generateLogin(nome: string) {
+  private generateLogin(
+    nome: string,
+    dominio: string,
+  ) {
 
     const normalized = nome
       .normalize('NFD')
@@ -47,9 +80,12 @@ export class UserService {
       .toLowerCase()
       .trim();
 
-    const parts = normalized.split(' ');
 
-    return `${parts[0]}.${parts[parts.length - 1]}@ibag.one`;
+    const parts =
+      normalized.split(' ');
+
+
+    return `${parts[0]}.${parts[parts.length - 1]}@${dominio}`;
   }
 
 }
