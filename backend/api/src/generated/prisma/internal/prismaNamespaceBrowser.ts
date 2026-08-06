@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Campus: 'Campus',
   Person: 'Person',
-  User: 'User'
+  User: 'User',
+  Organization: 'Organization'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -79,7 +80,8 @@ export const CampusScalarFieldEnum = {
   estado: 'estado',
   ativo: 'ativo',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId'
 } as const
 
 export type CampusScalarFieldEnum = (typeof CampusScalarFieldEnum)[keyof typeof CampusScalarFieldEnum]
@@ -99,7 +101,8 @@ export const PersonScalarFieldEnum = {
   dataMembresia: 'dataMembresia',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  campusId: 'campusId'
+  campusId: 'campusId',
+  organizationId: 'organizationId'
 } as const
 
 export type PersonScalarFieldEnum = (typeof PersonScalarFieldEnum)[keyof typeof PersonScalarFieldEnum]
@@ -113,10 +116,23 @@ export const UserScalarFieldEnum = {
   ultimoLogin: 'ultimoLogin',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  personId: 'personId'
+  personId: 'personId',
+  organizationId: 'organizationId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const OrganizationScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  dominio: 'dominio',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
 
 
 export const SortOrder = {

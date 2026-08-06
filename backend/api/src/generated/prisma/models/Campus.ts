@@ -32,6 +32,7 @@ export type CampusMinAggregateOutputType = {
   ativo: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  organizationId: string | null
 }
 
 export type CampusMaxAggregateOutputType = {
@@ -42,6 +43,7 @@ export type CampusMaxAggregateOutputType = {
   ativo: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  organizationId: string | null
 }
 
 export type CampusCountAggregateOutputType = {
@@ -52,6 +54,7 @@ export type CampusCountAggregateOutputType = {
   ativo: number
   createdAt: number
   updatedAt: number
+  organizationId: number
   _all: number
 }
 
@@ -64,6 +67,7 @@ export type CampusMinAggregateInputType = {
   ativo?: true
   createdAt?: true
   updatedAt?: true
+  organizationId?: true
 }
 
 export type CampusMaxAggregateInputType = {
@@ -74,6 +78,7 @@ export type CampusMaxAggregateInputType = {
   ativo?: true
   createdAt?: true
   updatedAt?: true
+  organizationId?: true
 }
 
 export type CampusCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type CampusCountAggregateInputType = {
   ativo?: true
   createdAt?: true
   updatedAt?: true
+  organizationId?: true
   _all?: true
 }
 
@@ -167,6 +173,7 @@ export type CampusGroupByOutputType = {
   ativo: boolean
   createdAt: Date
   updatedAt: Date
+  organizationId: string | null
   _count: CampusCountAggregateOutputType | null
   _min: CampusMinAggregateOutputType | null
   _max: CampusMaxAggregateOutputType | null
@@ -198,7 +205,9 @@ export type CampusWhereInput = {
   ativo?: Prisma.BoolFilter<"Campus"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
+  organizationId?: Prisma.StringNullableFilter<"Campus"> | string | null
   persons?: Prisma.PersonListRelationFilter
+  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
 }
 
 export type CampusOrderByWithRelationInput = {
@@ -209,7 +218,9 @@ export type CampusOrderByWithRelationInput = {
   ativo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
   persons?: Prisma.PersonOrderByRelationAggregateInput
+  organization?: Prisma.OrganizationOrderByWithRelationInput
 }
 
 export type CampusWhereUniqueInput = Prisma.AtLeast<{
@@ -223,7 +234,9 @@ export type CampusWhereUniqueInput = Prisma.AtLeast<{
   ativo?: Prisma.BoolFilter<"Campus"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
+  organizationId?: Prisma.StringNullableFilter<"Campus"> | string | null
   persons?: Prisma.PersonListRelationFilter
+  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
 }, "id">
 
 export type CampusOrderByWithAggregationInput = {
@@ -234,6 +247,7 @@ export type CampusOrderByWithAggregationInput = {
   ativo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CampusCountOrderByAggregateInput
   _max?: Prisma.CampusMaxOrderByAggregateInput
   _min?: Prisma.CampusMinOrderByAggregateInput
@@ -250,6 +264,7 @@ export type CampusScalarWhereWithAggregatesInput = {
   ativo?: Prisma.BoolWithAggregatesFilter<"Campus"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Campus"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Campus"> | Date | string
+  organizationId?: Prisma.StringNullableWithAggregatesFilter<"Campus"> | string | null
 }
 
 export type CampusCreateInput = {
@@ -261,6 +276,7 @@ export type CampusCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
 export type CampusUncheckedCreateInput = {
@@ -271,6 +287,7 @@ export type CampusUncheckedCreateInput = {
   ativo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  organizationId?: string | null
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
 }
 
@@ -283,6 +300,7 @@ export type CampusUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
 export type CampusUncheckedUpdateInput = {
@@ -293,6 +311,7 @@ export type CampusUncheckedUpdateInput = {
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
 }
 
@@ -304,6 +323,7 @@ export type CampusCreateManyInput = {
   ativo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  organizationId?: string | null
 }
 
 export type CampusUpdateManyMutationInput = {
@@ -324,6 +344,7 @@ export type CampusUncheckedUpdateManyInput = {
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CampusCountOrderByAggregateInput = {
@@ -334,6 +355,7 @@ export type CampusCountOrderByAggregateInput = {
   ativo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
 }
 
 export type CampusMaxOrderByAggregateInput = {
@@ -344,6 +366,7 @@ export type CampusMaxOrderByAggregateInput = {
   ativo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
 }
 
 export type CampusMinOrderByAggregateInput = {
@@ -354,11 +377,22 @@ export type CampusMinOrderByAggregateInput = {
   ativo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
 }
 
 export type CampusScalarRelationFilter = {
   is?: Prisma.CampusWhereInput
   isNot?: Prisma.CampusWhereInput
+}
+
+export type CampusListRelationFilter = {
+  every?: Prisma.CampusWhereInput
+  some?: Prisma.CampusWhereInput
+  none?: Prisma.CampusWhereInput
+}
+
+export type CampusOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -371,6 +405,10 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type CampusCreateNestedOneWithoutPersonsInput = {
@@ -387,6 +425,48 @@ export type CampusUpdateOneRequiredWithoutPersonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CampusUpdateToOneWithWhereWithoutPersonsInput, Prisma.CampusUpdateWithoutPersonsInput>, Prisma.CampusUncheckedUpdateWithoutPersonsInput>
 }
 
+export type CampusCreateNestedManyWithoutOrganizationInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutOrganizationInput, Prisma.CampusUncheckedCreateWithoutOrganizationInput> | Prisma.CampusCreateWithoutOrganizationInput[] | Prisma.CampusUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutOrganizationInput | Prisma.CampusCreateOrConnectWithoutOrganizationInput[]
+  createMany?: Prisma.CampusCreateManyOrganizationInputEnvelope
+  connect?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+}
+
+export type CampusUncheckedCreateNestedManyWithoutOrganizationInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutOrganizationInput, Prisma.CampusUncheckedCreateWithoutOrganizationInput> | Prisma.CampusCreateWithoutOrganizationInput[] | Prisma.CampusUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutOrganizationInput | Prisma.CampusCreateOrConnectWithoutOrganizationInput[]
+  createMany?: Prisma.CampusCreateManyOrganizationInputEnvelope
+  connect?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+}
+
+export type CampusUpdateManyWithoutOrganizationNestedInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutOrganizationInput, Prisma.CampusUncheckedCreateWithoutOrganizationInput> | Prisma.CampusCreateWithoutOrganizationInput[] | Prisma.CampusUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutOrganizationInput | Prisma.CampusCreateOrConnectWithoutOrganizationInput[]
+  upsert?: Prisma.CampusUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.CampusUpsertWithWhereUniqueWithoutOrganizationInput[]
+  createMany?: Prisma.CampusCreateManyOrganizationInputEnvelope
+  set?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+  disconnect?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+  delete?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+  connect?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+  update?: Prisma.CampusUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.CampusUpdateWithWhereUniqueWithoutOrganizationInput[]
+  updateMany?: Prisma.CampusUpdateManyWithWhereWithoutOrganizationInput | Prisma.CampusUpdateManyWithWhereWithoutOrganizationInput[]
+  deleteMany?: Prisma.CampusScalarWhereInput | Prisma.CampusScalarWhereInput[]
+}
+
+export type CampusUncheckedUpdateManyWithoutOrganizationNestedInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutOrganizationInput, Prisma.CampusUncheckedCreateWithoutOrganizationInput> | Prisma.CampusCreateWithoutOrganizationInput[] | Prisma.CampusUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutOrganizationInput | Prisma.CampusCreateOrConnectWithoutOrganizationInput[]
+  upsert?: Prisma.CampusUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.CampusUpsertWithWhereUniqueWithoutOrganizationInput[]
+  createMany?: Prisma.CampusCreateManyOrganizationInputEnvelope
+  set?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+  disconnect?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+  delete?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+  connect?: Prisma.CampusWhereUniqueInput | Prisma.CampusWhereUniqueInput[]
+  update?: Prisma.CampusUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.CampusUpdateWithWhereUniqueWithoutOrganizationInput[]
+  updateMany?: Prisma.CampusUpdateManyWithWhereWithoutOrganizationInput | Prisma.CampusUpdateManyWithWhereWithoutOrganizationInput[]
+  deleteMany?: Prisma.CampusScalarWhereInput | Prisma.CampusScalarWhereInput[]
+}
+
 export type CampusCreateWithoutPersonsInput = {
   id?: string
   nome: string
@@ -395,6 +475,7 @@ export type CampusCreateWithoutPersonsInput = {
   ativo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
 export type CampusUncheckedCreateWithoutPersonsInput = {
@@ -405,6 +486,7 @@ export type CampusUncheckedCreateWithoutPersonsInput = {
   ativo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  organizationId?: string | null
 }
 
 export type CampusCreateOrConnectWithoutPersonsInput = {
@@ -431,9 +513,115 @@ export type CampusUpdateWithoutPersonsInput = {
   ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
 export type CampusUncheckedUpdateWithoutPersonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  cidade?: Prisma.StringFieldUpdateOperationsInput | string
+  estado?: Prisma.StringFieldUpdateOperationsInput | string
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CampusCreateWithoutOrganizationInput = {
+  id?: string
+  nome: string
+  cidade: string
+  estado: string
+  ativo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
+}
+
+export type CampusUncheckedCreateWithoutOrganizationInput = {
+  id?: string
+  nome: string
+  cidade: string
+  estado: string
+  ativo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
+}
+
+export type CampusCreateOrConnectWithoutOrganizationInput = {
+  where: Prisma.CampusWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampusCreateWithoutOrganizationInput, Prisma.CampusUncheckedCreateWithoutOrganizationInput>
+}
+
+export type CampusCreateManyOrganizationInputEnvelope = {
+  data: Prisma.CampusCreateManyOrganizationInput | Prisma.CampusCreateManyOrganizationInput[]
+  skipDuplicates?: boolean
+}
+
+export type CampusUpsertWithWhereUniqueWithoutOrganizationInput = {
+  where: Prisma.CampusWhereUniqueInput
+  update: Prisma.XOR<Prisma.CampusUpdateWithoutOrganizationInput, Prisma.CampusUncheckedUpdateWithoutOrganizationInput>
+  create: Prisma.XOR<Prisma.CampusCreateWithoutOrganizationInput, Prisma.CampusUncheckedCreateWithoutOrganizationInput>
+}
+
+export type CampusUpdateWithWhereUniqueWithoutOrganizationInput = {
+  where: Prisma.CampusWhereUniqueInput
+  data: Prisma.XOR<Prisma.CampusUpdateWithoutOrganizationInput, Prisma.CampusUncheckedUpdateWithoutOrganizationInput>
+}
+
+export type CampusUpdateManyWithWhereWithoutOrganizationInput = {
+  where: Prisma.CampusScalarWhereInput
+  data: Prisma.XOR<Prisma.CampusUpdateManyMutationInput, Prisma.CampusUncheckedUpdateManyWithoutOrganizationInput>
+}
+
+export type CampusScalarWhereInput = {
+  AND?: Prisma.CampusScalarWhereInput | Prisma.CampusScalarWhereInput[]
+  OR?: Prisma.CampusScalarWhereInput[]
+  NOT?: Prisma.CampusScalarWhereInput | Prisma.CampusScalarWhereInput[]
+  id?: Prisma.StringFilter<"Campus"> | string
+  nome?: Prisma.StringFilter<"Campus"> | string
+  cidade?: Prisma.StringFilter<"Campus"> | string
+  estado?: Prisma.StringFilter<"Campus"> | string
+  ativo?: Prisma.BoolFilter<"Campus"> | boolean
+  createdAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Campus"> | Date | string
+  organizationId?: Prisma.StringNullableFilter<"Campus"> | string | null
+}
+
+export type CampusCreateManyOrganizationInput = {
+  id?: string
+  nome: string
+  cidade: string
+  estado: string
+  ativo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CampusUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  cidade?: Prisma.StringFieldUpdateOperationsInput | string
+  estado?: Prisma.StringFieldUpdateOperationsInput | string
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
+}
+
+export type CampusUncheckedUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  cidade?: Prisma.StringFieldUpdateOperationsInput | string
+  estado?: Prisma.StringFieldUpdateOperationsInput | string
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
+}
+
+export type CampusUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   cidade?: Prisma.StringFieldUpdateOperationsInput | string
@@ -482,7 +670,9 @@ export type CampusSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   ativo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  organizationId?: boolean
   persons?: boolean | Prisma.Campus$personsArgs<ExtArgs>
+  organization?: boolean | Prisma.Campus$organizationArgs<ExtArgs>
   _count?: boolean | Prisma.CampusCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["campus"]>
 
@@ -494,6 +684,8 @@ export type CampusSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   ativo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  organizationId?: boolean
+  organization?: boolean | Prisma.Campus$organizationArgs<ExtArgs>
 }, ExtArgs["result"]["campus"]>
 
 export type CampusSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -504,6 +696,8 @@ export type CampusSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   ativo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  organizationId?: boolean
+  organization?: boolean | Prisma.Campus$organizationArgs<ExtArgs>
 }, ExtArgs["result"]["campus"]>
 
 export type CampusSelectScalar = {
@@ -514,20 +708,27 @@ export type CampusSelectScalar = {
   ativo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  organizationId?: boolean
 }
 
-export type CampusOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "cidade" | "estado" | "ativo" | "createdAt" | "updatedAt", ExtArgs["result"]["campus"]>
+export type CampusOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "cidade" | "estado" | "ativo" | "createdAt" | "updatedAt" | "organizationId", ExtArgs["result"]["campus"]>
 export type CampusInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   persons?: boolean | Prisma.Campus$personsArgs<ExtArgs>
+  organization?: boolean | Prisma.Campus$organizationArgs<ExtArgs>
   _count?: boolean | Prisma.CampusCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type CampusIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type CampusIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type CampusIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  organization?: boolean | Prisma.Campus$organizationArgs<ExtArgs>
+}
+export type CampusIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  organization?: boolean | Prisma.Campus$organizationArgs<ExtArgs>
+}
 
 export type $CampusPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Campus"
   objects: {
     persons: Prisma.$PersonPayload<ExtArgs>[]
+    organization: Prisma.$OrganizationPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -537,6 +738,7 @@ export type $CampusPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     ativo: boolean
     createdAt: Date
     updatedAt: Date
+    organizationId: string | null
   }, ExtArgs["result"]["campus"]>
   composites: {}
 }
@@ -932,6 +1134,7 @@ readonly fields: CampusFieldRefs;
 export interface Prisma__CampusClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   persons<T extends Prisma.Campus$personsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$personsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  organization<T extends Prisma.Campus$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -968,6 +1171,7 @@ export interface CampusFieldRefs {
   readonly ativo: Prisma.FieldRef<"Campus", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Campus", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Campus", 'DateTime'>
+  readonly organizationId: Prisma.FieldRef<"Campus", 'String'>
 }
     
 
@@ -1222,6 +1426,10 @@ export type CampusCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    */
   data: Prisma.CampusCreateManyInput | Prisma.CampusCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampusIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1292,6 +1500,10 @@ export type CampusUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many Campuses to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampusIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1382,6 +1594,25 @@ export type Campus$personsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.PersonScalarFieldEnum | Prisma.PersonScalarFieldEnum[]
+}
+
+/**
+ * Campus.organization
+ */
+export type Campus$organizationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Organization
+   */
+  select?: Prisma.OrganizationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Organization
+   */
+  omit?: Prisma.OrganizationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationInclude<ExtArgs> | null
+  where?: Prisma.OrganizationWhereInput
 }
 
 /**

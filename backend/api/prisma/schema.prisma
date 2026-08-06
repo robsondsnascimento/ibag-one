@@ -9,43 +9,66 @@ datasource db {
 }
 
 model Campus {
-  id        String   @id @default(uuid())
-  nome      String
-  cidade    String
-  estado    String
-  ativo     Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  persons   Person[]
+  id             String        @id @default(uuid())
+  nome           String
+  cidade         String
+  estado         String
+  ativo          Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  persons        Person[]
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
 }
 
 model Person {
-  id             String    @id @default(uuid())
+  id             String        @id @default(uuid())
   nome           String
   sexo           String?
   dataNascimento DateTime?
-  cpf            String?   @unique
+  cpf            String?       @unique
   telefone       String?
-  email          String?   @unique
-  ativo          Boolean   @default(true)
+  email          String?       @unique
+  ativo          Boolean       @default(true)
   dataDecisao    DateTime?
   dataBatismo    DateTime?
   dataMembresia  DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
   campusId       String
-  campus         Campus    @relation(fields: [campusId], references: [id])
+  campus         Campus        @relation(fields: [campusId], references: [id])
   user           User?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
 }
 
 model User {
-  id           String    @id @default(uuid())
-  loginEmail   String    @unique
-  passwordHash String
-  ativo        Boolean   @default(true)
-  ultimoLogin  DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  personId     String    @unique
-  person       Person    @relation(fields: [personId], references: [id])
+  id             String        @id @default(uuid())
+  loginEmail     String        @unique
+  passwordHash   String
+  ativo          Boolean       @default(true)
+  ultimoLogin    DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  personId       String        @unique
+  person         Person        @relation(fields: [personId], references: [id])
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
+}
+
+model Organization {
+  id String @id @default(uuid())
+
+  nome String
+
+  dominio String @unique
+
+  ativo Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  campuses Campus[]
+  persons  Person[]
+  users    User[]
 }
