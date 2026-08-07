@@ -1,7 +1,14 @@
 import { Injectable } from '@nestjs/common';
+
 import { PrismaService } from '../../database/prisma.service';
+
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+
+import {
+  OrganizationContext,
+} from '../../common/context/organization-context';
+
 
 @Injectable()
 export class PersonService {
@@ -11,22 +18,10 @@ export class PersonService {
   ) {}
 
 
-  async create(createPersonDto: CreatePersonDto) {
-
-    const organization =
-      await this.prisma.organization.findUnique({
-        where: {
-          id: createPersonDto.organizationId,
-        },
-      });
-
-
-    if (!organization) {
-      throw new Error(
-        'Organização não encontrada',
-      );
-    }
-
+  async create(
+    createPersonDto: CreatePersonDto,
+    context: OrganizationContext,
+  ) {
 
     const campus =
       await this.prisma.campus.findUnique({
@@ -45,15 +40,18 @@ export class PersonService {
 
     if (
       campus.organizationId !==
-      createPersonDto.organizationId
+      context.organizationId
     ) {
+
       throw new Error(
-        'Campus não pertence à organização informada',
+        'Campus não pertence à organização atual',
       );
+
     }
 
 
-    return await this.prisma.person.create({
+    return this.prisma.person.create({
+
       data: {
 
         nome:
@@ -86,62 +84,160 @@ export class PersonService {
         ativo:
           createPersonDto.ativo,
 
-        organizationId:
-          createPersonDto.organizationId,
-
         campusId:
           createPersonDto.campusId,
 
+        organizationId:
+          context.organizationId,
+
       },
+
     });
+
   }
 
 
-  async findAll() {
-    return await this.prisma.person.findMany({
-      include: {
-        campus: true,
-        organization: true,
-      },
-    });
-  }
+  async findAll(
+    context: OrganizationContext,
+  ) {
 
+    return this.prisma.person.findMany({
 
-  async findOne(id: string) {
-    return await this.prisma.person.findUnique({
       where: {
-        id,
+
+        organizationId:
+          context.organizationId,
+
       },
+
       include: {
+
         campus: true,
-        organization: true,
+
       },
+
     });
+
+  }
+
+
+  async findOne(
+    id: string,
+    context: OrganizationContext,
+  ) {
+
+    return this.prisma.person.findFirst({
+
+      where: {
+
+        id,
+
+        organizationId:
+          context.organizationId,
+
+      },
+
+      include: {
+
+        campus: true,
+
+      },
+
+    });
+
   }
 
 
   async update(
     id: string,
     updatePersonDto: UpdatePersonDto,
+    context: OrganizationContext,
   ) {
-    return await this.prisma.person.update({
+
+    const person =
+      await this.prisma.person.findFirst({
+
+        where: {
+
+          id,
+
+          organizationId:
+            context.organizationId,
+
+        },
+
+      });
+
+
+    if (!person) {
+
+      throw new Error(
+        'Pessoa não encontrada na organização atual',
+      );
+
+    }
+
+
+    return this.prisma.person.update({
+
       where: {
+
         id,
+
       },
+
       data: updatePersonDto,
+
     });
+
   }
 
 
-  async remove(id: string) {
-    return await this.prisma.person.update({
+  async remove(
+    id: string,
+    context: OrganizationContext,
+  ) {
+
+    const person =
+      await this.prisma.person.findFirst({
+
+        where: {
+
+          id,
+
+          organizationId:
+            context.organizationId,
+
+        },
+
+      });
+
+
+    if (!person) {
+
+      throw new Error(
+        'Pessoa não encontrada na organização atual',
+      );
+
+    }
+
+
+    return this.prisma.person.update({
+
       where: {
+
         id,
+
       },
+
       data: {
+
         ativo: false,
+
       },
+
     });
+
   }
 
 }
