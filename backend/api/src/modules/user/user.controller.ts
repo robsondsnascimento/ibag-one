@@ -5,8 +5,16 @@ import {
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
+
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { CurrentUser } from '../../common/decorators/current-user.decorator';
+
+import {
+  CurrentOrganization,
+} from '../../common/decorators/current-organization.decorator';
+
+import {
+  OrganizationContext,
+} from '../../common/context/organization-context';
 
 
 @Controller('users')
@@ -20,11 +28,12 @@ export class UserController {
   @Get()
   @UseGuards(JwtAuthGuard)
   findAll(
-    @CurrentUser() user: any,
+    @CurrentOrganization()
+    context: OrganizationContext,
   ) {
 
     return this.userService.findAllByOrganization(
-      user.organizationId,
+      context.organizationId,
     );
 
   }
