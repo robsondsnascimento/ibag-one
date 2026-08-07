@@ -1,85 +1,78 @@
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import * as bcrypt from "bcrypt";
 import { Pool } from "pg";
-import bcrypt from "bcrypt";
 import "dotenv/config";
 
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString:
+    process.env.DATABASE_URL,
 });
 
+
 const adapter = new PrismaPg(pool);
+
 
 const prisma = new PrismaClient({
   adapter,
 });
 
 async function main() {
-  console.log("🌱 Iniciando seed IBAG One...");
+  console.log("🌱 Iniciando seed...");
 
-  const passwordHash = await bcrypt.hash("Admin@123", 10);
 
-  /*
-   * ORGANIZAÇÃO IBAG
-   */
-  const ibag = await prisma.organization.upsert({
-    where: {
-      dominio: "ibag.one",
-    },
-    update: {},
-    create: {
+  const passwordHash = await bcrypt.hash(
+    "Admin@123",
+    10,
+  );
+
+
+  // ORGANIZAÇÃO IBAG
+
+  const ibag = await prisma.organization.create({
+    data: {
       nome: "IBAG",
       dominio: "ibag.one",
     },
   });
 
-  const ibagCachoeirinha = await prisma.campus.upsert({
-    where: {
-      id: "campus-ibag-cachoeirinha",
-    },
-    update: {},
-    create: {
-      id: "campus-ibag-cachoeirinha",
-      nome: "IBAG Cachoeirinha",
-      cidade: "Cachoeirinha",
-      estado: "RS",
-      organizationId: ibag.id,
-    },
-  });
 
-  const ibagEsteio = await prisma.campus.upsert({
-    where: {
-      id: "campus-ibag-esteio",
-    },
-    update: {},
-    create: {
-      id: "campus-ibag-esteio",
-      nome: "IBAG Esteio",
-      cidade: "Esteio",
-      estado: "RS",
-      organizationId: ibag.id,
-    },
-  });
+  const campusCachoeirinha =
+    await prisma.campus.create({
+      data: {
+        nome: "Campus Cachoeirinha",
+        cidade: "Cachoeirinha",
+        estado: "RS",
+        organizationId: ibag.id,
+      },
+    });
 
-  const pessoaIbag = await prisma.person.upsert({
-    where: {
-      email: "admin@ibag.one",
-    },
-    update: {},
-    create: {
-      nome: "Administrador IBAG One",
-      email: "admin@ibag.one",
-      campusId: ibagCachoeirinha.id,
-      organizationId: ibag.id,
-    },
-  });
 
-  await prisma.user.upsert({
-    where: {
-      loginEmail: "admin@ibag.one",
-    },
-    update: {},
-    create: {
+  const campusEsteio =
+    await prisma.campus.create({
+      data: {
+        nome: "Campus Esteio",
+        cidade: "Esteio",
+        estado: "RS",
+        organizationId: ibag.id,
+      },
+    });
+
+
+  const pessoaIbag =
+    await prisma.person.create({
+      data: {
+        nome: "Administrador IBAG",
+        email: "admin@ibag.one",
+        campusId: campusCachoeirinha.id,
+        organizationId: ibag.id,
+      },
+    });
+
+
+  await prisma.user.create({
+    data: {
       loginEmail: "admin@ibag.one",
       passwordHash,
       personId: pessoaIbag.id,
@@ -88,66 +81,58 @@ async function main() {
   });
 
 
-  /*
-   * ORGANIZAÇÃO IGREJA CENTRAL
-   */
-  const igrejaCentral = await prisma.organization.upsert({
-    where: {
-      dominio: "igrejacentral.one",
-    },
-    update: {},
-    create: {
-      nome: "Igreja Central",
-      dominio: "igrejacentral.one",
-    },
-  });
+  // ORGANIZAÇÃO IGREJA CENTRAL
+
+  const igrejaCentral =
+    await prisma.organization.create({
+      data: {
+        nome: "Igreja Central",
+        dominio: "igrejacentral.one",
+      },
+    });
 
 
-  const campusCentral = await prisma.campus.upsert({
-    where: {
-      id: "campus-igreja-central",
-    },
-    update: {},
-    create: {
-      id: "campus-igreja-central",
-      nome: "Igreja Central",
-      cidade: "Belo Horizonte",
-      estado: "MG",
-      organizationId: igrejaCentral.id,
-    },
-  });
+  const campusIgrejaCentral =
+    await prisma.campus.create({
+      data: {
+        nome: "Campus Igreja Central",
+        cidade: "Belo Horizonte",
+        estado: "MG",
+        organizationId: igrejaCentral.id,
+      },
+    });
 
 
-  const pessoaCentral = await prisma.person.upsert({
-    where: {
-      email: "admin@igrejacentral.one",
-    },
-    update: {},
-    create: {
-      nome: "Administrador Igreja Central",
-      email: "admin@igrejacentral.one",
-      campusId: campusCentral.id,
-      organizationId: igrejaCentral.id,
-    },
-  });
+  const pessoaIgrejaCentral =
+    await prisma.person.create({
+      data: {
+        nome: "Administrador Igreja Central",
+        email: "admin@igrejacentral.one",
+        campusId: campusIgrejaCentral.id,
+        organizationId: igrejaCentral.id,
+      },
+    });
 
 
-  await prisma.user.upsert({
-    where: {
-      loginEmail: "admin@igrejacentral.one",
-    },
-    update: {},
-    create: {
+  await prisma.user.create({
+    data: {
       loginEmail: "admin@igrejacentral.one",
       passwordHash,
-      personId: pessoaCentral.id,
+      personId: pessoaIgrejaCentral.id,
       organizationId: igrejaCentral.id,
     },
   });
 
 
   console.log("✅ Seed concluído!");
+  console.log("");
+  console.log("Organizações criadas:");
+  console.log({
+    IBAG: ibag.id,
+    IgrejaCentral: igrejaCentral.id,
+  });
 }
+
 
 main()
   .catch((error) => {
