@@ -3,6 +3,7 @@ import { PrismaService } from '../../database/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 
+
 @Injectable()
 export class UserService {
 
@@ -10,13 +11,17 @@ export class UserService {
     private prisma: PrismaService,
   ) {}
 
-  async create(dto: CreateUserDto) {
+
+  async create(
+    dto: CreateUserDto,
+  ) {
 
     const person =
       await this.prisma.person.findUnique({
         where: {
           id: dto.personId,
         },
+
         include: {
           organization: true,
         },
@@ -69,16 +74,52 @@ export class UserService {
   }
 
 
+
+  async findAllByOrganization(
+    organizationId: string,
+  ) {
+
+    return this.prisma.user.findMany({
+      where: {
+        organizationId,
+      },
+
+      select: {
+
+        id: true,
+
+        loginEmail: true,
+
+        ativo: true,
+
+        person: {
+          select: {
+            id: true,
+            nome: true,
+          },
+        },
+
+      },
+    });
+
+  }
+
+
+
   private generateLogin(
     nome: string,
     dominio: string,
   ) {
 
-    const normalized = nome
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
-      .trim();
+    const normalized =
+      nome
+        .normalize('NFD')
+        .replace(
+          /[\u0300-\u036f]/g,
+          '',
+        )
+        .toLowerCase()
+        .trim();
 
 
     const parts =

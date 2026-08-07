@@ -1,6 +1,13 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  UseGuards,
+} from '@nestjs/common';
+
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
+
 
 @Controller('users')
 export class UserController {
@@ -9,10 +16,17 @@ export class UserController {
     private readonly userService: UserService,
   ) {}
 
-  @Post()
-  create(
-    @Body() dto: CreateUserDto,
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  findAll(
+    @CurrentUser() user: any,
   ) {
-    return this.userService.create(dto);
+
+    return this.userService.findAllByOrganization(
+      user.organizationId,
+    );
+
   }
+
 }
