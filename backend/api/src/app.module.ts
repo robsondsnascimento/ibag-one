@@ -28,6 +28,7 @@ import { EventModule } from './modules/event/event.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { KidsModule } from './modules/kids/kids.module';
 import { KidsResourceModule } from './modules/kids-resource/kids-resource.module';
+import { WorshipOrderModule } from './modules/worship-order/worship-order.module';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
@@ -98,6 +99,8 @@ import { OrganizationModule } from './modules/organization/organization.module';
     KidsModule,
 
     KidsResourceModule,
+
+    WorshipOrderModule,
   ],
 
   providers: [

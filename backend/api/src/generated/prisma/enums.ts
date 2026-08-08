@@ -25,6 +25,7 @@ export type MeetingDay = (typeof MeetingDay)[keyof typeof MeetingDay]
 export const UserRole = {
   MEMBER: 'MEMBER',
   SECRETARY: 'SECRETARY',
+  WORSHIP_ORDER_MANAGER: 'WORSHIP_ORDER_MANAGER',
   ADMIN: 'ADMIN',
   SUPER_ADMIN: 'SUPER_ADMIN',
   PASTOR: 'PASTOR'
@@ -182,3 +183,32 @@ export const KidsPreCheckInStatus = {
 } as const
 
 export type KidsPreCheckInStatus = (typeof KidsPreCheckInStatus)[keyof typeof KidsPreCheckInStatus]
+
+
+export const WorshipOrderStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED'
+} as const
+
+export type WorshipOrderStatus = (typeof WorshipOrderStatus)[keyof typeof WorshipOrderStatus]
+
+
+export const WorshipMaterialType = {
+  CARD: 'CARD',
+  VIDEO: 'VIDEO',
+  PRESENTATION: 'PRESENTATION',
+  MUSIC: 'MUSIC',
+  PRO_PRESENTER: 'PRO_PRESENTER',
+  OTHER: 'OTHER'
+} as const
+
+export type WorshipMaterialType = (typeof WorshipMaterialType)[keyof typeof WorshipMaterialType]
+
+
+export const WorshipDemandStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type WorshipDemandStatus = (typeof WorshipDemandStatus)[keyof typeof WorshipDemandStatus]

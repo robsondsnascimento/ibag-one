@@ -288,6 +288,8 @@ export type PersonWhereInput = {
   kidsIdentity?: Prisma.XOR<Prisma.KidsIdentityNullableScalarRelationFilter, Prisma.KidsIdentityWhereInput> | null
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentListRelationFilter
   kidsResourceRequests?: Prisma.KidsResourceRequestListRelationFilter
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemListRelationFilter
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -332,6 +334,8 @@ export type PersonOrderByWithRelationInput = {
   kidsIdentity?: Prisma.KidsIdentityOrderByWithRelationInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentOrderByRelationAggregateInput
   kidsResourceRequests?: Prisma.KidsResourceRequestOrderByRelationAggregateInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemOrderByRelationAggregateInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandOrderByRelationAggregateInput
 }
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -379,6 +383,8 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   kidsIdentity?: Prisma.XOR<Prisma.KidsIdentityNullableScalarRelationFilter, Prisma.KidsIdentityWhereInput> | null
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentListRelationFilter
   kidsResourceRequests?: Prisma.KidsResourceRequestListRelationFilter
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemListRelationFilter
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandListRelationFilter
 }, "id" | "cpf" | "email">
 
 export type PersonOrderByWithAggregationInput = {
@@ -463,6 +469,8 @@ export type PersonCreateInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -505,6 +513,8 @@ export type PersonUncheckedCreateInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUpdateInput = {
@@ -547,6 +557,8 @@ export type PersonUpdateInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -589,6 +601,8 @@ export type PersonUncheckedUpdateInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -905,6 +919,38 @@ export type PersonUpdateOneWithoutEventsResponsibleNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutEventsResponsibleInput, Prisma.PersonUpdateWithoutEventsResponsibleInput>, Prisma.PersonUncheckedUpdateWithoutEventsResponsibleInput>
 }
 
+export type PersonCreateNestedOneWithoutWorshipOrderItemsResponsibleInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutWorshipOrderItemsResponsibleInput, Prisma.PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutWorshipOrderItemsResponsibleInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutWorshipOrderItemsResponsibleNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutWorshipOrderItemsResponsibleInput, Prisma.PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutWorshipOrderItemsResponsibleInput
+  upsert?: Prisma.PersonUpsertWithoutWorshipOrderItemsResponsibleInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutWorshipOrderItemsResponsibleInput, Prisma.PersonUpdateWithoutWorshipOrderItemsResponsibleInput>, Prisma.PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput>
+}
+
+export type PersonCreateNestedOneWithoutWorshipDemandsResponsibleInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutWorshipDemandsResponsibleInput, Prisma.PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutWorshipDemandsResponsibleInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutWorshipDemandsResponsibleNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutWorshipDemandsResponsibleInput, Prisma.PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutWorshipDemandsResponsibleInput
+  upsert?: Prisma.PersonUpsertWithoutWorshipDemandsResponsibleInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutWorshipDemandsResponsibleInput, Prisma.PersonUpdateWithoutWorshipDemandsResponsibleInput>, Prisma.PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput>
+}
+
 export type PersonCreateNestedOneWithoutNotificationRecipientsInput = {
   create?: Prisma.XOR<Prisma.PersonCreateWithoutNotificationRecipientsInput, Prisma.PersonUncheckedCreateWithoutNotificationRecipientsInput>
   connectOrCreate?: Prisma.PersonCreateOrConnectWithoutNotificationRecipientsInput
@@ -1184,6 +1230,8 @@ export type PersonCreateWithoutCampusInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutCampusInput = {
@@ -1225,6 +1273,8 @@ export type PersonUncheckedCreateWithoutCampusInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutCampusInput = {
@@ -1313,6 +1363,8 @@ export type PersonCreateWithoutUserInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutUserInput = {
@@ -1354,6 +1406,8 @@ export type PersonUncheckedCreateWithoutUserInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutUserInput = {
@@ -1411,6 +1465,8 @@ export type PersonUpdateWithoutUserInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutUserInput = {
@@ -1452,6 +1508,8 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutOrganizationInput = {
@@ -1493,6 +1551,8 @@ export type PersonCreateWithoutOrganizationInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutOrganizationInput = {
@@ -1534,6 +1594,8 @@ export type PersonUncheckedCreateWithoutOrganizationInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutOrganizationInput = {
@@ -1601,6 +1663,8 @@ export type PersonCreateWithoutCellSupportRolesInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
@@ -1642,6 +1706,8 @@ export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutCellSupportRolesInput = {
@@ -1699,6 +1765,8 @@ export type PersonUpdateWithoutCellSupportRolesInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
@@ -1740,6 +1808,8 @@ export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutJourneyEventsInput = {
@@ -1781,6 +1851,8 @@ export type PersonCreateWithoutJourneyEventsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutJourneyEventsInput = {
@@ -1822,6 +1894,8 @@ export type PersonUncheckedCreateWithoutJourneyEventsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutJourneyEventsInput = {
@@ -1879,6 +1953,8 @@ export type PersonUpdateWithoutJourneyEventsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
@@ -1920,6 +1996,8 @@ export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutFamilyMembershipsInput = {
@@ -1961,6 +2039,8 @@ export type PersonCreateWithoutFamilyMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
@@ -2002,6 +2082,8 @@ export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutFamilyMembershipsInput = {
@@ -2059,6 +2141,8 @@ export type PersonUpdateWithoutFamilyMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
@@ -2100,6 +2184,8 @@ export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutServiceMembershipsInput = {
@@ -2141,6 +2227,8 @@ export type PersonCreateWithoutServiceMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
@@ -2182,6 +2270,8 @@ export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutServiceMembershipsInput = {
@@ -2239,6 +2329,8 @@ export type PersonUpdateWithoutServiceMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
@@ -2280,6 +2372,8 @@ export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutServiceSchedulesInput = {
@@ -2321,6 +2415,8 @@ export type PersonCreateWithoutServiceSchedulesInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
@@ -2362,6 +2458,8 @@ export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutServiceSchedulesInput = {
@@ -2419,6 +2517,8 @@ export type PersonUpdateWithoutServiceSchedulesInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
@@ -2460,6 +2560,8 @@ export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutEventsResponsibleInput = {
@@ -2501,6 +2603,8 @@ export type PersonCreateWithoutEventsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
@@ -2542,6 +2646,8 @@ export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutEventsResponsibleInput = {
@@ -2599,6 +2705,8 @@ export type PersonUpdateWithoutEventsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
@@ -2640,6 +2748,384 @@ export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+}
+
+export type PersonCreateWithoutWorshipOrderItemsResponsibleInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
+}
+
+export type PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
+}
+
+export type PersonCreateOrConnectWithoutWorshipOrderItemsResponsibleInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutWorshipOrderItemsResponsibleInput, Prisma.PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput>
+}
+
+export type PersonUpsertWithoutWorshipOrderItemsResponsibleInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutWorshipOrderItemsResponsibleInput, Prisma.PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutWorshipOrderItemsResponsibleInput, Prisma.PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutWorshipOrderItemsResponsibleInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutWorshipOrderItemsResponsibleInput, Prisma.PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput>
+}
+
+export type PersonUpdateWithoutWorshipOrderItemsResponsibleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+}
+
+export type PersonCreateWithoutWorshipDemandsResponsibleInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+}
+
+export type PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+}
+
+export type PersonCreateOrConnectWithoutWorshipDemandsResponsibleInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutWorshipDemandsResponsibleInput, Prisma.PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput>
+}
+
+export type PersonUpsertWithoutWorshipDemandsResponsibleInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutWorshipDemandsResponsibleInput, Prisma.PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutWorshipDemandsResponsibleInput, Prisma.PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutWorshipDemandsResponsibleInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutWorshipDemandsResponsibleInput, Prisma.PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput>
+}
+
+export type PersonUpdateWithoutWorshipDemandsResponsibleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutNotificationRecipientsInput = {
@@ -2681,6 +3167,8 @@ export type PersonCreateWithoutNotificationRecipientsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
@@ -2722,6 +3210,8 @@ export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutNotificationRecipientsInput = {
@@ -2779,6 +3269,8 @@ export type PersonUpdateWithoutNotificationRecipientsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
@@ -2820,6 +3312,8 @@ export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutKidsEnrollmentsInput = {
@@ -2861,6 +3355,8 @@ export type PersonCreateWithoutKidsEnrollmentsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
@@ -2902,6 +3398,8 @@ export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsEnrollmentsInput = {
@@ -2959,6 +3457,8 @@ export type PersonUpdateWithoutKidsEnrollmentsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
@@ -3000,6 +3500,8 @@ export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -3041,6 +3543,8 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -3082,6 +3586,8 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -3128,6 +3634,8 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -3169,6 +3677,8 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInp
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -3226,6 +3736,8 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -3267,6 +3779,8 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUpsertWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -3319,6 +3833,8 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -3360,6 +3876,8 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInp
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutKidsCheckInsInput = {
@@ -3401,6 +3919,8 @@ export type PersonCreateWithoutKidsCheckInsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
@@ -3442,6 +3962,8 @@ export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsCheckInsInput = {
@@ -3499,6 +4021,8 @@ export type PersonUpdateWithoutKidsCheckInsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
@@ -3540,6 +4064,8 @@ export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutKidsPreCheckInsInput = {
@@ -3581,6 +4107,8 @@ export type PersonCreateWithoutKidsPreCheckInsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsPreCheckInsInput = {
@@ -3622,6 +4150,8 @@ export type PersonUncheckedCreateWithoutKidsPreCheckInsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsPreCheckInsInput = {
@@ -3679,6 +4209,8 @@ export type PersonUpdateWithoutKidsPreCheckInsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsPreCheckInsInput = {
@@ -3720,6 +4252,8 @@ export type PersonUncheckedUpdateWithoutKidsPreCheckInsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutKidsIdentityInput = {
@@ -3761,6 +4295,8 @@ export type PersonCreateWithoutKidsIdentityInput = {
   kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsIdentityInput = {
@@ -3802,6 +4338,8 @@ export type PersonUncheckedCreateWithoutKidsIdentityInput = {
   kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsIdentityInput = {
@@ -3859,6 +4397,8 @@ export type PersonUpdateWithoutKidsIdentityInput = {
   kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
@@ -3900,6 +4440,8 @@ export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
   kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutKidsOperationalRolesInput = {
@@ -3941,6 +4483,8 @@ export type PersonCreateWithoutKidsOperationalRolesInput = {
   kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
@@ -3982,6 +4526,8 @@ export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
   kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsOperationalRolesInput = {
@@ -4039,6 +4585,8 @@ export type PersonUpdateWithoutKidsOperationalRolesInput = {
   kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
@@ -4080,6 +4628,8 @@ export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
   kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutKidsResourceRequestsInput = {
@@ -4121,6 +4671,8 @@ export type PersonCreateWithoutKidsResourceRequestsInput = {
   kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
@@ -4162,6 +4714,8 @@ export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
   kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsResourceRequestsInput = {
@@ -4219,6 +4773,8 @@ export type PersonUpdateWithoutKidsResourceRequestsInput = {
   kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
@@ -4260,6 +4816,8 @@ export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
   kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutKidsCareProfileInput = {
@@ -4301,6 +4859,8 @@ export type PersonCreateWithoutKidsCareProfileInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
@@ -4342,6 +4902,8 @@ export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsCareProfileInput = {
@@ -4399,6 +4961,8 @@ export type PersonUpdateWithoutKidsCareProfileInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
@@ -4440,6 +5004,8 @@ export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutMeetingVisitorInput = {
@@ -4481,6 +5047,8 @@ export type PersonCreateWithoutMeetingVisitorInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
@@ -4522,6 +5090,8 @@ export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutMeetingVisitorInput = {
@@ -4579,6 +5149,8 @@ export type PersonUpdateWithoutMeetingVisitorInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
@@ -4620,6 +5192,8 @@ export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
@@ -4661,6 +5235,8 @@ export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
@@ -4702,6 +5278,8 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutPastoralCaresAsSubjectInput = {
@@ -4748,6 +5326,8 @@ export type PersonCreateWithoutPastoralCaresAsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
@@ -4789,6 +5369,8 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutPastoralCaresAsResponsibleInput = {
@@ -4846,6 +5428,8 @@ export type PersonUpdateWithoutPastoralCaresAsSubjectInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
@@ -4887,6 +5471,8 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUpsertWithoutPastoralCaresAsResponsibleInput = {
@@ -4939,6 +5525,8 @@ export type PersonUpdateWithoutPastoralCaresAsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
@@ -4980,6 +5568,8 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutMeetingAttendancesInput = {
@@ -5021,6 +5611,8 @@ export type PersonCreateWithoutMeetingAttendancesInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
@@ -5062,6 +5654,8 @@ export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutMeetingAttendancesInput = {
@@ -5119,6 +5713,8 @@ export type PersonUpdateWithoutMeetingAttendancesInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
@@ -5160,6 +5756,8 @@ export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutCellNetworkSupervisionsInput = {
@@ -5201,6 +5799,8 @@ export type PersonCreateWithoutCellNetworkSupervisionsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
@@ -5242,6 +5842,8 @@ export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutCellNetworkSupervisionsInput = {
@@ -5299,6 +5901,8 @@ export type PersonUpdateWithoutCellNetworkSupervisionsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
@@ -5340,6 +5944,8 @@ export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutCellMembershipsInput = {
@@ -5381,6 +5987,8 @@ export type PersonCreateWithoutCellMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutCellMembershipsInput = {
@@ -5422,6 +6030,8 @@ export type PersonUncheckedCreateWithoutCellMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutCellMembershipsInput = {
@@ -5479,6 +6089,8 @@ export type PersonUpdateWithoutCellMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
@@ -5520,6 +6132,8 @@ export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateWithoutCellLeadershipsInput = {
@@ -5561,6 +6175,8 @@ export type PersonCreateWithoutCellLeadershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
@@ -5602,6 +6218,8 @@ export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
 }
 
 export type PersonCreateOrConnectWithoutCellLeadershipsInput = {
@@ -5659,6 +6277,8 @@ export type PersonUpdateWithoutCellLeadershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
@@ -5700,6 +6320,8 @@ export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonCreateManyCampusInput = {
@@ -5758,6 +6380,8 @@ export type PersonUpdateWithoutCampusInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCampusInput = {
@@ -5799,6 +6423,8 @@ export type PersonUncheckedUpdateWithoutCampusInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutCampusInput = {
@@ -5874,6 +6500,8 @@ export type PersonUpdateWithoutOrganizationInput = {
   kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutOrganizationInput = {
@@ -5915,6 +6543,8 @@ export type PersonUncheckedUpdateWithoutOrganizationInput = {
   kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutOrganizationInput = {
@@ -5960,6 +6590,8 @@ export type PersonCountOutputType = {
   kidsPreCheckIns: number
   kidsOperationalRoles: number
   kidsResourceRequests: number
+  worshipOrderItemsResponsible: number
+  worshipDemandsResponsible: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5983,6 +6615,8 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   kidsPreCheckIns?: boolean | PersonCountOutputTypeCountKidsPreCheckInsArgs
   kidsOperationalRoles?: boolean | PersonCountOutputTypeCountKidsOperationalRolesArgs
   kidsResourceRequests?: boolean | PersonCountOutputTypeCountKidsResourceRequestsArgs
+  worshipOrderItemsResponsible?: boolean | PersonCountOutputTypeCountWorshipOrderItemsResponsibleArgs
+  worshipDemandsResponsible?: boolean | PersonCountOutputTypeCountWorshipDemandsResponsibleArgs
 }
 
 /**
@@ -6135,6 +6769,20 @@ export type PersonCountOutputTypeCountKidsResourceRequestsArgs<ExtArgs extends r
   where?: Prisma.KidsResourceRequestWhereInput
 }
 
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountWorshipOrderItemsResponsibleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorshipOrderItemWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountWorshipDemandsResponsibleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorshipServiceDemandWhereInput
+}
+
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -6178,6 +6826,8 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   kidsIdentity?: boolean | Prisma.Person$kidsIdentityArgs<ExtArgs>
   kidsOperationalRoles?: boolean | Prisma.Person$kidsOperationalRolesArgs<ExtArgs>
   kidsResourceRequests?: boolean | Prisma.Person$kidsResourceRequestsArgs<ExtArgs>
+  worshipOrderItemsResponsible?: boolean | Prisma.Person$worshipOrderItemsResponsibleArgs<ExtArgs>
+  worshipDemandsResponsible?: boolean | Prisma.Person$worshipDemandsResponsibleArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
@@ -6267,6 +6917,8 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   kidsIdentity?: boolean | Prisma.Person$kidsIdentityArgs<ExtArgs>
   kidsOperationalRoles?: boolean | Prisma.Person$kidsOperationalRolesArgs<ExtArgs>
   kidsResourceRequests?: boolean | Prisma.Person$kidsResourceRequestsArgs<ExtArgs>
+  worshipOrderItemsResponsible?: boolean | Prisma.Person$worshipOrderItemsResponsibleArgs<ExtArgs>
+  worshipDemandsResponsible?: boolean | Prisma.Person$worshipDemandsResponsibleArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -6307,6 +6959,8 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     kidsIdentity: Prisma.$KidsIdentityPayload<ExtArgs> | null
     kidsOperationalRoles: Prisma.$KidsOperationalRoleAssignmentPayload<ExtArgs>[]
     kidsResourceRequests: Prisma.$KidsResourceRequestPayload<ExtArgs>[]
+    worshipOrderItemsResponsible: Prisma.$WorshipOrderItemPayload<ExtArgs>[]
+    worshipDemandsResponsible: Prisma.$WorshipServiceDemandPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -6744,6 +7398,8 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   kidsIdentity<T extends Prisma.Person$kidsIdentityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsIdentityArgs<ExtArgs>>): Prisma.Prisma__KidsIdentityClient<runtime.Types.Result.GetResult<Prisma.$KidsIdentityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   kidsOperationalRoles<T extends Prisma.Person$kidsOperationalRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsOperationalRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KidsOperationalRoleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   kidsResourceRequests<T extends Prisma.Person$kidsResourceRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsResourceRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KidsResourceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  worshipOrderItemsResponsible<T extends Prisma.Person$worshipOrderItemsResponsibleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$worshipOrderItemsResponsibleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorshipOrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  worshipDemandsResponsible<T extends Prisma.Person$worshipDemandsResponsibleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$worshipDemandsResponsibleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorshipServiceDemandPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7761,6 +8417,54 @@ export type Person$kidsResourceRequestsArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.KidsResourceRequestScalarFieldEnum | Prisma.KidsResourceRequestScalarFieldEnum[]
+}
+
+/**
+ * Person.worshipOrderItemsResponsible
+ */
+export type Person$worshipOrderItemsResponsibleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorshipOrderItem
+   */
+  select?: Prisma.WorshipOrderItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorshipOrderItem
+   */
+  omit?: Prisma.WorshipOrderItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorshipOrderItemInclude<ExtArgs> | null
+  where?: Prisma.WorshipOrderItemWhereInput
+  orderBy?: Prisma.WorshipOrderItemOrderByWithRelationInput | Prisma.WorshipOrderItemOrderByWithRelationInput[]
+  cursor?: Prisma.WorshipOrderItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorshipOrderItemScalarFieldEnum | Prisma.WorshipOrderItemScalarFieldEnum[]
+}
+
+/**
+ * Person.worshipDemandsResponsible
+ */
+export type Person$worshipDemandsResponsibleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorshipServiceDemand
+   */
+  select?: Prisma.WorshipServiceDemandSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorshipServiceDemand
+   */
+  omit?: Prisma.WorshipServiceDemandOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorshipServiceDemandInclude<ExtArgs> | null
+  where?: Prisma.WorshipServiceDemandWhereInput
+  orderBy?: Prisma.WorshipServiceDemandOrderByWithRelationInput | Prisma.WorshipServiceDemandOrderByWithRelationInput[]
+  cursor?: Prisma.WorshipServiceDemandWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorshipServiceDemandScalarFieldEnum | Prisma.WorshipServiceDemandScalarFieldEnum[]
 }
 
 /**

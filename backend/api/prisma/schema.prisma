@@ -21,6 +21,7 @@ enum MeetingDay {
 enum UserRole {
   MEMBER
   SECRETARY
+  WORSHIP_ORDER_MANAGER
   ADMIN
   SUPER_ADMIN
   PASTOR
@@ -132,6 +133,26 @@ enum KidsPreCheckInStatus {
   CANCELLED
 }
 
+enum WorshipOrderStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum WorshipMaterialType {
+  CARD
+  VIDEO
+  PRESENTATION
+  MUSIC
+  PRO_PRESENTER
+  OTHER
+}
+
+enum WorshipDemandStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
 
 model Campus {
   id        String   @id @default(uuid())
@@ -204,6 +225,8 @@ model Person {
   kidsIdentity KidsIdentity?
   kidsOperationalRoles KidsOperationalRoleAssignment[]
   kidsResourceRequests KidsResourceRequest[] @relation("KidsResourceRequestedBy")
+  worshipOrderItemsResponsible WorshipOrderItem[] @relation("WorshipOrderItemResponsible")
+  worshipDemandsResponsible WorshipServiceDemand[] @relation("WorshipDemandResponsible")
 }
 
 model User {
@@ -224,6 +247,7 @@ model User {
   journeyEventsCreated PersonJourneyEvent[]
   eventsCreated Event[] @relation("EventCreatedBy")
   eventHistory EventHistory[]
+  worshipOrdersCreated WorshipOrder[]
 }
 
 model Organization {
@@ -408,6 +432,8 @@ model ServiceArea {
   notifications Notification[]
   eventAreas EventServiceArea[]
   kidsClasses KidsClass[]
+  worshipOrderItems WorshipOrderItem[]
+  worshipDemands WorshipServiceDemand[]
   @@index([organizationId])
   @@index([campusId])
   @@index([ativo])
@@ -531,9 +557,67 @@ model Event {
   schedules ServiceSchedule[]
   kidsResourceRequests KidsResourceRequest[]
   kidsPreCheckIns KidsPreCheckIn[]
+  worshipOrder WorshipOrder?
   @@index([organizationId])
   @@index([campusId])
   @@index([inicio])
+  @@index([status])
+}
+
+model WorshipOrder {
+  id String @id @default(uuid())
+  status WorshipOrderStatus @default(DRAFT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  eventId String @unique
+  event Event @relation(fields: [eventId], references: [id])
+  createdByUserId String
+  createdByUser User @relation(fields: [createdByUserId], references: [id])
+  items WorshipOrderItem[]
+}
+
+model WorshipOrderItem {
+  id String @id @default(uuid())
+  sequencia Int
+  titulo String
+  horario String?
+  observacoes String?
+  orderId String
+  order WorshipOrder @relation(fields: [orderId], references: [id])
+  responsiblePersonId String?
+  responsiblePerson Person? @relation("WorshipOrderItemResponsible", fields: [responsiblePersonId], references: [id])
+  serviceAreaId String?
+  serviceArea ServiceArea? @relation(fields: [serviceAreaId], references: [id])
+  materials WorshipOrderMaterial[]
+  demands WorshipServiceDemand[]
+  @@unique([orderId, sequencia])
+  @@index([serviceAreaId])
+}
+
+model WorshipOrderMaterial {
+  id String @id @default(uuid())
+  type WorshipMaterialType
+  titulo String
+  referencia String?
+  itemId String
+  item WorshipOrderItem @relation(fields: [itemId], references: [id])
+  @@index([itemId])
+}
+
+model WorshipServiceDemand {
+  id String @id @default(uuid())
+  descricao String
+  dueAt DateTime?
+  status WorshipDemandStatus @default(PENDING)
+  completedAt DateTime?
+  itemId String
+  item WorshipOrderItem @relation(fields: [itemId], references: [id])
+  serviceAreaId String
+  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  responsiblePersonId String?
+  responsiblePerson Person? @relation("WorshipDemandResponsible", fields: [responsiblePersonId], references: [id])
+  @@index([itemId])
+  @@index([serviceAreaId])
   @@index([status])
 }
 

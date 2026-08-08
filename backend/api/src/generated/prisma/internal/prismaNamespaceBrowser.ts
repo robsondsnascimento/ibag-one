@@ -68,6 +68,10 @@ export const ModelName = {
   ServiceSchedule: 'ServiceSchedule',
   Space: 'Space',
   Event: 'Event',
+  WorshipOrder: 'WorshipOrder',
+  WorshipOrderItem: 'WorshipOrderItem',
+  WorshipOrderMaterial: 'WorshipOrderMaterial',
+  WorshipServiceDemand: 'WorshipServiceDemand',
   EventSpace: 'EventSpace',
   EventServiceArea: 'EventServiceArea',
   EventServiceTeam: 'EventServiceTeam',
@@ -372,6 +376,57 @@ export const EventScalarFieldEnum = {
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const WorshipOrderScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  eventId: 'eventId',
+  createdByUserId: 'createdByUserId'
+} as const
+
+export type WorshipOrderScalarFieldEnum = (typeof WorshipOrderScalarFieldEnum)[keyof typeof WorshipOrderScalarFieldEnum]
+
+
+export const WorshipOrderItemScalarFieldEnum = {
+  id: 'id',
+  sequencia: 'sequencia',
+  titulo: 'titulo',
+  horario: 'horario',
+  observacoes: 'observacoes',
+  orderId: 'orderId',
+  responsiblePersonId: 'responsiblePersonId',
+  serviceAreaId: 'serviceAreaId'
+} as const
+
+export type WorshipOrderItemScalarFieldEnum = (typeof WorshipOrderItemScalarFieldEnum)[keyof typeof WorshipOrderItemScalarFieldEnum]
+
+
+export const WorshipOrderMaterialScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  titulo: 'titulo',
+  referencia: 'referencia',
+  itemId: 'itemId'
+} as const
+
+export type WorshipOrderMaterialScalarFieldEnum = (typeof WorshipOrderMaterialScalarFieldEnum)[keyof typeof WorshipOrderMaterialScalarFieldEnum]
+
+
+export const WorshipServiceDemandScalarFieldEnum = {
+  id: 'id',
+  descricao: 'descricao',
+  dueAt: 'dueAt',
+  status: 'status',
+  completedAt: 'completedAt',
+  itemId: 'itemId',
+  serviceAreaId: 'serviceAreaId',
+  responsiblePersonId: 'responsiblePersonId'
+} as const
+
+export type WorshipServiceDemandScalarFieldEnum = (typeof WorshipServiceDemandScalarFieldEnum)[keyof typeof WorshipServiceDemandScalarFieldEnum]
 
 
 export const EventSpaceScalarFieldEnum = {

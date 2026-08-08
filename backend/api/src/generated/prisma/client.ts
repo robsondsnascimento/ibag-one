@@ -125,6 +125,26 @@ export type Space = Prisma.SpaceModel
  */
 export type Event = Prisma.EventModel
 /**
+ * Model WorshipOrder
+ * 
+ */
+export type WorshipOrder = Prisma.WorshipOrderModel
+/**
+ * Model WorshipOrderItem
+ * 
+ */
+export type WorshipOrderItem = Prisma.WorshipOrderItemModel
+/**
+ * Model WorshipOrderMaterial
+ * 
+ */
+export type WorshipOrderMaterial = Prisma.WorshipOrderMaterialModel
+/**
+ * Model WorshipServiceDemand
+ * 
+ */
+export type WorshipServiceDemand = Prisma.WorshipServiceDemandModel
+/**
  * Model EventSpace
  * 
  */
