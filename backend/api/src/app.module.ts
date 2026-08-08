@@ -23,6 +23,10 @@ import { CellMultiplicationModule } from './modules/cell-multiplication/cell-mul
 import { PersonJourneyModule } from './modules/person-journey/person-journey.module';
 import { FamilyModule } from './modules/family/family.module';
 import { ServiceAreaModule } from './modules/service-area/service-area.module';
+import { SpaceModule } from './modules/space/space.module';
+import { EventModule } from './modules/event/event.module';
+import { NotificationModule } from './modules/notification/notification.module';
+import { KidsModule } from './modules/kids/kids.module';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
@@ -83,6 +87,14 @@ import { OrganizationModule } from './modules/organization/organization.module';
     FamilyModule,
 
     ServiceAreaModule,
+
+    SpaceModule,
+
+    EventModule,
+
+    NotificationModule,
+
+    KidsModule,
   ],
 
   providers: [

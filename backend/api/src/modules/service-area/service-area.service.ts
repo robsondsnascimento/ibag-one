@@ -71,6 +71,10 @@ export class ServiceAreaService {
     await this.assertAreaManagement(team.serviceAreaId, context, team.id, team.campusId);
     const member = await this.prisma.serviceMembership.findFirst({ where: { personId: dto.personId, teamId: team.id, ativo: true } });
     if (!member) throw new BadRequestException('A pessoa precisa possuir vínculo ativo com esta equipe');
+    if (dto.eventId) {
+      const event = await this.prisma.event.findFirst({ where: { id: dto.eventId, organizationId: context.organizationId, status: 'APPROVED', teams: { some: { teamId: team.id } } } });
+      if (!event) throw new BadRequestException('O evento precisa estar aprovado e envolver esta equipe');
+    }
     const data = new Date(dto.data);
     const exists = await this.prisma.serviceSchedule.findFirst({ where: { teamId: team.id, personId: dto.personId, data } });
     if (exists) throw new BadRequestException('A pessoa já possui uma escala nesta equipe para esta data');

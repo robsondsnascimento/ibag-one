@@ -80,6 +80,37 @@ enum ServiceScheduleStatus {
   COMPLETED
 }
 
+enum EventType {
+  PASTORAL
+  SERVICE
+  TRAINING
+  REHEARSAL
+  MEETING
+  WORSHIP
+  CONFERENCE
+  SPECIAL_PROGRAM
+}
+
+enum EventStatus {
+  REQUESTED
+  APPROVED
+  CANCELLED
+  COMPLETED
+}
+
+enum NotificationAudience {
+  ORGANIZATION
+  CAMPUS
+  SERVICE_AREA
+  SERVICE_TEAM
+  PERSON
+}
+
+enum KidsCheckInStatus {
+  CHECKED_IN
+  CHECKED_OUT
+}
+
 
 model Campus {
   id        String   @id @default(uuid())
@@ -96,6 +127,10 @@ model Campus {
   serviceAreas ServiceArea[]
   serviceTeams ServiceTeam[]
   serviceMemberships ServiceMembership[]
+  spaces Space[]
+  events Event[]
+  notifications Notification[]
+  kidsClasses KidsClass[]
 
   organization   Organization? @relation(fields: [organizationId], references: [id])
   organizationId String?
@@ -136,6 +171,12 @@ model Person {
   familyMemberships FamilyMembership[]
   serviceMemberships ServiceMembership[]
   serviceSchedules ServiceSchedule[]
+  eventsResponsible Event[] @relation("EventResponsible")
+  notificationRecipients NotificationRecipient[]
+  kidsEnrollments KidsEnrollment[] @relation("KidsChild")
+  kidsPickupAuthorizationsAsChild KidsAuthorizedPickup[] @relation("KidsPickupChild")
+  kidsPickupAuthorizationsAsResponsible KidsAuthorizedPickup[] @relation("KidsPickupResponsible")
+  kidsCheckIns KidsCheckIn[] @relation("KidsCheckInChild")
 }
 
 model User {
@@ -154,6 +195,8 @@ model User {
   organizationId String?
   role UserRole @default(MEMBER)
   journeyEventsCreated PersonJourneyEvent[]
+  eventsCreated Event[] @relation("EventCreatedBy")
+  eventHistory EventHistory[]
 }
 
 model Organization {
@@ -180,6 +223,10 @@ model Organization {
   serviceAreas ServiceArea[]
   serviceTeams ServiceTeam[]
   serviceSchedules ServiceSchedule[]
+  spaces Space[]
+  events Event[]
+  notifications Notification[]
+  kidsClasses KidsClass[]
 }
 
 model Cell {
@@ -328,6 +375,8 @@ model ServiceArea {
   campus Campus? @relation(fields: [campusId], references: [id])
   teams ServiceTeam[]
   memberships ServiceMembership[]
+  notifications Notification[]
+  eventAreas EventServiceArea[]
   @@index([organizationId])
   @@index([campusId])
   @@index([ativo])
@@ -348,6 +397,8 @@ model ServiceTeam {
   campus Campus @relation(fields: [campusId], references: [id])
   memberships ServiceMembership[]
   schedules ServiceSchedule[]
+  eventTeams EventServiceTeam[]
+  notifications Notification[]
   @@index([organizationId])
   @@index([serviceAreaId])
   @@index([campusId])
@@ -391,10 +442,214 @@ model ServiceSchedule {
   team ServiceTeam @relation(fields: [teamId], references: [id])
   personId String
   person Person @relation(fields: [personId], references: [id])
+  eventId String?
+  event Event? @relation(fields: [eventId], references: [id])
   @@index([organizationId])
   @@index([teamId])
   @@index([personId])
   @@index([data])
+  @@index([eventId])
+}
+
+model Space {
+  id String @id @default(uuid())
+  nome String
+  capacidade Int?
+  recursos String?
+  ativo Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  campusId String
+  campus Campus @relation(fields: [campusId], references: [id])
+  eventSpaces EventSpace[]
+  kidsClasses KidsClass[]
+  @@index([organizationId])
+  @@index([campusId])
+  @@index([ativo])
+}
+
+model Event {
+  id String @id @default(uuid())
+  titulo String
+  descricao String?
+  type EventType
+  status EventStatus @default(REQUESTED)
+  inicio DateTime
+  fim DateTime
+  alertEnabled Boolean @default(false)
+  blocksCampusAgenda Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  campusId String
+  campus Campus @relation(fields: [campusId], references: [id])
+  createdByUserId String
+  createdByUser User @relation("EventCreatedBy", fields: [createdByUserId], references: [id])
+  responsiblePersonId String?
+  responsiblePerson Person? @relation("EventResponsible", fields: [responsiblePersonId], references: [id])
+  spaces EventSpace[]
+  serviceAreas EventServiceArea[]
+  teams EventServiceTeam[]
+  checklist EventChecklist[]
+  history EventHistory[]
+  notifications Notification[]
+  schedules ServiceSchedule[]
+  @@index([organizationId])
+  @@index([campusId])
+  @@index([inicio])
+  @@index([status])
+}
+
+model EventSpace {
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  spaceId String
+  space Space @relation(fields: [spaceId], references: [id])
+  @@id([eventId, spaceId])
+  @@index([spaceId])
+}
+
+model EventServiceArea {
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  serviceAreaId String
+  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  @@id([eventId, serviceAreaId])
+  @@index([serviceAreaId])
+}
+
+model EventServiceTeam {
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  teamId String
+  team ServiceTeam @relation(fields: [teamId], references: [id])
+  @@id([eventId, teamId])
+  @@index([teamId])
+}
+
+model EventChecklist {
+  id String @id @default(uuid())
+  descricao String
+  concluido Boolean @default(false)
+  concluidoEm DateTime?
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  @@index([eventId])
+}
+
+model EventHistory {
+  id String @id @default(uuid())
+  status EventStatus
+  createdAt DateTime @default(now())
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  changedByUserId String
+  changedByUser User @relation(fields: [changedByUserId], references: [id])
+  @@index([eventId])
+}
+
+model Notification {
+  id String @id @default(uuid())
+  titulo String
+  mensagem String
+  audience NotificationAudience
+  createdAt DateTime @default(now())
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  campusId String?
+  campus Campus? @relation(fields: [campusId], references: [id])
+  serviceAreaId String?
+  serviceArea ServiceArea? @relation(fields: [serviceAreaId], references: [id])
+  serviceTeamId String?
+  serviceTeam ServiceTeam? @relation(fields: [serviceTeamId], references: [id])
+  eventId String?
+  event Event? @relation(fields: [eventId], references: [id])
+  recipients NotificationRecipient[]
+  @@index([organizationId])
+  @@index([campusId])
+  @@index([serviceAreaId])
+  @@index([serviceTeamId])
+  @@index([eventId])
+}
+
+model NotificationRecipient {
+  id String @id @default(uuid())
+  deliveredAt DateTime @default(now())
+  readAt DateTime?
+  notificationId String
+  notification Notification @relation(fields: [notificationId], references: [id])
+  personId String
+  person Person @relation(fields: [personId], references: [id])
+  @@unique([notificationId, personId])
+  @@index([personId])
+  @@index([readAt])
+}
+
+model KidsClass {
+  id String @id @default(uuid())
+  nome String
+  idadeMinima Int?
+  idadeMaxima Int?
+  ativo Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  campusId String
+  campus Campus @relation(fields: [campusId], references: [id])
+  spaceId String?
+  space Space? @relation(fields: [spaceId], references: [id])
+  enrollments KidsEnrollment[]
+  @@index([organizationId])
+  @@index([campusId])
+  @@index([spaceId])
+}
+
+model KidsEnrollment {
+  id String @id @default(uuid())
+  ativo Boolean @default(true)
+  inicio DateTime @default(now())
+  fim DateTime?
+  classId String
+  class KidsClass @relation(fields: [classId], references: [id])
+  childId String
+  child Person @relation("KidsChild", fields: [childId], references: [id])
+  checkIns KidsCheckIn[]
+  @@index([classId])
+  @@index([childId])
+  @@index([ativo])
+}
+
+model KidsAuthorizedPickup {
+  id String @id @default(uuid())
+  parentesco String?
+  ativo Boolean @default(true)
+  createdAt DateTime @default(now())
+  childId String
+  child Person @relation("KidsPickupChild", fields: [childId], references: [id])
+  responsiblePersonId String
+  responsiblePerson Person @relation("KidsPickupResponsible", fields: [responsiblePersonId], references: [id])
+  @@unique([childId, responsiblePersonId])
+  @@index([responsiblePersonId])
+}
+
+model KidsCheckIn {
+  id String @id @default(uuid())
+  status KidsCheckInStatus @default(CHECKED_IN)
+  checkInAt DateTime @default(now())
+  checkOutAt DateTime?
+  enrollmentId String
+  enrollment KidsEnrollment @relation(fields: [enrollmentId], references: [id])
+  childId String
+  child Person @relation("KidsCheckInChild", fields: [childId], references: [id])
+  checkedInByPersonId String
+  checkedOutByPersonId String?
+  @@index([enrollmentId])
+  @@index([childId])
+  @@index([status])
 }
 
 

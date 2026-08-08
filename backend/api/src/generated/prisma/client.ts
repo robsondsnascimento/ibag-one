@@ -115,6 +115,71 @@ export type ServiceMembership = Prisma.ServiceMembershipModel
  */
 export type ServiceSchedule = Prisma.ServiceScheduleModel
 /**
+ * Model Space
+ * 
+ */
+export type Space = Prisma.SpaceModel
+/**
+ * Model Event
+ * 
+ */
+export type Event = Prisma.EventModel
+/**
+ * Model EventSpace
+ * 
+ */
+export type EventSpace = Prisma.EventSpaceModel
+/**
+ * Model EventServiceArea
+ * 
+ */
+export type EventServiceArea = Prisma.EventServiceAreaModel
+/**
+ * Model EventServiceTeam
+ * 
+ */
+export type EventServiceTeam = Prisma.EventServiceTeamModel
+/**
+ * Model EventChecklist
+ * 
+ */
+export type EventChecklist = Prisma.EventChecklistModel
+/**
+ * Model EventHistory
+ * 
+ */
+export type EventHistory = Prisma.EventHistoryModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model NotificationRecipient
+ * 
+ */
+export type NotificationRecipient = Prisma.NotificationRecipientModel
+/**
+ * Model KidsClass
+ * 
+ */
+export type KidsClass = Prisma.KidsClassModel
+/**
+ * Model KidsEnrollment
+ * 
+ */
+export type KidsEnrollment = Prisma.KidsEnrollmentModel
+/**
+ * Model KidsAuthorizedPickup
+ * 
+ */
+export type KidsAuthorizedPickup = Prisma.KidsAuthorizedPickupModel
+/**
+ * Model KidsCheckIn
+ * 
+ */
+export type KidsCheckIn = Prisma.KidsCheckInModel
+/**
  * Model CellMeeting
  * 
  */

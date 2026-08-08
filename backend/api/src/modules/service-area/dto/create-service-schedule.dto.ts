@@ -15,4 +15,8 @@ export class CreateServiceScheduleDto {
   @IsString()
   @Length(2, 1000)
   observacao?: string;
+
+  @IsOptional()
+  @IsUUID()
+  eventId?: string;
 }

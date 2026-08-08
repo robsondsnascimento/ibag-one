@@ -1,0 +1,1 @@
+import { IsOptional, IsString, IsUUID, Length } from 'class-validator'; export class AuthorizeKidsPickupDto { @IsUUID() responsiblePersonId: string; @IsOptional() @IsString() @Length(2, 80) parentesco?: string; }

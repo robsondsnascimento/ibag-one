@@ -66,6 +66,19 @@ export const ModelName = {
   ServiceTeam: 'ServiceTeam',
   ServiceMembership: 'ServiceMembership',
   ServiceSchedule: 'ServiceSchedule',
+  Space: 'Space',
+  Event: 'Event',
+  EventSpace: 'EventSpace',
+  EventServiceArea: 'EventServiceArea',
+  EventServiceTeam: 'EventServiceTeam',
+  EventChecklist: 'EventChecklist',
+  EventHistory: 'EventHistory',
+  Notification: 'Notification',
+  NotificationRecipient: 'NotificationRecipient',
+  KidsClass: 'KidsClass',
+  KidsEnrollment: 'KidsEnrollment',
+  KidsAuthorizedPickup: 'KidsAuthorizedPickup',
+  KidsCheckIn: 'KidsCheckIn',
   CellMeeting: 'CellMeeting',
   CellMeetingVisitor: 'CellMeetingVisitor',
   CellLocation: 'CellLocation',
@@ -311,10 +324,174 @@ export const ServiceScheduleScalarFieldEnum = {
   updatedAt: 'updatedAt',
   organizationId: 'organizationId',
   teamId: 'teamId',
-  personId: 'personId'
+  personId: 'personId',
+  eventId: 'eventId'
 } as const
 
 export type ServiceScheduleScalarFieldEnum = (typeof ServiceScheduleScalarFieldEnum)[keyof typeof ServiceScheduleScalarFieldEnum]
+
+
+export const SpaceScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  capacidade: 'capacidade',
+  recursos: 'recursos',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  campusId: 'campusId'
+} as const
+
+export type SpaceScalarFieldEnum = (typeof SpaceScalarFieldEnum)[keyof typeof SpaceScalarFieldEnum]
+
+
+export const EventScalarFieldEnum = {
+  id: 'id',
+  titulo: 'titulo',
+  descricao: 'descricao',
+  type: 'type',
+  status: 'status',
+  inicio: 'inicio',
+  fim: 'fim',
+  alertEnabled: 'alertEnabled',
+  blocksCampusAgenda: 'blocksCampusAgenda',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  campusId: 'campusId',
+  createdByUserId: 'createdByUserId',
+  responsiblePersonId: 'responsiblePersonId'
+} as const
+
+export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const EventSpaceScalarFieldEnum = {
+  eventId: 'eventId',
+  spaceId: 'spaceId'
+} as const
+
+export type EventSpaceScalarFieldEnum = (typeof EventSpaceScalarFieldEnum)[keyof typeof EventSpaceScalarFieldEnum]
+
+
+export const EventServiceAreaScalarFieldEnum = {
+  eventId: 'eventId',
+  serviceAreaId: 'serviceAreaId'
+} as const
+
+export type EventServiceAreaScalarFieldEnum = (typeof EventServiceAreaScalarFieldEnum)[keyof typeof EventServiceAreaScalarFieldEnum]
+
+
+export const EventServiceTeamScalarFieldEnum = {
+  eventId: 'eventId',
+  teamId: 'teamId'
+} as const
+
+export type EventServiceTeamScalarFieldEnum = (typeof EventServiceTeamScalarFieldEnum)[keyof typeof EventServiceTeamScalarFieldEnum]
+
+
+export const EventChecklistScalarFieldEnum = {
+  id: 'id',
+  descricao: 'descricao',
+  concluido: 'concluido',
+  concluidoEm: 'concluidoEm',
+  eventId: 'eventId'
+} as const
+
+export type EventChecklistScalarFieldEnum = (typeof EventChecklistScalarFieldEnum)[keyof typeof EventChecklistScalarFieldEnum]
+
+
+export const EventHistoryScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  createdAt: 'createdAt',
+  eventId: 'eventId',
+  changedByUserId: 'changedByUserId'
+} as const
+
+export type EventHistoryScalarFieldEnum = (typeof EventHistoryScalarFieldEnum)[keyof typeof EventHistoryScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  titulo: 'titulo',
+  mensagem: 'mensagem',
+  audience: 'audience',
+  createdAt: 'createdAt',
+  organizationId: 'organizationId',
+  campusId: 'campusId',
+  serviceAreaId: 'serviceAreaId',
+  serviceTeamId: 'serviceTeamId',
+  eventId: 'eventId'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const NotificationRecipientScalarFieldEnum = {
+  id: 'id',
+  deliveredAt: 'deliveredAt',
+  readAt: 'readAt',
+  notificationId: 'notificationId',
+  personId: 'personId'
+} as const
+
+export type NotificationRecipientScalarFieldEnum = (typeof NotificationRecipientScalarFieldEnum)[keyof typeof NotificationRecipientScalarFieldEnum]
+
+
+export const KidsClassScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  idadeMinima: 'idadeMinima',
+  idadeMaxima: 'idadeMaxima',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  campusId: 'campusId',
+  spaceId: 'spaceId'
+} as const
+
+export type KidsClassScalarFieldEnum = (typeof KidsClassScalarFieldEnum)[keyof typeof KidsClassScalarFieldEnum]
+
+
+export const KidsEnrollmentScalarFieldEnum = {
+  id: 'id',
+  ativo: 'ativo',
+  inicio: 'inicio',
+  fim: 'fim',
+  classId: 'classId',
+  childId: 'childId'
+} as const
+
+export type KidsEnrollmentScalarFieldEnum = (typeof KidsEnrollmentScalarFieldEnum)[keyof typeof KidsEnrollmentScalarFieldEnum]
+
+
+export const KidsAuthorizedPickupScalarFieldEnum = {
+  id: 'id',
+  parentesco: 'parentesco',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  childId: 'childId',
+  responsiblePersonId: 'responsiblePersonId'
+} as const
+
+export type KidsAuthorizedPickupScalarFieldEnum = (typeof KidsAuthorizedPickupScalarFieldEnum)[keyof typeof KidsAuthorizedPickupScalarFieldEnum]
+
+
+export const KidsCheckInScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  checkInAt: 'checkInAt',
+  checkOutAt: 'checkOutAt',
+  enrollmentId: 'enrollmentId',
+  childId: 'childId',
+  checkedInByPersonId: 'checkedInByPersonId',
+  checkedOutByPersonId: 'checkedOutByPersonId'
+} as const
+
+export type KidsCheckInScalarFieldEnum = (typeof KidsCheckInScalarFieldEnum)[keyof typeof KidsCheckInScalarFieldEnum]
 
 
 export const CellMeetingScalarFieldEnum = {

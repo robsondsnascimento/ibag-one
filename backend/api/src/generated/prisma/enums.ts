@@ -109,3 +109,46 @@ export const ServiceScheduleStatus = {
 } as const
 
 export type ServiceScheduleStatus = (typeof ServiceScheduleStatus)[keyof typeof ServiceScheduleStatus]
+
+
+export const EventType = {
+  PASTORAL: 'PASTORAL',
+  SERVICE: 'SERVICE',
+  TRAINING: 'TRAINING',
+  REHEARSAL: 'REHEARSAL',
+  MEETING: 'MEETING',
+  WORSHIP: 'WORSHIP',
+  CONFERENCE: 'CONFERENCE',
+  SPECIAL_PROGRAM: 'SPECIAL_PROGRAM'
+} as const
+
+export type EventType = (typeof EventType)[keyof typeof EventType]
+
+
+export const EventStatus = {
+  REQUESTED: 'REQUESTED',
+  APPROVED: 'APPROVED',
+  CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
+
+
+export const NotificationAudience = {
+  ORGANIZATION: 'ORGANIZATION',
+  CAMPUS: 'CAMPUS',
+  SERVICE_AREA: 'SERVICE_AREA',
+  SERVICE_TEAM: 'SERVICE_TEAM',
+  PERSON: 'PERSON'
+} as const
+
+export type NotificationAudience = (typeof NotificationAudience)[keyof typeof NotificationAudience]
+
+
+export const KidsCheckInStatus = {
+  CHECKED_IN: 'CHECKED_IN',
+  CHECKED_OUT: 'CHECKED_OUT'
+} as const
+
+export type KidsCheckInStatus = (typeof KidsCheckInStatus)[keyof typeof KidsCheckInStatus]
