@@ -396,6 +396,23 @@ export type EnumKidsCheckInStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumKidsCheckInStatusFilter<$PrismaModel>
 }
 
+export type EnumKidsOperationalRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsOperationalRole | Prisma.EnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsOperationalRole[] | Prisma.ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsOperationalRole[] | Prisma.ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsOperationalRoleFilter<$PrismaModel> | $Enums.KidsOperationalRole
+}
+
+export type EnumKidsOperationalRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsOperationalRole | Prisma.EnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsOperationalRole[] | Prisma.ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsOperationalRole[] | Prisma.ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsOperationalRoleWithAggregatesFilter<$PrismaModel> | $Enums.KidsOperationalRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumKidsOperationalRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumKidsOperationalRoleFilter<$PrismaModel>
+}
+
 export type IntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -421,6 +438,23 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedIntFilter<$PrismaModel>
   _max?: Prisma.NestedIntFilter<$PrismaModel>
+}
+
+export type EnumKidsResourceRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsResourceRequestStatus | Prisma.EnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsResourceRequestStatus[] | Prisma.ListEnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsResourceRequestStatus[] | Prisma.ListEnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsResourceRequestStatusFilter<$PrismaModel> | $Enums.KidsResourceRequestStatus
+}
+
+export type EnumKidsResourceRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsResourceRequestStatus | Prisma.EnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsResourceRequestStatus[] | Prisma.ListEnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsResourceRequestStatus[] | Prisma.ListEnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsResourceRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.KidsResourceRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumKidsResourceRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumKidsResourceRequestStatusFilter<$PrismaModel>
 }
 
 export type FloatFilter<$PrismaModel = never> = {
@@ -862,6 +896,23 @@ export type NestedEnumKidsCheckInStatusWithAggregatesFilter<$PrismaModel = never
   _max?: Prisma.NestedEnumKidsCheckInStatusFilter<$PrismaModel>
 }
 
+export type NestedEnumKidsOperationalRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsOperationalRole | Prisma.EnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsOperationalRole[] | Prisma.ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsOperationalRole[] | Prisma.ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsOperationalRoleFilter<$PrismaModel> | $Enums.KidsOperationalRole
+}
+
+export type NestedEnumKidsOperationalRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsOperationalRole | Prisma.EnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsOperationalRole[] | Prisma.ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsOperationalRole[] | Prisma.ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsOperationalRoleWithAggregatesFilter<$PrismaModel> | $Enums.KidsOperationalRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumKidsOperationalRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumKidsOperationalRoleFilter<$PrismaModel>
+}
+
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -887,6 +938,23 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
+}
+
+export type NestedEnumKidsResourceRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsResourceRequestStatus | Prisma.EnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsResourceRequestStatus[] | Prisma.ListEnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsResourceRequestStatus[] | Prisma.ListEnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsResourceRequestStatusFilter<$PrismaModel> | $Enums.KidsResourceRequestStatus
+}
+
+export type NestedEnumKidsResourceRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsResourceRequestStatus | Prisma.EnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsResourceRequestStatus[] | Prisma.ListEnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsResourceRequestStatus[] | Prisma.ListEnumKidsResourceRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsResourceRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.KidsResourceRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumKidsResourceRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumKidsResourceRequestStatusFilter<$PrismaModel>
 }
 
 export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {

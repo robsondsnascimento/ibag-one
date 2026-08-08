@@ -425,6 +425,12 @@ export const ModelName = {
   KidsEnrollment: 'KidsEnrollment',
   KidsAuthorizedPickup: 'KidsAuthorizedPickup',
   KidsCheckIn: 'KidsCheckIn',
+  KidsIdentity: 'KidsIdentity',
+  KidsOperationalRoleAssignment: 'KidsOperationalRoleAssignment',
+  KidsVisualResource: 'KidsVisualResource',
+  KidsResourceRequest: 'KidsResourceRequest',
+  KidsResourceRequestItem: 'KidsResourceRequestItem',
+  KidsCareProfile: 'KidsCareProfile',
   CellMeeting: 'CellMeeting',
   CellMeetingVisitor: 'CellMeetingVisitor',
   CellLocation: 'CellLocation',
@@ -449,7 +455,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "campus" | "person" | "user" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceSchedule" | "space" | "event" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellMembership" | "cellLeadership"
+    modelProps: "campus" | "person" | "user" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceSchedule" | "space" | "event" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellMembership" | "cellLeadership"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2525,6 +2531,450 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    KidsIdentity: {
+      payload: Prisma.$KidsIdentityPayload<ExtArgs>
+      fields: Prisma.KidsIdentityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KidsIdentityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KidsIdentityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload>
+        }
+        findFirst: {
+          args: Prisma.KidsIdentityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KidsIdentityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload>
+        }
+        findMany: {
+          args: Prisma.KidsIdentityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload>[]
+        }
+        create: {
+          args: Prisma.KidsIdentityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload>
+        }
+        createMany: {
+          args: Prisma.KidsIdentityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KidsIdentityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload>[]
+        }
+        delete: {
+          args: Prisma.KidsIdentityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload>
+        }
+        update: {
+          args: Prisma.KidsIdentityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload>
+        }
+        deleteMany: {
+          args: Prisma.KidsIdentityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KidsIdentityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KidsIdentityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload>[]
+        }
+        upsert: {
+          args: Prisma.KidsIdentityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsIdentityPayload>
+        }
+        aggregate: {
+          args: Prisma.KidsIdentityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKidsIdentity>
+        }
+        groupBy: {
+          args: Prisma.KidsIdentityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsIdentityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KidsIdentityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsIdentityCountAggregateOutputType> | number
+        }
+      }
+    }
+    KidsOperationalRoleAssignment: {
+      payload: Prisma.$KidsOperationalRoleAssignmentPayload<ExtArgs>
+      fields: Prisma.KidsOperationalRoleAssignmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KidsOperationalRoleAssignmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KidsOperationalRoleAssignmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload>
+        }
+        findFirst: {
+          args: Prisma.KidsOperationalRoleAssignmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KidsOperationalRoleAssignmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload>
+        }
+        findMany: {
+          args: Prisma.KidsOperationalRoleAssignmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload>[]
+        }
+        create: {
+          args: Prisma.KidsOperationalRoleAssignmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload>
+        }
+        createMany: {
+          args: Prisma.KidsOperationalRoleAssignmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KidsOperationalRoleAssignmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload>[]
+        }
+        delete: {
+          args: Prisma.KidsOperationalRoleAssignmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload>
+        }
+        update: {
+          args: Prisma.KidsOperationalRoleAssignmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.KidsOperationalRoleAssignmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KidsOperationalRoleAssignmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KidsOperationalRoleAssignmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.KidsOperationalRoleAssignmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsOperationalRoleAssignmentPayload>
+        }
+        aggregate: {
+          args: Prisma.KidsOperationalRoleAssignmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKidsOperationalRoleAssignment>
+        }
+        groupBy: {
+          args: Prisma.KidsOperationalRoleAssignmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsOperationalRoleAssignmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KidsOperationalRoleAssignmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsOperationalRoleAssignmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    KidsVisualResource: {
+      payload: Prisma.$KidsVisualResourcePayload<ExtArgs>
+      fields: Prisma.KidsVisualResourceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KidsVisualResourceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KidsVisualResourceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload>
+        }
+        findFirst: {
+          args: Prisma.KidsVisualResourceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KidsVisualResourceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload>
+        }
+        findMany: {
+          args: Prisma.KidsVisualResourceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload>[]
+        }
+        create: {
+          args: Prisma.KidsVisualResourceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload>
+        }
+        createMany: {
+          args: Prisma.KidsVisualResourceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KidsVisualResourceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload>[]
+        }
+        delete: {
+          args: Prisma.KidsVisualResourceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload>
+        }
+        update: {
+          args: Prisma.KidsVisualResourceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload>
+        }
+        deleteMany: {
+          args: Prisma.KidsVisualResourceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KidsVisualResourceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KidsVisualResourceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload>[]
+        }
+        upsert: {
+          args: Prisma.KidsVisualResourceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsVisualResourcePayload>
+        }
+        aggregate: {
+          args: Prisma.KidsVisualResourceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKidsVisualResource>
+        }
+        groupBy: {
+          args: Prisma.KidsVisualResourceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsVisualResourceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KidsVisualResourceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsVisualResourceCountAggregateOutputType> | number
+        }
+      }
+    }
+    KidsResourceRequest: {
+      payload: Prisma.$KidsResourceRequestPayload<ExtArgs>
+      fields: Prisma.KidsResourceRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KidsResourceRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KidsResourceRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.KidsResourceRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KidsResourceRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload>
+        }
+        findMany: {
+          args: Prisma.KidsResourceRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload>[]
+        }
+        create: {
+          args: Prisma.KidsResourceRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload>
+        }
+        createMany: {
+          args: Prisma.KidsResourceRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KidsResourceRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.KidsResourceRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload>
+        }
+        update: {
+          args: Prisma.KidsResourceRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.KidsResourceRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KidsResourceRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KidsResourceRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.KidsResourceRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.KidsResourceRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKidsResourceRequest>
+        }
+        groupBy: {
+          args: Prisma.KidsResourceRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsResourceRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KidsResourceRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsResourceRequestCountAggregateOutputType> | number
+        }
+      }
+    }
+    KidsResourceRequestItem: {
+      payload: Prisma.$KidsResourceRequestItemPayload<ExtArgs>
+      fields: Prisma.KidsResourceRequestItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KidsResourceRequestItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KidsResourceRequestItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload>
+        }
+        findFirst: {
+          args: Prisma.KidsResourceRequestItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KidsResourceRequestItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload>
+        }
+        findMany: {
+          args: Prisma.KidsResourceRequestItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload>[]
+        }
+        create: {
+          args: Prisma.KidsResourceRequestItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload>
+        }
+        createMany: {
+          args: Prisma.KidsResourceRequestItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KidsResourceRequestItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload>[]
+        }
+        delete: {
+          args: Prisma.KidsResourceRequestItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload>
+        }
+        update: {
+          args: Prisma.KidsResourceRequestItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.KidsResourceRequestItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KidsResourceRequestItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KidsResourceRequestItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.KidsResourceRequestItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsResourceRequestItemPayload>
+        }
+        aggregate: {
+          args: Prisma.KidsResourceRequestItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKidsResourceRequestItem>
+        }
+        groupBy: {
+          args: Prisma.KidsResourceRequestItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsResourceRequestItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KidsResourceRequestItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsResourceRequestItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    KidsCareProfile: {
+      payload: Prisma.$KidsCareProfilePayload<ExtArgs>
+      fields: Prisma.KidsCareProfileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KidsCareProfileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KidsCareProfileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload>
+        }
+        findFirst: {
+          args: Prisma.KidsCareProfileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KidsCareProfileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload>
+        }
+        findMany: {
+          args: Prisma.KidsCareProfileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload>[]
+        }
+        create: {
+          args: Prisma.KidsCareProfileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload>
+        }
+        createMany: {
+          args: Prisma.KidsCareProfileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KidsCareProfileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload>[]
+        }
+        delete: {
+          args: Prisma.KidsCareProfileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload>
+        }
+        update: {
+          args: Prisma.KidsCareProfileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload>
+        }
+        deleteMany: {
+          args: Prisma.KidsCareProfileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KidsCareProfileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KidsCareProfileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload>[]
+        }
+        upsert: {
+          args: Prisma.KidsCareProfileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsCareProfilePayload>
+        }
+        aggregate: {
+          args: Prisma.KidsCareProfileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKidsCareProfile>
+        }
+        groupBy: {
+          args: Prisma.KidsCareProfileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsCareProfileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KidsCareProfileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsCareProfileCountAggregateOutputType> | number
+        }
+      }
+    }
     CellMeeting: {
       payload: Prisma.$CellMeetingPayload<ExtArgs>
       fields: Prisma.CellMeetingFieldRefs
@@ -3567,6 +4017,7 @@ export type NotificationRecipientScalarFieldEnum = (typeof NotificationRecipient
 export const KidsClassScalarFieldEnum = {
   id: 'id',
   nome: 'nome',
+  capacidade: 'capacidade',
   idadeMinima: 'idadeMinima',
   idadeMaxima: 'idadeMaxima',
   ativo: 'ativo',
@@ -3574,6 +4025,8 @@ export const KidsClassScalarFieldEnum = {
   updatedAt: 'updatedAt',
   organizationId: 'organizationId',
   campusId: 'campusId',
+  serviceAreaId: 'serviceAreaId',
+  teamId: 'teamId',
   spaceId: 'spaceId'
 } as const
 
@@ -3609,6 +4062,7 @@ export const KidsCheckInScalarFieldEnum = {
   status: 'status',
   checkInAt: 'checkInAt',
   checkOutAt: 'checkOutAt',
+  pickupCode: 'pickupCode',
   enrollmentId: 'enrollmentId',
   childId: 'childId',
   checkedInByPersonId: 'checkedInByPersonId',
@@ -3616,6 +4070,78 @@ export const KidsCheckInScalarFieldEnum = {
 } as const
 
 export type KidsCheckInScalarFieldEnum = (typeof KidsCheckInScalarFieldEnum)[keyof typeof KidsCheckInScalarFieldEnum]
+
+
+export const KidsIdentityScalarFieldEnum = {
+  id: 'id',
+  qrCode: 'qrCode',
+  createdAt: 'createdAt',
+  childId: 'childId'
+} as const
+
+export type KidsIdentityScalarFieldEnum = (typeof KidsIdentityScalarFieldEnum)[keyof typeof KidsIdentityScalarFieldEnum]
+
+
+export const KidsOperationalRoleAssignmentScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  ativo: 'ativo',
+  inicio: 'inicio',
+  fim: 'fim',
+  personId: 'personId',
+  campusId: 'campusId',
+  organizationId: 'organizationId'
+} as const
+
+export type KidsOperationalRoleAssignmentScalarFieldEnum = (typeof KidsOperationalRoleAssignmentScalarFieldEnum)[keyof typeof KidsOperationalRoleAssignmentScalarFieldEnum]
+
+
+export const KidsVisualResourceScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  quantidadeDisponivel: 'quantidadeDisponivel',
+  ativo: 'ativo',
+  organizationId: 'organizationId'
+} as const
+
+export type KidsVisualResourceScalarFieldEnum = (typeof KidsVisualResourceScalarFieldEnum)[keyof typeof KidsVisualResourceScalarFieldEnum]
+
+
+export const KidsResourceRequestScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  observacao: 'observacao',
+  createdAt: 'createdAt',
+  eventId: 'eventId',
+  requestedByPersonId: 'requestedByPersonId',
+  organizationId: 'organizationId'
+} as const
+
+export type KidsResourceRequestScalarFieldEnum = (typeof KidsResourceRequestScalarFieldEnum)[keyof typeof KidsResourceRequestScalarFieldEnum]
+
+
+export const KidsResourceRequestItemScalarFieldEnum = {
+  id: 'id',
+  quantidade: 'quantidade',
+  requestId: 'requestId',
+  resourceId: 'resourceId'
+} as const
+
+export type KidsResourceRequestItemScalarFieldEnum = (typeof KidsResourceRequestItemScalarFieldEnum)[keyof typeof KidsResourceRequestItemScalarFieldEnum]
+
+
+export const KidsCareProfileScalarFieldEnum = {
+  id: 'id',
+  alergias: 'alergias',
+  restricoesAlimentares: 'restricoesAlimentares',
+  necessidadesFisicas: 'necessidadesFisicas',
+  necessidadesCognitivas: 'necessidadesCognitivas',
+  updatedAt: 'updatedAt',
+  childId: 'childId'
+} as const
+
+export type KidsCareProfileScalarFieldEnum = (typeof KidsCareProfileScalarFieldEnum)[keyof typeof KidsCareProfileScalarFieldEnum]
 
 
 export const CellMeetingScalarFieldEnum = {
@@ -4012,6 +4538,34 @@ export type ListEnumKidsCheckInStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'KidsOperationalRole'
+ */
+export type EnumKidsOperationalRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KidsOperationalRole'>
+    
+
+
+/**
+ * Reference to a field of type 'KidsOperationalRole[]'
+ */
+export type ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KidsOperationalRole[]'>
+    
+
+
+/**
+ * Reference to a field of type 'KidsResourceRequestStatus'
+ */
+export type EnumKidsResourceRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KidsResourceRequestStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'KidsResourceRequestStatus[]'
+ */
+export type ListEnumKidsResourceRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KidsResourceRequestStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4217,6 +4771,12 @@ export type GlobalOmitConfig = {
   kidsEnrollment?: Prisma.KidsEnrollmentOmit
   kidsAuthorizedPickup?: Prisma.KidsAuthorizedPickupOmit
   kidsCheckIn?: Prisma.KidsCheckInOmit
+  kidsIdentity?: Prisma.KidsIdentityOmit
+  kidsOperationalRoleAssignment?: Prisma.KidsOperationalRoleAssignmentOmit
+  kidsVisualResource?: Prisma.KidsVisualResourceOmit
+  kidsResourceRequest?: Prisma.KidsResourceRequestOmit
+  kidsResourceRequestItem?: Prisma.KidsResourceRequestItemOmit
+  kidsCareProfile?: Prisma.KidsCareProfileOmit
   cellMeeting?: Prisma.CellMeetingOmit
   cellMeetingVisitor?: Prisma.CellMeetingVisitorOmit
   cellLocation?: Prisma.CellLocationOmit

@@ -1,0 +1,2 @@
+import { IsDateString, IsOptional, IsString, IsUUID, Length } from 'class-validator';
+export class CreateKidsChildDto { @IsString() @Length(3, 150) nome: string; @IsUUID() campusId: string; @IsDateString() dataNascimento: string; @IsOptional() @IsString() @Length(2, 2000) alergias?: string; @IsOptional() @IsString() @Length(2, 2000) restricoesAlimentares?: string; @IsOptional() @IsString() @Length(2, 2000) necessidadesFisicas?: string; @IsOptional() @IsString() @Length(2, 2000) necessidadesCognitivas?: string; }

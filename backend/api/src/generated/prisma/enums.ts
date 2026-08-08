@@ -152,3 +152,23 @@ export const KidsCheckInStatus = {
 } as const
 
 export type KidsCheckInStatus = (typeof KidsCheckInStatus)[keyof typeof KidsCheckInStatus]
+
+
+export const KidsOperationalRole = {
+  CHECK_IN: 'CHECK_IN',
+  SECURITY: 'SECURITY',
+  WORSHIP_LEADER: 'WORSHIP_LEADER'
+} as const
+
+export type KidsOperationalRole = (typeof KidsOperationalRole)[keyof typeof KidsOperationalRole]
+
+
+export const KidsResourceRequestStatus = {
+  REQUESTED: 'REQUESTED',
+  READY: 'READY',
+  DELIVERED: 'DELIVERED',
+  RETURNED: 'RETURNED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type KidsResourceRequestStatus = (typeof KidsResourceRequestStatus)[keyof typeof KidsResourceRequestStatus]

@@ -79,6 +79,12 @@ export const ModelName = {
   KidsEnrollment: 'KidsEnrollment',
   KidsAuthorizedPickup: 'KidsAuthorizedPickup',
   KidsCheckIn: 'KidsCheckIn',
+  KidsIdentity: 'KidsIdentity',
+  KidsOperationalRoleAssignment: 'KidsOperationalRoleAssignment',
+  KidsVisualResource: 'KidsVisualResource',
+  KidsResourceRequest: 'KidsResourceRequest',
+  KidsResourceRequestItem: 'KidsResourceRequestItem',
+  KidsCareProfile: 'KidsCareProfile',
   CellMeeting: 'CellMeeting',
   CellMeetingVisitor: 'CellMeetingVisitor',
   CellLocation: 'CellLocation',
@@ -443,6 +449,7 @@ export type NotificationRecipientScalarFieldEnum = (typeof NotificationRecipient
 export const KidsClassScalarFieldEnum = {
   id: 'id',
   nome: 'nome',
+  capacidade: 'capacidade',
   idadeMinima: 'idadeMinima',
   idadeMaxima: 'idadeMaxima',
   ativo: 'ativo',
@@ -450,6 +457,8 @@ export const KidsClassScalarFieldEnum = {
   updatedAt: 'updatedAt',
   organizationId: 'organizationId',
   campusId: 'campusId',
+  serviceAreaId: 'serviceAreaId',
+  teamId: 'teamId',
   spaceId: 'spaceId'
 } as const
 
@@ -485,6 +494,7 @@ export const KidsCheckInScalarFieldEnum = {
   status: 'status',
   checkInAt: 'checkInAt',
   checkOutAt: 'checkOutAt',
+  pickupCode: 'pickupCode',
   enrollmentId: 'enrollmentId',
   childId: 'childId',
   checkedInByPersonId: 'checkedInByPersonId',
@@ -492,6 +502,78 @@ export const KidsCheckInScalarFieldEnum = {
 } as const
 
 export type KidsCheckInScalarFieldEnum = (typeof KidsCheckInScalarFieldEnum)[keyof typeof KidsCheckInScalarFieldEnum]
+
+
+export const KidsIdentityScalarFieldEnum = {
+  id: 'id',
+  qrCode: 'qrCode',
+  createdAt: 'createdAt',
+  childId: 'childId'
+} as const
+
+export type KidsIdentityScalarFieldEnum = (typeof KidsIdentityScalarFieldEnum)[keyof typeof KidsIdentityScalarFieldEnum]
+
+
+export const KidsOperationalRoleAssignmentScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  ativo: 'ativo',
+  inicio: 'inicio',
+  fim: 'fim',
+  personId: 'personId',
+  campusId: 'campusId',
+  organizationId: 'organizationId'
+} as const
+
+export type KidsOperationalRoleAssignmentScalarFieldEnum = (typeof KidsOperationalRoleAssignmentScalarFieldEnum)[keyof typeof KidsOperationalRoleAssignmentScalarFieldEnum]
+
+
+export const KidsVisualResourceScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  quantidadeDisponivel: 'quantidadeDisponivel',
+  ativo: 'ativo',
+  organizationId: 'organizationId'
+} as const
+
+export type KidsVisualResourceScalarFieldEnum = (typeof KidsVisualResourceScalarFieldEnum)[keyof typeof KidsVisualResourceScalarFieldEnum]
+
+
+export const KidsResourceRequestScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  observacao: 'observacao',
+  createdAt: 'createdAt',
+  eventId: 'eventId',
+  requestedByPersonId: 'requestedByPersonId',
+  organizationId: 'organizationId'
+} as const
+
+export type KidsResourceRequestScalarFieldEnum = (typeof KidsResourceRequestScalarFieldEnum)[keyof typeof KidsResourceRequestScalarFieldEnum]
+
+
+export const KidsResourceRequestItemScalarFieldEnum = {
+  id: 'id',
+  quantidade: 'quantidade',
+  requestId: 'requestId',
+  resourceId: 'resourceId'
+} as const
+
+export type KidsResourceRequestItemScalarFieldEnum = (typeof KidsResourceRequestItemScalarFieldEnum)[keyof typeof KidsResourceRequestItemScalarFieldEnum]
+
+
+export const KidsCareProfileScalarFieldEnum = {
+  id: 'id',
+  alergias: 'alergias',
+  restricoesAlimentares: 'restricoesAlimentares',
+  necessidadesFisicas: 'necessidadesFisicas',
+  necessidadesCognitivas: 'necessidadesCognitivas',
+  updatedAt: 'updatedAt',
+  childId: 'childId'
+} as const
+
+export type KidsCareProfileScalarFieldEnum = (typeof KidsCareProfileScalarFieldEnum)[keyof typeof KidsCareProfileScalarFieldEnum]
 
 
 export const CellMeetingScalarFieldEnum = {

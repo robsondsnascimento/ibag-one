@@ -9,7 +9,7 @@ export class PastoralDashboardService {
     const now = new Date(); const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())); const day = start.getUTCDay(); start.setUTCDate(start.getUTCDate() - (day === 0 ? 6 : day - 1)); const end = new Date(start); end.setUTCDate(end.getUTCDate() + 7);
     const meetingWhere = { cell: { organizationId: context.organizationId }, data: { gte: start, lt: end } };
     const nextThirtyDays = new Date(now); nextThirtyDays.setDate(nextThirtyDays.getDate() + 30); const nextYear = new Date(now); nextYear.setFullYear(nextYear.getFullYear() + 1);
-    const [cells, networks, leaders, meetings, pending, attendance, visitors, multiplications, serviceAreas, serviceTeams, volunteers, schedules, upcomingEvents, eventsNextYear, requestedEvents, spaces] = await Promise.all([
+    const [cells, networks, leaders, meetings, pending, attendance, visitors, multiplications, serviceAreas, serviceTeams, volunteers, schedules, upcomingEvents, eventsNextYear, requestedEvents, spaces, kidsClasses, kidsEnrollments, kidsOpenCheckIns] = await Promise.all([
       this.prisma.cell.count({ where: { organizationId: context.organizationId, ativo: true } }),
       this.prisma.cellNetwork.count({ where: { organizationId: context.organizationId, ativo: true } }),
       this.prisma.cellLeadership.count({ where: { ativo: true, cell: { organizationId: context.organizationId } } }),
@@ -26,8 +26,11 @@ export class PastoralDashboardService {
       this.prisma.event.count({ where: { organizationId: context.organizationId, status: 'APPROVED', inicio: { gte: now, lte: nextYear } } }),
       this.prisma.event.count({ where: { organizationId: context.organizationId, status: 'REQUESTED' } }),
       this.prisma.space.count({ where: { organizationId: context.organizationId, ativo: true } }),
+      this.prisma.kidsClass.count({ where: { organizationId: context.organizationId, ativo: true } }),
+      this.prisma.kidsEnrollment.count({ where: { ativo: true, class: { organizationId: context.organizationId } } }),
+      this.prisma.kidsCheckIn.count({ where: { status: 'CHECKED_IN', enrollment: { class: { organizationId: context.organizationId } } } }),
     ]);
-    return { weekStart: start, cells, networks, activeLeaders: leaders, meetings, meetingsAwaitingCompletion: pending, attendance, visitors: visitors._sum.visitantes ?? 0, multiplications, serviceAreas, serviceTeams, activeVolunteerAssignments: volunteers, schedulesNext30Days: schedules, upcomingEventsNext30Days: upcomingEvents, upcomingEventsNextYear: eventsNextYear, eventsAwaitingApproval: requestedEvents, spaces };
+    return { weekStart: start, cells, networks, activeLeaders: leaders, meetings, meetingsAwaitingCompletion: pending, attendance, visitors: visitors._sum.visitantes ?? 0, multiplications, serviceAreas, serviceTeams, activeVolunteerAssignments: volunteers, schedulesNext30Days: schedules, upcomingEventsNext30Days: upcomingEvents, upcomingEventsNextYear: eventsNextYear, eventsAwaitingApproval: requestedEvents, spaces, kidsClasses, kidsActiveEnrollments: kidsEnrollments, kidsOpenCheckIns };
   }
   async geography(context: OrganizationContext) {
     await this.authorize(context);

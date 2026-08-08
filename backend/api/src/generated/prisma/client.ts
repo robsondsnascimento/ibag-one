@@ -180,6 +180,36 @@ export type KidsAuthorizedPickup = Prisma.KidsAuthorizedPickupModel
  */
 export type KidsCheckIn = Prisma.KidsCheckInModel
 /**
+ * Model KidsIdentity
+ * 
+ */
+export type KidsIdentity = Prisma.KidsIdentityModel
+/**
+ * Model KidsOperationalRoleAssignment
+ * 
+ */
+export type KidsOperationalRoleAssignment = Prisma.KidsOperationalRoleAssignmentModel
+/**
+ * Model KidsVisualResource
+ * 
+ */
+export type KidsVisualResource = Prisma.KidsVisualResourceModel
+/**
+ * Model KidsResourceRequest
+ * 
+ */
+export type KidsResourceRequest = Prisma.KidsResourceRequestModel
+/**
+ * Model KidsResourceRequestItem
+ * 
+ */
+export type KidsResourceRequestItem = Prisma.KidsResourceRequestItemModel
+/**
+ * Model KidsCareProfile
+ * 
+ */
+export type KidsCareProfile = Prisma.KidsCareProfileModel
+/**
  * Model CellMeeting
  * 
  */

@@ -283,6 +283,10 @@ export type PersonWhereInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupListRelationFilter
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupListRelationFilter
   kidsCheckIns?: Prisma.KidsCheckInListRelationFilter
+  kidsCareProfile?: Prisma.XOR<Prisma.KidsCareProfileNullableScalarRelationFilter, Prisma.KidsCareProfileWhereInput> | null
+  kidsIdentity?: Prisma.XOR<Prisma.KidsIdentityNullableScalarRelationFilter, Prisma.KidsIdentityWhereInput> | null
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentListRelationFilter
+  kidsResourceRequests?: Prisma.KidsResourceRequestListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -322,6 +326,10 @@ export type PersonOrderByWithRelationInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupOrderByRelationAggregateInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupOrderByRelationAggregateInput
   kidsCheckIns?: Prisma.KidsCheckInOrderByRelationAggregateInput
+  kidsCareProfile?: Prisma.KidsCareProfileOrderByWithRelationInput
+  kidsIdentity?: Prisma.KidsIdentityOrderByWithRelationInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentOrderByRelationAggregateInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestOrderByRelationAggregateInput
 }
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -364,6 +372,10 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupListRelationFilter
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupListRelationFilter
   kidsCheckIns?: Prisma.KidsCheckInListRelationFilter
+  kidsCareProfile?: Prisma.XOR<Prisma.KidsCareProfileNullableScalarRelationFilter, Prisma.KidsCareProfileWhereInput> | null
+  kidsIdentity?: Prisma.XOR<Prisma.KidsIdentityNullableScalarRelationFilter, Prisma.KidsIdentityWhereInput> | null
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentListRelationFilter
+  kidsResourceRequests?: Prisma.KidsResourceRequestListRelationFilter
 }, "id" | "cpf" | "email">
 
 export type PersonOrderByWithAggregationInput = {
@@ -443,6 +455,10 @@ export type PersonCreateInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -480,6 +496,10 @@ export type PersonUncheckedCreateInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUpdateInput = {
@@ -517,6 +537,10 @@ export type PersonUpdateInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -554,6 +578,10 @@ export type PersonUncheckedUpdateInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -940,6 +968,62 @@ export type PersonUpdateOneRequiredWithoutKidsCheckInsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutKidsCheckInsInput, Prisma.PersonUpdateWithoutKidsCheckInsInput>, Prisma.PersonUncheckedUpdateWithoutKidsCheckInsInput>
 }
 
+export type PersonCreateNestedOneWithoutKidsIdentityInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutKidsIdentityInput, Prisma.PersonUncheckedCreateWithoutKidsIdentityInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutKidsIdentityInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutKidsIdentityNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutKidsIdentityInput, Prisma.PersonUncheckedCreateWithoutKidsIdentityInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutKidsIdentityInput
+  upsert?: Prisma.PersonUpsertWithoutKidsIdentityInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutKidsIdentityInput, Prisma.PersonUpdateWithoutKidsIdentityInput>, Prisma.PersonUncheckedUpdateWithoutKidsIdentityInput>
+}
+
+export type PersonCreateNestedOneWithoutKidsOperationalRolesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutKidsOperationalRolesInput, Prisma.PersonUncheckedCreateWithoutKidsOperationalRolesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutKidsOperationalRolesInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutKidsOperationalRolesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutKidsOperationalRolesInput, Prisma.PersonUncheckedCreateWithoutKidsOperationalRolesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutKidsOperationalRolesInput
+  upsert?: Prisma.PersonUpsertWithoutKidsOperationalRolesInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutKidsOperationalRolesInput, Prisma.PersonUpdateWithoutKidsOperationalRolesInput>, Prisma.PersonUncheckedUpdateWithoutKidsOperationalRolesInput>
+}
+
+export type PersonCreateNestedOneWithoutKidsResourceRequestsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutKidsResourceRequestsInput, Prisma.PersonUncheckedCreateWithoutKidsResourceRequestsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutKidsResourceRequestsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutKidsResourceRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutKidsResourceRequestsInput, Prisma.PersonUncheckedCreateWithoutKidsResourceRequestsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutKidsResourceRequestsInput
+  upsert?: Prisma.PersonUpsertWithoutKidsResourceRequestsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutKidsResourceRequestsInput, Prisma.PersonUpdateWithoutKidsResourceRequestsInput>, Prisma.PersonUncheckedUpdateWithoutKidsResourceRequestsInput>
+}
+
+export type PersonCreateNestedOneWithoutKidsCareProfileInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutKidsCareProfileInput, Prisma.PersonUncheckedCreateWithoutKidsCareProfileInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutKidsCareProfileInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutKidsCareProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutKidsCareProfileInput, Prisma.PersonUncheckedCreateWithoutKidsCareProfileInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutKidsCareProfileInput
+  upsert?: Prisma.PersonUpsertWithoutKidsCareProfileInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutKidsCareProfileInput, Prisma.PersonUpdateWithoutKidsCareProfileInput>, Prisma.PersonUncheckedUpdateWithoutKidsCareProfileInput>
+}
+
 export type PersonCreateNestedOneWithoutMeetingVisitorInput = {
   create?: Prisma.XOR<Prisma.PersonCreateWithoutMeetingVisitorInput, Prisma.PersonUncheckedCreateWithoutMeetingVisitorInput>
   connectOrCreate?: Prisma.PersonCreateOrConnectWithoutMeetingVisitorInput
@@ -1074,6 +1158,10 @@ export type PersonCreateWithoutCampusInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutCampusInput = {
@@ -1110,6 +1198,10 @@ export type PersonUncheckedCreateWithoutCampusInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutCampusInput = {
@@ -1193,6 +1285,10 @@ export type PersonCreateWithoutUserInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutUserInput = {
@@ -1229,6 +1325,10 @@ export type PersonUncheckedCreateWithoutUserInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutUserInput = {
@@ -1281,6 +1381,10 @@ export type PersonUpdateWithoutUserInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutUserInput = {
@@ -1317,6 +1421,10 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutOrganizationInput = {
@@ -1353,6 +1461,10 @@ export type PersonCreateWithoutOrganizationInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutOrganizationInput = {
@@ -1389,6 +1501,10 @@ export type PersonUncheckedCreateWithoutOrganizationInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutOrganizationInput = {
@@ -1451,6 +1567,10 @@ export type PersonCreateWithoutCellSupportRolesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
@@ -1487,6 +1607,10 @@ export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutCellSupportRolesInput = {
@@ -1539,6 +1663,10 @@ export type PersonUpdateWithoutCellSupportRolesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
@@ -1575,6 +1703,10 @@ export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutJourneyEventsInput = {
@@ -1611,6 +1743,10 @@ export type PersonCreateWithoutJourneyEventsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutJourneyEventsInput = {
@@ -1647,6 +1783,10 @@ export type PersonUncheckedCreateWithoutJourneyEventsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutJourneyEventsInput = {
@@ -1699,6 +1839,10 @@ export type PersonUpdateWithoutJourneyEventsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
@@ -1735,6 +1879,10 @@ export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutFamilyMembershipsInput = {
@@ -1771,6 +1919,10 @@ export type PersonCreateWithoutFamilyMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
@@ -1807,6 +1959,10 @@ export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutFamilyMembershipsInput = {
@@ -1859,6 +2015,10 @@ export type PersonUpdateWithoutFamilyMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
@@ -1895,6 +2055,10 @@ export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutServiceMembershipsInput = {
@@ -1931,6 +2095,10 @@ export type PersonCreateWithoutServiceMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
@@ -1967,6 +2135,10 @@ export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutServiceMembershipsInput = {
@@ -2019,6 +2191,10 @@ export type PersonUpdateWithoutServiceMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
@@ -2055,6 +2231,10 @@ export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutServiceSchedulesInput = {
@@ -2091,6 +2271,10 @@ export type PersonCreateWithoutServiceSchedulesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
@@ -2127,6 +2311,10 @@ export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutServiceSchedulesInput = {
@@ -2179,6 +2367,10 @@ export type PersonUpdateWithoutServiceSchedulesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
@@ -2215,6 +2407,10 @@ export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutEventsResponsibleInput = {
@@ -2251,6 +2447,10 @@ export type PersonCreateWithoutEventsResponsibleInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
@@ -2287,6 +2487,10 @@ export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutEventsResponsibleInput = {
@@ -2339,6 +2543,10 @@ export type PersonUpdateWithoutEventsResponsibleInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
@@ -2375,6 +2583,10 @@ export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutNotificationRecipientsInput = {
@@ -2411,6 +2623,10 @@ export type PersonCreateWithoutNotificationRecipientsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
@@ -2447,6 +2663,10 @@ export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutNotificationRecipientsInput = {
@@ -2499,6 +2719,10 @@ export type PersonUpdateWithoutNotificationRecipientsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
@@ -2535,6 +2759,10 @@ export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutKidsEnrollmentsInput = {
@@ -2571,6 +2799,10 @@ export type PersonCreateWithoutKidsEnrollmentsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
@@ -2607,6 +2839,10 @@ export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutKidsEnrollmentsInput = {
@@ -2659,6 +2895,10 @@ export type PersonUpdateWithoutKidsEnrollmentsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
@@ -2695,6 +2935,10 @@ export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -2731,6 +2975,10 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -2767,6 +3015,10 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -2808,6 +3060,10 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -2844,6 +3100,10 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInp
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -2896,6 +3156,10 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -2932,6 +3196,10 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUpsertWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -2979,6 +3247,10 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -3015,6 +3287,10 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInp
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutKidsCheckInsInput = {
@@ -3051,6 +3327,10 @@ export type PersonCreateWithoutKidsCheckInsInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
@@ -3087,6 +3367,10 @@ export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutKidsCheckInsInput = {
@@ -3139,6 +3423,10 @@ export type PersonUpdateWithoutKidsCheckInsInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
@@ -3175,6 +3463,714 @@ export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+}
+
+export type PersonCreateWithoutKidsIdentityInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+}
+
+export type PersonUncheckedCreateWithoutKidsIdentityInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+}
+
+export type PersonCreateOrConnectWithoutKidsIdentityInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutKidsIdentityInput, Prisma.PersonUncheckedCreateWithoutKidsIdentityInput>
+}
+
+export type PersonUpsertWithoutKidsIdentityInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutKidsIdentityInput, Prisma.PersonUncheckedUpdateWithoutKidsIdentityInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutKidsIdentityInput, Prisma.PersonUncheckedCreateWithoutKidsIdentityInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutKidsIdentityInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutKidsIdentityInput, Prisma.PersonUncheckedUpdateWithoutKidsIdentityInput>
+}
+
+export type PersonUpdateWithoutKidsIdentityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+}
+
+export type PersonCreateWithoutKidsOperationalRolesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+}
+
+export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+}
+
+export type PersonCreateOrConnectWithoutKidsOperationalRolesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutKidsOperationalRolesInput, Prisma.PersonUncheckedCreateWithoutKidsOperationalRolesInput>
+}
+
+export type PersonUpsertWithoutKidsOperationalRolesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutKidsOperationalRolesInput, Prisma.PersonUncheckedUpdateWithoutKidsOperationalRolesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutKidsOperationalRolesInput, Prisma.PersonUncheckedCreateWithoutKidsOperationalRolesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutKidsOperationalRolesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutKidsOperationalRolesInput, Prisma.PersonUncheckedUpdateWithoutKidsOperationalRolesInput>
+}
+
+export type PersonUpdateWithoutKidsOperationalRolesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+}
+
+export type PersonCreateWithoutKidsResourceRequestsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutKidsResourceRequestsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutKidsResourceRequestsInput, Prisma.PersonUncheckedCreateWithoutKidsResourceRequestsInput>
+}
+
+export type PersonUpsertWithoutKidsResourceRequestsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutKidsResourceRequestsInput, Prisma.PersonUncheckedUpdateWithoutKidsResourceRequestsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutKidsResourceRequestsInput, Prisma.PersonUncheckedCreateWithoutKidsResourceRequestsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutKidsResourceRequestsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutKidsResourceRequestsInput, Prisma.PersonUncheckedUpdateWithoutKidsResourceRequestsInput>
+}
+
+export type PersonUpdateWithoutKidsResourceRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutKidsCareProfileInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+}
+
+export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+}
+
+export type PersonCreateOrConnectWithoutKidsCareProfileInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutKidsCareProfileInput, Prisma.PersonUncheckedCreateWithoutKidsCareProfileInput>
+}
+
+export type PersonUpsertWithoutKidsCareProfileInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutKidsCareProfileInput, Prisma.PersonUncheckedUpdateWithoutKidsCareProfileInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutKidsCareProfileInput, Prisma.PersonUncheckedCreateWithoutKidsCareProfileInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutKidsCareProfileInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutKidsCareProfileInput, Prisma.PersonUncheckedUpdateWithoutKidsCareProfileInput>
+}
+
+export type PersonUpdateWithoutKidsCareProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutMeetingVisitorInput = {
@@ -3211,6 +4207,10 @@ export type PersonCreateWithoutMeetingVisitorInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
@@ -3247,6 +4247,10 @@ export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutMeetingVisitorInput = {
@@ -3299,6 +4303,10 @@ export type PersonUpdateWithoutMeetingVisitorInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
@@ -3335,6 +4343,10 @@ export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
@@ -3371,6 +4383,10 @@ export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
@@ -3407,6 +4423,10 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutPastoralCaresAsSubjectInput = {
@@ -3448,6 +4468,10 @@ export type PersonCreateWithoutPastoralCaresAsResponsibleInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
@@ -3484,6 +4508,10 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutPastoralCaresAsResponsibleInput = {
@@ -3536,6 +4564,10 @@ export type PersonUpdateWithoutPastoralCaresAsSubjectInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
@@ -3572,6 +4604,10 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUpsertWithoutPastoralCaresAsResponsibleInput = {
@@ -3619,6 +4655,10 @@ export type PersonUpdateWithoutPastoralCaresAsResponsibleInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
@@ -3655,6 +4695,10 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutMeetingAttendancesInput = {
@@ -3691,6 +4735,10 @@ export type PersonCreateWithoutMeetingAttendancesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
@@ -3727,6 +4775,10 @@ export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutMeetingAttendancesInput = {
@@ -3779,6 +4831,10 @@ export type PersonUpdateWithoutMeetingAttendancesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
@@ -3815,6 +4871,10 @@ export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutCellNetworkSupervisionsInput = {
@@ -3851,6 +4911,10 @@ export type PersonCreateWithoutCellNetworkSupervisionsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
@@ -3887,6 +4951,10 @@ export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutCellNetworkSupervisionsInput = {
@@ -3939,6 +5007,10 @@ export type PersonUpdateWithoutCellNetworkSupervisionsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
@@ -3975,6 +5047,10 @@ export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutCellMembershipsInput = {
@@ -4011,6 +5087,10 @@ export type PersonCreateWithoutCellMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutCellMembershipsInput = {
@@ -4047,6 +5127,10 @@ export type PersonUncheckedCreateWithoutCellMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutCellMembershipsInput = {
@@ -4099,6 +5183,10 @@ export type PersonUpdateWithoutCellMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
@@ -4135,6 +5223,10 @@ export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateWithoutCellLeadershipsInput = {
@@ -4171,6 +5263,10 @@ export type PersonCreateWithoutCellLeadershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
@@ -4207,6 +5303,10 @@ export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
 }
 
 export type PersonCreateOrConnectWithoutCellLeadershipsInput = {
@@ -4259,6 +5359,10 @@ export type PersonUpdateWithoutCellLeadershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
@@ -4295,6 +5399,10 @@ export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonCreateManyCampusInput = {
@@ -4348,6 +5456,10 @@ export type PersonUpdateWithoutCampusInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCampusInput = {
@@ -4384,6 +5496,10 @@ export type PersonUncheckedUpdateWithoutCampusInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutCampusInput = {
@@ -4454,6 +5570,10 @@ export type PersonUpdateWithoutOrganizationInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutOrganizationInput = {
@@ -4490,6 +5610,10 @@ export type PersonUncheckedUpdateWithoutOrganizationInput = {
   kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
   kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutOrganizationInput = {
@@ -4532,6 +5656,8 @@ export type PersonCountOutputType = {
   kidsPickupAuthorizationsAsChild: number
   kidsPickupAuthorizationsAsResponsible: number
   kidsCheckIns: number
+  kidsOperationalRoles: number
+  kidsResourceRequests: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4552,6 +5678,8 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   kidsPickupAuthorizationsAsChild?: boolean | PersonCountOutputTypeCountKidsPickupAuthorizationsAsChildArgs
   kidsPickupAuthorizationsAsResponsible?: boolean | PersonCountOutputTypeCountKidsPickupAuthorizationsAsResponsibleArgs
   kidsCheckIns?: boolean | PersonCountOutputTypeCountKidsCheckInsArgs
+  kidsOperationalRoles?: boolean | PersonCountOutputTypeCountKidsOperationalRolesArgs
+  kidsResourceRequests?: boolean | PersonCountOutputTypeCountKidsResourceRequestsArgs
 }
 
 /**
@@ -4683,6 +5811,20 @@ export type PersonCountOutputTypeCountKidsCheckInsArgs<ExtArgs extends runtime.T
   where?: Prisma.KidsCheckInWhereInput
 }
 
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountKidsOperationalRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KidsOperationalRoleAssignmentWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountKidsResourceRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KidsResourceRequestWhereInput
+}
+
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -4721,6 +5863,10 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   kidsPickupAuthorizationsAsChild?: boolean | Prisma.Person$kidsPickupAuthorizationsAsChildArgs<ExtArgs>
   kidsPickupAuthorizationsAsResponsible?: boolean | Prisma.Person$kidsPickupAuthorizationsAsResponsibleArgs<ExtArgs>
   kidsCheckIns?: boolean | Prisma.Person$kidsCheckInsArgs<ExtArgs>
+  kidsCareProfile?: boolean | Prisma.Person$kidsCareProfileArgs<ExtArgs>
+  kidsIdentity?: boolean | Prisma.Person$kidsIdentityArgs<ExtArgs>
+  kidsOperationalRoles?: boolean | Prisma.Person$kidsOperationalRolesArgs<ExtArgs>
+  kidsResourceRequests?: boolean | Prisma.Person$kidsResourceRequestsArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
@@ -4805,6 +5951,10 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   kidsPickupAuthorizationsAsChild?: boolean | Prisma.Person$kidsPickupAuthorizationsAsChildArgs<ExtArgs>
   kidsPickupAuthorizationsAsResponsible?: boolean | Prisma.Person$kidsPickupAuthorizationsAsResponsibleArgs<ExtArgs>
   kidsCheckIns?: boolean | Prisma.Person$kidsCheckInsArgs<ExtArgs>
+  kidsCareProfile?: boolean | Prisma.Person$kidsCareProfileArgs<ExtArgs>
+  kidsIdentity?: boolean | Prisma.Person$kidsIdentityArgs<ExtArgs>
+  kidsOperationalRoles?: boolean | Prisma.Person$kidsOperationalRolesArgs<ExtArgs>
+  kidsResourceRequests?: boolean | Prisma.Person$kidsResourceRequestsArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4840,6 +5990,10 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     kidsPickupAuthorizationsAsChild: Prisma.$KidsAuthorizedPickupPayload<ExtArgs>[]
     kidsPickupAuthorizationsAsResponsible: Prisma.$KidsAuthorizedPickupPayload<ExtArgs>[]
     kidsCheckIns: Prisma.$KidsCheckInPayload<ExtArgs>[]
+    kidsCareProfile: Prisma.$KidsCareProfilePayload<ExtArgs> | null
+    kidsIdentity: Prisma.$KidsIdentityPayload<ExtArgs> | null
+    kidsOperationalRoles: Prisma.$KidsOperationalRoleAssignmentPayload<ExtArgs>[]
+    kidsResourceRequests: Prisma.$KidsResourceRequestPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -5272,6 +6426,10 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   kidsPickupAuthorizationsAsChild<T extends Prisma.Person$kidsPickupAuthorizationsAsChildArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsPickupAuthorizationsAsChildArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KidsAuthorizedPickupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   kidsPickupAuthorizationsAsResponsible<T extends Prisma.Person$kidsPickupAuthorizationsAsResponsibleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsPickupAuthorizationsAsResponsibleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KidsAuthorizedPickupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   kidsCheckIns<T extends Prisma.Person$kidsCheckInsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsCheckInsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KidsCheckInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  kidsCareProfile<T extends Prisma.Person$kidsCareProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsCareProfileArgs<ExtArgs>>): Prisma.Prisma__KidsCareProfileClient<runtime.Types.Result.GetResult<Prisma.$KidsCareProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  kidsIdentity<T extends Prisma.Person$kidsIdentityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsIdentityArgs<ExtArgs>>): Prisma.Prisma__KidsIdentityClient<runtime.Types.Result.GetResult<Prisma.$KidsIdentityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  kidsOperationalRoles<T extends Prisma.Person$kidsOperationalRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsOperationalRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KidsOperationalRoleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  kidsResourceRequests<T extends Prisma.Person$kidsResourceRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$kidsResourceRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KidsResourceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6179,6 +7337,92 @@ export type Person$kidsCheckInsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.KidsCheckInScalarFieldEnum | Prisma.KidsCheckInScalarFieldEnum[]
+}
+
+/**
+ * Person.kidsCareProfile
+ */
+export type Person$kidsCareProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KidsCareProfile
+   */
+  select?: Prisma.KidsCareProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KidsCareProfile
+   */
+  omit?: Prisma.KidsCareProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KidsCareProfileInclude<ExtArgs> | null
+  where?: Prisma.KidsCareProfileWhereInput
+}
+
+/**
+ * Person.kidsIdentity
+ */
+export type Person$kidsIdentityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KidsIdentity
+   */
+  select?: Prisma.KidsIdentitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KidsIdentity
+   */
+  omit?: Prisma.KidsIdentityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KidsIdentityInclude<ExtArgs> | null
+  where?: Prisma.KidsIdentityWhereInput
+}
+
+/**
+ * Person.kidsOperationalRoles
+ */
+export type Person$kidsOperationalRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KidsOperationalRoleAssignment
+   */
+  select?: Prisma.KidsOperationalRoleAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KidsOperationalRoleAssignment
+   */
+  omit?: Prisma.KidsOperationalRoleAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KidsOperationalRoleAssignmentInclude<ExtArgs> | null
+  where?: Prisma.KidsOperationalRoleAssignmentWhereInput
+  orderBy?: Prisma.KidsOperationalRoleAssignmentOrderByWithRelationInput | Prisma.KidsOperationalRoleAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.KidsOperationalRoleAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KidsOperationalRoleAssignmentScalarFieldEnum | Prisma.KidsOperationalRoleAssignmentScalarFieldEnum[]
+}
+
+/**
+ * Person.kidsResourceRequests
+ */
+export type Person$kidsResourceRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KidsResourceRequest
+   */
+  select?: Prisma.KidsResourceRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KidsResourceRequest
+   */
+  omit?: Prisma.KidsResourceRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KidsResourceRequestInclude<ExtArgs> | null
+  where?: Prisma.KidsResourceRequestWhereInput
+  orderBy?: Prisma.KidsResourceRequestOrderByWithRelationInput | Prisma.KidsResourceRequestOrderByWithRelationInput[]
+  cursor?: Prisma.KidsResourceRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KidsResourceRequestScalarFieldEnum | Prisma.KidsResourceRequestScalarFieldEnum[]
 }
 
 /**

@@ -1,1 +1,1 @@
-import { IsUUID } from 'class-validator'; export class KidsCheckInDto { @IsUUID() childId: string; @IsUUID() responsiblePersonId: string; }
+import { IsOptional, IsString, IsUUID, Length } from 'class-validator'; export class KidsCheckInDto { @IsUUID() childId: string; @IsUUID() responsiblePersonId: string; @IsOptional() @IsString() @Length(10, 100) pickupCode?: string; }

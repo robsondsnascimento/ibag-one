@@ -111,6 +111,20 @@ enum KidsCheckInStatus {
   CHECKED_OUT
 }
 
+enum KidsOperationalRole {
+  CHECK_IN
+  SECURITY
+  WORSHIP_LEADER
+}
+
+enum KidsResourceRequestStatus {
+  REQUESTED
+  READY
+  DELIVERED
+  RETURNED
+  CANCELLED
+}
+
 
 model Campus {
   id        String   @id @default(uuid())
@@ -131,6 +145,7 @@ model Campus {
   events Event[]
   notifications Notification[]
   kidsClasses KidsClass[]
+  kidsOperationalRoles KidsOperationalRoleAssignment[]
 
   organization   Organization? @relation(fields: [organizationId], references: [id])
   organizationId String?
@@ -177,6 +192,10 @@ model Person {
   kidsPickupAuthorizationsAsChild KidsAuthorizedPickup[] @relation("KidsPickupChild")
   kidsPickupAuthorizationsAsResponsible KidsAuthorizedPickup[] @relation("KidsPickupResponsible")
   kidsCheckIns KidsCheckIn[] @relation("KidsCheckInChild")
+  kidsCareProfile KidsCareProfile?
+  kidsIdentity KidsIdentity?
+  kidsOperationalRoles KidsOperationalRoleAssignment[]
+  kidsResourceRequests KidsResourceRequest[] @relation("KidsResourceRequestedBy")
 }
 
 model User {
@@ -227,6 +246,9 @@ model Organization {
   events Event[]
   notifications Notification[]
   kidsClasses KidsClass[]
+  kidsVisualResources KidsVisualResource[]
+  kidsResourceRequests KidsResourceRequest[]
+  kidsOperationalRoles KidsOperationalRoleAssignment[]
 }
 
 model Cell {
@@ -377,6 +399,7 @@ model ServiceArea {
   memberships ServiceMembership[]
   notifications Notification[]
   eventAreas EventServiceArea[]
+  kidsClasses KidsClass[]
   @@index([organizationId])
   @@index([campusId])
   @@index([ativo])
@@ -399,6 +422,7 @@ model ServiceTeam {
   schedules ServiceSchedule[]
   eventTeams EventServiceTeam[]
   notifications Notification[]
+  kidsClasses KidsClass[]
   @@index([organizationId])
   @@index([serviceAreaId])
   @@index([campusId])
@@ -497,6 +521,7 @@ model Event {
   history EventHistory[]
   notifications Notification[]
   schedules ServiceSchedule[]
+  kidsResourceRequests KidsResourceRequest[]
   @@index([organizationId])
   @@index([campusId])
   @@index([inicio])
@@ -591,6 +616,7 @@ model NotificationRecipient {
 model KidsClass {
   id String @id @default(uuid())
   nome String
+  capacidade Int?
   idadeMinima Int?
   idadeMaxima Int?
   ativo Boolean @default(true)
@@ -600,11 +626,16 @@ model KidsClass {
   organization Organization @relation(fields: [organizationId], references: [id])
   campusId String
   campus Campus @relation(fields: [campusId], references: [id])
+  serviceAreaId String
+  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  teamId String
+  team ServiceTeam @relation(fields: [teamId], references: [id])
   spaceId String?
   space Space? @relation(fields: [spaceId], references: [id])
   enrollments KidsEnrollment[]
   @@index([organizationId])
   @@index([campusId])
+  @@index([serviceAreaId])
   @@index([spaceId])
 }
 
@@ -641,6 +672,7 @@ model KidsCheckIn {
   status KidsCheckInStatus @default(CHECKED_IN)
   checkInAt DateTime @default(now())
   checkOutAt DateTime?
+  pickupCode String? @unique
   enrollmentId String
   enrollment KidsEnrollment @relation(fields: [enrollmentId], references: [id])
   childId String
@@ -650,6 +682,83 @@ model KidsCheckIn {
   @@index([enrollmentId])
   @@index([childId])
   @@index([status])
+}
+
+model KidsIdentity {
+  id String @id @default(uuid())
+  qrCode String @unique
+  createdAt DateTime @default(now())
+  childId String @unique
+  child Person @relation(fields: [childId], references: [id])
+}
+
+model KidsOperationalRoleAssignment {
+  id String @id @default(uuid())
+  role KidsOperationalRole
+  ativo Boolean @default(true)
+  inicio DateTime @default(now())
+  fim DateTime?
+  personId String
+  person Person @relation(fields: [personId], references: [id])
+  campusId String
+  campus Campus @relation(fields: [campusId], references: [id])
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  @@index([personId])
+  @@index([campusId])
+  @@index([organizationId])
+  @@index([role])
+  @@index([ativo])
+}
+
+model KidsVisualResource {
+  id String @id @default(uuid())
+  nome String
+  descricao String?
+  quantidadeDisponivel Int @default(0)
+  ativo Boolean @default(true)
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  items KidsResourceRequestItem[]
+  @@index([organizationId])
+}
+
+model KidsResourceRequest {
+  id String @id @default(uuid())
+  status KidsResourceRequestStatus @default(REQUESTED)
+  observacao String?
+  createdAt DateTime @default(now())
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  requestedByPersonId String
+  requestedBy Person @relation("KidsResourceRequestedBy", fields: [requestedByPersonId], references: [id])
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  items KidsResourceRequestItem[]
+  @@index([eventId])
+  @@index([organizationId])
+  @@index([status])
+}
+
+model KidsResourceRequestItem {
+  id String @id @default(uuid())
+  quantidade Int
+  requestId String
+  request KidsResourceRequest @relation(fields: [requestId], references: [id])
+  resourceId String
+  resource KidsVisualResource @relation(fields: [resourceId], references: [id])
+  @@unique([requestId, resourceId])
+}
+
+model KidsCareProfile {
+  id String @id @default(uuid())
+  alergias String?
+  restricoesAlimentares String?
+  necessidadesFisicas String?
+  necessidadesCognitivas String?
+  updatedAt DateTime @updatedAt
+  childId String @unique
+  child Person @relation(fields: [childId], references: [id])
 }
 
 
