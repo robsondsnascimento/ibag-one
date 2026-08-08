@@ -1,0 +1,1 @@
+import { Module } from '@nestjs/common'; import { PersonJourneyController } from './person-journey.controller'; import { PersonJourneyService } from './person-journey.service'; @Module({ controllers: [PersonJourneyController], providers: [PersonJourneyService] }) export class PersonJourneyModule {}

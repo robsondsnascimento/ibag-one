@@ -1,0 +1,1 @@
+import { Module } from '@nestjs/common'; import { CellSupportRoleController } from './cell-support-role.controller'; import { CellSupportRoleService } from './cell-support-role.service'; @Module({ controllers: [CellSupportRoleController], providers: [CellSupportRoleService] }) export class CellSupportRoleModule {}

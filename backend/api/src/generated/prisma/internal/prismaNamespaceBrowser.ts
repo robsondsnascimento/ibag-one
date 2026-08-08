@@ -54,7 +54,27 @@ export const ModelName = {
   Campus: 'Campus',
   Person: 'Person',
   User: 'User',
-  Organization: 'Organization'
+  Organization: 'Organization',
+  Cell: 'Cell',
+  CellNetwork: 'CellNetwork',
+  CellSupportRole: 'CellSupportRole',
+  CellMultiplication: 'CellMultiplication',
+  PersonJourneyEvent: 'PersonJourneyEvent',
+  Family: 'Family',
+  FamilyMembership: 'FamilyMembership',
+  ServiceArea: 'ServiceArea',
+  ServiceTeam: 'ServiceTeam',
+  ServiceMembership: 'ServiceMembership',
+  ServiceSchedule: 'ServiceSchedule',
+  CellMeeting: 'CellMeeting',
+  CellMeetingVisitor: 'CellMeetingVisitor',
+  CellLocation: 'CellLocation',
+  PastoralCare: 'PastoralCare',
+  CellStudy: 'CellStudy',
+  CellMeetingAttendance: 'CellMeetingAttendance',
+  CellNetworkSupervision: 'CellNetworkSupervision',
+  CellMembership: 'CellMembership',
+  CellLeadership: 'CellLeadership'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -117,7 +137,8 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   personId: 'personId',
-  organizationId: 'organizationId'
+  organizationId: 'organizationId',
+  role: 'role'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -133,6 +154,299 @@ export const OrganizationScalarFieldEnum = {
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+export const CellScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  ativo: 'ativo',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  campusId: 'campusId',
+  networkId: 'networkId',
+  meetingDay: 'meetingDay',
+  meetingTime: 'meetingTime',
+  motherCellId: 'motherCellId'
+} as const
+
+export type CellScalarFieldEnum = (typeof CellScalarFieldEnum)[keyof typeof CellScalarFieldEnum]
+
+
+export const CellNetworkScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  campusId: 'campusId'
+} as const
+
+export type CellNetworkScalarFieldEnum = (typeof CellNetworkScalarFieldEnum)[keyof typeof CellNetworkScalarFieldEnum]
+
+
+export const CellSupportRoleScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  inicio: 'inicio',
+  fim: 'fim',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  personId: 'personId',
+  cellId: 'cellId'
+} as const
+
+export type CellSupportRoleScalarFieldEnum = (typeof CellSupportRoleScalarFieldEnum)[keyof typeof CellSupportRoleScalarFieldEnum]
+
+
+export const CellMultiplicationScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  observacao: 'observacao',
+  createdAt: 'createdAt',
+  sourceCellId: 'sourceCellId',
+  newCellId: 'newCellId'
+} as const
+
+export type CellMultiplicationScalarFieldEnum = (typeof CellMultiplicationScalarFieldEnum)[keyof typeof CellMultiplicationScalarFieldEnum]
+
+
+export const PersonJourneyEventScalarFieldEnum = {
+  id: 'id',
+  stage: 'stage',
+  data: 'data',
+  createdAt: 'createdAt',
+  personId: 'personId',
+  organizationId: 'organizationId',
+  createdByUserId: 'createdByUserId'
+} as const
+
+export type PersonJourneyEventScalarFieldEnum = (typeof PersonJourneyEventScalarFieldEnum)[keyof typeof PersonJourneyEventScalarFieldEnum]
+
+
+export const FamilyScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId'
+} as const
+
+export type FamilyScalarFieldEnum = (typeof FamilyScalarFieldEnum)[keyof typeof FamilyScalarFieldEnum]
+
+
+export const FamilyMembershipScalarFieldEnum = {
+  id: 'id',
+  relationship: 'relationship',
+  inicio: 'inicio',
+  fim: 'fim',
+  ativo: 'ativo',
+  familyId: 'familyId',
+  personId: 'personId'
+} as const
+
+export type FamilyMembershipScalarFieldEnum = (typeof FamilyMembershipScalarFieldEnum)[keyof typeof FamilyMembershipScalarFieldEnum]
+
+
+export const ServiceAreaScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  scope: 'scope',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  campusId: 'campusId'
+} as const
+
+export type ServiceAreaScalarFieldEnum = (typeof ServiceAreaScalarFieldEnum)[keyof typeof ServiceAreaScalarFieldEnum]
+
+
+export const ServiceTeamScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId',
+  campusId: 'campusId'
+} as const
+
+export type ServiceTeamScalarFieldEnum = (typeof ServiceTeamScalarFieldEnum)[keyof typeof ServiceTeamScalarFieldEnum]
+
+
+export const ServiceMembershipScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  inicio: 'inicio',
+  fim: 'fim',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  personId: 'personId',
+  serviceAreaId: 'serviceAreaId',
+  campusId: 'campusId',
+  teamId: 'teamId'
+} as const
+
+export type ServiceMembershipScalarFieldEnum = (typeof ServiceMembershipScalarFieldEnum)[keyof typeof ServiceMembershipScalarFieldEnum]
+
+
+export const ServiceScheduleScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  funcao: 'funcao',
+  observacao: 'observacao',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  teamId: 'teamId',
+  personId: 'personId'
+} as const
+
+export type ServiceScheduleScalarFieldEnum = (typeof ServiceScheduleScalarFieldEnum)[keyof typeof ServiceScheduleScalarFieldEnum]
+
+
+export const CellMeetingScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  tema: 'tema',
+  observacoes: 'observacoes',
+  visitantes: 'visitantes',
+  registroConcluidoEm: 'registroConcluidoEm',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  cellId: 'cellId'
+} as const
+
+export type CellMeetingScalarFieldEnum = (typeof CellMeetingScalarFieldEnum)[keyof typeof CellMeetingScalarFieldEnum]
+
+
+export const CellMeetingVisitorScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  telefone: 'telefone',
+  email: 'email',
+  observacao: 'observacao',
+  createdAt: 'createdAt',
+  meetingId: 'meetingId',
+  personId: 'personId'
+} as const
+
+export type CellMeetingVisitorScalarFieldEnum = (typeof CellMeetingVisitorScalarFieldEnum)[keyof typeof CellMeetingVisitorScalarFieldEnum]
+
+
+export const CellLocationScalarFieldEnum = {
+  id: 'id',
+  address: 'address',
+  neighborhood: 'neighborhood',
+  city: 'city',
+  state: 'state',
+  zipCode: 'zipCode',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  updatedAt: 'updatedAt',
+  cellId: 'cellId'
+} as const
+
+export type CellLocationScalarFieldEnum = (typeof CellLocationScalarFieldEnum)[keyof typeof CellLocationScalarFieldEnum]
+
+
+export const PastoralCareScalarFieldEnum = {
+  id: 'id',
+  descricao: 'descricao',
+  proximoPasso: 'proximoPasso',
+  dueDate: 'dueDate',
+  status: 'status',
+  concluidoEm: 'concluidoEm',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  subjectPersonId: 'subjectPersonId',
+  responsiblePersonId: 'responsiblePersonId'
+} as const
+
+export type PastoralCareScalarFieldEnum = (typeof PastoralCareScalarFieldEnum)[keyof typeof PastoralCareScalarFieldEnum]
+
+
+export const CellStudyScalarFieldEnum = {
+  id: 'id',
+  titulo: 'titulo',
+  descricao: 'descricao',
+  weekStart: 'weekStart',
+  attachmentPath: 'attachmentPath',
+  attachmentName: 'attachmentName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId'
+} as const
+
+export type CellStudyScalarFieldEnum = (typeof CellStudyScalarFieldEnum)[keyof typeof CellStudyScalarFieldEnum]
+
+
+export const CellMeetingAttendanceScalarFieldEnum = {
+  id: 'id',
+  presente: 'presente',
+  observacao: 'observacao',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  meetingId: 'meetingId',
+  personId: 'personId'
+} as const
+
+export type CellMeetingAttendanceScalarFieldEnum = (typeof CellMeetingAttendanceScalarFieldEnum)[keyof typeof CellMeetingAttendanceScalarFieldEnum]
+
+
+export const CellNetworkSupervisionScalarFieldEnum = {
+  id: 'id',
+  inicio: 'inicio',
+  fim: 'fim',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  personId: 'personId',
+  networkId: 'networkId'
+} as const
+
+export type CellNetworkSupervisionScalarFieldEnum = (typeof CellNetworkSupervisionScalarFieldEnum)[keyof typeof CellNetworkSupervisionScalarFieldEnum]
+
+
+export const CellMembershipScalarFieldEnum = {
+  id: 'id',
+  inicio: 'inicio',
+  fim: 'fim',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  personId: 'personId',
+  cellId: 'cellId'
+} as const
+
+export type CellMembershipScalarFieldEnum = (typeof CellMembershipScalarFieldEnum)[keyof typeof CellMembershipScalarFieldEnum]
+
+
+export const CellLeadershipScalarFieldEnum = {
+  id: 'id',
+  inicio: 'inicio',
+  fim: 'fim',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  personId: 'personId',
+  cellId: 'cellId'
+} as const
+
+export type CellLeadershipScalarFieldEnum = (typeof CellLeadershipScalarFieldEnum)[keyof typeof CellLeadershipScalarFieldEnum]
 
 
 export const SortOrder = {

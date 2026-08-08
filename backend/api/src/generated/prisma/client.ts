@@ -59,3 +59,103 @@ export type User = Prisma.UserModel
  * 
  */
 export type Organization = Prisma.OrganizationModel
+/**
+ * Model Cell
+ * 
+ */
+export type Cell = Prisma.CellModel
+/**
+ * Model CellNetwork
+ * 
+ */
+export type CellNetwork = Prisma.CellNetworkModel
+/**
+ * Model CellSupportRole
+ * 
+ */
+export type CellSupportRole = Prisma.CellSupportRoleModel
+/**
+ * Model CellMultiplication
+ * 
+ */
+export type CellMultiplication = Prisma.CellMultiplicationModel
+/**
+ * Model PersonJourneyEvent
+ * 
+ */
+export type PersonJourneyEvent = Prisma.PersonJourneyEventModel
+/**
+ * Model Family
+ * 
+ */
+export type Family = Prisma.FamilyModel
+/**
+ * Model FamilyMembership
+ * 
+ */
+export type FamilyMembership = Prisma.FamilyMembershipModel
+/**
+ * Model ServiceArea
+ * 
+ */
+export type ServiceArea = Prisma.ServiceAreaModel
+/**
+ * Model ServiceTeam
+ * 
+ */
+export type ServiceTeam = Prisma.ServiceTeamModel
+/**
+ * Model ServiceMembership
+ * 
+ */
+export type ServiceMembership = Prisma.ServiceMembershipModel
+/**
+ * Model ServiceSchedule
+ * 
+ */
+export type ServiceSchedule = Prisma.ServiceScheduleModel
+/**
+ * Model CellMeeting
+ * 
+ */
+export type CellMeeting = Prisma.CellMeetingModel
+/**
+ * Model CellMeetingVisitor
+ * 
+ */
+export type CellMeetingVisitor = Prisma.CellMeetingVisitorModel
+/**
+ * Model CellLocation
+ * 
+ */
+export type CellLocation = Prisma.CellLocationModel
+/**
+ * Model PastoralCare
+ * 
+ */
+export type PastoralCare = Prisma.PastoralCareModel
+/**
+ * Model CellStudy
+ * 
+ */
+export type CellStudy = Prisma.CellStudyModel
+/**
+ * Model CellMeetingAttendance
+ * 
+ */
+export type CellMeetingAttendance = Prisma.CellMeetingAttendanceModel
+/**
+ * Model CellNetworkSupervision
+ * 
+ */
+export type CellNetworkSupervision = Prisma.CellNetworkSupervisionModel
+/**
+ * Model CellMembership
+ * 
+ */
+export type CellMembership = Prisma.CellMembershipModel
+/**
+ * Model CellLeadership
+ * 
+ */
+export type CellLeadership = Prisma.CellLeadershipModel

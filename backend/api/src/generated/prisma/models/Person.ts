@@ -265,6 +265,18 @@ export type PersonWhereInput = {
   campus?: Prisma.XOR<Prisma.CampusScalarRelationFilter, Prisma.CampusWhereInput>
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  cellMemberships?: Prisma.CellMembershipListRelationFilter
+  cellLeaderships?: Prisma.CellLeadershipListRelationFilter
+  cellSupportRoles?: Prisma.CellSupportRoleListRelationFilter
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionListRelationFilter
+  meetingAttendances?: Prisma.CellMeetingAttendanceListRelationFilter
+  pastoralCaresAsSubject?: Prisma.PastoralCareListRelationFilter
+  pastoralCaresAsResponsible?: Prisma.PastoralCareListRelationFilter
+  meetingVisitor?: Prisma.XOR<Prisma.CellMeetingVisitorNullableScalarRelationFilter, Prisma.CellMeetingVisitorWhereInput> | null
+  journeyEvents?: Prisma.PersonJourneyEventListRelationFilter
+  familyMemberships?: Prisma.FamilyMembershipListRelationFilter
+  serviceMemberships?: Prisma.ServiceMembershipListRelationFilter
+  serviceSchedules?: Prisma.ServiceScheduleListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -286,6 +298,18 @@ export type PersonOrderByWithRelationInput = {
   campus?: Prisma.CampusOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   organization?: Prisma.OrganizationOrderByWithRelationInput
+  cellMemberships?: Prisma.CellMembershipOrderByRelationAggregateInput
+  cellLeaderships?: Prisma.CellLeadershipOrderByRelationAggregateInput
+  cellSupportRoles?: Prisma.CellSupportRoleOrderByRelationAggregateInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionOrderByRelationAggregateInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceOrderByRelationAggregateInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareOrderByRelationAggregateInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareOrderByRelationAggregateInput
+  meetingVisitor?: Prisma.CellMeetingVisitorOrderByWithRelationInput
+  journeyEvents?: Prisma.PersonJourneyEventOrderByRelationAggregateInput
+  familyMemberships?: Prisma.FamilyMembershipOrderByRelationAggregateInput
+  serviceMemberships?: Prisma.ServiceMembershipOrderByRelationAggregateInput
+  serviceSchedules?: Prisma.ServiceScheduleOrderByRelationAggregateInput
 }
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -310,6 +334,18 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   campus?: Prisma.XOR<Prisma.CampusScalarRelationFilter, Prisma.CampusWhereInput>
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  cellMemberships?: Prisma.CellMembershipListRelationFilter
+  cellLeaderships?: Prisma.CellLeadershipListRelationFilter
+  cellSupportRoles?: Prisma.CellSupportRoleListRelationFilter
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionListRelationFilter
+  meetingAttendances?: Prisma.CellMeetingAttendanceListRelationFilter
+  pastoralCaresAsSubject?: Prisma.PastoralCareListRelationFilter
+  pastoralCaresAsResponsible?: Prisma.PastoralCareListRelationFilter
+  meetingVisitor?: Prisma.XOR<Prisma.CellMeetingVisitorNullableScalarRelationFilter, Prisma.CellMeetingVisitorWhereInput> | null
+  journeyEvents?: Prisma.PersonJourneyEventListRelationFilter
+  familyMemberships?: Prisma.FamilyMembershipListRelationFilter
+  serviceMemberships?: Prisma.ServiceMembershipListRelationFilter
+  serviceSchedules?: Prisma.ServiceScheduleListRelationFilter
 }, "id" | "cpf" | "email">
 
 export type PersonOrderByWithAggregationInput = {
@@ -371,6 +407,18 @@ export type PersonCreateInput = {
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -390,6 +438,18 @@ export type PersonUncheckedCreateInput = {
   campusId: string
   organizationId?: string | null
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUpdateInput = {
@@ -409,6 +469,18 @@ export type PersonUpdateInput = {
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -428,6 +500,18 @@ export type PersonUncheckedUpdateInput = {
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -551,6 +635,11 @@ export type PersonScalarRelationFilter = {
   isNot?: Prisma.PersonWhereInput
 }
 
+export type PersonNullableScalarRelationFilter = {
+  is?: Prisma.PersonWhereInput | null
+  isNot?: Prisma.PersonWhereInput | null
+}
+
 export type PersonCreateNestedManyWithoutCampusInput = {
   create?: Prisma.XOR<Prisma.PersonCreateWithoutCampusInput, Prisma.PersonUncheckedCreateWithoutCampusInput> | Prisma.PersonCreateWithoutCampusInput[] | Prisma.PersonUncheckedCreateWithoutCampusInput[]
   connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCampusInput | Prisma.PersonCreateOrConnectWithoutCampusInput[]
@@ -653,6 +742,176 @@ export type PersonUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.PersonScalarWhereInput | Prisma.PersonScalarWhereInput[]
 }
 
+export type PersonCreateNestedOneWithoutCellSupportRolesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellSupportRolesInput, Prisma.PersonUncheckedCreateWithoutCellSupportRolesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellSupportRolesInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutCellSupportRolesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellSupportRolesInput, Prisma.PersonUncheckedCreateWithoutCellSupportRolesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellSupportRolesInput
+  upsert?: Prisma.PersonUpsertWithoutCellSupportRolesInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCellSupportRolesInput, Prisma.PersonUpdateWithoutCellSupportRolesInput>, Prisma.PersonUncheckedUpdateWithoutCellSupportRolesInput>
+}
+
+export type PersonCreateNestedOneWithoutJourneyEventsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutJourneyEventsInput, Prisma.PersonUncheckedCreateWithoutJourneyEventsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutJourneyEventsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutJourneyEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutJourneyEventsInput, Prisma.PersonUncheckedCreateWithoutJourneyEventsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutJourneyEventsInput
+  upsert?: Prisma.PersonUpsertWithoutJourneyEventsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutJourneyEventsInput, Prisma.PersonUpdateWithoutJourneyEventsInput>, Prisma.PersonUncheckedUpdateWithoutJourneyEventsInput>
+}
+
+export type PersonCreateNestedOneWithoutFamilyMembershipsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutFamilyMembershipsInput, Prisma.PersonUncheckedCreateWithoutFamilyMembershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutFamilyMembershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutFamilyMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutFamilyMembershipsInput, Prisma.PersonUncheckedCreateWithoutFamilyMembershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutFamilyMembershipsInput
+  upsert?: Prisma.PersonUpsertWithoutFamilyMembershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutFamilyMembershipsInput, Prisma.PersonUpdateWithoutFamilyMembershipsInput>, Prisma.PersonUncheckedUpdateWithoutFamilyMembershipsInput>
+}
+
+export type PersonCreateNestedOneWithoutServiceMembershipsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceMembershipsInput, Prisma.PersonUncheckedCreateWithoutServiceMembershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceMembershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutServiceMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceMembershipsInput, Prisma.PersonUncheckedCreateWithoutServiceMembershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceMembershipsInput
+  upsert?: Prisma.PersonUpsertWithoutServiceMembershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutServiceMembershipsInput, Prisma.PersonUpdateWithoutServiceMembershipsInput>, Prisma.PersonUncheckedUpdateWithoutServiceMembershipsInput>
+}
+
+export type PersonCreateNestedOneWithoutServiceSchedulesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceSchedulesInput, Prisma.PersonUncheckedCreateWithoutServiceSchedulesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceSchedulesInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutServiceSchedulesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceSchedulesInput, Prisma.PersonUncheckedCreateWithoutServiceSchedulesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceSchedulesInput
+  upsert?: Prisma.PersonUpsertWithoutServiceSchedulesInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutServiceSchedulesInput, Prisma.PersonUpdateWithoutServiceSchedulesInput>, Prisma.PersonUncheckedUpdateWithoutServiceSchedulesInput>
+}
+
+export type PersonCreateNestedOneWithoutMeetingVisitorInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutMeetingVisitorInput, Prisma.PersonUncheckedCreateWithoutMeetingVisitorInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutMeetingVisitorInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutMeetingVisitorNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutMeetingVisitorInput, Prisma.PersonUncheckedCreateWithoutMeetingVisitorInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutMeetingVisitorInput
+  upsert?: Prisma.PersonUpsertWithoutMeetingVisitorInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutMeetingVisitorInput, Prisma.PersonUpdateWithoutMeetingVisitorInput>, Prisma.PersonUncheckedUpdateWithoutMeetingVisitorInput>
+}
+
+export type PersonCreateNestedOneWithoutPastoralCaresAsSubjectInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutPastoralCaresAsSubjectInput, Prisma.PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutPastoralCaresAsSubjectInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonCreateNestedOneWithoutPastoralCaresAsResponsibleInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutPastoralCaresAsResponsibleInput, Prisma.PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutPastoralCaresAsResponsibleInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutPastoralCaresAsSubjectNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutPastoralCaresAsSubjectInput, Prisma.PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutPastoralCaresAsSubjectInput
+  upsert?: Prisma.PersonUpsertWithoutPastoralCaresAsSubjectInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutPastoralCaresAsSubjectInput, Prisma.PersonUpdateWithoutPastoralCaresAsSubjectInput>, Prisma.PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput>
+}
+
+export type PersonUpdateOneRequiredWithoutPastoralCaresAsResponsibleNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutPastoralCaresAsResponsibleInput, Prisma.PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutPastoralCaresAsResponsibleInput
+  upsert?: Prisma.PersonUpsertWithoutPastoralCaresAsResponsibleInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutPastoralCaresAsResponsibleInput, Prisma.PersonUpdateWithoutPastoralCaresAsResponsibleInput>, Prisma.PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput>
+}
+
+export type PersonCreateNestedOneWithoutMeetingAttendancesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutMeetingAttendancesInput, Prisma.PersonUncheckedCreateWithoutMeetingAttendancesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutMeetingAttendancesInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutMeetingAttendancesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutMeetingAttendancesInput, Prisma.PersonUncheckedCreateWithoutMeetingAttendancesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutMeetingAttendancesInput
+  upsert?: Prisma.PersonUpsertWithoutMeetingAttendancesInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutMeetingAttendancesInput, Prisma.PersonUpdateWithoutMeetingAttendancesInput>, Prisma.PersonUncheckedUpdateWithoutMeetingAttendancesInput>
+}
+
+export type PersonCreateNestedOneWithoutCellNetworkSupervisionsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellNetworkSupervisionsInput, Prisma.PersonUncheckedCreateWithoutCellNetworkSupervisionsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellNetworkSupervisionsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutCellNetworkSupervisionsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellNetworkSupervisionsInput, Prisma.PersonUncheckedCreateWithoutCellNetworkSupervisionsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellNetworkSupervisionsInput
+  upsert?: Prisma.PersonUpsertWithoutCellNetworkSupervisionsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCellNetworkSupervisionsInput, Prisma.PersonUpdateWithoutCellNetworkSupervisionsInput>, Prisma.PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput>
+}
+
+export type PersonCreateNestedOneWithoutCellMembershipsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellMembershipsInput, Prisma.PersonUncheckedCreateWithoutCellMembershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellMembershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutCellMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellMembershipsInput, Prisma.PersonUncheckedCreateWithoutCellMembershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellMembershipsInput
+  upsert?: Prisma.PersonUpsertWithoutCellMembershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCellMembershipsInput, Prisma.PersonUpdateWithoutCellMembershipsInput>, Prisma.PersonUncheckedUpdateWithoutCellMembershipsInput>
+}
+
+export type PersonCreateNestedOneWithoutCellLeadershipsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellLeadershipsInput, Prisma.PersonUncheckedCreateWithoutCellLeadershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellLeadershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutCellLeadershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellLeadershipsInput, Prisma.PersonUncheckedCreateWithoutCellLeadershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellLeadershipsInput
+  upsert?: Prisma.PersonUpsertWithoutCellLeadershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCellLeadershipsInput, Prisma.PersonUpdateWithoutCellLeadershipsInput>, Prisma.PersonUncheckedUpdateWithoutCellLeadershipsInput>
+}
+
 export type PersonCreateWithoutCampusInput = {
   id?: string
   nome: string
@@ -669,6 +928,18 @@ export type PersonCreateWithoutCampusInput = {
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutCampusInput = {
@@ -687,6 +958,18 @@ export type PersonUncheckedCreateWithoutCampusInput = {
   updatedAt?: Date | string
   organizationId?: string | null
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCampusInput = {
@@ -752,6 +1035,18 @@ export type PersonCreateWithoutUserInput = {
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutUserInput = {
@@ -770,6 +1065,18 @@ export type PersonUncheckedCreateWithoutUserInput = {
   updatedAt?: Date | string
   campusId: string
   organizationId?: string | null
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutUserInput = {
@@ -804,6 +1111,18 @@ export type PersonUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutUserInput = {
@@ -822,6 +1141,18 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutOrganizationInput = {
@@ -840,6 +1171,18 @@ export type PersonCreateWithoutOrganizationInput = {
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutOrganizationInput = {
@@ -858,6 +1201,18 @@ export type PersonUncheckedCreateWithoutOrganizationInput = {
   updatedAt?: Date | string
   campusId: string
   user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutOrganizationInput = {
@@ -884,6 +1239,1638 @@ export type PersonUpdateWithWhereUniqueWithoutOrganizationInput = {
 export type PersonUpdateManyWithWhereWithoutOrganizationInput = {
   where: Prisma.PersonScalarWhereInput
   data: Prisma.XOR<Prisma.PersonUpdateManyMutationInput, Prisma.PersonUncheckedUpdateManyWithoutOrganizationInput>
+}
+
+export type PersonCreateWithoutCellSupportRolesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutCellSupportRolesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellSupportRolesInput, Prisma.PersonUncheckedCreateWithoutCellSupportRolesInput>
+}
+
+export type PersonUpsertWithoutCellSupportRolesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutCellSupportRolesInput, Prisma.PersonUncheckedUpdateWithoutCellSupportRolesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellSupportRolesInput, Prisma.PersonUncheckedCreateWithoutCellSupportRolesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutCellSupportRolesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutCellSupportRolesInput, Prisma.PersonUncheckedUpdateWithoutCellSupportRolesInput>
+}
+
+export type PersonUpdateWithoutCellSupportRolesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutJourneyEventsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutJourneyEventsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutJourneyEventsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutJourneyEventsInput, Prisma.PersonUncheckedCreateWithoutJourneyEventsInput>
+}
+
+export type PersonUpsertWithoutJourneyEventsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutJourneyEventsInput, Prisma.PersonUncheckedUpdateWithoutJourneyEventsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutJourneyEventsInput, Prisma.PersonUncheckedCreateWithoutJourneyEventsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutJourneyEventsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutJourneyEventsInput, Prisma.PersonUncheckedUpdateWithoutJourneyEventsInput>
+}
+
+export type PersonUpdateWithoutJourneyEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutFamilyMembershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutFamilyMembershipsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutFamilyMembershipsInput, Prisma.PersonUncheckedCreateWithoutFamilyMembershipsInput>
+}
+
+export type PersonUpsertWithoutFamilyMembershipsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutFamilyMembershipsInput, Prisma.PersonUncheckedUpdateWithoutFamilyMembershipsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutFamilyMembershipsInput, Prisma.PersonUncheckedCreateWithoutFamilyMembershipsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutFamilyMembershipsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutFamilyMembershipsInput, Prisma.PersonUncheckedUpdateWithoutFamilyMembershipsInput>
+}
+
+export type PersonUpdateWithoutFamilyMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutServiceMembershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutServiceMembershipsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceMembershipsInput, Prisma.PersonUncheckedCreateWithoutServiceMembershipsInput>
+}
+
+export type PersonUpsertWithoutServiceMembershipsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutServiceMembershipsInput, Prisma.PersonUncheckedUpdateWithoutServiceMembershipsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceMembershipsInput, Prisma.PersonUncheckedCreateWithoutServiceMembershipsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutServiceMembershipsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutServiceMembershipsInput, Prisma.PersonUncheckedUpdateWithoutServiceMembershipsInput>
+}
+
+export type PersonUpdateWithoutServiceMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutServiceSchedulesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutServiceSchedulesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceSchedulesInput, Prisma.PersonUncheckedCreateWithoutServiceSchedulesInput>
+}
+
+export type PersonUpsertWithoutServiceSchedulesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutServiceSchedulesInput, Prisma.PersonUncheckedUpdateWithoutServiceSchedulesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceSchedulesInput, Prisma.PersonUncheckedCreateWithoutServiceSchedulesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutServiceSchedulesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutServiceSchedulesInput, Prisma.PersonUncheckedUpdateWithoutServiceSchedulesInput>
+}
+
+export type PersonUpdateWithoutServiceSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutMeetingVisitorInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutMeetingVisitorInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutMeetingVisitorInput, Prisma.PersonUncheckedCreateWithoutMeetingVisitorInput>
+}
+
+export type PersonUpsertWithoutMeetingVisitorInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutMeetingVisitorInput, Prisma.PersonUncheckedUpdateWithoutMeetingVisitorInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutMeetingVisitorInput, Prisma.PersonUncheckedCreateWithoutMeetingVisitorInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutMeetingVisitorInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutMeetingVisitorInput, Prisma.PersonUncheckedUpdateWithoutMeetingVisitorInput>
+}
+
+export type PersonUpdateWithoutMeetingVisitorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutPastoralCaresAsSubjectInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutPastoralCaresAsSubjectInput, Prisma.PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput>
+}
+
+export type PersonCreateWithoutPastoralCaresAsResponsibleInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutPastoralCaresAsResponsibleInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutPastoralCaresAsResponsibleInput, Prisma.PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput>
+}
+
+export type PersonUpsertWithoutPastoralCaresAsSubjectInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutPastoralCaresAsSubjectInput, Prisma.PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutPastoralCaresAsSubjectInput, Prisma.PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutPastoralCaresAsSubjectInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutPastoralCaresAsSubjectInput, Prisma.PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput>
+}
+
+export type PersonUpdateWithoutPastoralCaresAsSubjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUpsertWithoutPastoralCaresAsResponsibleInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutPastoralCaresAsResponsibleInput, Prisma.PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutPastoralCaresAsResponsibleInput, Prisma.PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutPastoralCaresAsResponsibleInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutPastoralCaresAsResponsibleInput, Prisma.PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput>
+}
+
+export type PersonUpdateWithoutPastoralCaresAsResponsibleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutMeetingAttendancesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutMeetingAttendancesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutMeetingAttendancesInput, Prisma.PersonUncheckedCreateWithoutMeetingAttendancesInput>
+}
+
+export type PersonUpsertWithoutMeetingAttendancesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutMeetingAttendancesInput, Prisma.PersonUncheckedUpdateWithoutMeetingAttendancesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutMeetingAttendancesInput, Prisma.PersonUncheckedCreateWithoutMeetingAttendancesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutMeetingAttendancesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutMeetingAttendancesInput, Prisma.PersonUncheckedUpdateWithoutMeetingAttendancesInput>
+}
+
+export type PersonUpdateWithoutMeetingAttendancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutCellNetworkSupervisionsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutCellNetworkSupervisionsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellNetworkSupervisionsInput, Prisma.PersonUncheckedCreateWithoutCellNetworkSupervisionsInput>
+}
+
+export type PersonUpsertWithoutCellNetworkSupervisionsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutCellNetworkSupervisionsInput, Prisma.PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellNetworkSupervisionsInput, Prisma.PersonUncheckedCreateWithoutCellNetworkSupervisionsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutCellNetworkSupervisionsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutCellNetworkSupervisionsInput, Prisma.PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput>
+}
+
+export type PersonUpdateWithoutCellNetworkSupervisionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutCellMembershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutCellMembershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutCellMembershipsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellMembershipsInput, Prisma.PersonUncheckedCreateWithoutCellMembershipsInput>
+}
+
+export type PersonUpsertWithoutCellMembershipsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutCellMembershipsInput, Prisma.PersonUncheckedUpdateWithoutCellMembershipsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellMembershipsInput, Prisma.PersonUncheckedCreateWithoutCellMembershipsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutCellMembershipsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutCellMembershipsInput, Prisma.PersonUncheckedUpdateWithoutCellMembershipsInput>
+}
+
+export type PersonUpdateWithoutCellMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutCellLeadershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutCellLeadershipsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellLeadershipsInput, Prisma.PersonUncheckedCreateWithoutCellLeadershipsInput>
+}
+
+export type PersonUpsertWithoutCellLeadershipsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutCellLeadershipsInput, Prisma.PersonUncheckedUpdateWithoutCellLeadershipsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellLeadershipsInput, Prisma.PersonUncheckedCreateWithoutCellLeadershipsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutCellLeadershipsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutCellLeadershipsInput, Prisma.PersonUncheckedUpdateWithoutCellLeadershipsInput>
+}
+
+export type PersonUpdateWithoutCellLeadershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyCampusInput = {
@@ -919,6 +2906,18 @@ export type PersonUpdateWithoutCampusInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCampusInput = {
@@ -937,6 +2936,18 @@ export type PersonUncheckedUpdateWithoutCampusInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutCampusInput = {
@@ -989,6 +3000,18 @@ export type PersonUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutOrganizationInput = {
@@ -1007,6 +3030,18 @@ export type PersonUncheckedUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1026,6 +3061,125 @@ export type PersonUncheckedUpdateManyWithoutOrganizationInput = {
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
+
+/**
+ * Count Type PersonCountOutputType
+ */
+
+export type PersonCountOutputType = {
+  cellMemberships: number
+  cellLeaderships: number
+  cellSupportRoles: number
+  cellNetworkSupervisions: number
+  meetingAttendances: number
+  pastoralCaresAsSubject: number
+  pastoralCaresAsResponsible: number
+  journeyEvents: number
+  familyMemberships: number
+  serviceMemberships: number
+  serviceSchedules: number
+}
+
+export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  cellMemberships?: boolean | PersonCountOutputTypeCountCellMembershipsArgs
+  cellLeaderships?: boolean | PersonCountOutputTypeCountCellLeadershipsArgs
+  cellSupportRoles?: boolean | PersonCountOutputTypeCountCellSupportRolesArgs
+  cellNetworkSupervisions?: boolean | PersonCountOutputTypeCountCellNetworkSupervisionsArgs
+  meetingAttendances?: boolean | PersonCountOutputTypeCountMeetingAttendancesArgs
+  pastoralCaresAsSubject?: boolean | PersonCountOutputTypeCountPastoralCaresAsSubjectArgs
+  pastoralCaresAsResponsible?: boolean | PersonCountOutputTypeCountPastoralCaresAsResponsibleArgs
+  journeyEvents?: boolean | PersonCountOutputTypeCountJourneyEventsArgs
+  familyMemberships?: boolean | PersonCountOutputTypeCountFamilyMembershipsArgs
+  serviceMemberships?: boolean | PersonCountOutputTypeCountServiceMembershipsArgs
+  serviceSchedules?: boolean | PersonCountOutputTypeCountServiceSchedulesArgs
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PersonCountOutputType
+   */
+  select?: Prisma.PersonCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountCellMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CellMembershipWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountCellLeadershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CellLeadershipWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountCellSupportRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CellSupportRoleWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountCellNetworkSupervisionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CellNetworkSupervisionWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountMeetingAttendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CellMeetingAttendanceWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountPastoralCaresAsSubjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PastoralCareWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountPastoralCaresAsResponsibleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PastoralCareWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountJourneyEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PersonJourneyEventWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountFamilyMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FamilyMembershipWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountServiceMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceMembershipWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountServiceSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceScheduleWhereInput
+}
 
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1047,6 +3201,19 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   campus?: boolean | Prisma.CampusDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Person$userArgs<ExtArgs>
   organization?: boolean | Prisma.Person$organizationArgs<ExtArgs>
+  cellMemberships?: boolean | Prisma.Person$cellMembershipsArgs<ExtArgs>
+  cellLeaderships?: boolean | Prisma.Person$cellLeadershipsArgs<ExtArgs>
+  cellSupportRoles?: boolean | Prisma.Person$cellSupportRolesArgs<ExtArgs>
+  cellNetworkSupervisions?: boolean | Prisma.Person$cellNetworkSupervisionsArgs<ExtArgs>
+  meetingAttendances?: boolean | Prisma.Person$meetingAttendancesArgs<ExtArgs>
+  pastoralCaresAsSubject?: boolean | Prisma.Person$pastoralCaresAsSubjectArgs<ExtArgs>
+  pastoralCaresAsResponsible?: boolean | Prisma.Person$pastoralCaresAsResponsibleArgs<ExtArgs>
+  meetingVisitor?: boolean | Prisma.Person$meetingVisitorArgs<ExtArgs>
+  journeyEvents?: boolean | Prisma.Person$journeyEventsArgs<ExtArgs>
+  familyMemberships?: boolean | Prisma.Person$familyMembershipsArgs<ExtArgs>
+  serviceMemberships?: boolean | Prisma.Person$serviceMembershipsArgs<ExtArgs>
+  serviceSchedules?: boolean | Prisma.Person$serviceSchedulesArgs<ExtArgs>
+  _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
 export type PersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1112,6 +3279,19 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   campus?: boolean | Prisma.CampusDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Person$userArgs<ExtArgs>
   organization?: boolean | Prisma.Person$organizationArgs<ExtArgs>
+  cellMemberships?: boolean | Prisma.Person$cellMembershipsArgs<ExtArgs>
+  cellLeaderships?: boolean | Prisma.Person$cellLeadershipsArgs<ExtArgs>
+  cellSupportRoles?: boolean | Prisma.Person$cellSupportRolesArgs<ExtArgs>
+  cellNetworkSupervisions?: boolean | Prisma.Person$cellNetworkSupervisionsArgs<ExtArgs>
+  meetingAttendances?: boolean | Prisma.Person$meetingAttendancesArgs<ExtArgs>
+  pastoralCaresAsSubject?: boolean | Prisma.Person$pastoralCaresAsSubjectArgs<ExtArgs>
+  pastoralCaresAsResponsible?: boolean | Prisma.Person$pastoralCaresAsResponsibleArgs<ExtArgs>
+  meetingVisitor?: boolean | Prisma.Person$meetingVisitorArgs<ExtArgs>
+  journeyEvents?: boolean | Prisma.Person$journeyEventsArgs<ExtArgs>
+  familyMemberships?: boolean | Prisma.Person$familyMembershipsArgs<ExtArgs>
+  serviceMemberships?: boolean | Prisma.Person$serviceMembershipsArgs<ExtArgs>
+  serviceSchedules?: boolean | Prisma.Person$serviceSchedulesArgs<ExtArgs>
+  _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   campus?: boolean | Prisma.CampusDefaultArgs<ExtArgs>
@@ -1128,6 +3308,18 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     campus: Prisma.$CampusPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs> | null
     organization: Prisma.$OrganizationPayload<ExtArgs> | null
+    cellMemberships: Prisma.$CellMembershipPayload<ExtArgs>[]
+    cellLeaderships: Prisma.$CellLeadershipPayload<ExtArgs>[]
+    cellSupportRoles: Prisma.$CellSupportRolePayload<ExtArgs>[]
+    cellNetworkSupervisions: Prisma.$CellNetworkSupervisionPayload<ExtArgs>[]
+    meetingAttendances: Prisma.$CellMeetingAttendancePayload<ExtArgs>[]
+    pastoralCaresAsSubject: Prisma.$PastoralCarePayload<ExtArgs>[]
+    pastoralCaresAsResponsible: Prisma.$PastoralCarePayload<ExtArgs>[]
+    meetingVisitor: Prisma.$CellMeetingVisitorPayload<ExtArgs> | null
+    journeyEvents: Prisma.$PersonJourneyEventPayload<ExtArgs>[]
+    familyMemberships: Prisma.$FamilyMembershipPayload<ExtArgs>[]
+    serviceMemberships: Prisma.$ServiceMembershipPayload<ExtArgs>[]
+    serviceSchedules: Prisma.$ServiceSchedulePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1542,6 +3734,18 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   campus<T extends Prisma.CampusDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CampusDefaultArgs<ExtArgs>>): Prisma.Prisma__CampusClient<runtime.Types.Result.GetResult<Prisma.$CampusPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.Person$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   organization<T extends Prisma.Person$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  cellMemberships<T extends Prisma.Person$cellMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$cellMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cellLeaderships<T extends Prisma.Person$cellLeadershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$cellLeadershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellLeadershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cellSupportRoles<T extends Prisma.Person$cellSupportRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$cellSupportRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellSupportRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cellNetworkSupervisions<T extends Prisma.Person$cellNetworkSupervisionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$cellNetworkSupervisionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellNetworkSupervisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  meetingAttendances<T extends Prisma.Person$meetingAttendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$meetingAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellMeetingAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pastoralCaresAsSubject<T extends Prisma.Person$pastoralCaresAsSubjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$pastoralCaresAsSubjectArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PastoralCarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pastoralCaresAsResponsible<T extends Prisma.Person$pastoralCaresAsResponsibleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$pastoralCaresAsResponsibleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PastoralCarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  meetingVisitor<T extends Prisma.Person$meetingVisitorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$meetingVisitorArgs<ExtArgs>>): Prisma.Prisma__CellMeetingVisitorClient<runtime.Types.Result.GetResult<Prisma.$CellMeetingVisitorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  journeyEvents<T extends Prisma.Person$journeyEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$journeyEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PersonJourneyEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  familyMemberships<T extends Prisma.Person$familyMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$familyMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FamilyMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceMemberships<T extends Prisma.Person$serviceMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceSchedules<T extends Prisma.Person$serviceSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2022,6 +4226,289 @@ export type Person$organizationArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   include?: Prisma.OrganizationInclude<ExtArgs> | null
   where?: Prisma.OrganizationWhereInput
+}
+
+/**
+ * Person.cellMemberships
+ */
+export type Person$cellMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CellMembership
+   */
+  select?: Prisma.CellMembershipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CellMembership
+   */
+  omit?: Prisma.CellMembershipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CellMembershipInclude<ExtArgs> | null
+  where?: Prisma.CellMembershipWhereInput
+  orderBy?: Prisma.CellMembershipOrderByWithRelationInput | Prisma.CellMembershipOrderByWithRelationInput[]
+  cursor?: Prisma.CellMembershipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CellMembershipScalarFieldEnum | Prisma.CellMembershipScalarFieldEnum[]
+}
+
+/**
+ * Person.cellLeaderships
+ */
+export type Person$cellLeadershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CellLeadership
+   */
+  select?: Prisma.CellLeadershipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CellLeadership
+   */
+  omit?: Prisma.CellLeadershipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CellLeadershipInclude<ExtArgs> | null
+  where?: Prisma.CellLeadershipWhereInput
+  orderBy?: Prisma.CellLeadershipOrderByWithRelationInput | Prisma.CellLeadershipOrderByWithRelationInput[]
+  cursor?: Prisma.CellLeadershipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CellLeadershipScalarFieldEnum | Prisma.CellLeadershipScalarFieldEnum[]
+}
+
+/**
+ * Person.cellSupportRoles
+ */
+export type Person$cellSupportRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CellSupportRole
+   */
+  select?: Prisma.CellSupportRoleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CellSupportRole
+   */
+  omit?: Prisma.CellSupportRoleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CellSupportRoleInclude<ExtArgs> | null
+  where?: Prisma.CellSupportRoleWhereInput
+  orderBy?: Prisma.CellSupportRoleOrderByWithRelationInput | Prisma.CellSupportRoleOrderByWithRelationInput[]
+  cursor?: Prisma.CellSupportRoleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CellSupportRoleScalarFieldEnum | Prisma.CellSupportRoleScalarFieldEnum[]
+}
+
+/**
+ * Person.cellNetworkSupervisions
+ */
+export type Person$cellNetworkSupervisionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CellNetworkSupervision
+   */
+  select?: Prisma.CellNetworkSupervisionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CellNetworkSupervision
+   */
+  omit?: Prisma.CellNetworkSupervisionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CellNetworkSupervisionInclude<ExtArgs> | null
+  where?: Prisma.CellNetworkSupervisionWhereInput
+  orderBy?: Prisma.CellNetworkSupervisionOrderByWithRelationInput | Prisma.CellNetworkSupervisionOrderByWithRelationInput[]
+  cursor?: Prisma.CellNetworkSupervisionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CellNetworkSupervisionScalarFieldEnum | Prisma.CellNetworkSupervisionScalarFieldEnum[]
+}
+
+/**
+ * Person.meetingAttendances
+ */
+export type Person$meetingAttendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CellMeetingAttendance
+   */
+  select?: Prisma.CellMeetingAttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CellMeetingAttendance
+   */
+  omit?: Prisma.CellMeetingAttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CellMeetingAttendanceInclude<ExtArgs> | null
+  where?: Prisma.CellMeetingAttendanceWhereInput
+  orderBy?: Prisma.CellMeetingAttendanceOrderByWithRelationInput | Prisma.CellMeetingAttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.CellMeetingAttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CellMeetingAttendanceScalarFieldEnum | Prisma.CellMeetingAttendanceScalarFieldEnum[]
+}
+
+/**
+ * Person.pastoralCaresAsSubject
+ */
+export type Person$pastoralCaresAsSubjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PastoralCare
+   */
+  select?: Prisma.PastoralCareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PastoralCare
+   */
+  omit?: Prisma.PastoralCareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PastoralCareInclude<ExtArgs> | null
+  where?: Prisma.PastoralCareWhereInput
+  orderBy?: Prisma.PastoralCareOrderByWithRelationInput | Prisma.PastoralCareOrderByWithRelationInput[]
+  cursor?: Prisma.PastoralCareWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PastoralCareScalarFieldEnum | Prisma.PastoralCareScalarFieldEnum[]
+}
+
+/**
+ * Person.pastoralCaresAsResponsible
+ */
+export type Person$pastoralCaresAsResponsibleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PastoralCare
+   */
+  select?: Prisma.PastoralCareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PastoralCare
+   */
+  omit?: Prisma.PastoralCareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PastoralCareInclude<ExtArgs> | null
+  where?: Prisma.PastoralCareWhereInput
+  orderBy?: Prisma.PastoralCareOrderByWithRelationInput | Prisma.PastoralCareOrderByWithRelationInput[]
+  cursor?: Prisma.PastoralCareWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PastoralCareScalarFieldEnum | Prisma.PastoralCareScalarFieldEnum[]
+}
+
+/**
+ * Person.meetingVisitor
+ */
+export type Person$meetingVisitorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CellMeetingVisitor
+   */
+  select?: Prisma.CellMeetingVisitorSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CellMeetingVisitor
+   */
+  omit?: Prisma.CellMeetingVisitorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CellMeetingVisitorInclude<ExtArgs> | null
+  where?: Prisma.CellMeetingVisitorWhereInput
+}
+
+/**
+ * Person.journeyEvents
+ */
+export type Person$journeyEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PersonJourneyEvent
+   */
+  select?: Prisma.PersonJourneyEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PersonJourneyEvent
+   */
+  omit?: Prisma.PersonJourneyEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PersonJourneyEventInclude<ExtArgs> | null
+  where?: Prisma.PersonJourneyEventWhereInput
+  orderBy?: Prisma.PersonJourneyEventOrderByWithRelationInput | Prisma.PersonJourneyEventOrderByWithRelationInput[]
+  cursor?: Prisma.PersonJourneyEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PersonJourneyEventScalarFieldEnum | Prisma.PersonJourneyEventScalarFieldEnum[]
+}
+
+/**
+ * Person.familyMemberships
+ */
+export type Person$familyMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FamilyMembership
+   */
+  select?: Prisma.FamilyMembershipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FamilyMembership
+   */
+  omit?: Prisma.FamilyMembershipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FamilyMembershipInclude<ExtArgs> | null
+  where?: Prisma.FamilyMembershipWhereInput
+  orderBy?: Prisma.FamilyMembershipOrderByWithRelationInput | Prisma.FamilyMembershipOrderByWithRelationInput[]
+  cursor?: Prisma.FamilyMembershipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FamilyMembershipScalarFieldEnum | Prisma.FamilyMembershipScalarFieldEnum[]
+}
+
+/**
+ * Person.serviceMemberships
+ */
+export type Person$serviceMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceMembership
+   */
+  select?: Prisma.ServiceMembershipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceMembership
+   */
+  omit?: Prisma.ServiceMembershipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceMembershipInclude<ExtArgs> | null
+  where?: Prisma.ServiceMembershipWhereInput
+  orderBy?: Prisma.ServiceMembershipOrderByWithRelationInput | Prisma.ServiceMembershipOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceMembershipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceMembershipScalarFieldEnum | Prisma.ServiceMembershipScalarFieldEnum[]
+}
+
+/**
+ * Person.serviceSchedules
+ */
+export type Person$serviceSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceSchedule
+   */
+  select?: Prisma.ServiceScheduleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceSchedule
+   */
+  omit?: Prisma.ServiceScheduleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceScheduleInclude<ExtArgs> | null
+  where?: Prisma.ServiceScheduleWhereInput
+  orderBy?: Prisma.ServiceScheduleOrderByWithRelationInput | Prisma.ServiceScheduleOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceScheduleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceScheduleScalarFieldEnum | Prisma.ServiceScheduleScalarFieldEnum[]
 }
 
 /**

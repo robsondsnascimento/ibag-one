@@ -9,7 +9,103 @@
 * 🟢 You can import this file directly.
 */
 
+export const MeetingDay = {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY'
+} as const
+
+export type MeetingDay = (typeof MeetingDay)[keyof typeof MeetingDay]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const UserRole = {
+  MEMBER: 'MEMBER',
+  SECRETARY: 'SECRETARY',
+  ADMIN: 'ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN',
+  PASTOR: 'PASTOR'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const PastoralCareStatus = {
+  OPEN: 'OPEN',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type PastoralCareStatus = (typeof PastoralCareStatus)[keyof typeof PastoralCareStatus]
+
+
+export const CellStatus = {
+  PLANNING: 'PLANNING',
+  ACTIVE: 'ACTIVE',
+  MULTIPLIED: 'MULTIPLIED',
+  PAUSED: 'PAUSED',
+  CLOSED: 'CLOSED'
+} as const
+
+export type CellStatus = (typeof CellStatus)[keyof typeof CellStatus]
+
+
+export const CellSupportRoleType = {
+  LEADER_IN_TRAINING: 'LEADER_IN_TRAINING',
+  HOST: 'HOST'
+} as const
+
+export type CellSupportRoleType = (typeof CellSupportRoleType)[keyof typeof CellSupportRoleType]
+
+
+export const PersonJourneyStage = {
+  CELL_PARTICIPANT: 'CELL_PARTICIPANT',
+  DECISION: 'DECISION',
+  CONSOLIDATION: 'CONSOLIDATION',
+  FORMAL_MEMBER: 'FORMAL_MEMBER',
+  DISCIPLESHIP: 'DISCIPLESHIP',
+  LEADERSHIP: 'LEADERSHIP'
+} as const
+
+export type PersonJourneyStage = (typeof PersonJourneyStage)[keyof typeof PersonJourneyStage]
+
+
+export const FamilyRelationship = {
+  HEAD: 'HEAD',
+  SPOUSE: 'SPOUSE',
+  CHILD: 'CHILD',
+  PARENT: 'PARENT',
+  OTHER: 'OTHER'
+} as const
+
+export type FamilyRelationship = (typeof FamilyRelationship)[keyof typeof FamilyRelationship]
+
+
+export const ServiceAreaScope = {
+  GLOBAL: 'GLOBAL',
+  CAMPUS: 'CAMPUS'
+} as const
+
+export type ServiceAreaScope = (typeof ServiceAreaScope)[keyof typeof ServiceAreaScope]
+
+
+export const ServiceMembershipRole = {
+  GENERAL_LEADER: 'GENERAL_LEADER',
+  CAMPUS_LEADER: 'CAMPUS_LEADER',
+  TEAM_LEADER: 'TEAM_LEADER',
+  MEMBER: 'MEMBER'
+} as const
+
+export type ServiceMembershipRole = (typeof ServiceMembershipRole)[keyof typeof ServiceMembershipRole]
+
+
+export const ServiceScheduleStatus = {
+  SCHEDULED: 'SCHEDULED',
+  CONFIRMED: 'CONFIRMED',
+  DECLINED: 'DECLINED',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type ServiceScheduleStatus = (typeof ServiceScheduleStatus)[keyof typeof ServiceScheduleStatus]

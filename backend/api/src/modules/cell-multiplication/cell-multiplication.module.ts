@@ -1,0 +1,1 @@
+import { Module } from '@nestjs/common'; import { CellMultiplicationController } from './cell-multiplication.controller'; import { CellMultiplicationService } from './cell-multiplication.service'; @Module({ controllers: [CellMultiplicationController], providers: [CellMultiplicationService] }) export class CellMultiplicationModule {}

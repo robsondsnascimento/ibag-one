@@ -8,52 +8,152 @@ datasource db {
   provider = "postgresql"
 }
 
+enum MeetingDay {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum UserRole {
+  MEMBER
+  SECRETARY
+  ADMIN
+  SUPER_ADMIN
+  PASTOR
+}
+
+enum PastoralCareStatus {
+  OPEN
+  COMPLETED
+}
+
+enum CellStatus {
+  PLANNING
+  ACTIVE
+  MULTIPLIED
+  PAUSED
+  CLOSED
+}
+
+enum CellSupportRoleType {
+  LEADER_IN_TRAINING
+  HOST
+}
+
+enum PersonJourneyStage {
+  CELL_PARTICIPANT
+  DECISION
+  CONSOLIDATION
+  FORMAL_MEMBER
+  DISCIPLESHIP
+  LEADERSHIP
+}
+
+enum FamilyRelationship {
+  HEAD
+  SPOUSE
+  CHILD
+  PARENT
+  OTHER
+}
+
+enum ServiceAreaScope {
+  GLOBAL
+  CAMPUS
+}
+
+enum ServiceMembershipRole {
+  GENERAL_LEADER
+  CAMPUS_LEADER
+  TEAM_LEADER
+  MEMBER
+}
+
+enum ServiceScheduleStatus {
+  SCHEDULED
+  CONFIRMED
+  DECLINED
+  COMPLETED
+}
+
+
 model Campus {
-  id             String        @id @default(uuid())
-  nome           String
-  cidade         String
-  estado         String
-  ativo          Boolean       @default(true)
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  persons        Person[]
+  id        String   @id @default(uuid())
+  nome      String
+  cidade    String
+  estado    String
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  persons Person[]
+  cells   Cell[]
+  cellNetworks CellNetwork[]
+  serviceAreas ServiceArea[]
+  serviceTeams ServiceTeam[]
+  serviceMemberships ServiceMembership[]
+
   organization   Organization? @relation(fields: [organizationId], references: [id])
   organizationId String?
 }
 
 model Person {
-  id             String        @id @default(uuid())
+  id             String    @id @default(uuid())
   nome           String
   sexo           String?
   dataNascimento DateTime?
-  cpf            String?       @unique
+  cpf            String?   @unique
   telefone       String?
-  email          String?       @unique
-  ativo          Boolean       @default(true)
+  email          String?   @unique
+  ativo          Boolean   @default(true)
   dataDecisao    DateTime?
   dataBatismo    DateTime?
   dataMembresia  DateTime?
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  campusId       String
-  campus         Campus        @relation(fields: [campusId], references: [id])
-  user           User?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  campusId String
+  campus   Campus @relation(fields: [campusId], references: [id])
+
+  user User?
+
   organization   Organization? @relation(fields: [organizationId], references: [id])
   organizationId String?
+
+  cellMemberships CellMembership[]
+  cellLeaderships CellLeadership[]
+  cellSupportRoles CellSupportRole[]
+  cellNetworkSupervisions CellNetworkSupervision[]
+  meetingAttendances CellMeetingAttendance[]
+  pastoralCaresAsSubject PastoralCare[] @relation("PastoralCareSubject")
+  pastoralCaresAsResponsible PastoralCare[] @relation("PastoralCareResponsible")
+  meetingVisitor CellMeetingVisitor?
+  journeyEvents PersonJourneyEvent[]
+  familyMemberships FamilyMembership[]
+  serviceMemberships ServiceMembership[]
+  serviceSchedules ServiceSchedule[]
 }
 
 model User {
-  id             String        @id @default(uuid())
-  loginEmail     String        @unique
-  passwordHash   String
-  ativo          Boolean       @default(true)
-  ultimoLogin    DateTime?
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  personId       String        @unique
-  person         Person        @relation(fields: [personId], references: [id])
+  id           String    @id @default(uuid())
+  loginEmail   String    @unique
+  passwordHash String
+  ativo        Boolean   @default(true)
+  ultimoLogin  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  personId String @unique
+  person   Person @relation(fields: [personId], references: [id])
+
   organization   Organization? @relation(fields: [organizationId], references: [id])
   organizationId String?
+  role UserRole @default(MEMBER)
+  journeyEventsCreated PersonJourneyEvent[]
 }
 
 model Organization {
@@ -71,4 +171,385 @@ model Organization {
   campuses Campus[]
   persons  Person[]
   users    User[]
+  cells    Cell[]
+  cellNetworks CellNetwork[]
+  studies CellStudy[]
+  pastoralCares PastoralCare[]
+  journeyEvents PersonJourneyEvent[]
+  families Family[]
+  serviceAreas ServiceArea[]
+  serviceTeams ServiceTeam[]
+  serviceSchedules ServiceSchedule[]
+}
+
+model Cell {
+  id        String   @id @default(uuid())
+  nome      String
+  descricao String?
+  ativo     Boolean  @default(true)
+  status    CellStatus @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  campusId String
+  campus   Campus @relation(fields: [campusId], references: [id])
+
+  networkId String?
+  network   CellNetwork? @relation(fields: [networkId], references: [id])
+
+  meetingDay  MeetingDay?
+  meetingTime String?
+
+  memberships CellMembership[]
+  leaderships CellLeadership[]
+  supportRoles CellSupportRole[]
+  sourceMultiplications CellMultiplication[] @relation("SourceCell")
+  originMultiplication CellMultiplication? @relation("NewCell")
+  motherCellId String?
+  motherCell Cell? @relation("CellMother", fields: [motherCellId], references: [id])
+  childCells Cell[] @relation("CellMother")
+  meetings CellMeeting[]
+  location CellLocation?
+
+  @@index([organizationId])
+  @@index([campusId])
+  @@index([networkId])
+}
+
+model CellNetwork {
+  id        String   @id @default(uuid())
+  nome      String
+  descricao String?
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  campusId String
+  campus   Campus @relation(fields: [campusId], references: [id])
+
+  cells Cell[]
+  supervisions CellNetworkSupervision[]
+
+  @@index([organizationId])
+  @@index([campusId])
+  @@index([ativo])
+}
+
+model CellSupportRole {
+  id String @id @default(uuid())
+  role CellSupportRoleType
+  inicio DateTime @default(now())
+  fim DateTime?
+  ativo Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  personId String
+  person Person @relation(fields: [personId], references: [id])
+  cellId String
+  cell Cell @relation(fields: [cellId], references: [id])
+  @@index([personId])
+  @@index([cellId])
+  @@index([role])
+  @@index([ativo])
+}
+
+model CellMultiplication {
+  id String @id @default(uuid())
+  data DateTime @default(now())
+  observacao String?
+  createdAt DateTime @default(now())
+  sourceCellId String
+  sourceCell Cell @relation("SourceCell", fields: [sourceCellId], references: [id])
+  newCellId String @unique
+  newCell Cell @relation("NewCell", fields: [newCellId], references: [id])
+  @@index([sourceCellId])
+}
+
+model PersonJourneyEvent {
+  id String @id @default(uuid())
+  stage PersonJourneyStage
+  data DateTime @default(now())
+  createdAt DateTime @default(now())
+  personId String
+  person Person @relation(fields: [personId], references: [id])
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  createdByUserId String
+  createdByUser User @relation(fields: [createdByUserId], references: [id])
+  @@index([personId])
+  @@index([organizationId])
+  @@index([stage])
+}
+
+model Family {
+  id String @id @default(uuid())
+  nome String
+  ativo Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  members FamilyMembership[]
+  @@index([organizationId])
+}
+
+model FamilyMembership {
+  id String @id @default(uuid())
+  relationship FamilyRelationship
+  inicio DateTime @default(now())
+  fim DateTime?
+  ativo Boolean @default(true)
+  familyId String
+  family Family @relation(fields: [familyId], references: [id])
+  personId String
+  person Person @relation(fields: [personId], references: [id])
+  @@index([familyId])
+  @@index([personId])
+  @@index([ativo])
+}
+
+model ServiceArea {
+  id String @id @default(uuid())
+  nome String
+  descricao String?
+  scope ServiceAreaScope @default(GLOBAL)
+  ativo Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  campusId String?
+  campus Campus? @relation(fields: [campusId], references: [id])
+  teams ServiceTeam[]
+  memberships ServiceMembership[]
+  @@index([organizationId])
+  @@index([campusId])
+  @@index([ativo])
+}
+
+model ServiceTeam {
+  id String @id @default(uuid())
+  nome String
+  descricao String?
+  ativo Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  serviceAreaId String
+  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  campusId String
+  campus Campus @relation(fields: [campusId], references: [id])
+  memberships ServiceMembership[]
+  schedules ServiceSchedule[]
+  @@index([organizationId])
+  @@index([serviceAreaId])
+  @@index([campusId])
+  @@index([ativo])
+}
+
+model ServiceMembership {
+  id String @id @default(uuid())
+  role ServiceMembershipRole @default(MEMBER)
+  inicio DateTime @default(now())
+  fim DateTime?
+  ativo Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  personId String
+  person Person @relation(fields: [personId], references: [id])
+  serviceAreaId String
+  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  campusId String?
+  campus Campus? @relation(fields: [campusId], references: [id])
+  teamId String?
+  team ServiceTeam? @relation(fields: [teamId], references: [id])
+  @@index([personId])
+  @@index([serviceAreaId])
+  @@index([campusId])
+  @@index([teamId])
+  @@index([ativo])
+}
+
+model ServiceSchedule {
+  id String @id @default(uuid())
+  data DateTime
+  funcao String
+  observacao String?
+  status ServiceScheduleStatus @default(SCHEDULED)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  teamId String
+  team ServiceTeam @relation(fields: [teamId], references: [id])
+  personId String
+  person Person @relation(fields: [personId], references: [id])
+  @@index([organizationId])
+  @@index([teamId])
+  @@index([personId])
+  @@index([data])
+}
+
+
+model CellMeeting {
+  id          String   @id @default(uuid())
+  data        DateTime
+  tema        String?
+  observacoes String?
+  visitantes  Int      @default(0)
+  registroConcluidoEm DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  cellId String
+  cell   Cell @relation(fields: [cellId], references: [id])
+
+  @@index([cellId])
+  @@index([data])
+  attendances CellMeetingAttendance[]
+  visitors CellMeetingVisitor[]
+}
+
+model CellMeetingVisitor {
+  id String @id @default(uuid())
+  nome String
+  telefone String?
+  email String?
+  observacao String?
+  createdAt DateTime @default(now())
+  meetingId String
+  meeting CellMeeting @relation(fields: [meetingId], references: [id])
+  personId String? @unique
+  person Person? @relation(fields: [personId], references: [id])
+  @@index([meetingId])
+}
+
+model CellLocation {
+  id String @id @default(uuid())
+  address String
+  neighborhood String?
+  city String
+  state String
+  zipCode String?
+  latitude Float
+  longitude Float
+  updatedAt DateTime @updatedAt
+  cellId String @unique
+  cell Cell @relation(fields: [cellId], references: [id])
+}
+
+model PastoralCare {
+  id String @id @default(uuid())
+  descricao String
+  proximoPasso String?
+  dueDate DateTime?
+  status PastoralCareStatus @default(OPEN)
+  concluidoEm DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  subjectPersonId String
+  subjectPerson Person @relation("PastoralCareSubject", fields: [subjectPersonId], references: [id])
+  responsiblePersonId String
+  responsiblePerson Person @relation("PastoralCareResponsible", fields: [responsiblePersonId], references: [id])
+  @@index([organizationId])
+  @@index([subjectPersonId])
+  @@index([responsiblePersonId])
+  @@index([status])
+}
+
+model CellStudy {
+  id String @id @default(uuid())
+  titulo String
+  descricao String?
+  weekStart DateTime
+  attachmentPath String
+  attachmentName String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id])
+  @@unique([organizationId, weekStart])
+}
+
+model CellMeetingAttendance {
+  id          String   @id @default(uuid())
+  presente    Boolean  @default(true)
+  observacao  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  meetingId String
+  meeting   CellMeeting @relation(fields: [meetingId], references: [id])
+
+  personId String
+  person   Person @relation(fields: [personId], references: [id])
+
+  @@unique([meetingId, personId])
+  @@index([personId])
+}
+
+model CellNetworkSupervision {
+  id        String   @id @default(uuid())
+  inicio    DateTime @default(now())
+  fim       DateTime?
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  personId String
+  person   Person @relation(fields: [personId], references: [id])
+
+  networkId String
+  network   CellNetwork @relation(fields: [networkId], references: [id])
+
+  @@index([personId])
+  @@index([networkId])
+  @@index([ativo])
+}
+
+model CellMembership {
+  id        String    @id @default(uuid())
+  inicio    DateTime  @default(now())
+  fim       DateTime?
+  ativo     Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  personId String
+  person   Person @relation(fields: [personId], references: [id])
+
+  cellId String
+  cell   Cell   @relation(fields: [cellId], references: [id])
+
+  @@index([personId])
+  @@index([cellId])
+  @@index([ativo])
+}
+
+model CellLeadership {
+  id        String    @id @default(uuid())
+  inicio    DateTime  @default(now())
+  fim       DateTime?
+  ativo     Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  personId String
+  person   Person @relation(fields: [personId], references: [id])
+
+  cellId String
+  cell   Cell   @relation(fields: [cellId], references: [id])
+
+  @@index([personId])
+  @@index([cellId])
+  @@index([ativo])
 }

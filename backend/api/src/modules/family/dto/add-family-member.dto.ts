@@ -1,0 +1,1 @@
+import { IsEnum, IsUUID } from 'class-validator'; import { FamilyRelationship } from '../../../generated/prisma/client'; export class AddFamilyMemberDto { @IsUUID() personId: string; @IsEnum(FamilyRelationship) relationship: FamilyRelationship; }

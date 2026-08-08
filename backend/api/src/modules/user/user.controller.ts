@@ -1,6 +1,9 @@
 import {
   Controller,
   Get,
+  Param,
+  Patch,
+  Body,
   UseGuards,
 } from '@nestjs/common';
 
@@ -15,6 +18,7 @@ import {
 import {
   OrganizationContext,
 } from '../../common/context/organization-context';
+import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 
 
 @Controller('users')
@@ -36,6 +40,12 @@ export class UserController {
       context.organizationId,
     );
 
+  }
+
+  @Patch(':id/role')
+  @UseGuards(JwtAuthGuard)
+  updateRole(@Param('id') id: string, @Body() dto: UpdateUserRoleDto, @CurrentOrganization() context: OrganizationContext) {
+    return this.userService.updateRole(id, dto, context);
   }
 
 }
