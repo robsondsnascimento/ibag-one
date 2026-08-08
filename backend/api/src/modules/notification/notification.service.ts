@@ -1,7 +1,91 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { NotificationAudience } from '../../generated/prisma/client';
+import { userRoleWhere } from '../../common/access/user-role.util';
 import { OrganizationContext } from '../../common/context/organization-context';
+import { NotificationAudience } from '../../generated/prisma/client';
 import { PrismaService } from '../../database/prisma.service';
 import { CreateNotificationDto } from './dto/create-notification.dto';
+
 @Injectable()
-export class NotificationService { constructor(private readonly prisma: PrismaService) {} async create(dto: CreateNotificationDto, context: OrganizationContext) { await this.authorize(context); const recipientIds = await this.recipients(dto, context); if (!recipientIds.length) throw new BadRequestException('Não há destinatários ativos para esta notificação'); return this.prisma.notification.create({ data: { titulo: dto.titulo, mensagem: dto.mensagem, audience: dto.audience, campusId: dto.campusId, serviceAreaId: dto.serviceAreaId, serviceTeamId: dto.serviceTeamId, eventId: dto.eventId, organizationId: context.organizationId, recipients: { create: recipientIds.map(personId => ({ personId })) } }, include: { recipients: { include: { person: true } } } }); } async mine(context: OrganizationContext) { return this.prisma.notificationRecipient.findMany({ where: { personId: context.personId }, include: { notification: { include: { event: true } } }, orderBy: { deliveredAt: 'desc' } }); } async markRead(id: string, context: OrganizationContext) { const item = await this.prisma.notificationRecipient.findFirst({ where: { id, personId: context.personId, notification: { organizationId: context.organizationId } } }); if (!item) throw new NotFoundException('Notificação não encontrada'); return this.prisma.notificationRecipient.update({ where: { id }, data: { readAt: new Date() } }); } private async recipients(dto: CreateNotificationDto, context: OrganizationContext) { await this.validateTarget(dto, context); if (dto.audience === NotificationAudience.ORGANIZATION) return (await this.prisma.person.findMany({ where: { organizationId: context.organizationId, ativo: true }, select: { id: true } })).map(item => item.id); if (dto.audience === NotificationAudience.CAMPUS) return (await this.prisma.person.findMany({ where: { organizationId: context.organizationId, campusId: dto.campusId!, ativo: true }, select: { id: true } })).map(item => item.id); if (dto.audience === NotificationAudience.SERVICE_AREA) return (await this.prisma.serviceMembership.findMany({ where: { serviceAreaId: dto.serviceAreaId!, ativo: true }, select: { personId: true }, distinct: ['personId'] })).map(item => item.personId); if (dto.audience === NotificationAudience.SERVICE_TEAM) return (await this.prisma.serviceMembership.findMany({ where: { teamId: dto.serviceTeamId!, ativo: true }, select: { personId: true }, distinct: ['personId'] })).map(item => item.personId); return [dto.personId!]; } private async validateTarget(dto: CreateNotificationDto, context: OrganizationContext) { const required: Record<NotificationAudience, keyof CreateNotificationDto | undefined> = { ORGANIZATION: undefined, CAMPUS: 'campusId', SERVICE_AREA: 'serviceAreaId', SERVICE_TEAM: 'serviceTeamId', PERSON: 'personId' }; const field = required[dto.audience]; if (field && !dto[field]) throw new BadRequestException('O público selecionado exige um destinatário específico'); const checks = [dto.campusId ? this.prisma.campus.findFirst({ where: { id: dto.campusId, organizationId: context.organizationId } }) : null, dto.serviceAreaId ? this.prisma.serviceArea.findFirst({ where: { id: dto.serviceAreaId, organizationId: context.organizationId } }) : null, dto.serviceTeamId ? this.prisma.serviceTeam.findFirst({ where: { id: dto.serviceTeamId, organizationId: context.organizationId } }) : null, dto.personId ? this.prisma.person.findFirst({ where: { id: dto.personId, organizationId: context.organizationId } }) : null, dto.eventId ? this.prisma.event.findFirst({ where: { id: dto.eventId, organizationId: context.organizationId } }) : null]; if ((await Promise.all(checks)).some(value => value === null)) throw new NotFoundException('Público ou evento não encontrado na organização atual'); } private async authorize(context: OrganizationContext) { const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId } }); if (!user || !['SECRETARY', 'ADMIN', 'SUPER_ADMIN', 'PASTOR'].includes(user.role)) throw new ForbiddenException('Somente liderança autorizada pode enviar notificações'); } }
+export class NotificationService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(dto: CreateNotificationDto, context: OrganizationContext) {
+    await this.authorize(context);
+    const recipientIds = await this.recipients(dto, context);
+    if (!recipientIds.length) throw new BadRequestException('Não há destinatários ativos para esta notificação');
+    return this.prisma.notification.create({
+      data: {
+        titulo: dto.titulo,
+        mensagem: dto.mensagem,
+        audience: dto.audience,
+        campusId: dto.campusId,
+        serviceAreaId: dto.serviceAreaId,
+        serviceTeamId: dto.serviceTeamId,
+        eventId: dto.eventId,
+        organizationId: context.organizationId,
+        recipients: { create: recipientIds.map(personId => ({ personId })) },
+      },
+      include: { recipients: { include: { person: true } } },
+    });
+  }
+
+  async mine(context: OrganizationContext) {
+    return this.prisma.notificationRecipient.findMany({
+      where: { personId: context.personId },
+      include: { notification: { include: { event: true } } },
+      orderBy: { deliveredAt: 'desc' },
+    });
+  }
+
+  async markRead(id: string, context: OrganizationContext) {
+    const item = await this.prisma.notificationRecipient.findFirst({
+      where: { id, personId: context.personId, notification: { organizationId: context.organizationId } },
+    });
+    if (!item) throw new NotFoundException('Notificação não encontrada');
+    return this.prisma.notificationRecipient.update({ where: { id }, data: { readAt: new Date() } });
+  }
+
+  private async recipients(dto: CreateNotificationDto, context: OrganizationContext) {
+    await this.validateTarget(dto, context);
+    if (dto.audience === NotificationAudience.ORGANIZATION) {
+      return (await this.prisma.person.findMany({ where: { organizationId: context.organizationId, ativo: true }, select: { id: true } })).map(item => item.id);
+    }
+    if (dto.audience === NotificationAudience.CAMPUS) {
+      return (await this.prisma.person.findMany({ where: { organizationId: context.organizationId, campusId: dto.campusId!, ativo: true }, select: { id: true } })).map(item => item.id);
+    }
+    if (dto.audience === NotificationAudience.SERVICE_AREA) {
+      return (await this.prisma.serviceMembership.findMany({ where: { serviceAreaId: dto.serviceAreaId!, ativo: true }, select: { personId: true }, distinct: ['personId'] })).map(item => item.personId);
+    }
+    if (dto.audience === NotificationAudience.SERVICE_TEAM) {
+      return (await this.prisma.serviceMembership.findMany({ where: { teamId: dto.serviceTeamId!, ativo: true }, select: { personId: true }, distinct: ['personId'] })).map(item => item.personId);
+    }
+    return [dto.personId!];
+  }
+
+  private async validateTarget(dto: CreateNotificationDto, context: OrganizationContext) {
+    const required: Record<NotificationAudience, keyof CreateNotificationDto | undefined> = {
+      ORGANIZATION: undefined,
+      CAMPUS: 'campusId',
+      SERVICE_AREA: 'serviceAreaId',
+      SERVICE_TEAM: 'serviceTeamId',
+      PERSON: 'personId',
+    };
+    const field = required[dto.audience];
+    if (field && !dto[field]) throw new BadRequestException('O público selecionado exige um destinatário específico');
+    const checks = [
+      dto.campusId ? this.prisma.campus.findFirst({ where: { id: dto.campusId, organizationId: context.organizationId } }) : null,
+      dto.serviceAreaId ? this.prisma.serviceArea.findFirst({ where: { id: dto.serviceAreaId, organizationId: context.organizationId } }) : null,
+      dto.serviceTeamId ? this.prisma.serviceTeam.findFirst({ where: { id: dto.serviceTeamId, organizationId: context.organizationId } }) : null,
+      dto.personId ? this.prisma.person.findFirst({ where: { id: dto.personId, organizationId: context.organizationId } }) : null,
+      dto.eventId ? this.prisma.event.findFirst({ where: { id: dto.eventId, organizationId: context.organizationId } }) : null,
+    ];
+    if ((await Promise.all(checks)).some(value => value === null)) throw new NotFoundException('Público ou evento não encontrado na organização atual');
+  }
+
+  private async authorize(context: OrganizationContext) {
+    const user = await this.prisma.user.findFirst({
+      where: { id: context.userId, organizationId: context.organizationId, ...userRoleWhere(['SECRETARY', 'ADMIN', 'SUPER_ADMIN', 'PASTOR']) },
+    });
+    if (!user) throw new ForbiddenException('Somente liderança autorizada pode enviar notificações');
+  }
+}

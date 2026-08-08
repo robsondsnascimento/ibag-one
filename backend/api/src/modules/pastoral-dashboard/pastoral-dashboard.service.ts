@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import { OrganizationContext } from '../../common/context/organization-context';
+import { userRoleWhere } from '../../common/access/user-role.util';
 @Injectable()
 export class PastoralDashboardService {
   constructor(private readonly prisma: PrismaService) {}
@@ -47,5 +48,5 @@ export class PastoralDashboardService {
     const inicio = start ? new Date(start) : now; const fim = end ? new Date(end) : defaultEnd;
     return this.prisma.event.findMany({ where: { organizationId: context.organizationId, status: { in: ['REQUESTED', 'APPROVED'] }, inicio: { gte: inicio, lte: fim }, ...(campusId ? { campusId } : {}) }, include: { campus: true, responsiblePerson: true, spaces: { include: { space: true } }, serviceAreas: { include: { serviceArea: true } }, teams: { include: { team: true } } }, orderBy: { inicio: 'asc' } });
   }
-  private async authorize(context: OrganizationContext) { const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId } }); if (!user || !['SECRETARY', 'ADMIN', 'SUPER_ADMIN'].includes(user.role)) throw new ForbiddenException('Sem acesso ao painel pastoral'); }
+  private async authorize(context: OrganizationContext) { const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId, ...userRoleWhere(['SECRETARY', 'ADMIN', 'SUPER_ADMIN']) } }); if (!user) throw new ForbiddenException('Sem acesso ao painel pastoral'); }
 }

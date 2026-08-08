@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { PrismaService } from '../../database/prisma.service';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { CreateCellStudyDto } from './dto/create-cell-study.dto';
+import { userRoleWhere } from '../../common/access/user-role.util';
 
 @Injectable()
 export class CellStudyService {
@@ -24,7 +25,7 @@ export class CellStudyService {
     return study;
   }
   private async assertSecretary(context: OrganizationContext) {
-    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId, role: { in: ['SECRETARY', 'SUPER_ADMIN'] } } });
+    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId, ...userRoleWhere(['SECRETARY', 'SUPER_ADMIN']) } });
     if (!user) throw new ForbiddenException('Somente o secretário pode publicar estudos');
   }
   private weekStart(date: Date) { const result = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())); const day = result.getUTCDay(); result.setUTCDate(result.getUTCDate() - (day === 0 ? 6 : day - 1)); return result; }

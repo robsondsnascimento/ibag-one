@@ -400,6 +400,7 @@ export const ModelName = {
   Campus: 'Campus',
   Person: 'Person',
   User: 'User',
+  UserRoleAssignment: 'UserRoleAssignment',
   Organization: 'Organization',
   Cell: 'Cell',
   CellNetwork: 'CellNetwork',
@@ -460,7 +461,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "campus" | "person" | "user" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceSchedule" | "space" | "event" | "worshipOrder" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellMembership" | "cellLeadership"
+    modelProps: "campus" | "person" | "user" | "userRoleAssignment" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceSchedule" | "space" | "event" | "worshipOrder" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellMembership" | "cellLeadership"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -683,6 +684,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserRoleAssignment: {
+      payload: Prisma.$UserRoleAssignmentPayload<ExtArgs>
+      fields: Prisma.UserRoleAssignmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserRoleAssignmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserRoleAssignmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        findFirst: {
+          args: Prisma.UserRoleAssignmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserRoleAssignmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        findMany: {
+          args: Prisma.UserRoleAssignmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>[]
+        }
+        create: {
+          args: Prisma.UserRoleAssignmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        createMany: {
+          args: Prisma.UserRoleAssignmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserRoleAssignmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>[]
+        }
+        delete: {
+          args: Prisma.UserRoleAssignmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        update: {
+          args: Prisma.UserRoleAssignmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserRoleAssignmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserRoleAssignmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserRoleAssignmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserRoleAssignmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        aggregate: {
+          args: Prisma.UserRoleAssignmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserRoleAssignment>
+        }
+        groupBy: {
+          args: Prisma.UserRoleAssignmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserRoleAssignmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserRoleAssignmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserRoleAssignmentCountAggregateOutputType> | number
         }
       }
     }
@@ -4106,6 +4181,17 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const UserRoleAssignmentScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  grantedByUserId: 'grantedByUserId'
+} as const
+
+export type UserRoleAssignmentScalarFieldEnum = (typeof UserRoleAssignmentScalarFieldEnum)[keyof typeof UserRoleAssignmentScalarFieldEnum]
+
+
 export const OrganizationScalarFieldEnum = {
   id: 'id',
   nome: 'nome',
@@ -5242,6 +5328,7 @@ export type GlobalOmitConfig = {
   campus?: Prisma.CampusOmit
   person?: Prisma.PersonOmit
   user?: Prisma.UserOmit
+  userRoleAssignment?: Prisma.UserRoleAssignmentOmit
   organization?: Prisma.OrganizationOmit
   cell?: Prisma.CellOmit
   cellNetwork?: Prisma.CellNetworkOmit

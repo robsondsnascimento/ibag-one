@@ -244,10 +244,24 @@ model User {
   organization   Organization? @relation(fields: [organizationId], references: [id])
   organizationId String?
   role UserRole @default(MEMBER)
+  additionalRoles UserRoleAssignment[] @relation("UserAdditionalRoles")
+  rolesGranted UserRoleAssignment[] @relation("UserAdditionalRolesGranted")
   journeyEventsCreated PersonJourneyEvent[]
   eventsCreated Event[] @relation("EventCreatedBy")
   eventHistory EventHistory[]
   worshipOrdersCreated WorshipOrder[]
+}
+
+model UserRoleAssignment {
+  id String @id @default(uuid())
+  role UserRole
+  createdAt DateTime @default(now())
+  userId String
+  user User @relation("UserAdditionalRoles", fields: [userId], references: [id])
+  grantedByUserId String?
+  grantedByUser User? @relation("UserAdditionalRolesGranted", fields: [grantedByUserId], references: [id])
+  @@unique([userId, role])
+  @@index([role])
 }
 
 model Organization {

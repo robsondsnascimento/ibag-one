@@ -5,6 +5,9 @@ import * as bcrypt from 'bcrypt';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
+import { AssignUserRoleDto } from './dto/assign-user-role.dto';
+import { UserRole } from '../../generated/prisma/client';
+import { userRoleWhere } from '../../common/access/user-role.util';
 
 
 @Injectable()
@@ -82,7 +85,7 @@ export class UserService {
     organizationId: string,
   ) {
 
-    return this.prisma.user.findMany({
+    const users = await this.prisma.user.findMany({
       where: {
         organizationId,
       },
@@ -97,6 +100,12 @@ export class UserService {
 
         role: true,
 
+        additionalRoles: {
+          select: {
+            role: true,
+          },
+        },
+
         person: {
           select: {
             id: true,
@@ -107,14 +116,46 @@ export class UserService {
       },
     });
 
+    return users.map(({ additionalRoles, ...user }) => ({
+      ...user,
+      roles: [...new Set([user.role, ...additionalRoles.map(assignment => assignment.role)])],
+    }));
+
   }
 
   async updateRole(id: string, dto: UpdateUserRoleDto, context: OrganizationContext) {
-    const administrator = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId, role: { in: ['ADMIN', 'SUPER_ADMIN'] } } });
+    const administrator = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId, ...userRoleWhere([UserRole.ADMIN, UserRole.SUPER_ADMIN]) } });
     if (!administrator) throw new ForbiddenException('Somente administradores podem alterar perfis');
     const user = await this.prisma.user.findFirst({ where: { id, organizationId: context.organizationId } });
     if (!user) throw new NotFoundException('Usuário não encontrado na organização atual');
     return this.prisma.user.update({ where: { id }, data: { role: dto.role }, select: { id: true, loginEmail: true, role: true } });
+  }
+
+  async assignAdditionalRole(id: string, dto: AssignUserRoleDto, context: OrganizationContext) {
+    await this.assertAdministrator(context);
+    const user = await this.prisma.user.findFirst({ where: { id, organizationId: context.organizationId } });
+    if (!user) throw new NotFoundException('Usuário não encontrado na organização atual');
+    if (user.role === dto.role) throw new ForbiddenException('Esta já é a função principal do usuário');
+    return this.prisma.userRoleAssignment.upsert({
+      where: { userId_role: { userId: id, role: dto.role } },
+      create: { userId: id, role: dto.role, grantedByUserId: context.userId },
+      update: {},
+      select: { id: true, role: true, createdAt: true },
+    });
+  }
+
+  async removeAdditionalRole(id: string, role: UserRole, context: OrganizationContext) {
+    await this.assertAdministrator(context);
+    const user = await this.prisma.user.findFirst({ where: { id, organizationId: context.organizationId } });
+    if (!user) throw new NotFoundException('Usuário não encontrado na organização atual');
+    const result = await this.prisma.userRoleAssignment.deleteMany({ where: { userId: id, role } });
+    if (!result.count) throw new NotFoundException('Função adicional não encontrada para este usuário');
+    return { removed: true };
+  }
+
+  private async assertAdministrator(context: OrganizationContext) {
+    const administrator = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId, ...userRoleWhere([UserRole.ADMIN, UserRole.SUPER_ADMIN]) } });
+    if (!administrator) throw new ForbiddenException('Somente administradores podem gerenciar funções');
   }
 
 

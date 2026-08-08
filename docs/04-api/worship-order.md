@@ -2,50 +2,52 @@
 
 ## Objetivo
 
-Cada ordem de culto pertence a um Ãºnico evento do tipo `WORSHIP`. Ela estrutura a sequÃªncia da celebraÃ§Ã£o, os materiais necessÃ¡rios e as demandas direcionadas Ã s Ã¡reas de serviÃ§o envolvidas.
+Cada ordem de culto pertence a um único evento do tipo `WORSHIP`. Ela estrutura a sequência da celebração, seus materiais e as demandas dirigidas às áreas de serviço envolvidas.
 
 ## Fluxo
 
-1. Um culto Ã© cadastrado e aprovado na agenda.
-2. A secretaria, administraÃ§Ã£o, pastoral, criador do evento ou responsÃ¡vel pelo culto cria a ordem.
-3. Enquanto estiver em rascunho, sÃ£o adicionados itens, materiais e demandas.
-4. A ordem Ã© publicada quando houver pelo menos um item.
-5. O responsÃ¡vel de cada demanda, ou a lideranÃ§a que monta a ordem, registra sua conclusÃ£o.
+1. Um culto é cadastrado e aprovado na agenda.
+2. A liderança autorizada cria a ordem em rascunho.
+3. Itens, materiais e demandas são incluídos e organizados.
+4. A ordem é publicada quando houver ao menos um item.
+5. As áreas recebem notificações e registram a conclusão das demandas.
 
-## Regras de domÃ­nio
+## Regras de domínio
 
-- SÃ³ Ã© permitida uma ordem por culto.
-- O culto precisa ser um evento `WORSHIP` aprovado e da organizaÃ§Ã£o do usuÃ¡rio.
-- A sequÃªncia Ã© Ãºnica dentro da mesma ordem.
-- Itens e demandas sÃ³ podem ser incluÃ­dos enquanto a ordem estiver em `DRAFT`.
-- Depois de publicada, a ordem nÃ£o recebe alteraÃ§Ãµes; demandas pendentes ainda podem ser concluÃ­das.
-- Uma Ã¡rea indicada em item ou demanda deve estar ativa, disponÃ­vel no campus e jÃ¡ vinculada ao evento de culto.
-- O responsÃ¡vel de uma demanda deve ser uma pessoa ativa e ter vÃ­nculo ativo com a Ã¡rea indicada.
-- Todos os acessos verificam o `organizationId` proveniente do token.
+- Só é permitida uma ordem por culto.
+- O culto precisa ser um evento `WORSHIP` aprovado da organização atual.
+- A sequência é única dentro da mesma ordem.
+- Itens, materiais, demandas, edições, exclusões e reordenações só são permitidos em `DRAFT`.
+- A reordenação deve receber todos os itens da ordem, com sequências únicas.
+- Ao excluir um item, seus materiais e demandas também são removidos.
+- Depois de publicada, a ordem não recebe alterações; demandas pendentes ainda podem ser concluídas ou canceladas.
+- A área indicada em item ou demanda deve estar ativa, disponível no campus e vinculada ao evento de culto.
+- O responsável de uma demanda deve ser uma pessoa ativa com vínculo ativo na área indicada.
+- Todos os acessos verificam o `organizationId` do usuário autenticado.
 
-## PermissÃµes para montar a ordem
+## Permissões
 
-- `WORSHIP_ORDER_MANAGER` (ResponsÃ¡vel por Ordem de Culto), `SECRETARY`, `ADMIN`, `SUPER_ADMIN` e `PASTOR` podem montar e publicar ordens de culto em todos os campus da organizaÃ§Ã£o.
-- O usuÃ¡rio que criou o evento e a pessoa definida como responsÃ¡vel pelo evento tambÃ©m podem fazer isso.
-- Qualquer usuÃ¡rio autenticado pode consultar uma ordem da sua organizaÃ§Ã£o.
-- A pessoa responsÃ¡vel por uma demanda pode concluÃ­-la; a lideranÃ§a que pode montar a ordem tambÃ©m pode concluÃ­-la.
-
-## FunÃ§Ã£o ResponsÃ¡vel por Ordem de Culto
-
-Essa Ã© uma funÃ§Ã£o organizacional, normalmente atribuÃ­da Ã  pessoa que centraliza as ordens dos cultos da IBAG. Um administrador pode concedÃª-la pela rota existente `PATCH /users/:id/role`, enviando `"role": "WORSHIP_ORDER_MANAGER"`. A permissÃ£o vale para todos os campus da mesma organizaÃ§Ã£o e nÃ£o concede permissÃµes administrativas fora do mÃ³dulo de Ordem de Culto.
+- `WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN` e `PASTOR` podem montar, editar e publicar ordens em todos os campus da organização.
+- O criador do evento e a pessoa responsável pelo evento também podem montar a ordem.
+- Qualquer usuário autenticado pode consultar uma ordem da própria organização.
+- O responsável por uma demanda pode concluí-la; a liderança que monta a ordem também pode concluí-la ou cancelá-la.
 
 ## Endpoints
 
-| MÃ©todo | Rota | Finalidade |
+| Método | Rota | Finalidade |
 | --- | --- | --- |
 | `POST` | `/worship-orders` | Cria uma ordem para um culto aprovado. |
 | `GET` | `/worship-orders/event/:eventId` | Consulta a ordem pelo evento de culto. |
 | `GET` | `/worship-orders/:id` | Consulta uma ordem completa. |
-| `POST` | `/worship-orders/:id/items` | Adiciona um item ao rascunho. |
+| `POST` | `/worship-orders/:id/items` | Adiciona item ao rascunho. |
+| `PATCH` | `/worship-orders/items/:id` | Edita um item do rascunho. |
+| `DELETE` | `/worship-orders/items/:id` | Exclui um item do rascunho. |
+| `PATCH` | `/worship-orders/:id/items/order` | Reordena todos os itens. |
 | `POST` | `/worship-orders/items/:id/materials` | Adiciona material a um item. |
-| `POST` | `/worship-orders/items/:id/demands` | Cria uma demanda por Ã¡rea. |
+| `POST` | `/worship-orders/items/:id/demands` | Cria uma demanda por área. |
 | `PATCH` | `/worship-orders/:id/publish` | Publica a ordem. |
 | `PATCH` | `/worship-orders/demands/:id/complete` | Conclui uma demanda pendente. |
+| `PATCH` | `/worship-orders/demands/:id/cancel` | Cancela uma demanda pendente. |
 
 ### Criar ordem
 
@@ -56,17 +58,30 @@ POST /worship-orders
 }
 ```
 
-### Adicionar item
+### Adicionar ou editar item
 
 ```json
-POST /worship-orders/:id/items
 {
   "sequencia": 1,
   "titulo": "Louvor",
   "horario": "19:45",
   "responsiblePersonId": "uuid-da-pessoa",
   "serviceAreaId": "uuid-da-area",
-  "observacoes": "Encerrar com transiÃ§Ã£o para os avisos."
+  "observacoes": "Encerrar com transição para os avisos."
+}
+```
+
+Para editar, envie apenas os campos que devem mudar em `PATCH /worship-orders/items/:id`.
+
+### Reordenar itens
+
+```json
+PATCH /worship-orders/:id/items/order
+{
+  "items": [
+    { "id": "uuid-item-abertura", "sequencia": 1 },
+    { "id": "uuid-item-louvor", "sequencia": 2 }
+  ]
 }
 ```
 
@@ -78,7 +93,7 @@ POST /worship-orders/:id/items
 POST /worship-orders/items/:id/materials
 {
   "type": "PRO_PRESENTER",
-  "titulo": "Letras do repertÃ³rio",
+  "titulo": "Letras do repertório",
   "referencia": "https://exemplo/arquivo"
 }
 ```
@@ -88,9 +103,26 @@ POST /worship-orders/items/:id/materials
 ```json
 POST /worship-orders/items/:id/demands
 {
-  "descricao": "Enviar repertÃ³rio final para a produÃ§Ã£o.",
+  "descricao": "Enviar repertório final para a produção.",
   "serviceAreaId": "uuid-da-area-de-musica",
   "responsiblePersonId": "uuid-do-responsavel",
   "dueAt": "2026-08-13T18:00:00.000Z"
+}
+```
+
+## Notificações
+
+- Ao criar uma demanda, todos os integrantes ativos da área de serviço indicada recebem uma notificação interna.
+- Ao publicar a ordem, os integrantes das áreas vinculadas ao culto recebem uma notificação interna.
+- Demandas concluídas ou canceladas preservam o status para acompanhamento da liderança.
+
+## Função Responsável por Ordem de Culto
+
+`WORSHIP_ORDER_MANAGER` é uma função adicional organizacional. Um administrador pode concedê-la sem substituir a função principal:
+
+```json
+POST /users/:id/roles
+{
+  "role": "WORSHIP_ORDER_MANAGER"
 }
 ```

@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 import { CreateSpaceDto } from './dto/create-space.dto';
+import { userRoleWhere } from '../../common/access/user-role.util';
 
 @Injectable()
 export class SpaceService {
@@ -16,7 +17,7 @@ export class SpaceService {
     return this.prisma.space.findMany({ where: { organizationId: context.organizationId, ativo: true, ...(campusId ? { campusId } : {}) }, include: { campus: true }, orderBy: { nome: 'asc' } });
   }
   private async authorize(context: OrganizationContext) {
-    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId } });
-    if (!user || !['SECRETARY', 'ADMIN', 'SUPER_ADMIN'].includes(user.role)) throw new ForbiddenException('Somente secretaria ou administração pode gerenciar espaços');
+    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId, ...userRoleWhere(['SECRETARY', 'ADMIN', 'SUPER_ADMIN']) } });
+    if (!user) throw new ForbiddenException('Somente secretaria ou administração pode gerenciar espaços');
   }
 }

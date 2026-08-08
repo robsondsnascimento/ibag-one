@@ -3,8 +3,10 @@ import {
   Get,
   Param,
   Patch,
+  Post,
   Body,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
@@ -19,6 +21,8 @@ import {
   OrganizationContext,
 } from '../../common/context/organization-context';
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
+import { AssignUserRoleDto } from './dto/assign-user-role.dto';
+import { UserRole } from '../../generated/prisma/client';
 
 
 @Controller('users')
@@ -46,6 +50,18 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   updateRole(@Param('id') id: string, @Body() dto: UpdateUserRoleDto, @CurrentOrganization() context: OrganizationContext) {
     return this.userService.updateRole(id, dto, context);
+  }
+
+  @Post(':id/roles')
+  @UseGuards(JwtAuthGuard)
+  assignAdditionalRole(@Param('id') id: string, @Body() dto: AssignUserRoleDto, @CurrentOrganization() context: OrganizationContext) {
+    return this.userService.assignAdditionalRole(id, dto, context);
+  }
+
+  @Delete(':id/roles/:role')
+  @UseGuards(JwtAuthGuard)
+  removeAdditionalRole(@Param('id') id: string, @Param('role') role: UserRole, @CurrentOrganization() context: OrganizationContext) {
+    return this.userService.removeAdditionalRole(id, role, context);
   }
 
 }

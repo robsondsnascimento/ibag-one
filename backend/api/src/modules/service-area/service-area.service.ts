@@ -7,6 +7,7 @@ import { CreateServiceAreaDto } from './dto/create-service-area.dto';
 import { CreateServiceScheduleDto } from './dto/create-service-schedule.dto';
 import { CreateServiceTeamDto } from './dto/create-service-team.dto';
 import { UpdateServiceScheduleStatusDto } from './dto/update-service-schedule-status.dto';
+import { userRoleWhere } from '../../common/access/user-role.util';
 
 @Injectable()
 export class ServiceAreaService {
@@ -132,13 +133,13 @@ export class ServiceAreaService {
   }
 
   private async assertCentralManagement(context: OrganizationContext) {
-    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId } });
-    if (!user || !['SECRETARY', 'ADMIN', 'SUPER_ADMIN'].includes(user.role)) throw new ForbiddenException('Somente secretaria ou administração pode criar áreas de serviço');
+    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId, ...userRoleWhere(['SECRETARY', 'ADMIN', 'SUPER_ADMIN']) } });
+    if (!user) throw new ForbiddenException('Somente secretaria ou administração pode criar áreas de serviço');
   }
 
   private async assertAreaManagement(areaId: string, context: OrganizationContext, teamId?: string, campusId?: string, targetRole?: ServiceMembershipRole) {
-    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId } });
-    if (user && ['SECRETARY', 'ADMIN', 'SUPER_ADMIN'].includes(user.role)) return;
+    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId, ...userRoleWhere(['SECRETARY', 'ADMIN', 'SUPER_ADMIN']) } });
+    if (user) return;
     const general = await this.prisma.serviceMembership.findFirst({ where: { personId: context.personId, serviceAreaId: areaId, role: ServiceMembershipRole.GENERAL_LEADER, ativo: true } });
     if (general) return;
     if (campusId) {

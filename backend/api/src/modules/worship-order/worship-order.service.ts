@@ -1,11 +1,14 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { EventStatus, EventType, WorshipOrderStatus } from '../../generated/prisma/client';
+import { EventStatus, EventType, NotificationAudience, WorshipOrderStatus } from '../../generated/prisma/client';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 import { CreateWorshipOrderDto } from './dto/create-worship-order.dto';
 import { CreateWorshipOrderItemDto } from './dto/create-worship-order-item.dto';
 import { CreateWorshipOrderMaterialDto } from './dto/create-worship-order-material.dto';
 import { CreateWorshipServiceDemandDto } from './dto/create-worship-service-demand.dto';
+import { hasAnyUserRole } from '../../common/access/user-role.util';
+import { ReorderWorshipOrderItemsDto } from './dto/reorder-worship-order-items.dto';
+import { UpdateWorshipOrderItemDto } from './dto/update-worship-order-item.dto';
 
 @Injectable()
 export class WorshipOrderService {
@@ -56,6 +59,58 @@ export class WorshipOrderService {
     });
   }
 
+  async updateItem(itemId: string, dto: UpdateWorshipOrderItemDto, context: OrganizationContext) {
+    const item = await this.item(itemId, context);
+    await this.assertManage(item.order.event, context);
+    this.assertDraft(item.order);
+
+    if (dto.responsiblePersonId) await this.person(dto.responsiblePersonId, context);
+    if (dto.serviceAreaId) await this.eventArea(dto.serviceAreaId, item.order.event, context);
+
+    return this.prisma.worshipOrderItem.update({
+      where: { id: itemId },
+      data: dto,
+      include: this.itemDetails,
+    });
+  }
+
+  async deleteItem(itemId: string, context: OrganizationContext) {
+    const item = await this.item(itemId, context);
+    await this.assertManage(item.order.event, context);
+    this.assertDraft(item.order);
+
+    return this.prisma.$transaction(async tx => {
+      await tx.worshipServiceDemand.deleteMany({ where: { itemId } });
+      await tx.worshipOrderMaterial.deleteMany({ where: { itemId } });
+      return tx.worshipOrderItem.delete({ where: { id: itemId } });
+    });
+  }
+
+  async reorderItems(orderId: string, dto: ReorderWorshipOrderItemsDto, context: OrganizationContext) {
+    const order = await this.order(orderId, context);
+    await this.assertManage(order.event, context);
+    this.assertDraft(order);
+
+    const existing = await this.prisma.worshipOrderItem.findMany({ where: { orderId }, select: { id: true, sequencia: true } });
+    const existingIds = new Set(existing.map(item => item.id));
+    const requestedIds = new Set(dto.items.map(item => item.id));
+    const sequences = new Set(dto.items.map(item => item.sequencia));
+    if (existing.length !== dto.items.length || requestedIds.size !== dto.items.length || sequences.size !== dto.items.length || [...requestedIds].some(id => !existingIds.has(id))) {
+      throw new BadRequestException('A reordenação deve informar todos os itens da ordem, sem repetições');
+    }
+
+    const offset = Math.max(0, ...existing.map(item => item.sequencia), ...dto.items.map(item => item.sequencia)) + existing.length + 1;
+    await this.prisma.$transaction(async tx => {
+      for (const item of existing) {
+        await tx.worshipOrderItem.update({ where: { id: item.id }, data: { sequencia: item.sequencia + offset } });
+      }
+      for (const item of dto.items) {
+        await tx.worshipOrderItem.update({ where: { id: item.id }, data: { sequencia: item.sequencia } });
+      }
+    });
+    return this.order(orderId, context);
+  }
+
   async addMaterial(itemId: string, dto: CreateWorshipOrderMaterialDto, context: OrganizationContext) {
     const item = await this.item(itemId, context);
     await this.assertManage(item.order.event, context);
@@ -77,10 +132,12 @@ export class WorshipOrderService {
       if (!membership) throw new BadRequestException('O responsÃ¡vel precisa ter vÃ­nculo ativo com a Ã¡rea de serviÃ§o da demanda');
     }
 
-    return this.prisma.worshipServiceDemand.create({
+    const demand = await this.prisma.worshipServiceDemand.create({
       data: { ...dto, dueAt: dto.dueAt ? new Date(dto.dueAt) : undefined, itemId },
       include: { serviceArea: true, responsiblePerson: true, item: { select: { id: true, titulo: true, orderId: true } } },
     });
+    await this.notifyArea(dto.serviceAreaId, item.order.event, context, 'Nova demanda na Ordem de Culto', `A área recebeu a demanda "${dto.descricao}" no item "${item.titulo}".`);
+    return demand;
   }
 
   async publish(id: string, context: OrganizationContext) {
@@ -89,11 +146,13 @@ export class WorshipOrderService {
     this.assertDraft(order);
     if (!order.items.length) throw new BadRequestException('Inclua ao menos um item antes de publicar a ordem de culto');
 
-    return this.prisma.worshipOrder.update({
+    const published = await this.prisma.worshipOrder.update({
       where: { id },
       data: { status: WorshipOrderStatus.PUBLISHED },
       include: this.details,
     });
+    await Promise.all(published.event.serviceAreas.map(area => this.notifyArea(area.serviceAreaId, published.event, context, 'Ordem de Culto publicada', `A ordem do culto "${published.event.titulo}" foi publicada.`)));
+    return published;
   }
 
   async completeDemand(id: string, context: OrganizationContext) {
@@ -111,6 +170,42 @@ export class WorshipOrderService {
       where: { id },
       data: { status: 'COMPLETED', completedAt: new Date() },
       include: { serviceArea: true, responsiblePerson: true, item: { select: { id: true, titulo: true, orderId: true } } },
+    });
+  }
+
+  async cancelDemand(id: string, context: OrganizationContext) {
+    const demand = await this.prisma.worshipServiceDemand.findFirst({
+      where: { id, item: { order: { event: { organizationId: context.organizationId } } } },
+      include: { item: { include: { order: { include: { event: true } } } } },
+    });
+    if (!demand) throw new NotFoundException('Demanda da ordem de culto não encontrada');
+    if (demand.status !== 'PENDING') throw new BadRequestException('Somente demandas pendentes podem ser canceladas');
+    await this.assertManage(demand.item.order.event, context);
+
+    return this.prisma.worshipServiceDemand.update({
+      where: { id },
+      data: { status: 'CANCELLED' },
+      include: { serviceArea: true, responsiblePerson: true, item: { select: { id: true, titulo: true, orderId: true } } },
+    });
+  }
+
+  private async notifyArea(serviceAreaId: string, event: { id: string; titulo: string }, context: OrganizationContext, titulo: string, mensagem: string) {
+    const recipients = await this.prisma.serviceMembership.findMany({
+      where: { serviceAreaId, ativo: true, serviceArea: { organizationId: context.organizationId } },
+      select: { personId: true },
+      distinct: ['personId'],
+    });
+    if (!recipients.length) return;
+    await this.prisma.notification.create({
+      data: {
+        titulo,
+        mensagem,
+        audience: NotificationAudience.SERVICE_AREA,
+        organizationId: context.organizationId,
+        eventId: event.id,
+        serviceAreaId,
+        recipients: { create: recipients.map(recipient => ({ personId: recipient.personId })) },
+      },
     });
   }
 
@@ -163,9 +258,10 @@ export class WorshipOrderService {
   private async assertManage(event: { createdByUserId: string; responsiblePersonId: string | null }, context: OrganizationContext) {
     const user = await this.prisma.user.findFirst({
       where: { id: context.userId, organizationId: context.organizationId, ativo: true },
+      include: { additionalRoles: { select: { role: true } } },
     });
     if (!user) throw new ForbiddenException('UsuÃ¡rio sem vÃ­nculo organizacional ativo');
-    if (['SECRETARY', 'WORSHIP_ORDER_MANAGER', 'ADMIN', 'SUPER_ADMIN', 'PASTOR'].includes(user.role)) return;
+    if (hasAnyUserRole(user, ['SECRETARY', 'WORSHIP_ORDER_MANAGER', 'ADMIN', 'SUPER_ADMIN', 'PASTOR'])) return;
     if (event.createdByUserId === context.userId || event.responsiblePersonId === context.personId) return;
     throw new ForbiddenException('Somente secretaria, administraÃ§Ã£o, pastoral ou a lideranÃ§a responsÃ¡vel pelo culto pode montar a ordem');
   }

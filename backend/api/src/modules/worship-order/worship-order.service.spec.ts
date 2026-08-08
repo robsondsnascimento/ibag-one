@@ -5,6 +5,55 @@ describe('WorshipOrderService', () => {
   const context = { userId: 'user-1', personId: 'person-1', organizationId: 'org-1' };
   const event = { id: 'event-1', campusId: 'campus-1', createdByUserId: 'user-2', responsiblePersonId: null, serviceAreas: [{ serviceAreaId: 'area-1' }] };
 
+  it('bloqueia a edição de um item depois da publicação da ordem', async () => {
+    const prisma: any = {
+      worshipOrderItem: { findFirst: jest.fn().mockResolvedValue({ id: 'item-1', order: { status: 'PUBLISHED', event } }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+    };
+    const service = new WorshipOrderService(prisma);
+
+    await expect(service.updateItem('item-1', { titulo: 'Abertura' }, context)).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('exige todos os itens ao reordenar a ordem', async () => {
+    const prisma: any = {
+      worshipOrder: { findFirst: jest.fn().mockResolvedValue({ id: 'order-1', status: 'DRAFT', event, items: [] }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+      worshipOrderItem: { findMany: jest.fn().mockResolvedValue([{ id: 'item-1', sequencia: 1 }, { id: 'item-2', sequencia: 2 }]) },
+    };
+    const service = new WorshipOrderService(prisma);
+
+    await expect(service.reorderItems('order-1', { items: [{ id: 'item-1', sequencia: 2 }] }, context)).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('cancela uma demanda pendente pela liderança da ordem', async () => {
+    const prisma: any = {
+      worshipServiceDemand: {
+        findFirst: jest.fn().mockResolvedValue({ id: 'demand-1', status: 'PENDING', item: { order: { event } } }),
+        update: jest.fn().mockResolvedValue({ id: 'demand-1', status: 'CANCELLED' }),
+      },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+    };
+    const service = new WorshipOrderService(prisma);
+
+    await expect(service.cancelDemand('demand-1', context)).resolves.toEqual({ id: 'demand-1', status: 'CANCELLED' });
+  });
+
+  it('notifica os integrantes da área quando cria uma demanda', async () => {
+    const prisma: any = {
+      worshipOrderItem: { findFirst: jest.fn().mockResolvedValue({ id: 'item-1', titulo: 'Louvor', order: { status: 'DRAFT', event } }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-1' }) },
+      worshipServiceDemand: { create: jest.fn().mockResolvedValue({ id: 'demand-1' }) },
+      serviceMembership: { findMany: jest.fn().mockResolvedValue([{ personId: 'person-area-1' }]) },
+      notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
+    };
+    const service = new WorshipOrderService(prisma);
+
+    await expect(service.addDemand('item-1', { descricao: 'Enviar repertório', serviceAreaId: 'area-1' }, context)).resolves.toEqual({ id: 'demand-1' });
+    expect(prisma.notification.create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ serviceAreaId: 'area-1' }) }));
+  });
+
   it('impede uma segunda ordem para o mesmo culto', async () => {
     const prisma: any = {
       event: { findFirst: jest.fn().mockResolvedValue(event) },
@@ -19,7 +68,7 @@ describe('WorshipOrderService', () => {
   it('permite que o responsÃ¡vel por ordem de culto monte ordens em qualquer campus da organizaÃ§Ã£o', async () => {
     const prisma: any = {
       event: { findFirst: jest.fn().mockResolvedValue(event) },
-      user: { findFirst: jest.fn().mockResolvedValue({ role: 'WORSHIP_ORDER_MANAGER' }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'MEMBER', additionalRoles: [{ role: 'WORSHIP_ORDER_MANAGER' }] }) },
       worshipOrder: {
         findUnique: jest.fn().mockResolvedValue(null),
         create: jest.fn().mockResolvedValue({ id: 'order-1', eventId: 'event-1' }),

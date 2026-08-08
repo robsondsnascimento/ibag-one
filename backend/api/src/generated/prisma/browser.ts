@@ -33,6 +33,11 @@ export type Person = Prisma.PersonModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model UserRoleAssignment
+ * 
+ */
+export type UserRoleAssignment = Prisma.UserRoleAssignmentModel
+/**
  * Model Organization
  * 
  */

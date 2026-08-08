@@ -54,6 +54,7 @@ export const ModelName = {
   Campus: 'Campus',
   Person: 'Person',
   User: 'User',
+  UserRoleAssignment: 'UserRoleAssignment',
   Organization: 'Organization',
   Cell: 'Cell',
   CellNetwork: 'CellNetwork',
@@ -166,6 +167,17 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserRoleAssignmentScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  grantedByUserId: 'grantedByUserId'
+} as const
+
+export type UserRoleAssignmentScalarFieldEnum = (typeof UserRoleAssignmentScalarFieldEnum)[keyof typeof UserRoleAssignmentScalarFieldEnum]
 
 
 export const OrganizationScalarFieldEnum = {
