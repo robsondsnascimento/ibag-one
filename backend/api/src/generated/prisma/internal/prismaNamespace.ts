@@ -425,6 +425,7 @@ export const ModelName = {
   KidsEnrollment: 'KidsEnrollment',
   KidsAuthorizedPickup: 'KidsAuthorizedPickup',
   KidsCheckIn: 'KidsCheckIn',
+  KidsPreCheckIn: 'KidsPreCheckIn',
   KidsIdentity: 'KidsIdentity',
   KidsOperationalRoleAssignment: 'KidsOperationalRoleAssignment',
   KidsVisualResource: 'KidsVisualResource',
@@ -455,7 +456,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "campus" | "person" | "user" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceSchedule" | "space" | "event" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellMembership" | "cellLeadership"
+    modelProps: "campus" | "person" | "user" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceSchedule" | "space" | "event" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellMembership" | "cellLeadership"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2531,6 +2532,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    KidsPreCheckIn: {
+      payload: Prisma.$KidsPreCheckInPayload<ExtArgs>
+      fields: Prisma.KidsPreCheckInFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KidsPreCheckInFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KidsPreCheckInFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload>
+        }
+        findFirst: {
+          args: Prisma.KidsPreCheckInFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KidsPreCheckInFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload>
+        }
+        findMany: {
+          args: Prisma.KidsPreCheckInFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload>[]
+        }
+        create: {
+          args: Prisma.KidsPreCheckInCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload>
+        }
+        createMany: {
+          args: Prisma.KidsPreCheckInCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KidsPreCheckInCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload>[]
+        }
+        delete: {
+          args: Prisma.KidsPreCheckInDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload>
+        }
+        update: {
+          args: Prisma.KidsPreCheckInUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload>
+        }
+        deleteMany: {
+          args: Prisma.KidsPreCheckInDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KidsPreCheckInUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KidsPreCheckInUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload>[]
+        }
+        upsert: {
+          args: Prisma.KidsPreCheckInUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KidsPreCheckInPayload>
+        }
+        aggregate: {
+          args: Prisma.KidsPreCheckInAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKidsPreCheckIn>
+        }
+        groupBy: {
+          args: Prisma.KidsPreCheckInGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsPreCheckInGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KidsPreCheckInCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KidsPreCheckInCountAggregateOutputType> | number
+        }
+      }
+    }
     KidsIdentity: {
       payload: Prisma.$KidsIdentityPayload<ExtArgs>
       fields: Prisma.KidsIdentityFieldRefs
@@ -4072,6 +4147,20 @@ export const KidsCheckInScalarFieldEnum = {
 export type KidsCheckInScalarFieldEnum = (typeof KidsCheckInScalarFieldEnum)[keyof typeof KidsCheckInScalarFieldEnum]
 
 
+export const KidsPreCheckInScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  createdAt: 'createdAt',
+  confirmedAt: 'confirmedAt',
+  childId: 'childId',
+  enrollmentId: 'enrollmentId',
+  responsiblePersonId: 'responsiblePersonId',
+  eventId: 'eventId'
+} as const
+
+export type KidsPreCheckInScalarFieldEnum = (typeof KidsPreCheckInScalarFieldEnum)[keyof typeof KidsPreCheckInScalarFieldEnum]
+
+
 export const KidsIdentityScalarFieldEnum = {
   id: 'id',
   qrCode: 'qrCode',
@@ -4538,6 +4627,20 @@ export type ListEnumKidsCheckInStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'KidsPreCheckInStatus'
+ */
+export type EnumKidsPreCheckInStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KidsPreCheckInStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'KidsPreCheckInStatus[]'
+ */
+export type ListEnumKidsPreCheckInStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KidsPreCheckInStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'KidsOperationalRole'
  */
 export type EnumKidsOperationalRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KidsOperationalRole'>
@@ -4771,6 +4874,7 @@ export type GlobalOmitConfig = {
   kidsEnrollment?: Prisma.KidsEnrollmentOmit
   kidsAuthorizedPickup?: Prisma.KidsAuthorizedPickupOmit
   kidsCheckIn?: Prisma.KidsCheckInOmit
+  kidsPreCheckIn?: Prisma.KidsPreCheckInOmit
   kidsIdentity?: Prisma.KidsIdentityOmit
   kidsOperationalRoleAssignment?: Prisma.KidsOperationalRoleAssignmentOmit
   kidsVisualResource?: Prisma.KidsVisualResourceOmit

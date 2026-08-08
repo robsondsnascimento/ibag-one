@@ -396,6 +396,23 @@ export type EnumKidsCheckInStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumKidsCheckInStatusFilter<$PrismaModel>
 }
 
+export type EnumKidsPreCheckInStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsPreCheckInStatus | Prisma.EnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsPreCheckInStatus[] | Prisma.ListEnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsPreCheckInStatus[] | Prisma.ListEnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsPreCheckInStatusFilter<$PrismaModel> | $Enums.KidsPreCheckInStatus
+}
+
+export type EnumKidsPreCheckInStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsPreCheckInStatus | Prisma.EnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsPreCheckInStatus[] | Prisma.ListEnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsPreCheckInStatus[] | Prisma.ListEnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsPreCheckInStatusWithAggregatesFilter<$PrismaModel> | $Enums.KidsPreCheckInStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumKidsPreCheckInStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumKidsPreCheckInStatusFilter<$PrismaModel>
+}
+
 export type EnumKidsOperationalRoleFilter<$PrismaModel = never> = {
   equals?: $Enums.KidsOperationalRole | Prisma.EnumKidsOperationalRoleFieldRefInput<$PrismaModel>
   in?: $Enums.KidsOperationalRole[] | Prisma.ListEnumKidsOperationalRoleFieldRefInput<$PrismaModel>
@@ -894,6 +911,23 @@ export type NestedEnumKidsCheckInStatusWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumKidsCheckInStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumKidsCheckInStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumKidsPreCheckInStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsPreCheckInStatus | Prisma.EnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsPreCheckInStatus[] | Prisma.ListEnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsPreCheckInStatus[] | Prisma.ListEnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsPreCheckInStatusFilter<$PrismaModel> | $Enums.KidsPreCheckInStatus
+}
+
+export type NestedEnumKidsPreCheckInStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.KidsPreCheckInStatus | Prisma.EnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.KidsPreCheckInStatus[] | Prisma.ListEnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.KidsPreCheckInStatus[] | Prisma.ListEnumKidsPreCheckInStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumKidsPreCheckInStatusWithAggregatesFilter<$PrismaModel> | $Enums.KidsPreCheckInStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumKidsPreCheckInStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumKidsPreCheckInStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumKidsOperationalRoleFilter<$PrismaModel = never> = {

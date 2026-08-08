@@ -125,6 +125,13 @@ enum KidsResourceRequestStatus {
   CANCELLED
 }
 
+enum KidsPreCheckInStatus {
+  PENDING
+  CONFIRMED
+  EXPIRED
+  CANCELLED
+}
+
 
 model Campus {
   id        String   @id @default(uuid())
@@ -192,6 +199,7 @@ model Person {
   kidsPickupAuthorizationsAsChild KidsAuthorizedPickup[] @relation("KidsPickupChild")
   kidsPickupAuthorizationsAsResponsible KidsAuthorizedPickup[] @relation("KidsPickupResponsible")
   kidsCheckIns KidsCheckIn[] @relation("KidsCheckInChild")
+  kidsPreCheckIns KidsPreCheckIn[]
   kidsCareProfile KidsCareProfile?
   kidsIdentity KidsIdentity?
   kidsOperationalRoles KidsOperationalRoleAssignment[]
@@ -522,6 +530,7 @@ model Event {
   notifications Notification[]
   schedules ServiceSchedule[]
   kidsResourceRequests KidsResourceRequest[]
+  kidsPreCheckIns KidsPreCheckIn[]
   @@index([organizationId])
   @@index([campusId])
   @@index([inicio])
@@ -649,6 +658,7 @@ model KidsEnrollment {
   childId String
   child Person @relation("KidsChild", fields: [childId], references: [id])
   checkIns KidsCheckIn[]
+  preCheckIns KidsPreCheckIn[]
   @@index([classId])
   @@index([childId])
   @@index([ativo])
@@ -681,6 +691,23 @@ model KidsCheckIn {
   checkedOutByPersonId String?
   @@index([enrollmentId])
   @@index([childId])
+  @@index([status])
+}
+
+model KidsPreCheckIn {
+  id String @id @default(uuid())
+  status KidsPreCheckInStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  confirmedAt DateTime?
+  childId String
+  child Person @relation(fields: [childId], references: [id])
+  enrollmentId String
+  enrollment KidsEnrollment @relation(fields: [enrollmentId], references: [id])
+  responsiblePersonId String
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  @@index([childId])
+  @@index([eventId])
   @@index([status])
 }
 

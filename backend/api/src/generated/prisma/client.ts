@@ -180,6 +180,11 @@ export type KidsAuthorizedPickup = Prisma.KidsAuthorizedPickupModel
  */
 export type KidsCheckIn = Prisma.KidsCheckInModel
 /**
+ * Model KidsPreCheckIn
+ * 
+ */
+export type KidsPreCheckIn = Prisma.KidsPreCheckInModel
+/**
  * Model KidsIdentity
  * 
  */

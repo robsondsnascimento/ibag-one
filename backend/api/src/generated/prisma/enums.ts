@@ -172,3 +172,13 @@ export const KidsResourceRequestStatus = {
 } as const
 
 export type KidsResourceRequestStatus = (typeof KidsResourceRequestStatus)[keyof typeof KidsResourceRequestStatus]
+
+
+export const KidsPreCheckInStatus = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type KidsPreCheckInStatus = (typeof KidsPreCheckInStatus)[keyof typeof KidsPreCheckInStatus]

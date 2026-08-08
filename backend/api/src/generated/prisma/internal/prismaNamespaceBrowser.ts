@@ -79,6 +79,7 @@ export const ModelName = {
   KidsEnrollment: 'KidsEnrollment',
   KidsAuthorizedPickup: 'KidsAuthorizedPickup',
   KidsCheckIn: 'KidsCheckIn',
+  KidsPreCheckIn: 'KidsPreCheckIn',
   KidsIdentity: 'KidsIdentity',
   KidsOperationalRoleAssignment: 'KidsOperationalRoleAssignment',
   KidsVisualResource: 'KidsVisualResource',
@@ -502,6 +503,20 @@ export const KidsCheckInScalarFieldEnum = {
 } as const
 
 export type KidsCheckInScalarFieldEnum = (typeof KidsCheckInScalarFieldEnum)[keyof typeof KidsCheckInScalarFieldEnum]
+
+
+export const KidsPreCheckInScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  createdAt: 'createdAt',
+  confirmedAt: 'confirmedAt',
+  childId: 'childId',
+  enrollmentId: 'enrollmentId',
+  responsiblePersonId: 'responsiblePersonId',
+  eventId: 'eventId'
+} as const
+
+export type KidsPreCheckInScalarFieldEnum = (typeof KidsPreCheckInScalarFieldEnum)[keyof typeof KidsPreCheckInScalarFieldEnum]
 
 
 export const KidsIdentityScalarFieldEnum = {

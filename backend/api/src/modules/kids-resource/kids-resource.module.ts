@@ -1,0 +1,1 @@
+import { Module } from '@nestjs/common'; import { KidsResourceController } from './kids-resource.controller'; import { KidsResourceService } from './kids-resource.service'; @Module({controllers:[KidsResourceController],providers:[KidsResourceService]}) export class KidsResourceModule {}

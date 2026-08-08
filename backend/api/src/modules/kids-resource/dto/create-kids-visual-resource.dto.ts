@@ -1,0 +1,1 @@
+import { IsInt, IsOptional, IsString, Length, Min } from 'class-validator'; export class CreateKidsVisualResourceDto { @IsString() @Length(2, 150) nome: string; @IsOptional() @IsString() descricao?: string; @IsInt() @Min(0) quantidadeDisponivel: number; }
