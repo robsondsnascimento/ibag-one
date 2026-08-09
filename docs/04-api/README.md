@@ -20,6 +20,10 @@ Esta pasta descreve os fluxos de negócio expostos pela API do IBAG One. Todas a
 - [IBAG Kids](ibag-kids.md): turmas, responsáveis, check-in/out, QR, recursos e operações.
 - [Papéis de usuário](user-roles.md): papéis globais e atribuições adicionais.
 
+## Células e cuidado pastoral
+
+- [Coordenação de Células](cell-campus-coordination.md): vínculo por campus, administração de supervisão e escopo pastoral.
+
 ## Endpoints de fundação
 
 Além dos fluxos acima, a API possui módulos para autenticação, organizações, campus, pessoas, famílias, células, redes, supervisão, estudos, cuidado pastoral, painel pastoral, eventos, espaços e notificações.

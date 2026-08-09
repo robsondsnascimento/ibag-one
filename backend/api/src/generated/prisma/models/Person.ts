@@ -269,6 +269,7 @@ export type PersonWhereInput = {
   cellLeaderships?: Prisma.CellLeadershipListRelationFilter
   cellSupportRoles?: Prisma.CellSupportRoleListRelationFilter
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionListRelationFilter
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationListRelationFilter
   meetingAttendances?: Prisma.CellMeetingAttendanceListRelationFilter
   pastoralCaresAsSubject?: Prisma.PastoralCareListRelationFilter
   pastoralCaresAsResponsible?: Prisma.PastoralCareListRelationFilter
@@ -319,6 +320,7 @@ export type PersonOrderByWithRelationInput = {
   cellLeaderships?: Prisma.CellLeadershipOrderByRelationAggregateInput
   cellSupportRoles?: Prisma.CellSupportRoleOrderByRelationAggregateInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionOrderByRelationAggregateInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationOrderByRelationAggregateInput
   meetingAttendances?: Prisma.CellMeetingAttendanceOrderByRelationAggregateInput
   pastoralCaresAsSubject?: Prisma.PastoralCareOrderByRelationAggregateInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareOrderByRelationAggregateInput
@@ -372,6 +374,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   cellLeaderships?: Prisma.CellLeadershipListRelationFilter
   cellSupportRoles?: Prisma.CellSupportRoleListRelationFilter
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionListRelationFilter
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationListRelationFilter
   meetingAttendances?: Prisma.CellMeetingAttendanceListRelationFilter
   pastoralCaresAsSubject?: Prisma.PastoralCareListRelationFilter
   pastoralCaresAsResponsible?: Prisma.PastoralCareListRelationFilter
@@ -462,6 +465,7 @@ export type PersonCreateInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -510,6 +514,7 @@ export type PersonUncheckedCreateInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -558,6 +563,7 @@ export type PersonUpdateInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -606,6 +612,7 @@ export type PersonUncheckedUpdateInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -1249,6 +1256,20 @@ export type PersonUpdateOneRequiredWithoutCellNetworkSupervisionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCellNetworkSupervisionsInput, Prisma.PersonUpdateWithoutCellNetworkSupervisionsInput>, Prisma.PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput>
 }
 
+export type PersonCreateNestedOneWithoutCellCampusCoordinationsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellCampusCoordinationsInput, Prisma.PersonUncheckedCreateWithoutCellCampusCoordinationsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellCampusCoordinationsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutCellCampusCoordinationsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCellCampusCoordinationsInput, Prisma.PersonUncheckedCreateWithoutCellCampusCoordinationsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellCampusCoordinationsInput
+  upsert?: Prisma.PersonUpsertWithoutCellCampusCoordinationsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCellCampusCoordinationsInput, Prisma.PersonUpdateWithoutCellCampusCoordinationsInput>, Prisma.PersonUncheckedUpdateWithoutCellCampusCoordinationsInput>
+}
+
 export type PersonCreateNestedOneWithoutCellMembershipsInput = {
   create?: Prisma.XOR<Prisma.PersonCreateWithoutCellMembershipsInput, Prisma.PersonUncheckedCreateWithoutCellMembershipsInput>
   connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCellMembershipsInput
@@ -1297,6 +1318,7 @@ export type PersonCreateWithoutCampusInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -1344,6 +1366,7 @@ export type PersonUncheckedCreateWithoutCampusInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -1438,6 +1461,7 @@ export type PersonCreateWithoutUserInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -1485,6 +1509,7 @@ export type PersonUncheckedCreateWithoutUserInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -1548,6 +1573,7 @@ export type PersonUpdateWithoutUserInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -1595,6 +1621,7 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -1642,6 +1669,7 @@ export type PersonCreateWithoutOrganizationInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -1689,6 +1717,7 @@ export type PersonUncheckedCreateWithoutOrganizationInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -1762,6 +1791,7 @@ export type PersonCreateWithoutCellSupportRolesInput = {
   cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -1809,6 +1839,7 @@ export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
   cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -1872,6 +1903,7 @@ export type PersonUpdateWithoutCellSupportRolesInput = {
   cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -1919,6 +1951,7 @@ export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
   cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -1967,6 +2000,7 @@ export type PersonCreateWithoutJourneyEventsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -2014,6 +2048,7 @@ export type PersonUncheckedCreateWithoutJourneyEventsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -2077,6 +2112,7 @@ export type PersonUpdateWithoutJourneyEventsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -2124,6 +2160,7 @@ export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -2171,6 +2208,7 @@ export type PersonCreateWithoutFamilyMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -2218,6 +2256,7 @@ export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -2281,6 +2320,7 @@ export type PersonUpdateWithoutFamilyMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -2328,6 +2368,7 @@ export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -2375,6 +2416,7 @@ export type PersonCreateWithoutServiceMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -2422,6 +2464,7 @@ export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -2485,6 +2528,7 @@ export type PersonUpdateWithoutServiceMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -2532,6 +2576,7 @@ export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -2579,6 +2624,7 @@ export type PersonCreateWithoutServiceOperationalRolesInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -2626,6 +2672,7 @@ export type PersonUncheckedCreateWithoutServiceOperationalRolesInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -2689,6 +2736,7 @@ export type PersonUpdateWithoutServiceOperationalRolesInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -2736,6 +2784,7 @@ export type PersonUncheckedUpdateWithoutServiceOperationalRolesInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -2783,6 +2832,7 @@ export type PersonCreateWithoutServiceSchedulesInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -2830,6 +2880,7 @@ export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -2893,6 +2944,7 @@ export type PersonUpdateWithoutServiceSchedulesInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -2940,6 +2992,7 @@ export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -2987,6 +3040,7 @@ export type PersonCreateWithoutServiceAreaApplicationsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -3034,6 +3088,7 @@ export type PersonUncheckedCreateWithoutServiceAreaApplicationsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -3097,6 +3152,7 @@ export type PersonUpdateWithoutServiceAreaApplicationsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -3144,6 +3200,7 @@ export type PersonUncheckedUpdateWithoutServiceAreaApplicationsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -3191,6 +3248,7 @@ export type PersonCreateWithoutEventsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -3238,6 +3296,7 @@ export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -3301,6 +3360,7 @@ export type PersonUpdateWithoutEventsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -3348,6 +3408,7 @@ export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -3395,6 +3456,7 @@ export type PersonCreateWithoutWorshipOrderItemsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -3442,6 +3504,7 @@ export type PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -3505,6 +3568,7 @@ export type PersonUpdateWithoutWorshipOrderItemsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -3552,6 +3616,7 @@ export type PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -3599,6 +3664,7 @@ export type PersonCreateWithoutWorshipDemandsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -3646,6 +3712,7 @@ export type PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -3709,6 +3776,7 @@ export type PersonUpdateWithoutWorshipDemandsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -3756,6 +3824,7 @@ export type PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -3803,6 +3872,7 @@ export type PersonCreateWithoutWorshipRepertoiresSubmittedInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -3850,6 +3920,7 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresSubmittedInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -3902,6 +3973,7 @@ export type PersonCreateWithoutWorshipRepertoiresApprovedInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -3949,6 +4021,7 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresApprovedInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -4012,6 +4085,7 @@ export type PersonUpdateWithoutWorshipRepertoiresSubmittedInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -4059,6 +4133,7 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresSubmittedInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -4117,6 +4192,7 @@ export type PersonUpdateWithoutWorshipRepertoiresApprovedInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -4164,6 +4240,7 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresApprovedInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -4211,6 +4288,7 @@ export type PersonCreateWithoutNotificationRecipientsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -4258,6 +4336,7 @@ export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -4321,6 +4400,7 @@ export type PersonUpdateWithoutNotificationRecipientsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -4368,6 +4448,7 @@ export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -4415,6 +4496,7 @@ export type PersonCreateWithoutKidsEnrollmentsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -4462,6 +4544,7 @@ export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -4525,6 +4608,7 @@ export type PersonUpdateWithoutKidsEnrollmentsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -4572,6 +4656,7 @@ export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -4619,6 +4704,7 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -4666,6 +4752,7 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -4718,6 +4805,7 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -4765,6 +4853,7 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInp
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -4828,6 +4917,7 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -4875,6 +4965,7 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -4933,6 +5024,7 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -4980,6 +5072,7 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInp
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -5027,6 +5120,7 @@ export type PersonCreateWithoutKidsCheckInsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -5074,6 +5168,7 @@ export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -5137,6 +5232,7 @@ export type PersonUpdateWithoutKidsCheckInsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -5184,6 +5280,7 @@ export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -5231,6 +5328,7 @@ export type PersonCreateWithoutKidsPreCheckInsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -5278,6 +5376,7 @@ export type PersonUncheckedCreateWithoutKidsPreCheckInsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -5341,6 +5440,7 @@ export type PersonUpdateWithoutKidsPreCheckInsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -5388,6 +5488,7 @@ export type PersonUncheckedUpdateWithoutKidsPreCheckInsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -5435,6 +5536,7 @@ export type PersonCreateWithoutKidsIdentityInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -5482,6 +5584,7 @@ export type PersonUncheckedCreateWithoutKidsIdentityInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -5545,6 +5648,7 @@ export type PersonUpdateWithoutKidsIdentityInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -5592,6 +5696,7 @@ export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -5639,6 +5744,7 @@ export type PersonCreateWithoutKidsOperationalRolesInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -5686,6 +5792,7 @@ export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -5749,6 +5856,7 @@ export type PersonUpdateWithoutKidsOperationalRolesInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -5796,6 +5904,7 @@ export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -5843,6 +5952,7 @@ export type PersonCreateWithoutKidsResourceRequestsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -5890,6 +6000,7 @@ export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -5953,6 +6064,7 @@ export type PersonUpdateWithoutKidsResourceRequestsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -6000,6 +6112,7 @@ export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -6047,6 +6160,7 @@ export type PersonCreateWithoutKidsCareProfileInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -6094,6 +6208,7 @@ export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -6157,6 +6272,7 @@ export type PersonUpdateWithoutKidsCareProfileInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -6204,6 +6320,7 @@ export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -6251,6 +6368,7 @@ export type PersonCreateWithoutMeetingVisitorInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -6298,6 +6416,7 @@ export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -6361,6 +6480,7 @@ export type PersonUpdateWithoutMeetingVisitorInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -6408,6 +6528,7 @@ export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -6455,6 +6576,7 @@ export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
   meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
@@ -6502,6 +6624,7 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
   meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
@@ -6554,6 +6677,7 @@ export type PersonCreateWithoutPastoralCaresAsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
@@ -6601,6 +6725,7 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
@@ -6664,6 +6789,7 @@ export type PersonUpdateWithoutPastoralCaresAsSubjectInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
   meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
@@ -6711,6 +6837,7 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
@@ -6769,6 +6896,7 @@ export type PersonUpdateWithoutPastoralCaresAsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
@@ -6816,6 +6944,7 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
@@ -6863,6 +6992,7 @@ export type PersonCreateWithoutMeetingAttendancesInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
   meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
@@ -6910,6 +7040,7 @@ export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
   meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
@@ -6973,6 +7104,7 @@ export type PersonUpdateWithoutMeetingAttendancesInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
   meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
@@ -7020,6 +7152,7 @@ export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
@@ -7066,6 +7199,7 @@ export type PersonCreateWithoutCellNetworkSupervisionsInput = {
   cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -7113,6 +7247,7 @@ export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
   cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -7176,6 +7311,7 @@ export type PersonUpdateWithoutCellNetworkSupervisionsInput = {
   cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -7223,6 +7359,215 @@ export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
   cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutCellCampusCoordinationsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutCellCampusCoordinationsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutCellCampusCoordinationsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellCampusCoordinationsInput, Prisma.PersonUncheckedCreateWithoutCellCampusCoordinationsInput>
+}
+
+export type PersonUpsertWithoutCellCampusCoordinationsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutCellCampusCoordinationsInput, Prisma.PersonUncheckedUpdateWithoutCellCampusCoordinationsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCellCampusCoordinationsInput, Prisma.PersonUncheckedCreateWithoutCellCampusCoordinationsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutCellCampusCoordinationsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutCellCampusCoordinationsInput, Prisma.PersonUncheckedUpdateWithoutCellCampusCoordinationsInput>
+}
+
+export type PersonUpdateWithoutCellCampusCoordinationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutCellCampusCoordinationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -7270,6 +7615,7 @@ export type PersonCreateWithoutCellMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -7317,6 +7663,7 @@ export type PersonUncheckedCreateWithoutCellMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -7380,6 +7727,7 @@ export type PersonUpdateWithoutCellMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -7427,6 +7775,7 @@ export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -7474,6 +7823,7 @@ export type PersonCreateWithoutCellLeadershipsInput = {
   cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
@@ -7521,6 +7871,7 @@ export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
   cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -7584,6 +7935,7 @@ export type PersonUpdateWithoutCellLeadershipsInput = {
   cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -7631,6 +7983,7 @@ export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
   cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -7695,6 +8048,7 @@ export type PersonUpdateWithoutCampusInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -7742,6 +8096,7 @@ export type PersonUncheckedUpdateWithoutCampusInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -7823,6 +8178,7 @@ export type PersonUpdateWithoutOrganizationInput = {
   cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
@@ -7870,6 +8226,7 @@ export type PersonUncheckedUpdateWithoutOrganizationInput = {
   cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
   cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
   cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
   meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
   pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
   pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -7924,6 +8281,7 @@ export type PersonCountOutputType = {
   cellLeaderships: number
   cellSupportRoles: number
   cellNetworkSupervisions: number
+  cellCampusCoordinations: number
   meetingAttendances: number
   pastoralCaresAsSubject: number
   pastoralCaresAsResponsible: number
@@ -7953,6 +8311,7 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   cellLeaderships?: boolean | PersonCountOutputTypeCountCellLeadershipsArgs
   cellSupportRoles?: boolean | PersonCountOutputTypeCountCellSupportRolesArgs
   cellNetworkSupervisions?: boolean | PersonCountOutputTypeCountCellNetworkSupervisionsArgs
+  cellCampusCoordinations?: boolean | PersonCountOutputTypeCountCellCampusCoordinationsArgs
   meetingAttendances?: boolean | PersonCountOutputTypeCountMeetingAttendancesArgs
   pastoralCaresAsSubject?: boolean | PersonCountOutputTypeCountPastoralCaresAsSubjectArgs
   pastoralCaresAsResponsible?: boolean | PersonCountOutputTypeCountPastoralCaresAsResponsibleArgs
@@ -8013,6 +8372,13 @@ export type PersonCountOutputTypeCountCellSupportRolesArgs<ExtArgs extends runti
  */
 export type PersonCountOutputTypeCountCellNetworkSupervisionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CellNetworkSupervisionWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountCellCampusCoordinationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CellCampusCoordinationWhereInput
 }
 
 /**
@@ -8193,6 +8559,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   cellLeaderships?: boolean | Prisma.Person$cellLeadershipsArgs<ExtArgs>
   cellSupportRoles?: boolean | Prisma.Person$cellSupportRolesArgs<ExtArgs>
   cellNetworkSupervisions?: boolean | Prisma.Person$cellNetworkSupervisionsArgs<ExtArgs>
+  cellCampusCoordinations?: boolean | Prisma.Person$cellCampusCoordinationsArgs<ExtArgs>
   meetingAttendances?: boolean | Prisma.Person$meetingAttendancesArgs<ExtArgs>
   pastoralCaresAsSubject?: boolean | Prisma.Person$pastoralCaresAsSubjectArgs<ExtArgs>
   pastoralCaresAsResponsible?: boolean | Prisma.Person$pastoralCaresAsResponsibleArgs<ExtArgs>
@@ -8288,6 +8655,7 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   cellLeaderships?: boolean | Prisma.Person$cellLeadershipsArgs<ExtArgs>
   cellSupportRoles?: boolean | Prisma.Person$cellSupportRolesArgs<ExtArgs>
   cellNetworkSupervisions?: boolean | Prisma.Person$cellNetworkSupervisionsArgs<ExtArgs>
+  cellCampusCoordinations?: boolean | Prisma.Person$cellCampusCoordinationsArgs<ExtArgs>
   meetingAttendances?: boolean | Prisma.Person$meetingAttendancesArgs<ExtArgs>
   pastoralCaresAsSubject?: boolean | Prisma.Person$pastoralCaresAsSubjectArgs<ExtArgs>
   pastoralCaresAsResponsible?: boolean | Prisma.Person$pastoralCaresAsResponsibleArgs<ExtArgs>
@@ -8334,6 +8702,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     cellLeaderships: Prisma.$CellLeadershipPayload<ExtArgs>[]
     cellSupportRoles: Prisma.$CellSupportRolePayload<ExtArgs>[]
     cellNetworkSupervisions: Prisma.$CellNetworkSupervisionPayload<ExtArgs>[]
+    cellCampusCoordinations: Prisma.$CellCampusCoordinationPayload<ExtArgs>[]
     meetingAttendances: Prisma.$CellMeetingAttendancePayload<ExtArgs>[]
     pastoralCaresAsSubject: Prisma.$PastoralCarePayload<ExtArgs>[]
     pastoralCaresAsResponsible: Prisma.$PastoralCarePayload<ExtArgs>[]
@@ -8777,6 +9146,7 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   cellLeaderships<T extends Prisma.Person$cellLeadershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$cellLeadershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellLeadershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cellSupportRoles<T extends Prisma.Person$cellSupportRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$cellSupportRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellSupportRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cellNetworkSupervisions<T extends Prisma.Person$cellNetworkSupervisionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$cellNetworkSupervisionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellNetworkSupervisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cellCampusCoordinations<T extends Prisma.Person$cellCampusCoordinationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$cellCampusCoordinationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellCampusCoordinationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   meetingAttendances<T extends Prisma.Person$meetingAttendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$meetingAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellMeetingAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pastoralCaresAsSubject<T extends Prisma.Person$pastoralCaresAsSubjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$pastoralCaresAsSubjectArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PastoralCarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pastoralCaresAsResponsible<T extends Prisma.Person$pastoralCaresAsResponsibleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$pastoralCaresAsResponsibleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PastoralCarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -9378,6 +9748,30 @@ export type Person$cellNetworkSupervisionsArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.CellNetworkSupervisionScalarFieldEnum | Prisma.CellNetworkSupervisionScalarFieldEnum[]
+}
+
+/**
+ * Person.cellCampusCoordinations
+ */
+export type Person$cellCampusCoordinationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CellCampusCoordination
+   */
+  select?: Prisma.CellCampusCoordinationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CellCampusCoordination
+   */
+  omit?: Prisma.CellCampusCoordinationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CellCampusCoordinationInclude<ExtArgs> | null
+  where?: Prisma.CellCampusCoordinationWhereInput
+  orderBy?: Prisma.CellCampusCoordinationOrderByWithRelationInput | Prisma.CellCampusCoordinationOrderByWithRelationInput[]
+  cursor?: Prisma.CellCampusCoordinationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CellCampusCoordinationScalarFieldEnum | Prisma.CellCampusCoordinationScalarFieldEnum[]
 }
 
 /**

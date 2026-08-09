@@ -4,7 +4,9 @@
 
 Cada pessoa possui uma função principal (`role`) e pode receber funções adicionais. As funções adicionais somam permissões e não substituem a função principal.
 
-Exemplo: uma pessoa com função principal `PASTOR` pode receber também `WORSHIP_ORDER_MANAGER` para montar as ordens de culto de todos os campus.
+O papel `PASTOR` está ligado ao campus da pessoa e, nos fluxos pastorais, opera nesse escopo. `PASTOR_SENIOR` tem as mesmas responsabilidades pastorais com alcance em todos os campi da organização. Ambos podem receber funções adicionais, como `WORSHIP_ORDER_MANAGER`.
+
+O vínculo de coordenador de células não é um papel global: ele é registrado por campus e permanece subordinado ao pastor nos cuidados pastorais.
 
 ## Gestão
 

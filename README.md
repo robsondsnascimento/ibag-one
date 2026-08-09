@@ -4,13 +4,13 @@ Plataforma de cuidado pastoral, células, áreas de serviço, eventos e operaç�
 
 ## Estado atual
 
-O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. A suíte atual possui **23 suítes e 71 testes unitários**.
+O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. A suíte atual possui **26 suítes e 82 testes unitários**.
 
 | Domínio | Entregas atuais |
 | --- | --- |
 | Pessoas e acesso | Pessoas, contas, papéis adicionais, super administração, campus, famílias e jornada da pessoa. |
-| Células | Redes, supervisão, liderança, apoio, presença/falta, visitantes, conclusão de reunião, estudos semanais, localização e multiplicação. |
-| Cuidado pastoral | Registros de acompanhamento e visão pastoral consolidada. |
+| Células | Coordenação por campus, redes, supervisão, liderança, apoio, presença/falta, visitantes, conclusão de reunião, estudos semanais, localização e multiplicação. |
+| Cuidado pastoral | Registros de acompanhamento e visão pastoral consolidada com escopo de campus. |
 | Áreas de serviço | Áreas globais ou por campus, equipes, membros, lideranças, funções operacionais e escalas. |
 | Entrada em áreas | Interesse, etapas configuráveis, comprovação, aprovação, recusa, desistência e criação do vínculo de integrante. |
 | Eventos | Solicitação, aprovação, agenda, espaços, áreas e equipes envolvidas. |
@@ -29,6 +29,8 @@ O backend NestJS está funcional, multi-tenant por `organizationId`, protegido p
 - O repertório é enviado pelo Ministro de Louvor, aprovado pela liderança e entregue à equipe de Ordem de Culto.
 - A presença em células permite registrar ausência; visitantes podem ser sugeridos como membros após três encontros.
 - Estudos semanais são globais à organização e dependem do registro da célula anterior, com exceção prevista para células novas.
+- A coordenação de células é um vínculo por campus; no cuidado pastoral, atua abaixo do pastor e acima da supervisão de rede.
+- `PASTOR` possui escopo do próprio campus; `PASTOR_SENIOR` herda as responsabilidades pastorais em todos os campi da organização.
 
 ## Estrutura
 
@@ -60,6 +62,7 @@ A API inicia, por padrão, em `http://localhost:3000`. O endpoint de saúde é `
 cd backend/api
 npx nest build
 npx jest --runInBand
+npm run test:e2e
 ```
 
 ## Documentação

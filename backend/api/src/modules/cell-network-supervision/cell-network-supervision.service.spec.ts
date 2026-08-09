@@ -20,6 +20,9 @@ describe('CellNetworkSupervisionService', () => {
   };
 
   const prisma = {
+    user: {
+      findFirst: jest.fn(),
+    },
     person: {
       findFirst: jest.fn(),
     },
@@ -31,6 +34,9 @@ describe('CellNetworkSupervisionService', () => {
       findFirst: jest.fn(),
       findMany: jest.fn(),
       update: jest.fn(),
+    },
+    cellCampusCoordination: {
+      findMany: jest.fn(),
     },
   };
 
@@ -56,7 +62,8 @@ describe('CellNetworkSupervisionService', () => {
 
   it('rejects assigning a second active supervisor to a network', async () => {
     prisma.person.findFirst.mockResolvedValue({ id: dto.personId });
-    prisma.cellNetwork.findFirst.mockResolvedValue({ id: dto.networkId });
+    prisma.cellNetwork.findFirst.mockResolvedValue({ id: dto.networkId, campusId: 'campus-id' });
+    prisma.user.findFirst.mockResolvedValue({ id: context.userId, person: { campusId: 'campus-id' }, role: 'ADMIN' });
     prisma.cellNetworkSupervision.findFirst.mockResolvedValue({
       id: 'existing-supervision-id',
     });
@@ -78,7 +85,8 @@ describe('CellNetworkSupervisionService', () => {
     const supervision = { id: 'supervision-id' };
 
     prisma.person.findFirst.mockResolvedValue({ id: dto.personId });
-    prisma.cellNetwork.findFirst.mockResolvedValue({ id: dto.networkId });
+    prisma.cellNetwork.findFirst.mockResolvedValue({ id: dto.networkId, campusId: 'campus-id' });
+    prisma.user.findFirst.mockResolvedValue({ id: context.userId, person: { campusId: 'campus-id' }, role: 'ADMIN' });
     prisma.cellNetworkSupervision.findFirst.mockResolvedValue(null);
     prisma.cellNetworkSupervision.create.mockResolvedValue(supervision);
 
@@ -94,6 +102,17 @@ describe('CellNetworkSupervisionService', () => {
         }),
       }),
     );
+  });
+
+  it('allows a coordinator to manage supervision only in a coordinated campus', async () => {
+    prisma.person.findFirst.mockResolvedValue({ id: dto.personId });
+    prisma.cellNetwork.findFirst.mockResolvedValue({ id: dto.networkId, campusId: 'campus-id' });
+    prisma.user.findFirst.mockResolvedValue({ id: context.userId, person: { campusId: 'another-campus-id' }, role: 'MEMBER' });
+    prisma.cellCampusCoordination.findMany.mockResolvedValue([{ campusId: 'campus-id' }]);
+    prisma.cellNetworkSupervision.findFirst.mockResolvedValue(null);
+    prisma.cellNetworkSupervision.create.mockResolvedValue({ id: 'supervision-id' });
+
+    await expect(service.create(dto, context)).resolves.toEqual({ id: 'supervision-id' });
   });
 
 });

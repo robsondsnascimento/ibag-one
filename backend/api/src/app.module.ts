@@ -11,6 +11,7 @@ import { CellMembershipModule } from './modules/cell-membership/cell-membership.
 import { CellLeadershipModule } from './modules/cell-leadership/cell-leadership.module';
 import { CellNetworkModule } from './modules/cell-network/cell-network.module';
 import { CellNetworkSupervisionModule } from './modules/cell-network-supervision/cell-network-supervision.module';
+import { CellCampusCoordinationModule } from './modules/cell-campus-coordination/cell-campus-coordination.module';
 import { CellMeetingModule } from './modules/cell-meeting/cell-meeting.module';
 import { CellMeetingAttendanceModule } from './modules/cell-meeting-attendance/cell-meeting-attendance.module';
 import { CellStudyModule } from './modules/cell-study/cell-study.module';
@@ -67,6 +68,8 @@ import { OrganizationModule } from './modules/organization/organization.module';
     CellNetworkModule,
 
     CellNetworkSupervisionModule,
+
+    CellCampusCoordinationModule,
 
     CellMeetingModule,
 

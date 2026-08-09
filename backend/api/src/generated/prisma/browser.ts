@@ -298,6 +298,11 @@ export type CellMeetingAttendance = Prisma.CellMeetingAttendanceModel
  */
 export type CellNetworkSupervision = Prisma.CellNetworkSupervisionModel
 /**
+ * Model CellCampusCoordination
+ * 
+ */
+export type CellCampusCoordination = Prisma.CellCampusCoordinationModel
+/**
  * Model CellMembership
  * 
  */

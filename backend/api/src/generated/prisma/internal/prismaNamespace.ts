@@ -453,6 +453,7 @@ export const ModelName = {
   CellStudy: 'CellStudy',
   CellMeetingAttendance: 'CellMeetingAttendance',
   CellNetworkSupervision: 'CellNetworkSupervision',
+  CellCampusCoordination: 'CellCampusCoordination',
   CellMembership: 'CellMembership',
   CellLeadership: 'CellLeadership'
 } as const
@@ -470,7 +471,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "campus" | "person" | "user" | "userRoleAssignment" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceOperationalRoleAssignment" | "serviceSchedule" | "serviceScheduleHistory" | "serviceAreaEntryStage" | "serviceAreaApplication" | "serviceAreaApplicationStage" | "space" | "event" | "worshipOrder" | "worshipOrderTemplate" | "worshipOrderTemplateItem" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "worshipRepertoire" | "worshipRepertoireSong" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellMembership" | "cellLeadership"
+    modelProps: "campus" | "person" | "user" | "userRoleAssignment" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceOperationalRoleAssignment" | "serviceSchedule" | "serviceScheduleHistory" | "serviceAreaEntryStage" | "serviceAreaApplication" | "serviceAreaApplicationStage" | "space" | "event" | "worshipOrder" | "worshipOrderTemplate" | "worshipOrderTemplateItem" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "worshipRepertoire" | "worshipRepertoireSong" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellCampusCoordination" | "cellMembership" | "cellLeadership"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4618,6 +4619,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CellCampusCoordination: {
+      payload: Prisma.$CellCampusCoordinationPayload<ExtArgs>
+      fields: Prisma.CellCampusCoordinationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CellCampusCoordinationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CellCampusCoordinationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload>
+        }
+        findFirst: {
+          args: Prisma.CellCampusCoordinationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CellCampusCoordinationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload>
+        }
+        findMany: {
+          args: Prisma.CellCampusCoordinationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload>[]
+        }
+        create: {
+          args: Prisma.CellCampusCoordinationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload>
+        }
+        createMany: {
+          args: Prisma.CellCampusCoordinationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CellCampusCoordinationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload>[]
+        }
+        delete: {
+          args: Prisma.CellCampusCoordinationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload>
+        }
+        update: {
+          args: Prisma.CellCampusCoordinationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload>
+        }
+        deleteMany: {
+          args: Prisma.CellCampusCoordinationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CellCampusCoordinationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CellCampusCoordinationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload>[]
+        }
+        upsert: {
+          args: Prisma.CellCampusCoordinationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CellCampusCoordinationPayload>
+        }
+        aggregate: {
+          args: Prisma.CellCampusCoordinationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCellCampusCoordination>
+        }
+        groupBy: {
+          args: Prisma.CellCampusCoordinationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CellCampusCoordinationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CellCampusCoordinationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CellCampusCoordinationCountAggregateOutputType> | number
+        }
+      }
+    }
     CellMembership: {
       payload: Prisma.$CellMembershipPayload<ExtArgs>
       fields: Prisma.CellMembershipFieldRefs
@@ -5596,6 +5671,20 @@ export const CellNetworkSupervisionScalarFieldEnum = {
 export type CellNetworkSupervisionScalarFieldEnum = (typeof CellNetworkSupervisionScalarFieldEnum)[keyof typeof CellNetworkSupervisionScalarFieldEnum]
 
 
+export const CellCampusCoordinationScalarFieldEnum = {
+  id: 'id',
+  inicio: 'inicio',
+  fim: 'fim',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  personId: 'personId',
+  campusId: 'campusId'
+} as const
+
+export type CellCampusCoordinationScalarFieldEnum = (typeof CellCampusCoordinationScalarFieldEnum)[keyof typeof CellCampusCoordinationScalarFieldEnum]
+
+
 export const CellMembershipScalarFieldEnum = {
   id: 'id',
   inicio: 'inicio',
@@ -6259,6 +6348,7 @@ export type GlobalOmitConfig = {
   cellStudy?: Prisma.CellStudyOmit
   cellMeetingAttendance?: Prisma.CellMeetingAttendanceOmit
   cellNetworkSupervision?: Prisma.CellNetworkSupervisionOmit
+  cellCampusCoordination?: Prisma.CellCampusCoordinationOmit
   cellMembership?: Prisma.CellMembershipOmit
   cellLeadership?: Prisma.CellLeadershipOmit
 }

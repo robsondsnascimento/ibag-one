@@ -25,6 +25,7 @@ enum UserRole {
   ADMIN
   SUPER_ADMIN
   PASTOR
+  PASTOR_SENIOR
 }
 
 enum PastoralCareStatus {
@@ -192,6 +193,7 @@ model Campus {
   persons              Person[]
   cells                Cell[]
   cellNetworks         CellNetwork[]
+  cellCampusCoordinations CellCampusCoordination[]
   serviceAreas         ServiceArea[]
   serviceTeams         ServiceTeam[]
   serviceMemberships   ServiceMembership[]
@@ -232,6 +234,7 @@ model Person {
   cellLeaderships                       CellLeadership[]
   cellSupportRoles                      CellSupportRole[]
   cellNetworkSupervisions               CellNetworkSupervision[]
+  cellCampusCoordinations               CellCampusCoordination[]
   meetingAttendances                    CellMeetingAttendance[]
   pastoralCaresAsSubject                PastoralCare[]                  @relation("PastoralCareSubject")
   pastoralCaresAsResponsible            PastoralCare[]                  @relation("PastoralCareResponsible")
@@ -1283,6 +1286,25 @@ model CellNetworkSupervision {
 
   @@index([personId])
   @@index([networkId])
+  @@index([ativo])
+}
+
+model CellCampusCoordination {
+  id        String    @id @default(uuid())
+  inicio    DateTime  @default(now())
+  fim       DateTime?
+  ativo     Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  personId String
+  person   Person @relation(fields: [personId], references: [id])
+
+  campusId String
+  campus   Campus @relation(fields: [campusId], references: [id])
+
+  @@index([personId])
+  @@index([campusId])
   @@index([ativo])
 }
 

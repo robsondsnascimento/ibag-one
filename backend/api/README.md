@@ -37,6 +37,9 @@ npm run build
 # Executar todos os testes unitários
 npx jest --runInBand
 
+# Executar o teste integrado de infraestrutura da API
+npm run test:e2e
+
 # Gerar cliente Prisma após mudanças de schema
 npx prisma generate
 

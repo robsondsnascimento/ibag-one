@@ -154,31 +154,39 @@ A autenticação deve ser independente das permissões.
 
 ---
 
-# 👥 Papéis
+# 👥 Papéis e atribuições de domínio
 
-Papéis representam responsabilidades.
-
-Exemplo:
+Os papéis globais de usuário implementados são:
 
 ```
-MEMBRO
-
-PASTOR_SENIOR
-
+MEMBER
+SECRETARY
+WORSHIP_ORDER_MANAGER
+ADMIN
+SUPER_ADMIN
 PASTOR
-
-COORDENADOR
-
-SUPERVISOR
-
-LIDER_CELULA
-
-LIDER_SERVICO
-
-INTEGRANTE_SERVICO
-
-SECRETARIA
+PASTOR_SENIOR
 ```
+
+Responsabilidades ministeriais e operacionais não são papéis globais quando dependem de um escopo. Elas são vínculos de domínio com histórico, como liderança de célula, supervisão de rede, coordenação de células e liderança em áreas de serviço.
+
+O **Coordenador de Células** é uma atribuição por campus, não um `UserRole`. No cuidado pastoral, a hierarquia é:
+
+```text
+Pastor Sênior (todos os campi)
+  ↓
+Pastor do campus
+  ↓
+Coordenador de Células do campus
+  ↓
+Supervisor de rede
+  ↓
+Liderança de célula
+  ↓
+Pessoas da célula
+```
+
+O pastor pode acompanhar qualquer pessoa de seu campus. O pastor sênior possui o mesmo conjunto de responsabilidades pastorais em todos os campi da organização. O coordenador acompanha somente pessoas que tenham vínculo ativo com uma célula de um campus que ele coordena.
 
 ---
 

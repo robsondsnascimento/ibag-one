@@ -24,8 +24,8 @@ Pessoa
 | --- | --- | --- |
 | Pessoa, conta e acesso | Implementado | Identidade, conta, papéis, jornada, família e isolamento por organização. |
 | Campus | Implementado | Estrutura multicampus, pessoas, células, equipes, eventos e espaços. |
-| Células | Implementado | Redes, supervisão, liderança, presença/falta, visitantes, estudos, localização e multiplicação. |
-| Cuidado pastoral | Implementado | Registros de cuidado e visões consolidadas para liderança autorizada. |
+| Células | Implementado | Coordenação por campus, redes, supervisão, liderança, presença/falta, visitantes, estudos, localização e multiplicação. |
+| Cuidado pastoral | Implementado | Registros de cuidado e visões consolidadas, com escopo de campus para pastor e coordenador. |
 | Áreas de serviço | Implementado | Áreas, equipes, membros, funções, escalas, histórico e formação de voluntários. |
 | Eventos e espaços | Implementado | Agenda, solicitações, aprovação, conflitos de espaço e equipes envolvidas. |
 | IBAG Kids | Implementado | Estrutura Kids, segurança de retirada, operações e recursos visuais. |

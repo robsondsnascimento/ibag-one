@@ -38,7 +38,7 @@
 ### Preparação para o frontend
 
 1. Cadastrar a estrutura real da IBAG: organização, campus, áreas, equipes, lideranças e modelos de culto.
-2. Executar testes integrados da API e homologação dos fluxos com usuários reais.
+2. Ampliar os testes integrados por domínio e realizar a homologação dos fluxos com usuários reais. A infraestrutura integrada já valida saúde, proteção JWT, autenticação inválida e contratos de entrada, isolada do banco real.
 3. Iniciar o painel administrativo e o aplicativo sobre os contratos já documentados.
 
 ### Evoluções opcionais de backend

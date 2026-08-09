@@ -10,7 +10,7 @@ A API NestJS está organizada por domínios. Cada módulo expõe controller, ser
 ## Células e cuidado
 
 - `cell`, `cell-membership`, `cell-leadership`, `cell-support-role`.
-- `cell-network`, `cell-network-supervision`, `cell-meeting`, `cell-meeting-attendance`, `cell-meeting-visitor`.
+- `cell-network`, `cell-network-supervision`, `cell-campus-coordination`, `cell-meeting`, `cell-meeting-attendance`, `cell-meeting-visitor`.
 - `cell-study`, `cell-location`, `cell-multiplication`, `pastoral-care`, `pastoral-dashboard`, `person-journey`.
 
 ## Áreas de serviço

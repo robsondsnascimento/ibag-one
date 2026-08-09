@@ -21,7 +21,7 @@ Organization
 | Grupo | Entidades principais |
 | --- | --- |
 | Pessoas e acesso | `Person`, `User`, `UserRoleAssignment`, `Family`, `PersonJourneyEvent` |
-| Células | `Cell`, `CellMembership`, `CellLeadership`, `CellMeeting`, `CellStudy`, `CellMultiplication` |
+| Células | `Cell`, `CellMembership`, `CellLeadership`, `CellNetworkSupervision`, `CellCampusCoordination`, `CellMeeting`, `CellStudy`, `CellMultiplication` |
 | Áreas de serviço | `ServiceArea`, `ServiceTeam`, `ServiceMembership`, `ServiceSchedule`, `ServiceScheduleHistory` |
 | Formação | `ServiceAreaEntryStage`, `ServiceAreaApplication`, `ServiceAreaApplicationStage` |
 | Eventos e cultos | `Event`, `Space`, `WorshipOrder`, `WorshipOrderTemplate`, `WorshipRepertoire` |
@@ -37,7 +37,7 @@ Organization
 
 ## Migrations recentes
 
-As migrations versionam cada evolução de domínio, incluindo modelos de Ordem de Culto, repertório, funções operacionais, histórico de escalas e entrada/formação de áreas. Após atualizar o repositório, aplique-as com:
+As migrations versionam cada evolução de domínio, incluindo coordenação de células por campus, modelos de Ordem de Culto, repertório, funções operacionais, histórico de escalas e entrada/formação de áreas. Após atualizar o repositório, aplique-as com:
 
 ```powershell
 cd backend/api

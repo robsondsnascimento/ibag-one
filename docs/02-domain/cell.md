@@ -83,6 +83,14 @@ Uma rede não atravessa Campi.
 
 Cada Campus possui suas próprias redes e células.
 
+## Coordenação de Células
+
+A coordenação é registrada como um vínculo histórico entre uma pessoa e um campus. Uma mesma pessoa pode coordenar mais de um campus e um campus pode ter mais de um coordenador, se a organização desejar compartilhar a responsabilidade.
+
+O coordenador pode consultar as redes, células, agenda e indicadores dos campi sob sua coordenação, além de administrar a supervisão dessas redes. Ele não acessa dados dos demais campi.
+
+Nos cuidados pastorais, o coordenador atua abaixo do pastor: pode acompanhar participantes de células do seu escopo, enquanto o pastor acompanha também pessoas do seu campus que ainda não participam de uma célula. O pastor sênior possui esse mesmo acompanhamento em todos os campi da organização.
+
 ---
 
 # 🌎 Rede

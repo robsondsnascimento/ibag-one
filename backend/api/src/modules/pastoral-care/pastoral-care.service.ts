@@ -27,7 +27,7 @@ export class PastoralCareService {
   private async assertAccess(subject: any, context: OrganizationContext) {
     const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId }, include: { person: true, additionalRoles: { select: { role: true } } } });
     if (!user) throw new ForbiddenException('Usuário sem vínculo organizacional');
-    if (hasAnyUserRole(user, ['ADMIN', 'SUPER_ADMIN'])) return;
+    if (hasAnyUserRole(user, ['ADMIN', 'SUPER_ADMIN', 'PASTOR_SENIOR'])) return;
     if (hasAnyUserRole(user, ['PASTOR']) && user.person.campusId === subject.campusId) return;
     const membership = await this.prisma.cellMembership.findFirst({ where: { personId: subject.id, ativo: true } });
     if (!membership) throw new ForbiddenException('Sem acesso a este acompanhamento');
@@ -35,6 +35,10 @@ export class PastoralCareService {
     if (leadership) return;
     const cell = await this.prisma.cell.findUnique({ where: { id: membership.cellId } });
     if (cell?.networkId) { const supervision = await this.prisma.cellNetworkSupervision.findFirst({ where: { personId: context.personId, networkId: cell.networkId, ativo: true } }); if (supervision) return; }
+    if (cell) {
+      const coordination = await this.prisma.cellCampusCoordination.findFirst({ where: { personId: context.personId, campusId: cell.campusId, ativo: true } });
+      if (coordination) return;
+    }
     throw new ForbiddenException('Sem acesso a este acompanhamento');
   }
   private include() { return { subjectPerson: true, responsiblePerson: true }; }

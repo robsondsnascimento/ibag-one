@@ -28,7 +28,8 @@ export const UserRole = {
   WORSHIP_ORDER_MANAGER: 'WORSHIP_ORDER_MANAGER',
   ADMIN: 'ADMIN',
   SUPER_ADMIN: 'SUPER_ADMIN',
-  PASTOR: 'PASTOR'
+  PASTOR: 'PASTOR',
+  PASTOR_SENIOR: 'PASTOR_SENIOR'
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]

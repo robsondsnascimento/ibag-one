@@ -209,6 +209,7 @@ export type CampusWhereInput = {
   persons?: Prisma.PersonListRelationFilter
   cells?: Prisma.CellListRelationFilter
   cellNetworks?: Prisma.CellNetworkListRelationFilter
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationListRelationFilter
   serviceAreas?: Prisma.ServiceAreaListRelationFilter
   serviceTeams?: Prisma.ServiceTeamListRelationFilter
   serviceMemberships?: Prisma.ServiceMembershipListRelationFilter
@@ -232,6 +233,7 @@ export type CampusOrderByWithRelationInput = {
   persons?: Prisma.PersonOrderByRelationAggregateInput
   cells?: Prisma.CellOrderByRelationAggregateInput
   cellNetworks?: Prisma.CellNetworkOrderByRelationAggregateInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationOrderByRelationAggregateInput
   serviceAreas?: Prisma.ServiceAreaOrderByRelationAggregateInput
   serviceTeams?: Prisma.ServiceTeamOrderByRelationAggregateInput
   serviceMemberships?: Prisma.ServiceMembershipOrderByRelationAggregateInput
@@ -258,6 +260,7 @@ export type CampusWhereUniqueInput = Prisma.AtLeast<{
   persons?: Prisma.PersonListRelationFilter
   cells?: Prisma.CellListRelationFilter
   cellNetworks?: Prisma.CellNetworkListRelationFilter
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationListRelationFilter
   serviceAreas?: Prisma.ServiceAreaListRelationFilter
   serviceTeams?: Prisma.ServiceTeamListRelationFilter
   serviceMemberships?: Prisma.ServiceMembershipListRelationFilter
@@ -308,6 +311,7 @@ export type CampusCreateInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -331,6 +335,7 @@ export type CampusUncheckedCreateInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -352,6 +357,7 @@ export type CampusUpdateInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -375,6 +381,7 @@ export type CampusUncheckedUpdateInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -688,6 +695,20 @@ export type CampusUpdateOneRequiredWithoutKidsOperationalRolesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CampusUpdateToOneWithWhereWithoutKidsOperationalRolesInput, Prisma.CampusUpdateWithoutKidsOperationalRolesInput>, Prisma.CampusUncheckedUpdateWithoutKidsOperationalRolesInput>
 }
 
+export type CampusCreateNestedOneWithoutCellCampusCoordinationsInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutCellCampusCoordinationsInput, Prisma.CampusUncheckedCreateWithoutCellCampusCoordinationsInput>
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutCellCampusCoordinationsInput
+  connect?: Prisma.CampusWhereUniqueInput
+}
+
+export type CampusUpdateOneRequiredWithoutCellCampusCoordinationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutCellCampusCoordinationsInput, Prisma.CampusUncheckedCreateWithoutCellCampusCoordinationsInput>
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutCellCampusCoordinationsInput
+  upsert?: Prisma.CampusUpsertWithoutCellCampusCoordinationsInput
+  connect?: Prisma.CampusWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CampusUpdateToOneWithWhereWithoutCellCampusCoordinationsInput, Prisma.CampusUpdateWithoutCellCampusCoordinationsInput>, Prisma.CampusUncheckedUpdateWithoutCellCampusCoordinationsInput>
+}
+
 export type CampusCreateWithoutPersonsInput = {
   id?: string
   nome: string
@@ -698,6 +719,7 @@ export type CampusCreateWithoutPersonsInput = {
   updatedAt?: Date | string
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -720,6 +742,7 @@ export type CampusUncheckedCreateWithoutPersonsInput = {
   organizationId?: string | null
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -756,6 +779,7 @@ export type CampusUpdateWithoutPersonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -778,6 +802,7 @@ export type CampusUncheckedUpdateWithoutPersonsInput = {
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -799,6 +824,7 @@ export type CampusCreateWithoutOrganizationInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -820,6 +846,7 @@ export type CampusUncheckedCreateWithoutOrganizationInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -880,6 +907,7 @@ export type CampusCreateWithoutCellsInput = {
   updatedAt?: Date | string
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -902,6 +930,7 @@ export type CampusUncheckedCreateWithoutCellsInput = {
   organizationId?: string | null
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -938,6 +967,7 @@ export type CampusUpdateWithoutCellsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -960,6 +990,7 @@ export type CampusUncheckedUpdateWithoutCellsInput = {
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -980,6 +1011,7 @@ export type CampusCreateWithoutCellNetworksInput = {
   updatedAt?: Date | string
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -1002,6 +1034,7 @@ export type CampusUncheckedCreateWithoutCellNetworksInput = {
   organizationId?: string | null
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -1038,6 +1071,7 @@ export type CampusUpdateWithoutCellNetworksInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -1060,6 +1094,7 @@ export type CampusUncheckedUpdateWithoutCellNetworksInput = {
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -1081,6 +1116,7 @@ export type CampusCreateWithoutServiceAreasInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
   spaces?: Prisma.SpaceCreateNestedManyWithoutCampusInput
@@ -1103,6 +1139,7 @@ export type CampusUncheckedCreateWithoutServiceAreasInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
   spaces?: Prisma.SpaceUncheckedCreateNestedManyWithoutCampusInput
@@ -1139,6 +1176,7 @@ export type CampusUpdateWithoutServiceAreasInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
   spaces?: Prisma.SpaceUpdateManyWithoutCampusNestedInput
@@ -1161,6 +1199,7 @@ export type CampusUncheckedUpdateWithoutServiceAreasInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
   spaces?: Prisma.SpaceUncheckedUpdateManyWithoutCampusNestedInput
@@ -1181,6 +1220,7 @@ export type CampusCreateWithoutServiceTeamsInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
   spaces?: Prisma.SpaceCreateNestedManyWithoutCampusInput
@@ -1203,6 +1243,7 @@ export type CampusUncheckedCreateWithoutServiceTeamsInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
   spaces?: Prisma.SpaceUncheckedCreateNestedManyWithoutCampusInput
@@ -1239,6 +1280,7 @@ export type CampusUpdateWithoutServiceTeamsInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
   spaces?: Prisma.SpaceUpdateManyWithoutCampusNestedInput
@@ -1261,6 +1303,7 @@ export type CampusUncheckedUpdateWithoutServiceTeamsInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
   spaces?: Prisma.SpaceUncheckedUpdateManyWithoutCampusNestedInput
@@ -1281,6 +1324,7 @@ export type CampusCreateWithoutServiceMembershipsInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   spaces?: Prisma.SpaceCreateNestedManyWithoutCampusInput
@@ -1303,6 +1347,7 @@ export type CampusUncheckedCreateWithoutServiceMembershipsInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   spaces?: Prisma.SpaceUncheckedCreateNestedManyWithoutCampusInput
@@ -1339,6 +1384,7 @@ export type CampusUpdateWithoutServiceMembershipsInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   spaces?: Prisma.SpaceUpdateManyWithoutCampusNestedInput
@@ -1361,6 +1407,7 @@ export type CampusUncheckedUpdateWithoutServiceMembershipsInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   spaces?: Prisma.SpaceUncheckedUpdateManyWithoutCampusNestedInput
@@ -1381,6 +1428,7 @@ export type CampusCreateWithoutSpacesInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -1403,6 +1451,7 @@ export type CampusUncheckedCreateWithoutSpacesInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -1439,6 +1488,7 @@ export type CampusUpdateWithoutSpacesInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -1461,6 +1511,7 @@ export type CampusUncheckedUpdateWithoutSpacesInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -1481,6 +1532,7 @@ export type CampusCreateWithoutEventsInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -1503,6 +1555,7 @@ export type CampusUncheckedCreateWithoutEventsInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -1539,6 +1592,7 @@ export type CampusUpdateWithoutEventsInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -1561,6 +1615,7 @@ export type CampusUncheckedUpdateWithoutEventsInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -1581,6 +1636,7 @@ export type CampusCreateWithoutNotificationsInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -1603,6 +1659,7 @@ export type CampusUncheckedCreateWithoutNotificationsInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -1639,6 +1696,7 @@ export type CampusUpdateWithoutNotificationsInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -1661,6 +1719,7 @@ export type CampusUncheckedUpdateWithoutNotificationsInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -1681,6 +1740,7 @@ export type CampusCreateWithoutKidsClassesInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -1703,6 +1763,7 @@ export type CampusUncheckedCreateWithoutKidsClassesInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -1739,6 +1800,7 @@ export type CampusUpdateWithoutKidsClassesInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -1761,6 +1823,7 @@ export type CampusUncheckedUpdateWithoutKidsClassesInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -1781,6 +1844,7 @@ export type CampusCreateWithoutKidsOperationalRolesInput = {
   persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
@@ -1803,6 +1867,7 @@ export type CampusUncheckedCreateWithoutKidsOperationalRolesInput = {
   persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
   cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
   cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
   serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
   serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
@@ -1839,6 +1904,7 @@ export type CampusUpdateWithoutKidsOperationalRolesInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -1861,6 +1927,7 @@ export type CampusUncheckedUpdateWithoutKidsOperationalRolesInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -1868,6 +1935,110 @@ export type CampusUncheckedUpdateWithoutKidsOperationalRolesInput = {
   events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
+}
+
+export type CampusCreateWithoutCellCampusCoordinationsInput = {
+  id?: string
+  nome: string
+  cidade: string
+  estado: string
+  ativo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
+  cells?: Prisma.CellCreateNestedManyWithoutCampusInput
+  cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
+  serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
+  spaces?: Prisma.SpaceCreateNestedManyWithoutCampusInput
+  events?: Prisma.EventCreateNestedManyWithoutCampusInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
+  kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
+}
+
+export type CampusUncheckedCreateWithoutCellCampusCoordinationsInput = {
+  id?: string
+  nome: string
+  cidade: string
+  estado: string
+  ativo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organizationId?: string | null
+  persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
+  cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
+  cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
+  serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
+  spaces?: Prisma.SpaceUncheckedCreateNestedManyWithoutCampusInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
+  kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+}
+
+export type CampusCreateOrConnectWithoutCellCampusCoordinationsInput = {
+  where: Prisma.CampusWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampusCreateWithoutCellCampusCoordinationsInput, Prisma.CampusUncheckedCreateWithoutCellCampusCoordinationsInput>
+}
+
+export type CampusUpsertWithoutCellCampusCoordinationsInput = {
+  update: Prisma.XOR<Prisma.CampusUpdateWithoutCellCampusCoordinationsInput, Prisma.CampusUncheckedUpdateWithoutCellCampusCoordinationsInput>
+  create: Prisma.XOR<Prisma.CampusCreateWithoutCellCampusCoordinationsInput, Prisma.CampusUncheckedCreateWithoutCellCampusCoordinationsInput>
+  where?: Prisma.CampusWhereInput
+}
+
+export type CampusUpdateToOneWithWhereWithoutCellCampusCoordinationsInput = {
+  where?: Prisma.CampusWhereInput
+  data: Prisma.XOR<Prisma.CampusUpdateWithoutCellCampusCoordinationsInput, Prisma.CampusUncheckedUpdateWithoutCellCampusCoordinationsInput>
+}
+
+export type CampusUpdateWithoutCellCampusCoordinationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  cidade?: Prisma.StringFieldUpdateOperationsInput | string
+  estado?: Prisma.StringFieldUpdateOperationsInput | string
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
+  cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
+  cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
+  serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
+  spaces?: Prisma.SpaceUpdateManyWithoutCampusNestedInput
+  events?: Prisma.EventUpdateManyWithoutCampusNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
+  kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
+}
+
+export type CampusUncheckedUpdateWithoutCellCampusCoordinationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  cidade?: Prisma.StringFieldUpdateOperationsInput | string
+  estado?: Prisma.StringFieldUpdateOperationsInput | string
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
+  cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
+  cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
+  serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
+  spaces?: Prisma.SpaceUncheckedUpdateManyWithoutCampusNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
+  kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateManyOrganizationInput = {
@@ -1891,6 +2062,7 @@ export type CampusUpdateWithoutOrganizationInput = {
   persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
@@ -1912,6 +2084,7 @@ export type CampusUncheckedUpdateWithoutOrganizationInput = {
   persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
   cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
   cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
@@ -1941,6 +2114,7 @@ export type CampusCountOutputType = {
   persons: number
   cells: number
   cellNetworks: number
+  cellCampusCoordinations: number
   serviceAreas: number
   serviceTeams: number
   serviceMemberships: number
@@ -1955,6 +2129,7 @@ export type CampusCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   persons?: boolean | CampusCountOutputTypeCountPersonsArgs
   cells?: boolean | CampusCountOutputTypeCountCellsArgs
   cellNetworks?: boolean | CampusCountOutputTypeCountCellNetworksArgs
+  cellCampusCoordinations?: boolean | CampusCountOutputTypeCountCellCampusCoordinationsArgs
   serviceAreas?: boolean | CampusCountOutputTypeCountServiceAreasArgs
   serviceTeams?: boolean | CampusCountOutputTypeCountServiceTeamsArgs
   serviceMemberships?: boolean | CampusCountOutputTypeCountServiceMembershipsArgs
@@ -1994,6 +2169,13 @@ export type CampusCountOutputTypeCountCellsArgs<ExtArgs extends runtime.Types.Ex
  */
 export type CampusCountOutputTypeCountCellNetworksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CellNetworkWhereInput
+}
+
+/**
+ * CampusCountOutputType without action
+ */
+export type CampusCountOutputTypeCountCellCampusCoordinationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CellCampusCoordinationWhereInput
 }
 
 /**
@@ -2065,6 +2247,7 @@ export type CampusSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   persons?: boolean | Prisma.Campus$personsArgs<ExtArgs>
   cells?: boolean | Prisma.Campus$cellsArgs<ExtArgs>
   cellNetworks?: boolean | Prisma.Campus$cellNetworksArgs<ExtArgs>
+  cellCampusCoordinations?: boolean | Prisma.Campus$cellCampusCoordinationsArgs<ExtArgs>
   serviceAreas?: boolean | Prisma.Campus$serviceAreasArgs<ExtArgs>
   serviceTeams?: boolean | Prisma.Campus$serviceTeamsArgs<ExtArgs>
   serviceMemberships?: boolean | Prisma.Campus$serviceMembershipsArgs<ExtArgs>
@@ -2117,6 +2300,7 @@ export type CampusInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   persons?: boolean | Prisma.Campus$personsArgs<ExtArgs>
   cells?: boolean | Prisma.Campus$cellsArgs<ExtArgs>
   cellNetworks?: boolean | Prisma.Campus$cellNetworksArgs<ExtArgs>
+  cellCampusCoordinations?: boolean | Prisma.Campus$cellCampusCoordinationsArgs<ExtArgs>
   serviceAreas?: boolean | Prisma.Campus$serviceAreasArgs<ExtArgs>
   serviceTeams?: boolean | Prisma.Campus$serviceTeamsArgs<ExtArgs>
   serviceMemberships?: boolean | Prisma.Campus$serviceMembershipsArgs<ExtArgs>
@@ -2141,6 +2325,7 @@ export type $CampusPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     persons: Prisma.$PersonPayload<ExtArgs>[]
     cells: Prisma.$CellPayload<ExtArgs>[]
     cellNetworks: Prisma.$CellNetworkPayload<ExtArgs>[]
+    cellCampusCoordinations: Prisma.$CellCampusCoordinationPayload<ExtArgs>[]
     serviceAreas: Prisma.$ServiceAreaPayload<ExtArgs>[]
     serviceTeams: Prisma.$ServiceTeamPayload<ExtArgs>[]
     serviceMemberships: Prisma.$ServiceMembershipPayload<ExtArgs>[]
@@ -2557,6 +2742,7 @@ export interface Prisma__CampusClient<T, Null = never, ExtArgs extends runtime.T
   persons<T extends Prisma.Campus$personsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$personsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cells<T extends Prisma.Campus$cellsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$cellsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cellNetworks<T extends Prisma.Campus$cellNetworksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$cellNetworksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellNetworkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cellCampusCoordinations<T extends Prisma.Campus$cellCampusCoordinationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$cellCampusCoordinationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CellCampusCoordinationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceAreas<T extends Prisma.Campus$serviceAreasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$serviceAreasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceTeams<T extends Prisma.Campus$serviceTeamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$serviceTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceMemberships<T extends Prisma.Campus$serviceMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$serviceMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3073,6 +3259,30 @@ export type Campus$cellNetworksArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.CellNetworkScalarFieldEnum | Prisma.CellNetworkScalarFieldEnum[]
+}
+
+/**
+ * Campus.cellCampusCoordinations
+ */
+export type Campus$cellCampusCoordinationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CellCampusCoordination
+   */
+  select?: Prisma.CellCampusCoordinationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CellCampusCoordination
+   */
+  omit?: Prisma.CellCampusCoordinationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CellCampusCoordinationInclude<ExtArgs> | null
+  where?: Prisma.CellCampusCoordinationWhereInput
+  orderBy?: Prisma.CellCampusCoordinationOrderByWithRelationInput | Prisma.CellCampusCoordinationOrderByWithRelationInput[]
+  cursor?: Prisma.CellCampusCoordinationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CellCampusCoordinationScalarFieldEnum | Prisma.CellCampusCoordinationScalarFieldEnum[]
 }
 
 /**

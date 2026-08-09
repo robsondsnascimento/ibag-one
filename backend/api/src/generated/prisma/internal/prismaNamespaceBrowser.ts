@@ -107,6 +107,7 @@ export const ModelName = {
   CellStudy: 'CellStudy',
   CellMeetingAttendance: 'CellMeetingAttendance',
   CellNetworkSupervision: 'CellNetworkSupervision',
+  CellCampusCoordination: 'CellCampusCoordination',
   CellMembership: 'CellMembership',
   CellLeadership: 'CellLeadership'
 } as const
@@ -916,6 +917,20 @@ export const CellNetworkSupervisionScalarFieldEnum = {
 } as const
 
 export type CellNetworkSupervisionScalarFieldEnum = (typeof CellNetworkSupervisionScalarFieldEnum)[keyof typeof CellNetworkSupervisionScalarFieldEnum]
+
+
+export const CellCampusCoordinationScalarFieldEnum = {
+  id: 'id',
+  inicio: 'inicio',
+  fim: 'fim',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  personId: 'personId',
+  campusId: 'campusId'
+} as const
+
+export type CellCampusCoordinationScalarFieldEnum = (typeof CellCampusCoordinationScalarFieldEnum)[keyof typeof CellCampusCoordinationScalarFieldEnum]
 
 
 export const CellMembershipScalarFieldEnum = {
