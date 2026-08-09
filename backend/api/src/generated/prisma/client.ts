@@ -115,10 +115,35 @@ export type ServiceTeam = Prisma.ServiceTeamModel
  */
 export type ServiceMembership = Prisma.ServiceMembershipModel
 /**
+ * Model ServiceOperationalRoleAssignment
+ * 
+ */
+export type ServiceOperationalRoleAssignment = Prisma.ServiceOperationalRoleAssignmentModel
+/**
  * Model ServiceSchedule
  * 
  */
 export type ServiceSchedule = Prisma.ServiceScheduleModel
+/**
+ * Model ServiceScheduleHistory
+ * 
+ */
+export type ServiceScheduleHistory = Prisma.ServiceScheduleHistoryModel
+/**
+ * Model ServiceAreaEntryStage
+ * 
+ */
+export type ServiceAreaEntryStage = Prisma.ServiceAreaEntryStageModel
+/**
+ * Model ServiceAreaApplication
+ * 
+ */
+export type ServiceAreaApplication = Prisma.ServiceAreaApplicationModel
+/**
+ * Model ServiceAreaApplicationStage
+ * 
+ */
+export type ServiceAreaApplicationStage = Prisma.ServiceAreaApplicationStageModel
 /**
  * Model Space
  * 
@@ -135,6 +160,16 @@ export type Event = Prisma.EventModel
  */
 export type WorshipOrder = Prisma.WorshipOrderModel
 /**
+ * Model WorshipOrderTemplate
+ * 
+ */
+export type WorshipOrderTemplate = Prisma.WorshipOrderTemplateModel
+/**
+ * Model WorshipOrderTemplateItem
+ * 
+ */
+export type WorshipOrderTemplateItem = Prisma.WorshipOrderTemplateItemModel
+/**
  * Model WorshipOrderItem
  * 
  */
@@ -149,6 +184,16 @@ export type WorshipOrderMaterial = Prisma.WorshipOrderMaterialModel
  * 
  */
 export type WorshipServiceDemand = Prisma.WorshipServiceDemandModel
+/**
+ * Model WorshipRepertoire
+ * 
+ */
+export type WorshipRepertoire = Prisma.WorshipRepertoireModel
+/**
+ * Model WorshipRepertoireSong
+ * 
+ */
+export type WorshipRepertoireSong = Prisma.WorshipRepertoireSongModel
 /**
  * Model EventSpace
  * 

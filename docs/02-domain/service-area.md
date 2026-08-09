@@ -1,431 +1,66 @@
-# 🤝 Domínio: Área de Serviço
+# Domínio: Área de Serviço
 
-## Contexto
+## Propósito
 
-O domínio **Área de Serviço** representa os ambientes onde as pessoas contribuem voluntariamente para a missão da IBAG.
+Áreas de serviço conectam pessoas, dons e missão. Elas não substituem a célula: a célula é o ambiente de cuidado e discipulado; a área organiza o voluntariado e a atuação da pessoa.
 
-Uma pessoa não serve apenas por ocupar uma função, mas por fazer parte de uma equipe que coopera com a visão da igreja.
-
-O conceito principal é:
-
-> Pessoas pertencem à igreja, são cuidadas através das células e servem através das áreas de serviço.
-
----
-
-# 🎯 Objetivo
-
-O domínio Área de Serviço deve permitir acompanhar:
-
-- áreas existentes;
-- líderes;
-- integrantes;
-- treinamentos;
-- escalas;
-- histórico;
-- atuação por Campus;
-- desenvolvimento de pessoas.
-
----
-
-# 🏛️ Relação com a Jornada da Pessoa
-
-A jornada de uma pessoa dentro da IBAG pode ser representada:
-
-```
-Visitante
-
-↓
-
-Pessoa IBAG
-
-↓
-
-Célula
-
-↓
-
-Área de Serviço
-
-↓
-
-Liderança
-```
-
----
-
-# 🤝 Área de Serviço x Célula
-
-Célula e Área de Serviço são conceitos diferentes.
-
-A célula representa:
-
-- relacionamento;
-- cuidado;
-- discipulado;
-- acompanhamento.
-
-A Área de Serviço representa:
-
-- contribuição;
-- voluntariado;
-- participação;
-- desenvolvimento.
-
-Modelo:
-
-```
+```text
 Pessoa
-
-├── Participa da Célula
-│
-└── Serve em Área de Serviço
+├── participa de uma célula
+└── pode servir em uma ou mais áreas de serviço
+    └── atua em uma ou mais equipes
 ```
 
-Uma pessoa pode estar em uma célula e servir em uma ou mais áreas.
+## Estrutura implementada
 
----
+Uma área pode ser global, atendendo toda a organização, ou local, vinculada a um campus. Cada equipe pertence a uma área e a um campus.
 
-# 🌎 Estrutura de Serviço
-
-Uma Área de Serviço pode possuir abrangência global ou local.
-
-Modelo:
-
-```
-                    IBAG
-
-                      |
-
-            Área de Serviço Geral
-
-                      |
-
-        --------------------------------
-
-        |              |               |
-
-     Música       Comunicação      Outros
-
-
-                      |
-
-                   Campus
-
-                      |
-
-            Área de Serviço Local
-
-                      |
-
-                   Equipes
+```text
+Área de serviço
+├── Liderança geral
+├── Liderança de campus
+├── Equipes
+│   ├── Liderança de equipe
+│   └── Integrantes
+├── Processo de entrada e formação
+└── Escalas
 ```
 
----
+Papéis de vínculo disponíveis:
 
-# 🎵 Exemplo: Música
+- `GENERAL_LEADER`
+- `CAMPUS_LEADER`
+- `TEAM_LEADER`
+- `MEMBER`
 
-Uma estrutura possível:
+Funções operacionais complementam o vínculo de equipe. O primeiro papel implementado é `WORSHIP_MINISTER`, destinado ao integrante que pode enviar repertórios de cultos.
 
-```
-IBAG
+## Entrada e formação
 
-|
-
-Responsável Geral de Música
-
-|
-
----------------------------------
-
-Campus A
-
-Líder de Música
-
-
-Campus B
-
-Líder de Música
-
-
-Campus C
-
-Líder de Música
-```
-
----
-
-# 👥 Papéis dentro de uma Área de Serviço
-
-Uma Área de Serviço possui diferentes responsabilidades.
-
-```
-Área de Serviço
-
-├── Responsável Geral
-│
-├── Líder de Campus
-│
-├── Líder de Equipe
-│
-└── Integrantes
-```
-
----
-
-# 👤 Integrante
-
-O integrante participa da execução da área.
-
-Responsabilidades:
-
-- servir conforme sua função;
-- participar de treinamentos;
-- cumprir escalas;
-- desenvolver seus dons.
-
----
-
-# 👑 Líder
-
-O líder possui responsabilidade sobre pessoas e processos.
-
-Responsabilidades:
-
-- acompanhar integrantes;
-- organizar equipes;
-- desenvolver novos líderes;
-- manter comunicação com liderança superior.
-
----
-
-# 🏛️ Liderança Geral
-
-Algumas áreas podem possuir um responsável que atende todos os Campi.
-
-Exemplo:
-
-```
-Responsável Geral
-
-↓
-
-Líderes dos Campi
-
-↓
-
-Equipes Locais
-```
-
-Com o crescimento da IBAG, uma liderança geral pode deixar de atuar diretamente em um Campus específico e passar a coordenar líderes locais.
-
----
-
-# 🔄 Entrada em uma Área de Serviço
-
-Cada área pode possuir seu próprio processo de entrada.
-
-Não existe uma única regra.
-
----
-
-# 🎤 Exemplo: Música
-
-```
-Interesse
-
-↓
-
-Audição
-
-↓
-
-Avaliação
-
-↓
-
-Treinamento
-
-↓
-
-Integrante
-```
-
----
-
-# 🤝 Outros Serviços
-
-Exemplo:
-
-```
-Interesse
-
-↓
-
-Treinamento
-
-↓
-
-Acompanhamento
-
-↓
-
-Integrante
-```
-
----
-
-# 📚 Formação e Treinamentos
-
-As Áreas de Serviço podem possuir treinamentos específicos.
+Cada área configura suas próprias etapas. Não há um funil obrigatório para todas as áreas.
 
 Exemplos:
 
-- cursos;
-- capacitações;
-- treinamentos técnicos;
-- desenvolvimento espiritual.
+- Música: interesse, audição, avaliação e treinamento.
+- Recepção: interesse, treinamento e acompanhamento.
 
-A formação será detalhada futuramente no domínio de Formação.
+Uma pessoa se torna integrante apenas quando a liderança aprova seu processo e escolhe uma equipe. Etapas obrigatórias ativas precisam estar concluídas. Processos encerrados por aprovação, recusa ou desistência permanecem registrados.
 
----
+## Escalas
 
-# 📅 Escalas
+Cada área possui sua visão consolidada de escalas, e cada equipe administra as suas escalas.
 
-As Áreas de Serviço possuem escalas.
+- Liderança geral visualiza toda a área.
+- Liderança de campus visualiza as equipes do seu campus.
+- Liderança de equipe visualiza e administra a própria equipe.
+- Integrantes consultam as próprias escalas e respondem com confirmação ou recusa.
 
-A escala representa quando uma pessoa irá servir.
+As escalas podem estar vinculadas a eventos, mas não pertencem à Ordem de Culto. A API impede conflitos ativos de agenda, permite criação em lote e registra histórico de criação, mudança de status e substituição.
 
-Exemplo:
+## Histórico
 
-```
-Pessoa:
+Vínculos são encerrados, não apagados. Escalas mantêm histórico auditável com usuário responsável, status anterior/novo, pessoas envolvidas em substituição e motivo opcional.
 
-Maria
+## Extensão futura
 
-Área:
-Louvor
-
-Escala:
-
-03/08
-Vocal
-
-10/08
-Folga
-
-17/08
-Vocal
-```
-
----
-
-# 🕒 Relação com Agenda e Cultos
-
-Escalas podem estar relacionadas a:
-
-- cultos;
-- eventos;
-- treinamentos;
-- programações.
-
-Exemplo:
-
-```
-Culto Domingo 19h
-
-Momento:
-Louvor
-
-Responsável:
-Equipe Música
-
-Escala:
-Banda Domingo
-```
-
----
-
-# 🔄 Histórico
-
-Nenhuma alteração importante deve apagar história.
-
-Exemplo:
-
-```
-Maria
-
-2026
-Integrante Recepção
-
-2028
-Líder Recepção
-
-2031
-Encerramento da liderança
-```
-
-O histórico permanece registrado.
-
----
-
-# 📌 Regras de Negócio
-
-## Regra 01
-
-Uma pessoa pode servir em mais de uma Área de Serviço.
-
----
-
-## Regra 02
-
-Uma pessoa pertence a uma célula, mas pode servir em diferentes áreas.
-
----
-
-## Regra 03
-
-Áreas de Serviço podem possuir liderança global ou local.
-
----
-
-## Regra 04
-
-Cada Área de Serviço pode definir seu processo de entrada.
-
----
-
-## Regra 05
-
-Todas as funções importantes devem manter histórico.
-
----
-
-# 🏛️ Princípio do Domínio
-
-A Área de Serviço existe para conectar dons, pessoas e missão.
-
-Modelo:
-
-```
-Pessoa
-
-↓
-
-Dons
-
-↓
-
-Serviço
-
-↓
-
-Equipe
-
-↓
-
-Missão da Igreja
-```
-
-O objetivo não é apenas controlar equipes.
-
-É ajudar cada pessoa a encontrar seu lugar de contribuição dentro da IBAG.
+O fluxo atual cobre etapas de entrada e sua comprovação. Um catálogo central de cursos, turmas, presença e certificados pode ser adicionado futuramente sem alterar a regra de que cada área possui seu próprio processo.

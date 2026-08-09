@@ -102,6 +102,13 @@ export const ServiceMembershipRole = {
 export type ServiceMembershipRole = (typeof ServiceMembershipRole)[keyof typeof ServiceMembershipRole]
 
 
+export const ServiceOperationalRole = {
+  WORSHIP_MINISTER: 'WORSHIP_MINISTER'
+} as const
+
+export type ServiceOperationalRole = (typeof ServiceOperationalRole)[keyof typeof ServiceOperationalRole]
+
+
 export const ServiceScheduleStatus = {
   SCHEDULED: 'SCHEDULED',
   CONFIRMED: 'CONFIRMED',
@@ -110,6 +117,26 @@ export const ServiceScheduleStatus = {
 } as const
 
 export type ServiceScheduleStatus = (typeof ServiceScheduleStatus)[keyof typeof ServiceScheduleStatus]
+
+
+export const ServiceScheduleHistoryAction = {
+  CREATED: 'CREATED',
+  STATUS_CHANGED: 'STATUS_CHANGED',
+  SUBSTITUTED: 'SUBSTITUTED'
+} as const
+
+export type ServiceScheduleHistoryAction = (typeof ServiceScheduleHistoryAction)[keyof typeof ServiceScheduleHistoryAction]
+
+
+export const ServiceAreaApplicationStatus = {
+  INTERESTED: 'INTERESTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  WITHDRAWN: 'WITHDRAWN'
+} as const
+
+export type ServiceAreaApplicationStatus = (typeof ServiceAreaApplicationStatus)[keyof typeof ServiceAreaApplicationStatus]
 
 
 export const EventType = {
@@ -212,3 +239,15 @@ export const WorshipDemandStatus = {
 } as const
 
 export type WorshipDemandStatus = (typeof WorshipDemandStatus)[keyof typeof WorshipDemandStatus]
+
+
+export const WorshipRepertoireStatus = {
+  DRAFT: 'DRAFT',
+  SUBMITTED: 'SUBMITTED',
+  RETURNED: 'RETURNED',
+  APPROVED: 'APPROVED',
+  SENT_TO_WORSHIP_ORDER: 'SENT_TO_WORSHIP_ORDER',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type WorshipRepertoireStatus = (typeof WorshipRepertoireStatus)[keyof typeof WorshipRepertoireStatus]

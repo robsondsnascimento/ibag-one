@@ -66,13 +66,22 @@ export const ModelName = {
   ServiceArea: 'ServiceArea',
   ServiceTeam: 'ServiceTeam',
   ServiceMembership: 'ServiceMembership',
+  ServiceOperationalRoleAssignment: 'ServiceOperationalRoleAssignment',
   ServiceSchedule: 'ServiceSchedule',
+  ServiceScheduleHistory: 'ServiceScheduleHistory',
+  ServiceAreaEntryStage: 'ServiceAreaEntryStage',
+  ServiceAreaApplication: 'ServiceAreaApplication',
+  ServiceAreaApplicationStage: 'ServiceAreaApplicationStage',
   Space: 'Space',
   Event: 'Event',
   WorshipOrder: 'WorshipOrder',
+  WorshipOrderTemplate: 'WorshipOrderTemplate',
+  WorshipOrderTemplateItem: 'WorshipOrderTemplateItem',
   WorshipOrderItem: 'WorshipOrderItem',
   WorshipOrderMaterial: 'WorshipOrderMaterial',
   WorshipServiceDemand: 'WorshipServiceDemand',
+  WorshipRepertoire: 'WorshipRepertoire',
+  WorshipRepertoireSong: 'WorshipRepertoireSong',
   EventSpace: 'EventSpace',
   EventServiceArea: 'EventServiceArea',
   EventServiceTeam: 'EventServiceTeam',
@@ -337,6 +346,23 @@ export const ServiceMembershipScalarFieldEnum = {
 export type ServiceMembershipScalarFieldEnum = (typeof ServiceMembershipScalarFieldEnum)[keyof typeof ServiceMembershipScalarFieldEnum]
 
 
+export const ServiceOperationalRoleAssignmentScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  ativo: 'ativo',
+  inicio: 'inicio',
+  fim: 'fim',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId',
+  teamId: 'teamId',
+  personId: 'personId'
+} as const
+
+export type ServiceOperationalRoleAssignmentScalarFieldEnum = (typeof ServiceOperationalRoleAssignmentScalarFieldEnum)[keyof typeof ServiceOperationalRoleAssignmentScalarFieldEnum]
+
+
 export const ServiceScheduleScalarFieldEnum = {
   id: 'id',
   data: 'data',
@@ -352,6 +378,72 @@ export const ServiceScheduleScalarFieldEnum = {
 } as const
 
 export type ServiceScheduleScalarFieldEnum = (typeof ServiceScheduleScalarFieldEnum)[keyof typeof ServiceScheduleScalarFieldEnum]
+
+
+export const ServiceScheduleHistoryScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  previousPersonId: 'previousPersonId',
+  replacementPersonId: 'replacementPersonId',
+  previousPersonName: 'previousPersonName',
+  replacementPersonName: 'replacementPersonName',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  scheduleId: 'scheduleId',
+  changedByUserId: 'changedByUserId'
+} as const
+
+export type ServiceScheduleHistoryScalarFieldEnum = (typeof ServiceScheduleHistoryScalarFieldEnum)[keyof typeof ServiceScheduleHistoryScalarFieldEnum]
+
+
+export const ServiceAreaEntryStageScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  ordem: 'ordem',
+  obrigatoria: 'obrigatoria',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId'
+} as const
+
+export type ServiceAreaEntryStageScalarFieldEnum = (typeof ServiceAreaEntryStageScalarFieldEnum)[keyof typeof ServiceAreaEntryStageScalarFieldEnum]
+
+
+export const ServiceAreaApplicationScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  observacao: 'observacao',
+  decisaoMotivo: 'decisaoMotivo',
+  startedAt: 'startedAt',
+  decidedAt: 'decidedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId',
+  personId: 'personId',
+  desiredTeamId: 'desiredTeamId',
+  createdByUserId: 'createdByUserId',
+  decidedByUserId: 'decidedByUserId'
+} as const
+
+export type ServiceAreaApplicationScalarFieldEnum = (typeof ServiceAreaApplicationScalarFieldEnum)[keyof typeof ServiceAreaApplicationScalarFieldEnum]
+
+
+export const ServiceAreaApplicationStageScalarFieldEnum = {
+  id: 'id',
+  observacao: 'observacao',
+  completedAt: 'completedAt',
+  applicationId: 'applicationId',
+  entryStageId: 'entryStageId',
+  completedByUserId: 'completedByUserId'
+} as const
+
+export type ServiceAreaApplicationStageScalarFieldEnum = (typeof ServiceAreaApplicationStageScalarFieldEnum)[keyof typeof ServiceAreaApplicationStageScalarFieldEnum]
 
 
 export const SpaceScalarFieldEnum = {
@@ -396,10 +488,38 @@ export const WorshipOrderScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   eventId: 'eventId',
-  createdByUserId: 'createdByUserId'
+  createdByUserId: 'createdByUserId',
+  templateId: 'templateId'
 } as const
 
 export type WorshipOrderScalarFieldEnum = (typeof WorshipOrderScalarFieldEnum)[keyof typeof WorshipOrderScalarFieldEnum]
+
+
+export const WorshipOrderTemplateScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  ativo: 'ativo',
+  padrao: 'padrao',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  createdByUserId: 'createdByUserId'
+} as const
+
+export type WorshipOrderTemplateScalarFieldEnum = (typeof WorshipOrderTemplateScalarFieldEnum)[keyof typeof WorshipOrderTemplateScalarFieldEnum]
+
+
+export const WorshipOrderTemplateItemScalarFieldEnum = {
+  id: 'id',
+  sequencia: 'sequencia',
+  titulo: 'titulo',
+  horario: 'horario',
+  observacoes: 'observacoes',
+  templateId: 'templateId',
+  serviceAreaId: 'serviceAreaId'
+} as const
+
+export type WorshipOrderTemplateItemScalarFieldEnum = (typeof WorshipOrderTemplateItemScalarFieldEnum)[keyof typeof WorshipOrderTemplateItemScalarFieldEnum]
 
 
 export const WorshipOrderItemScalarFieldEnum = {
@@ -439,6 +559,42 @@ export const WorshipServiceDemandScalarFieldEnum = {
 } as const
 
 export type WorshipServiceDemandScalarFieldEnum = (typeof WorshipServiceDemandScalarFieldEnum)[keyof typeof WorshipServiceDemandScalarFieldEnum]
+
+
+export const WorshipRepertoireScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  reviewComment: 'reviewComment',
+  submittedAt: 'submittedAt',
+  approvedAt: 'approvedAt',
+  sentToWorshipOrderAt: 'sentToWorshipOrderAt',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  eventId: 'eventId',
+  serviceAreaId: 'serviceAreaId',
+  submittedByPersonId: 'submittedByPersonId',
+  approvedByPersonId: 'approvedByPersonId',
+  orderItemId: 'orderItemId',
+  deliveryDemandId: 'deliveryDemandId'
+} as const
+
+export type WorshipRepertoireScalarFieldEnum = (typeof WorshipRepertoireScalarFieldEnum)[keyof typeof WorshipRepertoireScalarFieldEnum]
+
+
+export const WorshipRepertoireSongScalarFieldEnum = {
+  id: 'id',
+  sequencia: 'sequencia',
+  titulo: 'titulo',
+  tom: 'tom',
+  artista: 'artista',
+  referencia: 'referencia',
+  observacoes: 'observacoes',
+  repertoireId: 'repertoireId'
+} as const
+
+export type WorshipRepertoireSongScalarFieldEnum = (typeof WorshipRepertoireSongScalarFieldEnum)[keyof typeof WorshipRepertoireSongScalarFieldEnum]
 
 
 export const EventSpaceScalarFieldEnum = {

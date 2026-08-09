@@ -74,11 +74,29 @@ enum ServiceMembershipRole {
   MEMBER
 }
 
+enum ServiceOperationalRole {
+  WORSHIP_MINISTER
+}
+
 enum ServiceScheduleStatus {
   SCHEDULED
   CONFIRMED
   DECLINED
   COMPLETED
+}
+
+enum ServiceScheduleHistoryAction {
+  CREATED
+  STATUS_CHANGED
+  SUBSTITUTED
+}
+
+enum ServiceAreaApplicationStatus {
+  INTERESTED
+  IN_PROGRESS
+  APPROVED
+  REJECTED
+  WITHDRAWN
 }
 
 enum EventType {
@@ -153,6 +171,14 @@ enum WorshipDemandStatus {
   CANCELLED
 }
 
+enum WorshipRepertoireStatus {
+  DRAFT
+  SUBMITTED
+  RETURNED
+  APPROVED
+  SENT_TO_WORSHIP_ORDER
+  COMPLETED
+}
 
 model Campus {
   id        String   @id @default(uuid())
@@ -163,16 +189,16 @@ model Campus {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  persons Person[]
-  cells   Cell[]
-  cellNetworks CellNetwork[]
-  serviceAreas ServiceArea[]
-  serviceTeams ServiceTeam[]
-  serviceMemberships ServiceMembership[]
-  spaces Space[]
-  events Event[]
-  notifications Notification[]
-  kidsClasses KidsClass[]
+  persons              Person[]
+  cells                Cell[]
+  cellNetworks         CellNetwork[]
+  serviceAreas         ServiceArea[]
+  serviceTeams         ServiceTeam[]
+  serviceMemberships   ServiceMembership[]
+  spaces               Space[]
+  events               Event[]
+  notifications        Notification[]
+  kidsClasses          KidsClass[]
   kidsOperationalRoles KidsOperationalRoleAssignment[]
 
   organization   Organization? @relation(fields: [organizationId], references: [id])
@@ -202,31 +228,35 @@ model Person {
   organization   Organization? @relation(fields: [organizationId], references: [id])
   organizationId String?
 
-  cellMemberships CellMembership[]
-  cellLeaderships CellLeadership[]
-  cellSupportRoles CellSupportRole[]
-  cellNetworkSupervisions CellNetworkSupervision[]
-  meetingAttendances CellMeetingAttendance[]
-  pastoralCaresAsSubject PastoralCare[] @relation("PastoralCareSubject")
-  pastoralCaresAsResponsible PastoralCare[] @relation("PastoralCareResponsible")
-  meetingVisitor CellMeetingVisitor?
-  journeyEvents PersonJourneyEvent[]
-  familyMemberships FamilyMembership[]
-  serviceMemberships ServiceMembership[]
-  serviceSchedules ServiceSchedule[]
-  eventsResponsible Event[] @relation("EventResponsible")
-  notificationRecipients NotificationRecipient[]
-  kidsEnrollments KidsEnrollment[] @relation("KidsChild")
-  kidsPickupAuthorizationsAsChild KidsAuthorizedPickup[] @relation("KidsPickupChild")
-  kidsPickupAuthorizationsAsResponsible KidsAuthorizedPickup[] @relation("KidsPickupResponsible")
-  kidsCheckIns KidsCheckIn[] @relation("KidsCheckInChild")
-  kidsPreCheckIns KidsPreCheckIn[]
-  kidsCareProfile KidsCareProfile?
-  kidsIdentity KidsIdentity?
-  kidsOperationalRoles KidsOperationalRoleAssignment[]
-  kidsResourceRequests KidsResourceRequest[] @relation("KidsResourceRequestedBy")
-  worshipOrderItemsResponsible WorshipOrderItem[] @relation("WorshipOrderItemResponsible")
-  worshipDemandsResponsible WorshipServiceDemand[] @relation("WorshipDemandResponsible")
+  cellMemberships                       CellMembership[]
+  cellLeaderships                       CellLeadership[]
+  cellSupportRoles                      CellSupportRole[]
+  cellNetworkSupervisions               CellNetworkSupervision[]
+  meetingAttendances                    CellMeetingAttendance[]
+  pastoralCaresAsSubject                PastoralCare[]                  @relation("PastoralCareSubject")
+  pastoralCaresAsResponsible            PastoralCare[]                  @relation("PastoralCareResponsible")
+  meetingVisitor                        CellMeetingVisitor?
+  journeyEvents                         PersonJourneyEvent[]
+  familyMemberships                     FamilyMembership[]
+  serviceMemberships                    ServiceMembership[]
+  serviceSchedules                      ServiceSchedule[]
+  serviceOperationalRoles               ServiceOperationalRoleAssignment[]
+  eventsResponsible                     Event[]                         @relation("EventResponsible")
+  notificationRecipients                NotificationRecipient[]
+  kidsEnrollments                       KidsEnrollment[]                @relation("KidsChild")
+  kidsPickupAuthorizationsAsChild       KidsAuthorizedPickup[]          @relation("KidsPickupChild")
+  kidsPickupAuthorizationsAsResponsible KidsAuthorizedPickup[]          @relation("KidsPickupResponsible")
+  kidsCheckIns                          KidsCheckIn[]                   @relation("KidsCheckInChild")
+  kidsPreCheckIns                       KidsPreCheckIn[]
+  kidsCareProfile                       KidsCareProfile?
+  kidsIdentity                          KidsIdentity?
+  kidsOperationalRoles                  KidsOperationalRoleAssignment[]
+  kidsResourceRequests                  KidsResourceRequest[]           @relation("KidsResourceRequestedBy")
+  worshipOrderItemsResponsible          WorshipOrderItem[]              @relation("WorshipOrderItemResponsible")
+  worshipDemandsResponsible             WorshipServiceDemand[]          @relation("WorshipDemandResponsible")
+  worshipRepertoiresSubmitted           WorshipRepertoire[]             @relation("WorshipRepertoireSubmittedBy")
+  worshipRepertoiresApproved            WorshipRepertoire[]             @relation("WorshipRepertoireApprovedBy")
+  serviceAreaApplications               ServiceAreaApplication[]
 }
 
 model User {
@@ -241,25 +271,31 @@ model User {
   personId String @unique
   person   Person @relation(fields: [personId], references: [id])
 
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  organizationId String?
-  role UserRole @default(MEMBER)
-  additionalRoles UserRoleAssignment[] @relation("UserAdditionalRoles")
-  rolesGranted UserRoleAssignment[] @relation("UserAdditionalRolesGranted")
-  journeyEventsCreated PersonJourneyEvent[]
-  eventsCreated Event[] @relation("EventCreatedBy")
-  eventHistory EventHistory[]
-  worshipOrdersCreated WorshipOrder[]
+  organization                 Organization?          @relation(fields: [organizationId], references: [id])
+  organizationId               String?
+  role                         UserRole               @default(MEMBER)
+  additionalRoles              UserRoleAssignment[]   @relation("UserAdditionalRoles")
+  rolesGranted                 UserRoleAssignment[]   @relation("UserAdditionalRolesGranted")
+  journeyEventsCreated         PersonJourneyEvent[]
+  eventsCreated                Event[]                @relation("EventCreatedBy")
+  eventHistory                 EventHistory[]
+  serviceScheduleHistory       ServiceScheduleHistory[]
+  serviceAreaApplicationsCreated ServiceAreaApplication[] @relation("ServiceAreaApplicationCreatedBy")
+  serviceAreaApplicationsDecided ServiceAreaApplication[] @relation("ServiceAreaApplicationDecidedBy")
+  serviceAreaApplicationStagesCompleted ServiceAreaApplicationStage[]
+  worshipOrdersCreated         WorshipOrder[]
+  worshipOrderTemplatesCreated WorshipOrderTemplate[]
 }
 
 model UserRoleAssignment {
-  id String @id @default(uuid())
-  role UserRole
-  createdAt DateTime @default(now())
-  userId String
-  user User @relation("UserAdditionalRoles", fields: [userId], references: [id])
+  id              String   @id @default(uuid())
+  role            UserRole
+  createdAt       DateTime @default(now())
+  userId          String
+  user            User     @relation("UserAdditionalRoles", fields: [userId], references: [id])
   grantedByUserId String?
-  grantedByUser User? @relation("UserAdditionalRolesGranted", fields: [grantedByUserId], references: [id])
+  grantedByUser   User?    @relation("UserAdditionalRolesGranted", fields: [grantedByUserId], references: [id])
+
   @@unique([userId, role])
   @@index([role])
 }
@@ -276,35 +312,40 @@ model Organization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  campuses Campus[]
-  persons  Person[]
-  users    User[]
-  cells    Cell[]
-  cellNetworks CellNetwork[]
-  studies CellStudy[]
-  pastoralCares PastoralCare[]
-  journeyEvents PersonJourneyEvent[]
-  families Family[]
-  serviceAreas ServiceArea[]
-  serviceTeams ServiceTeam[]
-  serviceSchedules ServiceSchedule[]
-  spaces Space[]
-  events Event[]
-  notifications Notification[]
-  kidsClasses KidsClass[]
-  kidsVisualResources KidsVisualResource[]
-  kidsResourceRequests KidsResourceRequest[]
-  kidsOperationalRoles KidsOperationalRoleAssignment[]
+  campuses              Campus[]
+  persons               Person[]
+  users                 User[]
+  cells                 Cell[]
+  cellNetworks          CellNetwork[]
+  studies               CellStudy[]
+  pastoralCares         PastoralCare[]
+  journeyEvents         PersonJourneyEvent[]
+  families              Family[]
+  serviceAreas          ServiceArea[]
+  serviceTeams          ServiceTeam[]
+  serviceSchedules      ServiceSchedule[]
+  serviceOperationalRoles ServiceOperationalRoleAssignment[]
+  serviceAreaEntryStages ServiceAreaEntryStage[]
+  serviceAreaApplications ServiceAreaApplication[]
+  spaces                Space[]
+  events                Event[]
+  notifications         Notification[]
+  kidsClasses           KidsClass[]
+  kidsVisualResources   KidsVisualResource[]
+  kidsResourceRequests  KidsResourceRequest[]
+  kidsOperationalRoles  KidsOperationalRoleAssignment[]
+  worshipOrderTemplates WorshipOrderTemplate[]
+  worshipRepertoires    WorshipRepertoire[]
 }
 
 model Cell {
-  id        String   @id @default(uuid())
+  id        String     @id @default(uuid())
   nome      String
   descricao String?
-  ativo     Boolean  @default(true)
+  ativo     Boolean    @default(true)
   status    CellStatus @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id])
@@ -318,16 +359,16 @@ model Cell {
   meetingDay  MeetingDay?
   meetingTime String?
 
-  memberships CellMembership[]
-  leaderships CellLeadership[]
-  supportRoles CellSupportRole[]
+  memberships           CellMembership[]
+  leaderships           CellLeadership[]
+  supportRoles          CellSupportRole[]
   sourceMultiplications CellMultiplication[] @relation("SourceCell")
-  originMultiplication CellMultiplication? @relation("NewCell")
-  motherCellId String?
-  motherCell Cell? @relation("CellMother", fields: [motherCellId], references: [id])
-  childCells Cell[] @relation("CellMother")
-  meetings CellMeeting[]
-  location CellLocation?
+  originMultiplication  CellMultiplication?  @relation("NewCell")
+  motherCellId          String?
+  motherCell            Cell?                @relation("CellMother", fields: [motherCellId], references: [id])
+  childCells            Cell[]               @relation("CellMother")
+  meetings              CellMeeting[]
+  location              CellLocation?
 
   @@index([organizationId])
   @@index([campusId])
@@ -348,7 +389,7 @@ model CellNetwork {
   campusId String
   campus   Campus @relation(fields: [campusId], references: [id])
 
-  cells Cell[]
+  cells        Cell[]
   supervisions CellNetworkSupervision[]
 
   @@index([organizationId])
@@ -357,17 +398,18 @@ model CellNetwork {
 }
 
 model CellSupportRole {
-  id String @id @default(uuid())
-  role CellSupportRoleType
-  inicio DateTime @default(now())
-  fim DateTime?
-  ativo Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  personId String
-  person Person @relation(fields: [personId], references: [id])
-  cellId String
-  cell Cell @relation(fields: [cellId], references: [id])
+  id        String              @id @default(uuid())
+  role      CellSupportRoleType
+  inicio    DateTime            @default(now())
+  fim       DateTime?
+  ativo     Boolean             @default(true)
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  personId  String
+  person    Person              @relation(fields: [personId], references: [id])
+  cellId    String
+  cell      Cell                @relation(fields: [cellId], references: [id])
+
   @@index([personId])
   @@index([cellId])
   @@index([role])
@@ -375,102 +417,115 @@ model CellSupportRole {
 }
 
 model CellMultiplication {
-  id String @id @default(uuid())
-  data DateTime @default(now())
-  observacao String?
-  createdAt DateTime @default(now())
+  id           String   @id @default(uuid())
+  data         DateTime @default(now())
+  observacao   String?
+  createdAt    DateTime @default(now())
   sourceCellId String
-  sourceCell Cell @relation("SourceCell", fields: [sourceCellId], references: [id])
-  newCellId String @unique
-  newCell Cell @relation("NewCell", fields: [newCellId], references: [id])
+  sourceCell   Cell     @relation("SourceCell", fields: [sourceCellId], references: [id])
+  newCellId    String   @unique
+  newCell      Cell     @relation("NewCell", fields: [newCellId], references: [id])
+
   @@index([sourceCellId])
 }
 
 model PersonJourneyEvent {
-  id String @id @default(uuid())
-  stage PersonJourneyStage
-  data DateTime @default(now())
-  createdAt DateTime @default(now())
-  personId String
-  person Person @relation(fields: [personId], references: [id])
-  organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
+  id              String             @id @default(uuid())
+  stage           PersonJourneyStage
+  data            DateTime           @default(now())
+  createdAt       DateTime           @default(now())
+  personId        String
+  person          Person             @relation(fields: [personId], references: [id])
+  organizationId  String
+  organization    Organization       @relation(fields: [organizationId], references: [id])
   createdByUserId String
-  createdByUser User @relation(fields: [createdByUserId], references: [id])
+  createdByUser   User               @relation(fields: [createdByUserId], references: [id])
+
   @@index([personId])
   @@index([organizationId])
   @@index([stage])
 }
 
 model Family {
-  id String @id @default(uuid())
-  nome String
-  ativo Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String             @id @default(uuid())
+  nome           String
+  ativo          Boolean            @default(true)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  members FamilyMembership[]
+  organization   Organization       @relation(fields: [organizationId], references: [id])
+  members        FamilyMembership[]
+
   @@index([organizationId])
 }
 
 model FamilyMembership {
-  id String @id @default(uuid())
+  id           String             @id @default(uuid())
   relationship FamilyRelationship
-  inicio DateTime @default(now())
-  fim DateTime?
-  ativo Boolean @default(true)
-  familyId String
-  family Family @relation(fields: [familyId], references: [id])
-  personId String
-  person Person @relation(fields: [personId], references: [id])
+  inicio       DateTime           @default(now())
+  fim          DateTime?
+  ativo        Boolean            @default(true)
+  familyId     String
+  family       Family             @relation(fields: [familyId], references: [id])
+  personId     String
+  person       Person             @relation(fields: [personId], references: [id])
+
   @@index([familyId])
   @@index([personId])
   @@index([ativo])
 }
 
 model ServiceArea {
-  id String @id @default(uuid())
-  nome String
-  descricao String?
-  scope ServiceAreaScope @default(GLOBAL)
-  ativo Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  campusId String?
-  campus Campus? @relation(fields: [campusId], references: [id])
-  teams ServiceTeam[]
-  memberships ServiceMembership[]
-  notifications Notification[]
-  eventAreas EventServiceArea[]
-  kidsClasses KidsClass[]
-  worshipOrderItems WorshipOrderItem[]
-  worshipDemands WorshipServiceDemand[]
+  id                        String                     @id @default(uuid())
+  nome                      String
+  descricao                 String?
+  scope                     ServiceAreaScope           @default(GLOBAL)
+  ativo                     Boolean                    @default(true)
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
+  organizationId            String
+  organization              Organization               @relation(fields: [organizationId], references: [id])
+  campusId                  String?
+  campus                    Campus?                    @relation(fields: [campusId], references: [id])
+  teams                     ServiceTeam[]
+  memberships               ServiceMembership[]
+  operationalRoles          ServiceOperationalRoleAssignment[]
+  notifications             Notification[]
+  eventAreas                EventServiceArea[]
+  kidsClasses               KidsClass[]
+  worshipOrderItems         WorshipOrderItem[]
+  worshipOrderTemplateItems WorshipOrderTemplateItem[]
+  worshipDemands            WorshipServiceDemand[]
+  worshipRepertoires        WorshipRepertoire[]
+  entryStages               ServiceAreaEntryStage[]
+  applications              ServiceAreaApplication[]
+
   @@index([organizationId])
   @@index([campusId])
   @@index([ativo])
 }
 
 model ServiceTeam {
-  id String @id @default(uuid())
-  nome String
-  descricao String?
-  ativo Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String              @id @default(uuid())
+  nome           String
+  descricao      String?
+  ativo          Boolean             @default(true)
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  serviceAreaId String
-  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
-  campusId String
-  campus Campus @relation(fields: [campusId], references: [id])
-  memberships ServiceMembership[]
-  schedules ServiceSchedule[]
-  eventTeams EventServiceTeam[]
-  notifications Notification[]
-  kidsClasses KidsClass[]
+  organization   Organization        @relation(fields: [organizationId], references: [id])
+  serviceAreaId  String
+  serviceArea    ServiceArea         @relation(fields: [serviceAreaId], references: [id])
+  campusId       String
+  campus         Campus              @relation(fields: [campusId], references: [id])
+  memberships    ServiceMembership[]
+  operationalRoles ServiceOperationalRoleAssignment[]
+  schedules      ServiceSchedule[]
+  eventTeams     EventServiceTeam[]
+  notifications  Notification[]
+  kidsClasses    KidsClass[]
+  desiredApplications ServiceAreaApplication[] @relation("ServiceAreaApplicationDesiredTeam")
+
   @@index([organizationId])
   @@index([serviceAreaId])
   @@index([campusId])
@@ -478,21 +533,22 @@ model ServiceTeam {
 }
 
 model ServiceMembership {
-  id String @id @default(uuid())
-  role ServiceMembershipRole @default(MEMBER)
-  inicio DateTime @default(now())
-  fim DateTime?
-  ativo Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  personId String
-  person Person @relation(fields: [personId], references: [id])
+  id            String                @id @default(uuid())
+  role          ServiceMembershipRole @default(MEMBER)
+  inicio        DateTime              @default(now())
+  fim           DateTime?
+  ativo         Boolean               @default(true)
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  personId      String
+  person        Person                @relation(fields: [personId], references: [id])
   serviceAreaId String
-  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
-  campusId String?
-  campus Campus? @relation(fields: [campusId], references: [id])
-  teamId String?
-  team ServiceTeam? @relation(fields: [teamId], references: [id])
+  serviceArea   ServiceArea           @relation(fields: [serviceAreaId], references: [id])
+  campusId      String?
+  campus        Campus?               @relation(fields: [campusId], references: [id])
+  teamId        String?
+  team          ServiceTeam?          @relation(fields: [teamId], references: [id])
+
   @@index([personId])
   @@index([serviceAreaId])
   @@index([campusId])
@@ -500,22 +556,49 @@ model ServiceMembership {
   @@index([ativo])
 }
 
-model ServiceSchedule {
-  id String @id @default(uuid())
-  data DateTime
-  funcao String
-  observacao String?
-  status ServiceScheduleStatus @default(SCHEDULED)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model ServiceOperationalRoleAssignment {
+  id             String                 @id @default(uuid())
+  role           ServiceOperationalRole
+  ativo          Boolean                @default(true)
+  inicio         DateTime               @default(now())
+  fim            DateTime?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  teamId String
-  team ServiceTeam @relation(fields: [teamId], references: [id])
-  personId String
-  person Person @relation(fields: [personId], references: [id])
-  eventId String?
-  event Event? @relation(fields: [eventId], references: [id])
+  organization   Organization           @relation(fields: [organizationId], references: [id])
+  serviceAreaId  String
+  serviceArea    ServiceArea            @relation(fields: [serviceAreaId], references: [id])
+  teamId         String
+  team           ServiceTeam            @relation(fields: [teamId], references: [id])
+  personId       String
+  person         Person                 @relation(fields: [personId], references: [id])
+
+  @@index([organizationId])
+  @@index([serviceAreaId])
+  @@index([teamId])
+  @@index([personId])
+  @@index([role])
+  @@index([ativo])
+}
+
+model ServiceSchedule {
+  id             String                @id @default(uuid())
+  data           DateTime
+  funcao         String
+  observacao     String?
+  status         ServiceScheduleStatus @default(SCHEDULED)
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  organizationId String
+  organization   Organization          @relation(fields: [organizationId], references: [id])
+  teamId         String
+  team           ServiceTeam           @relation(fields: [teamId], references: [id])
+  personId       String
+  person         Person                @relation(fields: [personId], references: [id])
+  eventId        String?
+  event          Event?                @relation(fields: [eventId], references: [id])
+  history        ServiceScheduleHistory[]
+
   @@index([organizationId])
   @@index([teamId])
   @@index([personId])
@@ -523,55 +606,145 @@ model ServiceSchedule {
   @@index([eventId])
 }
 
-model Space {
-  id String @id @default(uuid())
-  nome String
-  capacidade Int?
-  recursos String?
-  ativo Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model ServiceScheduleHistory {
+  id                    String                       @id @default(uuid())
+  action                ServiceScheduleHistoryAction
+  previousStatus        ServiceScheduleStatus?
+  newStatus             ServiceScheduleStatus?
+  previousPersonId      String?
+  replacementPersonId   String?
+  previousPersonName    String?
+  replacementPersonName String?
+  reason                String?
+  createdAt             DateTime                     @default(now())
+  scheduleId            String
+  schedule              ServiceSchedule              @relation(fields: [scheduleId], references: [id])
+  changedByUserId       String
+  changedByUser         User                         @relation(fields: [changedByUserId], references: [id])
+
+  @@index([scheduleId])
+  @@index([changedByUserId])
+}
+
+model ServiceAreaEntryStage {
+  id             String    @id @default(uuid())
+  nome           String
+  descricao      String?
+  ordem          Int
+  obrigatoria    Boolean   @default(true)
+  ativo          Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  campusId String
-  campus Campus @relation(fields: [campusId], references: [id])
-  eventSpaces EventSpace[]
-  kidsClasses KidsClass[]
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  serviceAreaId  String
+  serviceArea    ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  completions    ServiceAreaApplicationStage[]
+
+  @@unique([serviceAreaId, ordem])
+  @@index([organizationId])
+  @@index([serviceAreaId])
+  @@index([ativo])
+}
+
+model ServiceAreaApplication {
+  id                String                       @id @default(uuid())
+  status            ServiceAreaApplicationStatus @default(INTERESTED)
+  observacao        String?
+  decisaoMotivo     String?
+  startedAt         DateTime?
+  decidedAt         DateTime?
+  createdAt         DateTime                     @default(now())
+  updatedAt         DateTime                     @updatedAt
+  organizationId    String
+  organization      Organization                 @relation(fields: [organizationId], references: [id])
+  serviceAreaId     String
+  serviceArea       ServiceArea                  @relation(fields: [serviceAreaId], references: [id])
+  personId          String
+  person            Person                       @relation(fields: [personId], references: [id])
+  desiredTeamId     String?
+  desiredTeam       ServiceTeam?                 @relation("ServiceAreaApplicationDesiredTeam", fields: [desiredTeamId], references: [id])
+  createdByUserId   String
+  createdByUser     User                         @relation("ServiceAreaApplicationCreatedBy", fields: [createdByUserId], references: [id])
+  decidedByUserId   String?
+  decidedByUser     User?                        @relation("ServiceAreaApplicationDecidedBy", fields: [decidedByUserId], references: [id])
+  stageCompletions  ServiceAreaApplicationStage[]
+
+  @@index([organizationId])
+  @@index([serviceAreaId])
+  @@index([personId])
+  @@index([desiredTeamId])
+  @@index([status])
+}
+
+model ServiceAreaApplicationStage {
+  id                String                 @id @default(uuid())
+  observacao        String?
+  completedAt       DateTime               @default(now())
+  applicationId     String
+  application       ServiceAreaApplication @relation(fields: [applicationId], references: [id])
+  entryStageId      String
+  entryStage        ServiceAreaEntryStage  @relation(fields: [entryStageId], references: [id])
+  completedByUserId String
+  completedByUser   User                   @relation(fields: [completedByUserId], references: [id])
+
+  @@unique([applicationId, entryStageId])
+  @@index([entryStageId])
+  @@index([completedByUserId])
+}
+
+model Space {
+  id             String       @id @default(uuid())
+  nome           String
+  capacidade     Int?
+  recursos       String?
+  ativo          Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  campusId       String
+  campus         Campus       @relation(fields: [campusId], references: [id])
+  eventSpaces    EventSpace[]
+  kidsClasses    KidsClass[]
+
   @@index([organizationId])
   @@index([campusId])
   @@index([ativo])
 }
 
 model Event {
-  id String @id @default(uuid())
-  titulo String
-  descricao String?
-  type EventType
-  status EventStatus @default(REQUESTED)
-  inicio DateTime
-  fim DateTime
-  alertEnabled Boolean @default(false)
-  blocksCampusAgenda Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  campusId String
-  campus Campus @relation(fields: [campusId], references: [id])
-  createdByUserId String
-  createdByUser User @relation("EventCreatedBy", fields: [createdByUserId], references: [id])
-  responsiblePersonId String?
-  responsiblePerson Person? @relation("EventResponsible", fields: [responsiblePersonId], references: [id])
-  spaces EventSpace[]
-  serviceAreas EventServiceArea[]
-  teams EventServiceTeam[]
-  checklist EventChecklist[]
-  history EventHistory[]
-  notifications Notification[]
-  schedules ServiceSchedule[]
+  id                   String                @id @default(uuid())
+  titulo               String
+  descricao            String?
+  type                 EventType
+  status               EventStatus           @default(REQUESTED)
+  inicio               DateTime
+  fim                  DateTime
+  alertEnabled         Boolean               @default(false)
+  blocksCampusAgenda   Boolean               @default(false)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  organizationId       String
+  organization         Organization          @relation(fields: [organizationId], references: [id])
+  campusId             String
+  campus               Campus                @relation(fields: [campusId], references: [id])
+  createdByUserId      String
+  createdByUser        User                  @relation("EventCreatedBy", fields: [createdByUserId], references: [id])
+  responsiblePersonId  String?
+  responsiblePerson    Person?               @relation("EventResponsible", fields: [responsiblePersonId], references: [id])
+  spaces               EventSpace[]
+  serviceAreas         EventServiceArea[]
+  teams                EventServiceTeam[]
+  checklist            EventChecklist[]
+  history              EventHistory[]
+  notifications        Notification[]
+  schedules            ServiceSchedule[]
   kidsResourceRequests KidsResourceRequest[]
-  kidsPreCheckIns KidsPreCheckIn[]
-  worshipOrder WorshipOrder?
+  kidsPreCheckIns      KidsPreCheckIn[]
+  worshipOrder         WorshipOrder?
+  worshipRepertoires   WorshipRepertoire[]
+
   @@index([organizationId])
   @@index([campusId])
   @@index([inicio])
@@ -579,127 +752,223 @@ model Event {
 }
 
 model WorshipOrder {
-  id String @id @default(uuid())
-  status WorshipOrderStatus @default(DRAFT)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  eventId String @unique
-  event Event @relation(fields: [eventId], references: [id])
+  id              String                @id @default(uuid())
+  status          WorshipOrderStatus    @default(DRAFT)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  eventId         String                @unique
+  event           Event                 @relation(fields: [eventId], references: [id])
   createdByUserId String
-  createdByUser User @relation(fields: [createdByUserId], references: [id])
-  items WorshipOrderItem[]
+  createdByUser   User                  @relation(fields: [createdByUserId], references: [id])
+  templateId      String?
+  template        WorshipOrderTemplate? @relation(fields: [templateId], references: [id])
+  items           WorshipOrderItem[]
+
+  @@index([templateId])
+}
+
+model WorshipOrderTemplate {
+  id              String                     @id @default(uuid())
+  nome            String
+  ativo           Boolean                    @default(true)
+  padrao          Boolean                    @default(false)
+  createdAt       DateTime                   @default(now())
+  updatedAt       DateTime                   @updatedAt
+  organizationId  String
+  organization    Organization               @relation(fields: [organizationId], references: [id])
+  createdByUserId String
+  createdByUser   User                       @relation(fields: [createdByUserId], references: [id])
+  items           WorshipOrderTemplateItem[]
+  orders          WorshipOrder[]
+
+  @@index([organizationId])
+  @@index([organizationId, ativo])
+  @@index([organizationId, padrao])
+}
+
+model WorshipOrderTemplateItem {
+  id            String               @id @default(uuid())
+  sequencia     Int
+  titulo        String
+  horario       String?
+  observacoes   String?
+  templateId    String
+  template      WorshipOrderTemplate @relation(fields: [templateId], references: [id])
+  serviceAreaId String?
+  serviceArea   ServiceArea?         @relation(fields: [serviceAreaId], references: [id])
+
+  @@unique([templateId, sequencia])
+  @@index([serviceAreaId])
 }
 
 model WorshipOrderItem {
-  id String @id @default(uuid())
-  sequencia Int
-  titulo String
-  horario String?
-  observacoes String?
-  orderId String
-  order WorshipOrder @relation(fields: [orderId], references: [id])
+  id                  String                 @id @default(uuid())
+  sequencia           Int
+  titulo              String
+  horario             String?
+  observacoes         String?
+  orderId             String
+  order               WorshipOrder           @relation(fields: [orderId], references: [id])
   responsiblePersonId String?
-  responsiblePerson Person? @relation("WorshipOrderItemResponsible", fields: [responsiblePersonId], references: [id])
-  serviceAreaId String?
-  serviceArea ServiceArea? @relation(fields: [serviceAreaId], references: [id])
-  materials WorshipOrderMaterial[]
-  demands WorshipServiceDemand[]
+  responsiblePerson   Person?                @relation("WorshipOrderItemResponsible", fields: [responsiblePersonId], references: [id])
+  serviceAreaId       String?
+  serviceArea         ServiceArea?           @relation(fields: [serviceAreaId], references: [id])
+  materials           WorshipOrderMaterial[]
+  demands             WorshipServiceDemand[]
+  repertoires         WorshipRepertoire[]
+
   @@unique([orderId, sequencia])
   @@index([serviceAreaId])
 }
 
 model WorshipOrderMaterial {
-  id String @id @default(uuid())
-  type WorshipMaterialType
-  titulo String
+  id         String              @id @default(uuid())
+  type       WorshipMaterialType
+  titulo     String
   referencia String?
-  itemId String
-  item WorshipOrderItem @relation(fields: [itemId], references: [id])
+  itemId     String
+  item       WorshipOrderItem    @relation(fields: [itemId], references: [id])
+
   @@index([itemId])
 }
 
 model WorshipServiceDemand {
-  id String @id @default(uuid())
-  descricao String
-  dueAt DateTime?
-  status WorshipDemandStatus @default(PENDING)
-  completedAt DateTime?
-  itemId String
-  item WorshipOrderItem @relation(fields: [itemId], references: [id])
-  serviceAreaId String
-  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  id                  String              @id @default(uuid())
+  descricao           String
+  dueAt               DateTime?
+  status              WorshipDemandStatus @default(PENDING)
+  completedAt         DateTime?
+  itemId              String
+  item                WorshipOrderItem    @relation(fields: [itemId], references: [id])
+  serviceAreaId       String
+  serviceArea         ServiceArea         @relation(fields: [serviceAreaId], references: [id])
   responsiblePersonId String?
-  responsiblePerson Person? @relation("WorshipDemandResponsible", fields: [responsiblePersonId], references: [id])
+  responsiblePerson   Person?             @relation("WorshipDemandResponsible", fields: [responsiblePersonId], references: [id])
+  repertoireDelivery  WorshipRepertoire? @relation("WorshipRepertoireDeliveryDemand")
+
   @@index([itemId])
   @@index([serviceAreaId])
   @@index([status])
 }
 
+model WorshipRepertoire {
+  id                   String                  @id @default(uuid())
+  status               WorshipRepertoireStatus @default(DRAFT)
+  reviewComment        String?
+  submittedAt          DateTime?
+  approvedAt           DateTime?
+  sentToWorshipOrderAt DateTime?
+  completedAt          DateTime?
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+  organizationId       String
+  organization         Organization            @relation(fields: [organizationId], references: [id])
+  eventId              String
+  event                Event                   @relation(fields: [eventId], references: [id])
+  serviceAreaId        String
+  serviceArea          ServiceArea             @relation(fields: [serviceAreaId], references: [id])
+  submittedByPersonId  String
+  submittedByPerson    Person                  @relation("WorshipRepertoireSubmittedBy", fields: [submittedByPersonId], references: [id])
+  approvedByPersonId   String?
+  approvedByPerson     Person?                 @relation("WorshipRepertoireApprovedBy", fields: [approvedByPersonId], references: [id])
+  orderItemId          String?
+  orderItem            WorshipOrderItem?      @relation(fields: [orderItemId], references: [id])
+  deliveryDemandId     String?                 @unique
+  deliveryDemand       WorshipServiceDemand?   @relation("WorshipRepertoireDeliveryDemand", fields: [deliveryDemandId], references: [id])
+  songs                WorshipRepertoireSong[]
+
+  @@unique([eventId, serviceAreaId])
+  @@index([organizationId])
+  @@index([serviceAreaId])
+  @@index([status])
+  @@index([orderItemId])
+}
+
+model WorshipRepertoireSong {
+  id           String            @id @default(uuid())
+  sequencia    Int
+  titulo       String
+  tom          String?
+  artista      String?
+  referencia   String?
+  observacoes  String?
+  repertoireId String
+  repertoire   WorshipRepertoire @relation(fields: [repertoireId], references: [id])
+
+  @@unique([repertoireId, sequencia])
+}
+
 model EventSpace {
   eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  event   Event  @relation(fields: [eventId], references: [id])
   spaceId String
-  space Space @relation(fields: [spaceId], references: [id])
+  space   Space  @relation(fields: [spaceId], references: [id])
+
   @@id([eventId, spaceId])
   @@index([spaceId])
 }
 
 model EventServiceArea {
-  eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  eventId       String
+  event         Event       @relation(fields: [eventId], references: [id])
   serviceAreaId String
-  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  serviceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id])
+
   @@id([eventId, serviceAreaId])
   @@index([serviceAreaId])
 }
 
 model EventServiceTeam {
   eventId String
-  event Event @relation(fields: [eventId], references: [id])
-  teamId String
-  team ServiceTeam @relation(fields: [teamId], references: [id])
+  event   Event       @relation(fields: [eventId], references: [id])
+  teamId  String
+  team    ServiceTeam @relation(fields: [teamId], references: [id])
+
   @@id([eventId, teamId])
   @@index([teamId])
 }
 
 model EventChecklist {
-  id String @id @default(uuid())
-  descricao String
-  concluido Boolean @default(false)
+  id          String    @id @default(uuid())
+  descricao   String
+  concluido   Boolean   @default(false)
   concluidoEm DateTime?
-  eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  eventId     String
+  event       Event     @relation(fields: [eventId], references: [id])
+
   @@index([eventId])
 }
 
 model EventHistory {
-  id String @id @default(uuid())
-  status EventStatus
-  createdAt DateTime @default(now())
-  eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  id              String      @id @default(uuid())
+  status          EventStatus
+  createdAt       DateTime    @default(now())
+  eventId         String
+  event           Event       @relation(fields: [eventId], references: [id])
   changedByUserId String
-  changedByUser User @relation(fields: [changedByUserId], references: [id])
+  changedByUser   User        @relation(fields: [changedByUserId], references: [id])
+
   @@index([eventId])
 }
 
 model Notification {
-  id String @id @default(uuid())
-  titulo String
-  mensagem String
-  audience NotificationAudience
-  createdAt DateTime @default(now())
+  id             String                  @id @default(uuid())
+  titulo         String
+  mensagem       String
+  audience       NotificationAudience
+  createdAt      DateTime                @default(now())
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  campusId String?
-  campus Campus? @relation(fields: [campusId], references: [id])
-  serviceAreaId String?
-  serviceArea ServiceArea? @relation(fields: [serviceAreaId], references: [id])
-  serviceTeamId String?
-  serviceTeam ServiceTeam? @relation(fields: [serviceTeamId], references: [id])
-  eventId String?
-  event Event? @relation(fields: [eventId], references: [id])
-  recipients NotificationRecipient[]
+  organization   Organization            @relation(fields: [organizationId], references: [id])
+  campusId       String?
+  campus         Campus?                 @relation(fields: [campusId], references: [id])
+  serviceAreaId  String?
+  serviceArea    ServiceArea?            @relation(fields: [serviceAreaId], references: [id])
+  serviceTeamId  String?
+  serviceTeam    ServiceTeam?            @relation(fields: [serviceTeamId], references: [id])
+  eventId        String?
+  event          Event?                  @relation(fields: [eventId], references: [id])
+  recipients     NotificationRecipient[]
+
   @@index([organizationId])
   @@index([campusId])
   @@index([serviceAreaId])
@@ -708,38 +977,40 @@ model Notification {
 }
 
 model NotificationRecipient {
-  id String @id @default(uuid())
-  deliveredAt DateTime @default(now())
-  readAt DateTime?
+  id             String       @id @default(uuid())
+  deliveredAt    DateTime     @default(now())
+  readAt         DateTime?
   notificationId String
-  notification Notification @relation(fields: [notificationId], references: [id])
-  personId String
-  person Person @relation(fields: [personId], references: [id])
+  notification   Notification @relation(fields: [notificationId], references: [id])
+  personId       String
+  person         Person       @relation(fields: [personId], references: [id])
+
   @@unique([notificationId, personId])
   @@index([personId])
   @@index([readAt])
 }
 
 model KidsClass {
-  id String @id @default(uuid())
-  nome String
-  capacidade Int?
-  idadeMinima Int?
-  idadeMaxima Int?
-  ativo Boolean @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String           @id @default(uuid())
+  nome           String
+  capacidade     Int?
+  idadeMinima    Int?
+  idadeMaxima    Int?
+  ativo          Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  campusId String
-  campus Campus @relation(fields: [campusId], references: [id])
-  serviceAreaId String
-  serviceArea ServiceArea @relation(fields: [serviceAreaId], references: [id])
-  teamId String
-  team ServiceTeam @relation(fields: [teamId], references: [id])
-  spaceId String?
-  space Space? @relation(fields: [spaceId], references: [id])
-  enrollments KidsEnrollment[]
+  organization   Organization     @relation(fields: [organizationId], references: [id])
+  campusId       String
+  campus         Campus           @relation(fields: [campusId], references: [id])
+  serviceAreaId  String
+  serviceArea    ServiceArea      @relation(fields: [serviceAreaId], references: [id])
+  teamId         String
+  team           ServiceTeam      @relation(fields: [teamId], references: [id])
+  spaceId        String?
+  space          Space?           @relation(fields: [spaceId], references: [id])
+  enrollments    KidsEnrollment[]
+
   @@index([organizationId])
   @@index([campusId])
   @@index([serviceAreaId])
@@ -747,88 +1018,93 @@ model KidsClass {
 }
 
 model KidsEnrollment {
-  id String @id @default(uuid())
-  ativo Boolean @default(true)
-  inicio DateTime @default(now())
-  fim DateTime?
-  classId String
-  class KidsClass @relation(fields: [classId], references: [id])
-  childId String
-  child Person @relation("KidsChild", fields: [childId], references: [id])
-  checkIns KidsCheckIn[]
+  id          String           @id @default(uuid())
+  ativo       Boolean          @default(true)
+  inicio      DateTime         @default(now())
+  fim         DateTime?
+  classId     String
+  class       KidsClass        @relation(fields: [classId], references: [id])
+  childId     String
+  child       Person           @relation("KidsChild", fields: [childId], references: [id])
+  checkIns    KidsCheckIn[]
   preCheckIns KidsPreCheckIn[]
+
   @@index([classId])
   @@index([childId])
   @@index([ativo])
 }
 
 model KidsAuthorizedPickup {
-  id String @id @default(uuid())
-  parentesco String?
-  ativo Boolean @default(true)
-  createdAt DateTime @default(now())
-  childId String
-  child Person @relation("KidsPickupChild", fields: [childId], references: [id])
+  id                  String   @id @default(uuid())
+  parentesco          String?
+  ativo               Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  childId             String
+  child               Person   @relation("KidsPickupChild", fields: [childId], references: [id])
   responsiblePersonId String
-  responsiblePerson Person @relation("KidsPickupResponsible", fields: [responsiblePersonId], references: [id])
+  responsiblePerson   Person   @relation("KidsPickupResponsible", fields: [responsiblePersonId], references: [id])
+
   @@unique([childId, responsiblePersonId])
   @@index([responsiblePersonId])
 }
 
 model KidsCheckIn {
-  id String @id @default(uuid())
-  status KidsCheckInStatus @default(CHECKED_IN)
-  checkInAt DateTime @default(now())
-  checkOutAt DateTime?
-  pickupCode String? @unique
-  enrollmentId String
-  enrollment KidsEnrollment @relation(fields: [enrollmentId], references: [id])
-  childId String
-  child Person @relation("KidsCheckInChild", fields: [childId], references: [id])
-  checkedInByPersonId String
+  id                   String            @id @default(uuid())
+  status               KidsCheckInStatus @default(CHECKED_IN)
+  checkInAt            DateTime          @default(now())
+  checkOutAt           DateTime?
+  pickupCode           String?           @unique
+  enrollmentId         String
+  enrollment           KidsEnrollment    @relation(fields: [enrollmentId], references: [id])
+  childId              String
+  child                Person            @relation("KidsCheckInChild", fields: [childId], references: [id])
+  checkedInByPersonId  String
   checkedOutByPersonId String?
+
   @@index([enrollmentId])
   @@index([childId])
   @@index([status])
 }
 
 model KidsPreCheckIn {
-  id String @id @default(uuid())
-  status KidsPreCheckInStatus @default(PENDING)
-  createdAt DateTime @default(now())
-  confirmedAt DateTime?
-  childId String
-  child Person @relation(fields: [childId], references: [id])
-  enrollmentId String
-  enrollment KidsEnrollment @relation(fields: [enrollmentId], references: [id])
+  id                  String               @id @default(uuid())
+  status              KidsPreCheckInStatus @default(PENDING)
+  createdAt           DateTime             @default(now())
+  confirmedAt         DateTime?
+  childId             String
+  child               Person               @relation(fields: [childId], references: [id])
+  enrollmentId        String
+  enrollment          KidsEnrollment       @relation(fields: [enrollmentId], references: [id])
   responsiblePersonId String
-  eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  eventId             String
+  event               Event                @relation(fields: [eventId], references: [id])
+
   @@index([childId])
   @@index([eventId])
   @@index([status])
 }
 
 model KidsIdentity {
-  id String @id @default(uuid())
-  qrCode String @unique
+  id        String   @id @default(uuid())
+  qrCode    String   @unique
   createdAt DateTime @default(now())
-  childId String @unique
-  child Person @relation(fields: [childId], references: [id])
+  childId   String   @unique
+  child     Person   @relation(fields: [childId], references: [id])
 }
 
 model KidsOperationalRoleAssignment {
-  id String @id @default(uuid())
-  role KidsOperationalRole
-  ativo Boolean @default(true)
-  inicio DateTime @default(now())
-  fim DateTime?
-  personId String
-  person Person @relation(fields: [personId], references: [id])
-  campusId String
-  campus Campus @relation(fields: [campusId], references: [id])
+  id             String              @id @default(uuid())
+  role           KidsOperationalRole
+  ativo          Boolean             @default(true)
+  inicio         DateTime            @default(now())
+  fim            DateTime?
+  personId       String
+  person         Person              @relation(fields: [personId], references: [id])
+  campusId       String
+  campus         Campus              @relation(fields: [campusId], references: [id])
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
+  organization   Organization        @relation(fields: [organizationId], references: [id])
+
   @@index([personId])
   @@index([campusId])
   @@index([organizationId])
@@ -837,118 +1113,122 @@ model KidsOperationalRoleAssignment {
 }
 
 model KidsVisualResource {
-  id String @id @default(uuid())
-  nome String
-  descricao String?
-  quantidadeDisponivel Int @default(0)
-  ativo Boolean @default(true)
-  organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  items KidsResourceRequestItem[]
+  id                   String                    @id @default(uuid())
+  nome                 String
+  descricao            String?
+  quantidadeDisponivel Int                       @default(0)
+  ativo                Boolean                   @default(true)
+  organizationId       String
+  organization         Organization              @relation(fields: [organizationId], references: [id])
+  items                KidsResourceRequestItem[]
+
   @@index([organizationId])
 }
 
 model KidsResourceRequest {
-  id String @id @default(uuid())
-  status KidsResourceRequestStatus @default(REQUESTED)
-  observacao String?
-  createdAt DateTime @default(now())
-  eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  id                  String                    @id @default(uuid())
+  status              KidsResourceRequestStatus @default(REQUESTED)
+  observacao          String?
+  createdAt           DateTime                  @default(now())
+  eventId             String
+  event               Event                     @relation(fields: [eventId], references: [id])
   requestedByPersonId String
-  requestedBy Person @relation("KidsResourceRequestedBy", fields: [requestedByPersonId], references: [id])
-  organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  items KidsResourceRequestItem[]
+  requestedBy         Person                    @relation("KidsResourceRequestedBy", fields: [requestedByPersonId], references: [id])
+  organizationId      String
+  organization        Organization              @relation(fields: [organizationId], references: [id])
+  items               KidsResourceRequestItem[]
+
   @@index([eventId])
   @@index([organizationId])
   @@index([status])
 }
 
 model KidsResourceRequestItem {
-  id String @id @default(uuid())
+  id         String              @id @default(uuid())
   quantidade Int
-  requestId String
-  request KidsResourceRequest @relation(fields: [requestId], references: [id])
+  requestId  String
+  request    KidsResourceRequest @relation(fields: [requestId], references: [id])
   resourceId String
-  resource KidsVisualResource @relation(fields: [resourceId], references: [id])
+  resource   KidsVisualResource  @relation(fields: [resourceId], references: [id])
+
   @@unique([requestId, resourceId])
 }
 
 model KidsCareProfile {
-  id String @id @default(uuid())
-  alergias String?
-  restricoesAlimentares String?
-  necessidadesFisicas String?
+  id                     String   @id @default(uuid())
+  alergias               String?
+  restricoesAlimentares  String?
+  necessidadesFisicas    String?
   necessidadesCognitivas String?
-  updatedAt DateTime @updatedAt
-  childId String @unique
-  child Person @relation(fields: [childId], references: [id])
+  updatedAt              DateTime @updatedAt
+  childId                String   @unique
+  child                  Person   @relation(fields: [childId], references: [id])
 }
 
-
 model CellMeeting {
-  id          String   @id @default(uuid())
-  data        DateTime
-  tema        String?
-  observacoes String?
-  visitantes  Int      @default(0)
+  id                  String    @id @default(uuid())
+  data                DateTime
+  tema                String?
+  observacoes         String?
+  visitantes          Int       @default(0)
   registroConcluidoEm DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
-  cellId String
-  cell   Cell @relation(fields: [cellId], references: [id])
+  cellId      String
+  cell        Cell                    @relation(fields: [cellId], references: [id])
+  attendances CellMeetingAttendance[]
+  visitors    CellMeetingVisitor[]
 
   @@index([cellId])
   @@index([data])
-  attendances CellMeetingAttendance[]
-  visitors CellMeetingVisitor[]
 }
 
 model CellMeetingVisitor {
-  id String @id @default(uuid())
-  nome String
-  telefone String?
-  email String?
+  id         String      @id @default(uuid())
+  nome       String
+  telefone   String?
+  email      String?
   observacao String?
-  createdAt DateTime @default(now())
-  meetingId String
-  meeting CellMeeting @relation(fields: [meetingId], references: [id])
-  personId String? @unique
-  person Person? @relation(fields: [personId], references: [id])
+  createdAt  DateTime    @default(now())
+  meetingId  String
+  meeting    CellMeeting @relation(fields: [meetingId], references: [id])
+  personId   String?     @unique
+  person     Person?     @relation(fields: [personId], references: [id])
+
   @@index([meetingId])
 }
 
 model CellLocation {
-  id String @id @default(uuid())
-  address String
+  id           String   @id @default(uuid())
+  address      String
   neighborhood String?
-  city String
-  state String
-  zipCode String?
-  latitude Float
-  longitude Float
-  updatedAt DateTime @updatedAt
-  cellId String @unique
-  cell Cell @relation(fields: [cellId], references: [id])
+  city         String
+  state        String
+  zipCode      String?
+  latitude     Float
+  longitude    Float
+  updatedAt    DateTime @updatedAt
+  cellId       String   @unique
+  cell         Cell     @relation(fields: [cellId], references: [id])
 }
 
 model PastoralCare {
-  id String @id @default(uuid())
-  descricao String
-  proximoPasso String?
-  dueDate DateTime?
-  status PastoralCareStatus @default(OPEN)
-  concluidoEm DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  subjectPersonId String
-  subjectPerson Person @relation("PastoralCareSubject", fields: [subjectPersonId], references: [id])
+  id                  String             @id @default(uuid())
+  descricao           String
+  proximoPasso        String?
+  dueDate             DateTime?
+  status              PastoralCareStatus @default(OPEN)
+  concluidoEm         DateTime?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  organizationId      String
+  organization        Organization       @relation(fields: [organizationId], references: [id])
+  subjectPersonId     String
+  subjectPerson       Person             @relation("PastoralCareSubject", fields: [subjectPersonId], references: [id])
   responsiblePersonId String
-  responsiblePerson Person @relation("PastoralCareResponsible", fields: [responsiblePersonId], references: [id])
+  responsiblePerson   Person             @relation("PastoralCareResponsible", fields: [responsiblePersonId], references: [id])
+
   @@index([organizationId])
   @@index([subjectPersonId])
   @@index([responsiblePersonId])
@@ -956,25 +1236,26 @@ model PastoralCare {
 }
 
 model CellStudy {
-  id String @id @default(uuid())
-  titulo String
-  descricao String?
-  weekStart DateTime
+  id             String       @id @default(uuid())
+  titulo         String
+  descricao      String?
+  weekStart      DateTime
   attachmentPath String
   attachmentName String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
   @@unique([organizationId, weekStart])
 }
 
 model CellMeetingAttendance {
-  id          String   @id @default(uuid())
-  presente    Boolean  @default(true)
-  observacao  String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(uuid())
+  presente   Boolean  @default(true)
+  observacao String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   meetingId String
   meeting   CellMeeting @relation(fields: [meetingId], references: [id])
@@ -987,12 +1268,12 @@ model CellMeetingAttendance {
 }
 
 model CellNetworkSupervision {
-  id        String   @id @default(uuid())
-  inicio    DateTime @default(now())
+  id        String    @id @default(uuid())
+  inicio    DateTime  @default(now())
   fim       DateTime?
-  ativo     Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  ativo     Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   personId String
   person   Person @relation(fields: [personId], references: [id])

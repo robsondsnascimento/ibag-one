@@ -1,11 +1,15 @@
 import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { ServiceScheduleStatus } from '../../generated/prisma/client';
 import { CurrentOrganization } from '../../common/decorators/current-organization.decorator';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AddServiceMemberDto } from './dto/add-service-member.dto';
+import { AssignServiceOperationalRoleDto } from './dto/assign-service-operational-role.dto';
 import { CreateServiceAreaDto } from './dto/create-service-area.dto';
+import { CreateServiceScheduleBatchDto } from './dto/create-service-schedule-batch.dto';
 import { CreateServiceScheduleDto } from './dto/create-service-schedule.dto';
 import { CreateServiceTeamDto } from './dto/create-service-team.dto';
+import { SubstituteServiceScheduleDto } from './dto/substitute-service-schedule.dto';
 import { UpdateServiceScheduleStatusDto } from './dto/update-service-schedule-status.dto';
 import { ServiceAreaService } from './service-area.service';
 
@@ -19,8 +23,17 @@ export class ServiceAreaController {
   @Get(':id') findOne(@Param('id') id: string, @CurrentOrganization() context: OrganizationContext) { return this.service.findOne(id, context); }
   @Post(':id/teams') createTeam(@Param('id') id: string, @Body() dto: CreateServiceTeamDto, @CurrentOrganization() context: OrganizationContext) { return this.service.createTeam(id, dto, context); }
   @Post(':id/members') addMember(@Param('id') id: string, @Body() dto: AddServiceMemberDto, @CurrentOrganization() context: OrganizationContext) { return this.service.addMember(id, dto, context); }
+  @Get(':id/schedules') findAreaSchedules(@Param('id') id: string, @Query('start') start: string | undefined, @Query('end') end: string | undefined, @Query('teamId') teamId: string | undefined, @Query('status') status: ServiceScheduleStatus | undefined, @CurrentOrganization() context: OrganizationContext) { return this.service.findAreaSchedules(id, start, end, teamId, status, context); }
   @Patch('memberships/:id/end') endMembership(@Param('id') id: string, @CurrentOrganization() context: OrganizationContext) { return this.service.endMembership(id, context); }
+  @Post('teams/:id/operational-roles') assignOperationalRole(@Param('id') id: string, @Body() dto: AssignServiceOperationalRoleDto, @CurrentOrganization() context: OrganizationContext) { return this.service.assignOperationalRole(id, dto, context); }
+  @Get('teams/:id/operational-roles') findOperationalRoles(@Param('id') id: string, @CurrentOrganization() context: OrganizationContext) { return this.service.findOperationalRoles(id, context); }
+  @Patch('operational-roles/:id/end') endOperationalRole(@Param('id') id: string, @CurrentOrganization() context: OrganizationContext) { return this.service.endOperationalRole(id, context); }
   @Post('teams/:id/schedules') createSchedule(@Param('id') id: string, @Body() dto: CreateServiceScheduleDto, @CurrentOrganization() context: OrganizationContext) { return this.service.createSchedule(id, dto, context); }
+  @Post('teams/:id/schedules/batch') createScheduleBatch(@Param('id') id: string, @Body() dto: CreateServiceScheduleBatchDto, @CurrentOrganization() context: OrganizationContext) { return this.service.createScheduleBatch(id, dto, context); }
   @Get('teams/:id/schedules') findSchedules(@Param('id') id: string, @Query('start') start: string | undefined, @Query('end') end: string | undefined, @CurrentOrganization() context: OrganizationContext) { return this.service.findSchedules(id, start, end, context); }
+  @Get('schedules/me') findMySchedules(@Query('start') start: string | undefined, @Query('end') end: string | undefined, @CurrentOrganization() context: OrganizationContext) { return this.service.findMySchedules(start, end, context); }
+  @Get('schedules/:id/history') findScheduleHistory(@Param('id') id: string, @CurrentOrganization() context: OrganizationContext) { return this.service.findScheduleHistory(id, context); }
+  @Get('events/:eventId/schedules') findEventSchedules(@Param('eventId') eventId: string, @CurrentOrganization() context: OrganizationContext) { return this.service.findEventSchedules(eventId, context); }
   @Patch('schedules/:id/status') updateScheduleStatus(@Param('id') id: string, @Body() dto: UpdateServiceScheduleStatusDto, @CurrentOrganization() context: OrganizationContext) { return this.service.updateScheduleStatus(id, dto, context); }
+  @Patch('schedules/:id/substitute') substituteSchedule(@Param('id') id: string, @Body() dto: SubstituteServiceScheduleDto, @CurrentOrganization() context: OrganizationContext) { return this.service.substituteSchedule(id, dto, context); }
 }

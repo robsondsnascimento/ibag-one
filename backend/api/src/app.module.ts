@@ -23,12 +23,14 @@ import { CellMultiplicationModule } from './modules/cell-multiplication/cell-mul
 import { PersonJourneyModule } from './modules/person-journey/person-journey.module';
 import { FamilyModule } from './modules/family/family.module';
 import { ServiceAreaModule } from './modules/service-area/service-area.module';
+import { ServiceAreaOnboardingModule } from './modules/service-area-onboarding/service-area-onboarding.module';
 import { SpaceModule } from './modules/space/space.module';
 import { EventModule } from './modules/event/event.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { KidsModule } from './modules/kids/kids.module';
 import { KidsResourceModule } from './modules/kids-resource/kids-resource.module';
 import { WorshipOrderModule } from './modules/worship-order/worship-order.module';
+import { WorshipRepertoireModule } from './modules/worship-repertoire/worship-repertoire.module';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
@@ -90,6 +92,8 @@ import { OrganizationModule } from './modules/organization/organization.module';
 
     ServiceAreaModule,
 
+    ServiceAreaOnboardingModule,
+
     SpaceModule,
 
     EventModule,
@@ -101,6 +105,8 @@ import { OrganizationModule } from './modules/organization/organization.module';
     KidsResourceModule,
 
     WorshipOrderModule,
+
+    WorshipRepertoireModule,
   ],
 
   providers: [

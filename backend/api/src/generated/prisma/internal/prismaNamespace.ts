@@ -412,13 +412,22 @@ export const ModelName = {
   ServiceArea: 'ServiceArea',
   ServiceTeam: 'ServiceTeam',
   ServiceMembership: 'ServiceMembership',
+  ServiceOperationalRoleAssignment: 'ServiceOperationalRoleAssignment',
   ServiceSchedule: 'ServiceSchedule',
+  ServiceScheduleHistory: 'ServiceScheduleHistory',
+  ServiceAreaEntryStage: 'ServiceAreaEntryStage',
+  ServiceAreaApplication: 'ServiceAreaApplication',
+  ServiceAreaApplicationStage: 'ServiceAreaApplicationStage',
   Space: 'Space',
   Event: 'Event',
   WorshipOrder: 'WorshipOrder',
+  WorshipOrderTemplate: 'WorshipOrderTemplate',
+  WorshipOrderTemplateItem: 'WorshipOrderTemplateItem',
   WorshipOrderItem: 'WorshipOrderItem',
   WorshipOrderMaterial: 'WorshipOrderMaterial',
   WorshipServiceDemand: 'WorshipServiceDemand',
+  WorshipRepertoire: 'WorshipRepertoire',
+  WorshipRepertoireSong: 'WorshipRepertoireSong',
   EventSpace: 'EventSpace',
   EventServiceArea: 'EventServiceArea',
   EventServiceTeam: 'EventServiceTeam',
@@ -461,7 +470,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "campus" | "person" | "user" | "userRoleAssignment" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceSchedule" | "space" | "event" | "worshipOrder" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellMembership" | "cellLeadership"
+    modelProps: "campus" | "person" | "user" | "userRoleAssignment" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceOperationalRoleAssignment" | "serviceSchedule" | "serviceScheduleHistory" | "serviceAreaEntryStage" | "serviceAreaApplication" | "serviceAreaApplicationStage" | "space" | "event" | "worshipOrder" | "worshipOrderTemplate" | "worshipOrderTemplateItem" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "worshipRepertoire" | "worshipRepertoireSong" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellMembership" | "cellLeadership"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1575,6 +1584,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ServiceOperationalRoleAssignment: {
+      payload: Prisma.$ServiceOperationalRoleAssignmentPayload<ExtArgs>
+      fields: Prisma.ServiceOperationalRoleAssignmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceOperationalRoleAssignmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceOperationalRoleAssignmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceOperationalRoleAssignmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceOperationalRoleAssignmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceOperationalRoleAssignmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceOperationalRoleAssignmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceOperationalRoleAssignmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceOperationalRoleAssignmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceOperationalRoleAssignmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload>
+        }
+        update: {
+          args: Prisma.ServiceOperationalRoleAssignmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceOperationalRoleAssignmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceOperationalRoleAssignmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceOperationalRoleAssignmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceOperationalRoleAssignmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOperationalRoleAssignmentPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceOperationalRoleAssignmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceOperationalRoleAssignment>
+        }
+        groupBy: {
+          args: Prisma.ServiceOperationalRoleAssignmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceOperationalRoleAssignmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceOperationalRoleAssignmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceOperationalRoleAssignmentCountAggregateOutputType> | number
+        }
+      }
+    }
     ServiceSchedule: {
       payload: Prisma.$ServiceSchedulePayload<ExtArgs>
       fields: Prisma.ServiceScheduleFieldRefs
@@ -1646,6 +1729,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ServiceScheduleCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ServiceScheduleCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceScheduleHistory: {
+      payload: Prisma.$ServiceScheduleHistoryPayload<ExtArgs>
+      fields: Prisma.ServiceScheduleHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceScheduleHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceScheduleHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceScheduleHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceScheduleHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceScheduleHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceScheduleHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceScheduleHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceScheduleHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceScheduleHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload>
+        }
+        update: {
+          args: Prisma.ServiceScheduleHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceScheduleHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceScheduleHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceScheduleHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceScheduleHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceScheduleHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceScheduleHistory>
+        }
+        groupBy: {
+          args: Prisma.ServiceScheduleHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceScheduleHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceScheduleHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceScheduleHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceAreaEntryStage: {
+      payload: Prisma.$ServiceAreaEntryStagePayload<ExtArgs>
+      fields: Prisma.ServiceAreaEntryStageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceAreaEntryStageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceAreaEntryStageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceAreaEntryStageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceAreaEntryStageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload>
+        }
+        findMany: {
+          args: Prisma.ServiceAreaEntryStageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload>[]
+        }
+        create: {
+          args: Prisma.ServiceAreaEntryStageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload>
+        }
+        createMany: {
+          args: Prisma.ServiceAreaEntryStageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceAreaEntryStageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceAreaEntryStageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload>
+        }
+        update: {
+          args: Prisma.ServiceAreaEntryStageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceAreaEntryStageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceAreaEntryStageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceAreaEntryStageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceAreaEntryStageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaEntryStagePayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceAreaEntryStageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceAreaEntryStage>
+        }
+        groupBy: {
+          args: Prisma.ServiceAreaEntryStageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAreaEntryStageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceAreaEntryStageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAreaEntryStageCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceAreaApplication: {
+      payload: Prisma.$ServiceAreaApplicationPayload<ExtArgs>
+      fields: Prisma.ServiceAreaApplicationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceAreaApplicationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceAreaApplicationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceAreaApplicationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceAreaApplicationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceAreaApplicationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceAreaApplicationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceAreaApplicationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceAreaApplicationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceAreaApplicationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload>
+        }
+        update: {
+          args: Prisma.ServiceAreaApplicationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceAreaApplicationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceAreaApplicationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceAreaApplicationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceAreaApplicationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceAreaApplicationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceAreaApplication>
+        }
+        groupBy: {
+          args: Prisma.ServiceAreaApplicationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAreaApplicationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceAreaApplicationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAreaApplicationCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceAreaApplicationStage: {
+      payload: Prisma.$ServiceAreaApplicationStagePayload<ExtArgs>
+      fields: Prisma.ServiceAreaApplicationStageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceAreaApplicationStageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceAreaApplicationStageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceAreaApplicationStageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceAreaApplicationStageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload>
+        }
+        findMany: {
+          args: Prisma.ServiceAreaApplicationStageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload>[]
+        }
+        create: {
+          args: Prisma.ServiceAreaApplicationStageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload>
+        }
+        createMany: {
+          args: Prisma.ServiceAreaApplicationStageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceAreaApplicationStageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceAreaApplicationStageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload>
+        }
+        update: {
+          args: Prisma.ServiceAreaApplicationStageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceAreaApplicationStageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceAreaApplicationStageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceAreaApplicationStageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceAreaApplicationStageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceAreaApplicationStagePayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceAreaApplicationStageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceAreaApplicationStage>
+        }
+        groupBy: {
+          args: Prisma.ServiceAreaApplicationStageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAreaApplicationStageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceAreaApplicationStageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceAreaApplicationStageCountAggregateOutputType> | number
         }
       }
     }
@@ -1871,6 +2250,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WorshipOrderTemplate: {
+      payload: Prisma.$WorshipOrderTemplatePayload<ExtArgs>
+      fields: Prisma.WorshipOrderTemplateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WorshipOrderTemplateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WorshipOrderTemplateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload>
+        }
+        findFirst: {
+          args: Prisma.WorshipOrderTemplateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WorshipOrderTemplateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload>
+        }
+        findMany: {
+          args: Prisma.WorshipOrderTemplateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload>[]
+        }
+        create: {
+          args: Prisma.WorshipOrderTemplateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload>
+        }
+        createMany: {
+          args: Prisma.WorshipOrderTemplateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WorshipOrderTemplateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload>[]
+        }
+        delete: {
+          args: Prisma.WorshipOrderTemplateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload>
+        }
+        update: {
+          args: Prisma.WorshipOrderTemplateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload>
+        }
+        deleteMany: {
+          args: Prisma.WorshipOrderTemplateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WorshipOrderTemplateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WorshipOrderTemplateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload>[]
+        }
+        upsert: {
+          args: Prisma.WorshipOrderTemplateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplatePayload>
+        }
+        aggregate: {
+          args: Prisma.WorshipOrderTemplateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorshipOrderTemplate>
+        }
+        groupBy: {
+          args: Prisma.WorshipOrderTemplateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorshipOrderTemplateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WorshipOrderTemplateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorshipOrderTemplateCountAggregateOutputType> | number
+        }
+      }
+    }
+    WorshipOrderTemplateItem: {
+      payload: Prisma.$WorshipOrderTemplateItemPayload<ExtArgs>
+      fields: Prisma.WorshipOrderTemplateItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WorshipOrderTemplateItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WorshipOrderTemplateItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload>
+        }
+        findFirst: {
+          args: Prisma.WorshipOrderTemplateItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WorshipOrderTemplateItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload>
+        }
+        findMany: {
+          args: Prisma.WorshipOrderTemplateItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload>[]
+        }
+        create: {
+          args: Prisma.WorshipOrderTemplateItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload>
+        }
+        createMany: {
+          args: Prisma.WorshipOrderTemplateItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WorshipOrderTemplateItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload>[]
+        }
+        delete: {
+          args: Prisma.WorshipOrderTemplateItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload>
+        }
+        update: {
+          args: Prisma.WorshipOrderTemplateItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.WorshipOrderTemplateItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WorshipOrderTemplateItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WorshipOrderTemplateItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.WorshipOrderTemplateItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipOrderTemplateItemPayload>
+        }
+        aggregate: {
+          args: Prisma.WorshipOrderTemplateItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorshipOrderTemplateItem>
+        }
+        groupBy: {
+          args: Prisma.WorshipOrderTemplateItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorshipOrderTemplateItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WorshipOrderTemplateItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorshipOrderTemplateItemCountAggregateOutputType> | number
+        }
+      }
+    }
     WorshipOrderItem: {
       payload: Prisma.$WorshipOrderItemPayload<ExtArgs>
       fields: Prisma.WorshipOrderItemFieldRefs
@@ -2090,6 +2617,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WorshipServiceDemandCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WorshipServiceDemandCountAggregateOutputType> | number
+        }
+      }
+    }
+    WorshipRepertoire: {
+      payload: Prisma.$WorshipRepertoirePayload<ExtArgs>
+      fields: Prisma.WorshipRepertoireFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WorshipRepertoireFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WorshipRepertoireFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload>
+        }
+        findFirst: {
+          args: Prisma.WorshipRepertoireFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WorshipRepertoireFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload>
+        }
+        findMany: {
+          args: Prisma.WorshipRepertoireFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload>[]
+        }
+        create: {
+          args: Prisma.WorshipRepertoireCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload>
+        }
+        createMany: {
+          args: Prisma.WorshipRepertoireCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WorshipRepertoireCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload>[]
+        }
+        delete: {
+          args: Prisma.WorshipRepertoireDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload>
+        }
+        update: {
+          args: Prisma.WorshipRepertoireUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload>
+        }
+        deleteMany: {
+          args: Prisma.WorshipRepertoireDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WorshipRepertoireUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WorshipRepertoireUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload>[]
+        }
+        upsert: {
+          args: Prisma.WorshipRepertoireUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoirePayload>
+        }
+        aggregate: {
+          args: Prisma.WorshipRepertoireAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorshipRepertoire>
+        }
+        groupBy: {
+          args: Prisma.WorshipRepertoireGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorshipRepertoireGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WorshipRepertoireCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorshipRepertoireCountAggregateOutputType> | number
+        }
+      }
+    }
+    WorshipRepertoireSong: {
+      payload: Prisma.$WorshipRepertoireSongPayload<ExtArgs>
+      fields: Prisma.WorshipRepertoireSongFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WorshipRepertoireSongFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WorshipRepertoireSongFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload>
+        }
+        findFirst: {
+          args: Prisma.WorshipRepertoireSongFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WorshipRepertoireSongFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload>
+        }
+        findMany: {
+          args: Prisma.WorshipRepertoireSongFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload>[]
+        }
+        create: {
+          args: Prisma.WorshipRepertoireSongCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload>
+        }
+        createMany: {
+          args: Prisma.WorshipRepertoireSongCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WorshipRepertoireSongCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload>[]
+        }
+        delete: {
+          args: Prisma.WorshipRepertoireSongDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload>
+        }
+        update: {
+          args: Prisma.WorshipRepertoireSongUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload>
+        }
+        deleteMany: {
+          args: Prisma.WorshipRepertoireSongDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WorshipRepertoireSongUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WorshipRepertoireSongUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload>[]
+        }
+        upsert: {
+          args: Prisma.WorshipRepertoireSongUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorshipRepertoireSongPayload>
+        }
+        aggregate: {
+          args: Prisma.WorshipRepertoireSongAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorshipRepertoireSong>
+        }
+        groupBy: {
+          args: Prisma.WorshipRepertoireSongGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorshipRepertoireSongGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WorshipRepertoireSongCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorshipRepertoireSongCountAggregateOutputType> | number
         }
       }
     }
@@ -4349,6 +5024,23 @@ export const ServiceMembershipScalarFieldEnum = {
 export type ServiceMembershipScalarFieldEnum = (typeof ServiceMembershipScalarFieldEnum)[keyof typeof ServiceMembershipScalarFieldEnum]
 
 
+export const ServiceOperationalRoleAssignmentScalarFieldEnum = {
+  id: 'id',
+  role: 'role',
+  ativo: 'ativo',
+  inicio: 'inicio',
+  fim: 'fim',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId',
+  teamId: 'teamId',
+  personId: 'personId'
+} as const
+
+export type ServiceOperationalRoleAssignmentScalarFieldEnum = (typeof ServiceOperationalRoleAssignmentScalarFieldEnum)[keyof typeof ServiceOperationalRoleAssignmentScalarFieldEnum]
+
+
 export const ServiceScheduleScalarFieldEnum = {
   id: 'id',
   data: 'data',
@@ -4364,6 +5056,72 @@ export const ServiceScheduleScalarFieldEnum = {
 } as const
 
 export type ServiceScheduleScalarFieldEnum = (typeof ServiceScheduleScalarFieldEnum)[keyof typeof ServiceScheduleScalarFieldEnum]
+
+
+export const ServiceScheduleHistoryScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  previousPersonId: 'previousPersonId',
+  replacementPersonId: 'replacementPersonId',
+  previousPersonName: 'previousPersonName',
+  replacementPersonName: 'replacementPersonName',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  scheduleId: 'scheduleId',
+  changedByUserId: 'changedByUserId'
+} as const
+
+export type ServiceScheduleHistoryScalarFieldEnum = (typeof ServiceScheduleHistoryScalarFieldEnum)[keyof typeof ServiceScheduleHistoryScalarFieldEnum]
+
+
+export const ServiceAreaEntryStageScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  ordem: 'ordem',
+  obrigatoria: 'obrigatoria',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId'
+} as const
+
+export type ServiceAreaEntryStageScalarFieldEnum = (typeof ServiceAreaEntryStageScalarFieldEnum)[keyof typeof ServiceAreaEntryStageScalarFieldEnum]
+
+
+export const ServiceAreaApplicationScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  observacao: 'observacao',
+  decisaoMotivo: 'decisaoMotivo',
+  startedAt: 'startedAt',
+  decidedAt: 'decidedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId',
+  personId: 'personId',
+  desiredTeamId: 'desiredTeamId',
+  createdByUserId: 'createdByUserId',
+  decidedByUserId: 'decidedByUserId'
+} as const
+
+export type ServiceAreaApplicationScalarFieldEnum = (typeof ServiceAreaApplicationScalarFieldEnum)[keyof typeof ServiceAreaApplicationScalarFieldEnum]
+
+
+export const ServiceAreaApplicationStageScalarFieldEnum = {
+  id: 'id',
+  observacao: 'observacao',
+  completedAt: 'completedAt',
+  applicationId: 'applicationId',
+  entryStageId: 'entryStageId',
+  completedByUserId: 'completedByUserId'
+} as const
+
+export type ServiceAreaApplicationStageScalarFieldEnum = (typeof ServiceAreaApplicationStageScalarFieldEnum)[keyof typeof ServiceAreaApplicationStageScalarFieldEnum]
 
 
 export const SpaceScalarFieldEnum = {
@@ -4408,10 +5166,38 @@ export const WorshipOrderScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   eventId: 'eventId',
-  createdByUserId: 'createdByUserId'
+  createdByUserId: 'createdByUserId',
+  templateId: 'templateId'
 } as const
 
 export type WorshipOrderScalarFieldEnum = (typeof WorshipOrderScalarFieldEnum)[keyof typeof WorshipOrderScalarFieldEnum]
+
+
+export const WorshipOrderTemplateScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  ativo: 'ativo',
+  padrao: 'padrao',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  createdByUserId: 'createdByUserId'
+} as const
+
+export type WorshipOrderTemplateScalarFieldEnum = (typeof WorshipOrderTemplateScalarFieldEnum)[keyof typeof WorshipOrderTemplateScalarFieldEnum]
+
+
+export const WorshipOrderTemplateItemScalarFieldEnum = {
+  id: 'id',
+  sequencia: 'sequencia',
+  titulo: 'titulo',
+  horario: 'horario',
+  observacoes: 'observacoes',
+  templateId: 'templateId',
+  serviceAreaId: 'serviceAreaId'
+} as const
+
+export type WorshipOrderTemplateItemScalarFieldEnum = (typeof WorshipOrderTemplateItemScalarFieldEnum)[keyof typeof WorshipOrderTemplateItemScalarFieldEnum]
 
 
 export const WorshipOrderItemScalarFieldEnum = {
@@ -4451,6 +5237,42 @@ export const WorshipServiceDemandScalarFieldEnum = {
 } as const
 
 export type WorshipServiceDemandScalarFieldEnum = (typeof WorshipServiceDemandScalarFieldEnum)[keyof typeof WorshipServiceDemandScalarFieldEnum]
+
+
+export const WorshipRepertoireScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  reviewComment: 'reviewComment',
+  submittedAt: 'submittedAt',
+  approvedAt: 'approvedAt',
+  sentToWorshipOrderAt: 'sentToWorshipOrderAt',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  eventId: 'eventId',
+  serviceAreaId: 'serviceAreaId',
+  submittedByPersonId: 'submittedByPersonId',
+  approvedByPersonId: 'approvedByPersonId',
+  orderItemId: 'orderItemId',
+  deliveryDemandId: 'deliveryDemandId'
+} as const
+
+export type WorshipRepertoireScalarFieldEnum = (typeof WorshipRepertoireScalarFieldEnum)[keyof typeof WorshipRepertoireScalarFieldEnum]
+
+
+export const WorshipRepertoireSongScalarFieldEnum = {
+  id: 'id',
+  sequencia: 'sequencia',
+  titulo: 'titulo',
+  tom: 'tom',
+  artista: 'artista',
+  referencia: 'referencia',
+  observacoes: 'observacoes',
+  repertoireId: 'repertoireId'
+} as const
+
+export type WorshipRepertoireSongScalarFieldEnum = (typeof WorshipRepertoireSongScalarFieldEnum)[keyof typeof WorshipRepertoireSongScalarFieldEnum]
 
 
 export const EventSpaceScalarFieldEnum = {
@@ -4980,6 +5802,20 @@ export type ListEnumServiceMembershipRoleFieldRefInput<$PrismaModel> = FieldRefI
 
 
 /**
+ * Reference to a field of type 'ServiceOperationalRole'
+ */
+export type EnumServiceOperationalRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceOperationalRole'>
+    
+
+
+/**
+ * Reference to a field of type 'ServiceOperationalRole[]'
+ */
+export type ListEnumServiceOperationalRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceOperationalRole[]'>
+    
+
+
+/**
  * Reference to a field of type 'ServiceScheduleStatus'
  */
 export type EnumServiceScheduleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceScheduleStatus'>
@@ -4994,6 +5830,20 @@ export type ListEnumServiceScheduleStatusFieldRefInput<$PrismaModel> = FieldRefI
 
 
 /**
+ * Reference to a field of type 'ServiceScheduleHistoryAction'
+ */
+export type EnumServiceScheduleHistoryActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceScheduleHistoryAction'>
+    
+
+
+/**
+ * Reference to a field of type 'ServiceScheduleHistoryAction[]'
+ */
+export type ListEnumServiceScheduleHistoryActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceScheduleHistoryAction[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -5004,6 +5854,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ServiceAreaApplicationStatus'
+ */
+export type EnumServiceAreaApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceAreaApplicationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ServiceAreaApplicationStatus[]'
+ */
+export type ListEnumServiceAreaApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceAreaApplicationStatus[]'>
     
 
 
@@ -5074,6 +5938,20 @@ export type EnumWorshipDemandStatusFieldRefInput<$PrismaModel> = FieldRefInputTy
  * Reference to a field of type 'WorshipDemandStatus[]'
  */
 export type ListEnumWorshipDemandStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorshipDemandStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'WorshipRepertoireStatus'
+ */
+export type EnumWorshipRepertoireStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorshipRepertoireStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'WorshipRepertoireStatus[]'
+ */
+export type ListEnumWorshipRepertoireStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorshipRepertoireStatus[]'>
     
 
 
@@ -5340,13 +6218,22 @@ export type GlobalOmitConfig = {
   serviceArea?: Prisma.ServiceAreaOmit
   serviceTeam?: Prisma.ServiceTeamOmit
   serviceMembership?: Prisma.ServiceMembershipOmit
+  serviceOperationalRoleAssignment?: Prisma.ServiceOperationalRoleAssignmentOmit
   serviceSchedule?: Prisma.ServiceScheduleOmit
+  serviceScheduleHistory?: Prisma.ServiceScheduleHistoryOmit
+  serviceAreaEntryStage?: Prisma.ServiceAreaEntryStageOmit
+  serviceAreaApplication?: Prisma.ServiceAreaApplicationOmit
+  serviceAreaApplicationStage?: Prisma.ServiceAreaApplicationStageOmit
   space?: Prisma.SpaceOmit
   event?: Prisma.EventOmit
   worshipOrder?: Prisma.WorshipOrderOmit
+  worshipOrderTemplate?: Prisma.WorshipOrderTemplateOmit
+  worshipOrderTemplateItem?: Prisma.WorshipOrderTemplateItemOmit
   worshipOrderItem?: Prisma.WorshipOrderItemOmit
   worshipOrderMaterial?: Prisma.WorshipOrderMaterialOmit
   worshipServiceDemand?: Prisma.WorshipServiceDemandOmit
+  worshipRepertoire?: Prisma.WorshipRepertoireOmit
+  worshipRepertoireSong?: Prisma.WorshipRepertoireSongOmit
   eventSpace?: Prisma.EventSpaceOmit
   eventServiceArea?: Prisma.EventServiceAreaOmit
   eventServiceTeam?: Prisma.EventServiceTeamOmit

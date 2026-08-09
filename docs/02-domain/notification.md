@@ -1,80 +1,37 @@
-# 🔔 Domínio: Comunicação e Notificação
+# Domínio: Comunicação e Notificação
 
-## Contexto
+## Estado atual
 
-O domínio Comunicação permite avisar pessoas e equipes sobre acontecimentos importantes.
+O backend registra notificações internas com título, mensagem, organização, público e destinatários. Elas formam a trilha de auditoria para comunicações operacionais.
 
----
+Públicos suportados:
 
-# Objetivo
+- organização;
+- campus;
+- área de serviço;
+- equipe;
+- pessoa específica.
 
-Enviar informações para públicos corretos.
+## Origens já utilizadas
 
----
+- criação, recusa e substituição de escalas;
+- fluxo de repertório;
+- publicação e alerta da Ordem de Culto;
+- operações do IBAG Kids.
 
-# Origem
+## Canais autorizados
 
-Uma notificação pode nascer de:
+As futuras entregas externas ficam limitadas a:
 
-- evento;
-- escala;
-- treinamento;
-- comunicado.
+1. WhatsApp;
+2. ProPresenter.
 
----
+E-mail não faz parte do escopo atual. Nenhuma credencial ou chamada externa está configurada no backend neste momento.
 
-# Público
+## Princípio de integração
 
-Possíveis destinatários:
+O registro interno é a fonte de verdade. Um conector futuro poderá entregar uma notificação já registrada ao WhatsApp ou ProPresenter, guardando o resultado da entrega sem perder o histórico operacional.
 
-```
-Toda IBAG
+## Permissões
 
-Campus
-
-Área de Serviço
-
-Equipe
-
-Célula
-
-Pessoa específica
-```
-
----
-
-# Exemplo
-
-Evento:
-
-```
-Ensaio Louvor
-
-Domingo 16h
-```
-
-Configuração:
-
-```
-Enviar alerta:
-
-Sim
-
-Público:
-
-Integrantes do Louvor
-```
-
-Mensagem:
-
-```
-Você possui ensaio domingo às 16h.
-```
-
----
-
-# Permissões
-
-Nem todos podem enviar notificações gerais.
-
-Permissões serão definidas conforme função.
+O direito de iniciar uma comunicação acompanha o domínio de origem: liderança de equipe administra suas escalas, responsáveis de Ordem de Culto enviam seus alertas e funções operacionais do Kids atuam apenas dentro do seu escopo.

@@ -1,264 +1,42 @@
-# 🧭 Mapa de Domínio - IBAG One
+# Mapa de Domínios — IBAG One
 
-## Objetivo
+O IBAG One é organizado ao redor das pessoas e de seus vínculos com campus, células, família, áreas de serviço e cuidado pastoral.
 
-Este documento apresenta uma visão geral dos principais domínios do IBAG One.
-
-O objetivo é organizar o conhecimento da realidade da igreja antes da implementação técnica.
-
-Cada domínio representa uma área importante da operação, cuidado e missão da IBAG.
-
----
-
-# 🏛️ Visão Geral
-
-O IBAG One é organizado ao redor das pessoas e dos relacionamentos.
-
-Modelo central:
-
-```
-                    Igreja
-
-                       |
-                       |
-
-                    Pessoas
-
-                       |
-        --------------------------------
-
-        |              |              |
-
-      Célula       Ministério       Família
-
-        |
-
-     Liderança
-
-        |
-
-   Cuidado Pastoral
-```
-
----
-
-# 👥 1. Pessoa
-
-## Descrição
-
-Representa cada indivíduo que possui uma história dentro da igreja.
-
-É o domínio central da plataforma.
-
-## Responsabilidades
-
-- Identidade;
-- Jornada espiritual;
-- Histórico;
-- Família;
-- Campus;
-- Célula;
-- Ministérios.
-
-## Documento
-
-```
-person.md
-```
-
-Status:
-
-✅ Modelado
-
----
-
-# ⛪ 2. Campus
-
-## Descrição
-
-Representa uma unidade local da IBAG.
-
-Cada Campus está relacionado a uma cidade e possui sua própria estrutura local.
-
-## Responsabilidades
-
-- Localização;
-- Liderança;
-- Pessoas vinculadas;
-- Células;
-- Ministérios locais.
-
-Status:
-
-⌛ A definir
-
----
-
-# 🏠 3. Células
-
-## Descrição
-
-Representa o principal ambiente de cuidado e discipulado da igreja.
-
-A célula conecta pessoas, líderes e acompanhamento pastoral.
-
-## Responsabilidades
-
-- Redes;
-- Supervisores;
-- Líderes;
-- Líderes em treinamento;
-- Anfitriões;
-- Multiplicações;
-- Histórico.
-
-Status:
-
-⌛ A definir
-
----
-
-# 🎵 4. Ministérios
-
-## Descrição
-
-Representa as áreas onde pessoas servem.
-
-Uma pessoa pode participar de múltiplos ministérios.
-
-## Exemplos
-
-- Louvor;
-- Recepção;
-- Dança;
-- Comunicação;
-- Mídia;
-- Outros serviços.
-
-Status:
-
-⌛ A definir
-
----
-
-# 📅 5. Eventos
-
-## Descrição
-
-Representa atividades, encontros e programações da igreja.
-
-## Responsabilidades
-
-- Agenda;
-- Solicitações;
-- Organização;
-- Participantes;
-- Histórico.
-
-Status:
-
-⌛ A definir
-
----
-
-# 🔐 6. Identidade e Permissões
-
-## Descrição
-
-Responsável por controlar acessos e responsabilidades dentro do sistema.
-
-## Possíveis perfis
-
-- Pastor;
-- Supervisor;
-- Líder;
-- Secretaria;
-- Membro.
-
-Status:
-
-⌛ A definir
-
----
-
-# 📊 7. Indicadores e Dashboard
-
-## Descrição
-
-Camada de inteligência do sistema.
-
-Transforma dados em informações para liderança.
-
-## Exemplos
-
-- Saúde das células;
-- Crescimento;
-- Pessoas sem acompanhamento;
-- Multiplicações;
-- Desenvolvimento de líderes.
-
-Status:
-
-⌛ A definir
-
----
-
-# 🔗 Relacionamentos Principais
-
-Modelo inicial:
-
-```
+```text
 Pessoa
-
- |
- |
- +---- pertence ---- Campus
-
- |
- |
- +---- participa ---- Célula
-
- |
- |
- +---- serve ---- Ministério
-
- |
- |
- +---- pertence ---- Família
+├── Campus
+├── Família
+├── Célula
+│   ├── Rede e supervisão
+│   ├── Liderança e apoio
+│   ├── Reuniões, presença e visitantes
+│   └── Estudos e multiplicação
+├── Área de serviço
+│   ├── Equipe e liderança
+│   ├── Entrada e formação
+│   └── Escalas
+└── Jornada e cuidado pastoral
 ```
 
----
+## Domínios implementados
 
-# 🧱 Princípios de Modelagem
+| Domínio | Estado | Responsabilidades principais |
+| --- | --- | --- |
+| Pessoa, conta e acesso | Implementado | Identidade, conta, papéis, jornada, família e isolamento por organização. |
+| Campus | Implementado | Estrutura multicampus, pessoas, células, equipes, eventos e espaços. |
+| Células | Implementado | Redes, supervisão, liderança, presença/falta, visitantes, estudos, localização e multiplicação. |
+| Cuidado pastoral | Implementado | Registros de cuidado e visões consolidadas para liderança autorizada. |
+| Áreas de serviço | Implementado | Áreas, equipes, membros, funções, escalas, histórico e formação de voluntários. |
+| Eventos e espaços | Implementado | Agenda, solicitações, aprovação, conflitos de espaço e equipes envolvidas. |
+| IBAG Kids | Implementado | Estrutura Kids, segurança de retirada, operações e recursos visuais. |
+| Ordem de Culto e repertório | Implementado | Modelos, itens, materiais, PDF, alertas e fluxo de músicas. |
+| Notificações | Implementado internamente | Registro, público e destinatários; entrega externa pendente de integração. |
+| Indicadores | Implementado em base | Painel pastoral, agenda, geografia e indicadores operacionais. |
 
-## História acima de alteração
+## Princípios mantidos
 
-Informações importantes não devem simplesmente ser substituídas.
-
-Devem gerar histórico.
-
----
-
-## Pessoas acima de cadastros
-
-O sistema acompanha jornadas, não apenas registros.
-
----
-
-## Domínios independentes
-
-Cada área deve possuir suas próprias responsabilidades.
-
----
-
-## Evolução contínua
-
-O modelo deve crescer junto com a realidade da igreja.
-
----
-
-# 🏛️ Norte do Domínio
-
-Antes de criar qualquer funcionalidade, devemos responder:
-
-> "Como isso ajuda a igreja a cuidar melhor das pessoas?"
+- Uma pessoa mantém a mesma identidade enquanto seus papéis evoluem.
+- História operacional relevante não é apagada: vínculos são encerrados e escalas possuem auditoria.
+- Célula cuida e discipula; área de serviço organiza a contribuição voluntária.
+- Escalas pertencem às equipes; eventos e Ordem de Culto apenas as relacionam.
+- A organização é a fronteira obrigatória de isolamento de dados.

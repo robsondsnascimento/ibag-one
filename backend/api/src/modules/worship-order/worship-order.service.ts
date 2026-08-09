@@ -1,18 +1,26 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { EventStatus, EventType, NotificationAudience, WorshipOrderStatus } from '../../generated/prisma/client';
+import { EventStatus, EventType, NotificationAudience, WorshipOrderStatus, WorshipRepertoireStatus } from '../../generated/prisma/client';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 import { CreateWorshipOrderDto } from './dto/create-worship-order.dto';
+import { CreateWorshipOrderFromTemplateDto } from './dto/create-worship-order-from-template.dto';
 import { CreateWorshipOrderItemDto } from './dto/create-worship-order-item.dto';
 import { CreateWorshipOrderMaterialDto } from './dto/create-worship-order-material.dto';
 import { CreateWorshipServiceDemandDto } from './dto/create-worship-service-demand.dto';
+import { SendWorshipOrderAlertDto } from './dto/send-worship-order-alert.dto';
 import { hasAnyUserRole } from '../../common/access/user-role.util';
 import { ReorderWorshipOrderItemsDto } from './dto/reorder-worship-order-items.dto';
 import { UpdateWorshipOrderItemDto } from './dto/update-worship-order-item.dto';
+import { WorshipOrderTemplateService } from '../worship-order-template/worship-order-template.service';
+import { WorshipOrderPdfService } from './worship-order-pdf.service';
 
 @Injectable()
 export class WorshipOrderService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly templates: WorshipOrderTemplateService,
+    private readonly pdf: WorshipOrderPdfService,
+  ) {}
 
   async create(dto: CreateWorshipOrderDto, context: OrganizationContext) {
     const event = await this.event(dto.eventId, context);
@@ -23,6 +31,37 @@ export class WorshipOrderService {
 
     return this.prisma.worshipOrder.create({
       data: { eventId: event.id, createdByUserId: context.userId },
+      include: this.details,
+    });
+  }
+
+  async createFromTemplate(dto: CreateWorshipOrderFromTemplateDto, context: OrganizationContext) {
+    const event = await this.event(dto.eventId, context);
+    await this.assertManage(event, context);
+    const existing = await this.prisma.worshipOrder.findUnique({ where: { eventId: event.id } });
+    if (existing) throw new BadRequestException('Este culto já possui uma ordem de culto');
+
+    const template = await this.templates.findForApplication(dto.templateId, context);
+    const missingAreaItem = template.items.find(item => item.serviceAreaId && !event.serviceAreas.some(area => area.serviceAreaId === item.serviceAreaId));
+    if (missingAreaItem) {
+      throw new BadRequestException(`O culto precisa envolver a área de serviço do item "${missingAreaItem.titulo}" antes de aplicar o modelo`);
+    }
+
+    return this.prisma.worshipOrder.create({
+      data: {
+        eventId: event.id,
+        createdByUserId: context.userId,
+        templateId: template.id,
+        items: {
+          create: template.items.map(item => ({
+            sequencia: item.sequencia,
+            titulo: item.titulo,
+            horario: item.horario,
+            observacoes: item.observacoes,
+            serviceAreaId: item.serviceAreaId,
+          })),
+        },
+      },
       include: this.details,
     });
   }
@@ -155,38 +194,89 @@ export class WorshipOrderService {
     return published;
   }
 
+  async sendAlert(id: string, dto: SendWorshipOrderAlertDto, context: OrganizationContext) {
+    const order = await this.order(id, context);
+    await this.assertManage(order.event, context);
+    this.assertPublished(order);
+    const recipientIds = await this.alertRecipients(order, context);
+    if (!recipientIds.length) throw new BadRequestException('Não há participantes ativos para receber o alerta deste culto');
+
+    return this.prisma.notification.create({
+      data: {
+        titulo: dto.titulo,
+        mensagem: dto.mensagem,
+        audience: NotificationAudience.PERSON,
+        organizationId: context.organizationId,
+        eventId: order.event.id,
+        recipients: { create: recipientIds.map(personId => ({ personId })) },
+      },
+      include: { recipients: { include: { person: true } } },
+    });
+  }
+
+  async generatePdf(id: string, context: OrganizationContext) {
+    const order = await this.order(id, context);
+    await this.assertManage(order.event, context);
+    this.assertPublished(order);
+    return this.pdf.render(order);
+  }
+
   async completeDemand(id: string, context: OrganizationContext) {
     const demand = await this.prisma.worshipServiceDemand.findFirst({
       where: { id, item: { order: { event: { organizationId: context.organizationId } } } },
-      include: { item: { include: { order: { include: { event: true } } } } },
+      include: { repertoireDelivery: true, item: { include: { order: { include: { event: true } } } } },
     });
     if (!demand) throw new NotFoundException('Demanda da ordem de culto nÃ£o encontrada');
     if (demand.status !== 'PENDING') throw new BadRequestException('Somente demandas pendentes podem ser concluÃ­das');
 
     const isResponsible = demand.responsiblePersonId === context.personId;
-    if (!isResponsible) await this.assertManage(demand.item.order.event, context);
+    if (!isResponsible) {
+      try {
+        await this.assertManage(demand.item.order.event, context);
+      } catch (error) {
+        if (!(error instanceof ForbiddenException)) throw error;
+        const member = await this.prisma.serviceMembership.findFirst({
+          where: { personId: context.personId, serviceAreaId: demand.serviceAreaId, ativo: true },
+        });
+        if (!member) throw error;
+      }
+    }
 
-    return this.prisma.worshipServiceDemand.update({
+    const completed = await this.prisma.worshipServiceDemand.update({
       where: { id },
       data: { status: 'COMPLETED', completedAt: new Date() },
       include: { serviceArea: true, responsiblePerson: true, item: { select: { id: true, titulo: true, orderId: true } } },
     });
+    if (demand.repertoireDelivery) {
+      await this.prisma.worshipRepertoire.update({
+        where: { id: demand.repertoireDelivery.id },
+        data: { status: WorshipRepertoireStatus.COMPLETED, completedAt: new Date() },
+      });
+    }
+    return completed;
   }
 
   async cancelDemand(id: string, context: OrganizationContext) {
     const demand = await this.prisma.worshipServiceDemand.findFirst({
       where: { id, item: { order: { event: { organizationId: context.organizationId } } } },
-      include: { item: { include: { order: { include: { event: true } } } } },
+      include: { repertoireDelivery: true, item: { include: { order: { include: { event: true } } } } },
     });
     if (!demand) throw new NotFoundException('Demanda da ordem de culto não encontrada');
     if (demand.status !== 'PENDING') throw new BadRequestException('Somente demandas pendentes podem ser canceladas');
     await this.assertManage(demand.item.order.event, context);
 
-    return this.prisma.worshipServiceDemand.update({
+    const cancelled = await this.prisma.worshipServiceDemand.update({
       where: { id },
       data: { status: 'CANCELLED' },
       include: { serviceArea: true, responsiblePerson: true, item: { select: { id: true, titulo: true, orderId: true } } },
     });
+    if (demand.repertoireDelivery) {
+      await this.prisma.worshipRepertoire.update({
+        where: { id: demand.repertoireDelivery.id },
+        data: { status: WorshipRepertoireStatus.APPROVED, sentToWorshipOrderAt: null, deliveryDemandId: null },
+      });
+    }
+    return cancelled;
   }
 
   private async notifyArea(serviceAreaId: string, event: { id: string; titulo: string }, context: OrganizationContext, titulo: string, mensagem: string) {
@@ -207,6 +297,38 @@ export class WorshipOrderService {
         recipients: { create: recipients.map(recipient => ({ personId: recipient.personId })) },
       },
     });
+  }
+
+  private async alertRecipients(order: {
+    event: {
+      id: string;
+      responsiblePersonId: string | null;
+      serviceAreas: { serviceAreaId: string }[];
+      schedules: { personId: string }[];
+    };
+    items: { responsiblePersonId: string | null; demands: { responsiblePersonId: string | null }[] }[];
+  }, context: OrganizationContext) {
+    const areaIds = order.event.serviceAreas.map(area => area.serviceAreaId);
+    const areaMembers = areaIds.length
+      ? await this.prisma.serviceMembership.findMany({
+        where: { serviceAreaId: { in: areaIds }, ativo: true, serviceArea: { organizationId: context.organizationId } },
+        select: { personId: true },
+        distinct: ['personId'],
+      })
+      : [];
+    const candidateIds = new Set([
+      order.event.responsiblePersonId,
+      ...areaMembers.map(member => member.personId),
+      ...order.event.schedules.map(schedule => schedule.personId),
+      ...order.items.map(item => item.responsiblePersonId),
+      ...order.items.flatMap(item => item.demands.map(demand => demand.responsiblePersonId)),
+    ].filter((id): id is string => Boolean(id)));
+    if (!candidateIds.size) return [];
+    const activePeople = await this.prisma.person.findMany({
+      where: { id: { in: [...candidateIds] }, organizationId: context.organizationId, ativo: true },
+      select: { id: true },
+    });
+    return activePeople.map(person => person.id);
   }
 
   private async order(id: string, context: OrganizationContext) {
@@ -272,6 +394,12 @@ export class WorshipOrderService {
     }
   }
 
+  private assertPublished(order: { status: WorshipOrderStatus }) {
+    if (order.status !== WorshipOrderStatus.PUBLISHED) {
+      throw new BadRequestException('Publique a ordem de culto antes de enviar alertas ou gerar o PDF');
+    }
+  }
+
   private readonly itemDetails = {
     responsiblePerson: true,
     serviceArea: true,
@@ -280,8 +408,9 @@ export class WorshipOrderService {
   } as const;
 
   private readonly details = {
-    event: { include: { campus: true, serviceAreas: { include: { serviceArea: true } } } },
+    event: { include: { campus: true, serviceAreas: { include: { serviceArea: true } }, schedules: { include: { person: true, team: { include: { serviceArea: true } } }, orderBy: { data: 'asc' as const } } } },
     createdByUser: { select: { id: true, loginEmail: true } },
+    template: { select: { id: true, nome: true, padrao: true } },
     items: { include: this.itemDetails, orderBy: { sequencia: 'asc' as const } },
   } as const;
 }

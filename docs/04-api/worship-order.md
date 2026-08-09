@@ -49,6 +49,8 @@ Cada ordem de culto pertence a um único evento do tipo `WORSHIP`. Ela estrutura
 | `PATCH` | `/worship-orders/demands/:id/complete` | Conclui uma demanda pendente. |
 | `PATCH` | `/worship-orders/demands/:id/cancel` | Cancela uma demanda pendente. |
 
+As escalas do evento são retornadas em uma seção própria da consulta da ordem, apenas para visualização. A edição continua sendo feita exclusivamente no módulo de Escalas de Serviço.
+
 ### Criar ordem
 
 ```json

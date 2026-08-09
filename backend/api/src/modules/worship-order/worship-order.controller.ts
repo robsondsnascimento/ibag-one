@@ -1,11 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Res, UseGuards } from '@nestjs/common';
 import { CurrentOrganization } from '../../common/decorators/current-organization.decorator';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateWorshipOrderDto } from './dto/create-worship-order.dto';
+import { CreateWorshipOrderFromTemplateDto } from './dto/create-worship-order-from-template.dto';
 import { CreateWorshipOrderItemDto } from './dto/create-worship-order-item.dto';
 import { CreateWorshipOrderMaterialDto } from './dto/create-worship-order-material.dto';
 import { CreateWorshipServiceDemandDto } from './dto/create-worship-service-demand.dto';
+import { SendWorshipOrderAlertDto } from './dto/send-worship-order-alert.dto';
 import { ReorderWorshipOrderItemsDto } from './dto/reorder-worship-order-items.dto';
 import { UpdateWorshipOrderItemDto } from './dto/update-worship-order-item.dto';
 import { WorshipOrderService } from './worship-order.service';
@@ -18,6 +20,11 @@ export class WorshipOrderController {
   @Post()
   create(@Body() dto: CreateWorshipOrderDto, @CurrentOrganization() context: OrganizationContext) {
     return this.service.create(dto, context);
+  }
+
+  @Post('from-template')
+  createFromTemplate(@Body() dto: CreateWorshipOrderFromTemplateDto, @CurrentOrganization() context: OrganizationContext) {
+    return this.service.createFromTemplate(dto, context);
   }
 
   @Get('event/:eventId')
@@ -58,6 +65,19 @@ export class WorshipOrderController {
   @Patch(':id/publish')
   publish(@Param('id') id: string, @CurrentOrganization() context: OrganizationContext) {
     return this.service.publish(id, context);
+  }
+
+  @Post(':id/alert')
+  sendAlert(@Param('id') id: string, @Body() dto: SendWorshipOrderAlertDto, @CurrentOrganization() context: OrganizationContext) {
+    return this.service.sendAlert(id, dto, context);
+  }
+
+  @Get(':id/pdf')
+  async downloadPdf(@Param('id') id: string, @CurrentOrganization() context: OrganizationContext, @Res() response: any) {
+    const pdf = await this.service.generatePdf(id, context);
+    response.setHeader('Content-Type', 'application/pdf');
+    response.setHeader('Content-Disposition', `attachment; filename="ordem-de-culto-${id}.pdf"`);
+    return response.send(pdf);
   }
 
   @Patch('demands/:id/complete')
