@@ -402,6 +402,7 @@ export const ModelName = {
   User: 'User',
   UserRoleAssignment: 'UserRoleAssignment',
   Organization: 'Organization',
+  AuditLog: 'AuditLog',
   Cell: 'Cell',
   CellNetwork: 'CellNetwork',
   CellSupportRole: 'CellSupportRole',
@@ -471,7 +472,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "campus" | "person" | "user" | "userRoleAssignment" | "organization" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceOperationalRoleAssignment" | "serviceSchedule" | "serviceScheduleHistory" | "serviceAreaEntryStage" | "serviceAreaApplication" | "serviceAreaApplicationStage" | "space" | "event" | "worshipOrder" | "worshipOrderTemplate" | "worshipOrderTemplateItem" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "worshipRepertoire" | "worshipRepertoireSong" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellCampusCoordination" | "cellMembership" | "cellLeadership"
+    modelProps: "campus" | "person" | "user" | "userRoleAssignment" | "organization" | "auditLog" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceOperationalRoleAssignment" | "serviceSchedule" | "serviceScheduleHistory" | "serviceAreaEntryStage" | "serviceAreaApplication" | "serviceAreaApplicationStage" | "space" | "event" | "worshipOrder" | "worshipOrderTemplate" | "worshipOrderTemplateItem" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "worshipRepertoire" | "worshipRepertoireSong" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellCampusCoordination" | "cellMembership" | "cellLeadership"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -842,6 +843,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.OrganizationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.OrganizationCountAggregateOutputType> | number
+        }
+      }
+    }
+    AuditLog: {
+      payload: Prisma.$AuditLogPayload<ExtArgs>
+      fields: Prisma.AuditLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuditLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuditLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        findFirst: {
+          args: Prisma.AuditLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuditLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        findMany: {
+          args: Prisma.AuditLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
+        }
+        create: {
+          args: Prisma.AuditLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        createMany: {
+          args: Prisma.AuditLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AuditLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
+        }
+        delete: {
+          args: Prisma.AuditLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        update: {
+          args: Prisma.AuditLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.AuditLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuditLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AuditLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.AuditLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuditLogPayload>
+        }
+        aggregate: {
+          args: Prisma.AuditLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuditLog>
+        }
+        groupBy: {
+          args: Prisma.AuditLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuditLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuditLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuditLogCountAggregateOutputType> | number
         }
       }
     }
@@ -4954,6 +5029,20 @@ export const OrganizationScalarFieldEnum = {
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
 
 
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  resource: 'resource',
+  entityId: 'entityId',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  organizationId: 'organizationId',
+  actorUserId: 'actorUserId'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
 export const CellScalarFieldEnum = {
   id: 'id',
   nome: 'nome',
@@ -5721,6 +5810,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -5735,6 +5832,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -5790,6 +5896,20 @@ export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  */
 export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
     
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+
 
 
 /**
@@ -6297,6 +6417,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   userRoleAssignment?: Prisma.UserRoleAssignmentOmit
   organization?: Prisma.OrganizationOmit
+  auditLog?: Prisma.AuditLogOmit
   cell?: Prisma.CellOmit
   cellNetwork?: Prisma.CellNetworkOmit
   cellSupportRole?: Prisma.CellSupportRoleOmit
@@ -6413,4 +6534,3 @@ export type PrismaAction =
  * `PrismaClient` proxy available in interactive transactions.
  */
 export type TransactionClient = Omit<DefaultPrismaClient, runtime.ITXClientDenyList>
-

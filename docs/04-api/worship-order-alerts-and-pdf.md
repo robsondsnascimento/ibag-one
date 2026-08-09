@@ -18,7 +18,7 @@ Somente pessoas ativas na organização recebem a notificação interna.
 ## Regras
 
 - Alerta e PDF exigem uma ordem `PUBLISHED`.
-- Apenas quem já pode administrar a ordem do culto pode enviar o alerta ou gerar o PDF: liderança responsável pelo evento, criador do evento, `WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN` ou `PASTOR`.
+- Apenas quem já pode administrar a ordem do culto pode enviar o alerta ou gerar o PDF: liderança responsável pelo evento, criador do evento, `WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN`, `PASTOR_SENIOR` ou `PASTOR` no próprio campus.
 - O PDF é gerado sob demanda; ele não cria uma cópia permanente no servidor.
 - O documento reúne dados do culto, sequência dos itens, responsáveis, materiais, pendências e as escalas apenas para consulta.
 

@@ -11,4 +11,14 @@ export class HealthController {
   check() {
     return this.healthService.check();
   }
+
+  @Get('live')
+  live() {
+    return this.healthService.check();
+  }
+
+  @Get('ready')
+  ready() {
+    return this.healthService.ready();
+  }
 }

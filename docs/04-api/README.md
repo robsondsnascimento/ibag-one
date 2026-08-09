@@ -20,6 +20,11 @@ Esta pasta descreve os fluxos de negócio expostos pela API do IBAG One. Todas a
 - [IBAG Kids](ibag-kids.md): turmas, responsáveis, check-in/out, QR, recursos e operações.
 - [Papéis de usuário](user-roles.md): papéis globais e atribuições adicionais.
 
+## Operação e integrações
+
+- [Operação, segurança e homologação](operation-and-homologation.md): health checks, Swagger, CORS, auditoria, paginação e checklist final.
+- [WhatsApp e ProPresenter](external-notifications.md): adaptadores externos opcionais e contrato de webhook.
+
 ## Células e cuidado pastoral
 
 - [Coordenação de Células](cell-campus-coordination.md): vínculo por campus, administração de supervisão e escopo pastoral.
@@ -28,4 +33,4 @@ Esta pasta descreve os fluxos de negócio expostos pela API do IBAG One. Todas a
 
 Além dos fluxos acima, a API possui módulos para autenticação, organizações, campus, pessoas, famílias, células, redes, supervisão, estudos, cuidado pastoral, painel pastoral, eventos, espaços e notificações.
 
-O endpoint público de saúde é `GET /health`.
+Os endpoints públicos de saúde são `GET /health`, `GET /health/live` e `GET /health/ready`.

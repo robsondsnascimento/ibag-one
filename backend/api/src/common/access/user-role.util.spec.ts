@@ -1,5 +1,5 @@
 import { UserRole } from '../../generated/prisma/client';
-import { hasAnyUserRole, userRoleWhere } from './user-role.util';
+import { hasAnyUserRole, hasPastoralCampusAccess, userRoleWhere } from './user-role.util';
 
 describe('user role access', () => {
   it('makes pastor senior inherit permissions granted to pastor', () => {
@@ -13,5 +13,12 @@ describe('user role access', () => {
         { additionalRoles: { some: { role: { in: [UserRole.PASTOR, UserRole.PASTOR_SENIOR] } } } },
       ],
     });
+  });
+
+  it('restricts pastor to their campus while pastor senior reaches every campus', () => {
+    const pastor = { role: UserRole.PASTOR, person: { campusId: 'campus-1' } };
+    expect(hasPastoralCampusAccess(pastor, 'campus-1')).toBe(true);
+    expect(hasPastoralCampusAccess(pastor, 'campus-2')).toBe(false);
+    expect(hasPastoralCampusAccess({ role: UserRole.PASTOR_SENIOR, person: { campusId: 'campus-1' } }, 'campus-2')).toBe(true);
   });
 });

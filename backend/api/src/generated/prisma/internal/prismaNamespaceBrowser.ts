@@ -56,6 +56,7 @@ export const ModelName = {
   User: 'User',
   UserRoleAssignment: 'UserRoleAssignment',
   Organization: 'Organization',
+  AuditLog: 'AuditLog',
   Cell: 'Cell',
   CellNetwork: 'CellNetwork',
   CellSupportRole: 'CellSupportRole',
@@ -200,6 +201,20 @@ export const OrganizationScalarFieldEnum = {
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  resource: 'resource',
+  entityId: 'entityId',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  organizationId: 'organizationId',
+  actorUserId: 'actorUserId'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
 export const CellScalarFieldEnum = {
@@ -969,6 +984,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -983,4 +1006,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

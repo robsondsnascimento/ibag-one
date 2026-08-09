@@ -13,6 +13,8 @@ import {
   OrganizationContext,
 } from '../../common/context/organization-context';
 import { CellStatus } from '../../generated/prisma/client';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
+import { paginatedResult } from '../../common/pagination/paginated-result';
 
 
 @Injectable()
@@ -80,16 +82,16 @@ export class CellService {
 
   async findAll(
     context: OrganizationContext,
+    pagination: PaginationQueryDto,
   ) {
 
-    return this.prisma.cell.findMany({
+    const where = {
+      organizationId: context.organizationId,
+    };
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.cell.findMany({
 
-      where: {
-
-        organizationId:
-          context.organizationId,
-
-      },
+      where,
 
       include: {
 
@@ -110,7 +112,14 @@ export class CellService {
 
       },
 
-    });
+      skip: (pagination.page - 1) * pagination.limit,
+      take: pagination.limit,
+
+      }),
+      this.prisma.cell.count({ where }),
+    ]);
+
+    return paginatedResult(data, total, pagination);
 
   }
 

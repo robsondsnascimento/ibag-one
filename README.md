@@ -4,7 +4,7 @@ Plataforma de cuidado pastoral, células, áreas de serviço, eventos e operaç�
 
 ## Estado atual
 
-O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. A suíte atual possui **26 suítes e 82 testes unitários**.
+O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. A suíte atual possui **29 suítes e 92 testes unitários**, além de testes HTTP e de integração com PostgreSQL isolado.
 
 | Domínio | Entregas atuais |
 | --- | --- |
@@ -17,7 +17,8 @@ O backend NestJS está funcional, multi-tenant por `organizationId`, protegido p
 | Ordem de culto | Modelo editável, itens, materiais, demandas, alertas internos e geração de PDF. |
 | Louvor | Repertório, músicas, aprovação da liderança, prazo de envio e encaminhamento à Ordem de Culto. |
 | IBAG Kids | Estrutura de liderança, faixas etárias, check-in/out, QR de retirada, pré-check-in, recursos visuais e escalas operacionais. |
-| Comunicação | Registros internos de notificação, prontos para futura entrega por WhatsApp e ProPresenter. |
+| Comunicação | Notificações internas, adaptadores opcionais de webhook para WhatsApp e ProPresenter e alertas de Ordem de Culto. |
+| Operação | Swagger/OpenAPI, health checks, auditoria de alterações, CORS, limite de requisições e paginação inicial. |
 
 ## Regras centrais já aplicadas
 
@@ -54,7 +55,7 @@ npx prisma migrate dev
 npm run start:dev
 ```
 
-A API inicia, por padrão, em `http://localhost:3000`. O endpoint de saúde é `GET /health`.
+A API inicia, por padrão, em `http://localhost:3000`. A documentação está em `GET /docs`; os endpoints de saúde são `GET /health`, `GET /health/live` e `GET /health/ready`.
 
 ## Verificações
 
@@ -63,6 +64,7 @@ cd backend/api
 npx nest build
 npx jest --runInBand
 npm run test:e2e
+npm run test:integration
 ```
 
 ## Documentação
@@ -72,8 +74,10 @@ npm run test:e2e
 - [Arquitetura e módulos](docs/03-architecture/modules.md)
 - [Integrações](docs/03-architecture/integrations.md)
 - [Referência da API](docs/04-api/README.md)
+- [Operação e homologação](docs/04-api/operation-and-homologation.md)
+- [Notificações externas](docs/04-api/external-notifications.md)
 - [Visão do banco](docs/05-database/database-overview.md)
 
 ## Próximos passos
 
-O núcleo de negócio está pronto para o início do frontend. Antes de produção, as prioridades são configurar dados reais da IBAG, executar testes integrados/homologação e conectar os provedores autorizados de WhatsApp e ProPresenter.
+O núcleo de negócio está pronto para o início do frontend. Antes de produção, a validação ministerial do checklist, a configuração de dados reais, backup/restauração e a ativação dos conectores autorizados continuam necessárias.

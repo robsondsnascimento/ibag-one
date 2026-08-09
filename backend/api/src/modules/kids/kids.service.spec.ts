@@ -69,8 +69,28 @@ describe('KidsService — QR de retirada', () => {
 
   it('bloqueia perfil de cuidado para quem não é liderança Kids nem administração', async () => {
     prisma.user.findFirst.mockResolvedValue({ role: 'MEMBER' });
+    prisma.person.findFirst.mockResolvedValue({ id: 'child-1', campusId: 'campus-1' });
     prisma.serviceMembership.findFirst.mockResolvedValue(null);
     await expect(service.childAttendance('child-1', context)).rejects.toBeInstanceOf(require('@nestjs/common').ForbiddenException);
+  });
+
+  it('limita a listagem de turmas ao campus do pastor', async () => {
+    prisma.user.findFirst.mockResolvedValue({ role: 'PASTOR', person: { campusId: 'campus-1' }, additionalRoles: [] });
+    prisma.kidsClass.findMany.mockResolvedValue([]);
+
+    await service.classes(context);
+
+    expect(prisma.kidsClass.findMany).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({ campusId: 'campus-1' }),
+    }));
+  });
+
+  it('impede o pastor de operar check-in em outro campus e permite o pastor sênior', async () => {
+    prisma.user.findFirst.mockResolvedValue({ role: 'PASTOR', person: { campusId: 'campus-1' }, additionalRoles: [] });
+    await expect((service as any).authorizeOperation(context, 'campus-2', 'CHECK_IN')).rejects.toBeInstanceOf(require('@nestjs/common').ForbiddenException);
+
+    prisma.user.findFirst.mockResolvedValue({ role: 'PASTOR_SENIOR', person: { campusId: 'campus-1' }, additionalRoles: [] });
+    await expect((service as any).authorizeOperation(context, 'campus-2', 'CHECK_IN')).resolves.toBeUndefined();
   });
 
   it('bloqueia visão do culto sem função ativa de Líder de Culto', async () => {

@@ -40,8 +40,8 @@ O Líder de Culto apenas acompanha pendências e envia lembretes; solicitações
 
 ## Segurança
 
-- Check-in e check-out: exclusivamente equipe Check-in, liderança Kids e administração.
-- Dados de cuidado: liderança Kids completa, secretaria, administração e pastoral.
+- Check-in e check-out: exclusivamente equipe Check-in, liderança Kids, administração, `PASTOR` no próprio campus e `PASTOR_SENIOR` em todos os campi.
+- Dados de cuidado: liderança Kids completa, secretaria, administração, `PASTOR` no próprio campus e `PASTOR_SENIOR` em todos os campi.
 - Servos e líderes de faixa: acesso apenas à própria turma/equipe.
 - Etiqueta de retirada: obrigatória e válida somente no check-in aberto correspondente.
 

@@ -50,7 +50,7 @@ flowchart LR
 
 - Somente o participante com a função operacional ativa `WORSHIP_MINISTER` na equipe de louvor pode criar, editar e enviar o próprio repertório.
 - `GENERAL_LEADER`, `CAMPUS_LEADER` e `TEAM_LEADER` ativos da área de Música revisam e encaminham repertórios do respectivo campus.
-- `WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN` e `PASTOR` também podem operar o fluxo.
+- `WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN` e `PASTOR_SENIOR` podem operar o fluxo em todos os campi; `PASTOR` opera apenas os repertórios de seu campus.
 - Integrantes ativos da área que recebeu a pendência podem concluí-la na ordem de culto.
 
 ## Endpoints

@@ -8,6 +8,8 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 import {
   OrganizationContext,
 } from '../../common/context/organization-context';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
+import { paginatedResult } from '../../common/pagination/paginated-result';
 
 
 @Injectable()
@@ -99,16 +101,16 @@ export class PersonService {
 
   async findAll(
     context: OrganizationContext,
+    pagination: PaginationQueryDto,
   ) {
 
-    return this.prisma.person.findMany({
+    const where = {
+      organizationId: context.organizationId,
+    };
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.person.findMany({
 
-      where: {
-
-        organizationId:
-          context.organizationId,
-
-      },
+      where,
 
       include: {
 
@@ -116,7 +118,14 @@ export class PersonService {
 
       },
 
-    });
+      skip: (pagination.page - 1) * pagination.limit,
+      take: pagination.limit,
+
+      }),
+      this.prisma.person.count({ where }),
+    ]);
+
+    return paginatedResult(data, total, pagination);
 
   }
 

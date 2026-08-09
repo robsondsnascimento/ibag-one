@@ -288,6 +288,7 @@ model User {
   serviceAreaApplicationStagesCompleted ServiceAreaApplicationStage[]
   worshipOrdersCreated         WorshipOrder[]
   worshipOrderTemplatesCreated WorshipOrderTemplate[]
+  auditLogs                    AuditLog[]
 }
 
 model UserRoleAssignment {
@@ -339,6 +340,26 @@ model Organization {
   kidsOperationalRoles  KidsOperationalRoleAssignment[]
   worshipOrderTemplates WorshipOrderTemplate[]
   worshipRepertoires    WorshipRepertoire[]
+  auditLogs             AuditLog[]
+}
+
+model AuditLog {
+  id             String   @id @default(uuid())
+  action         String
+  resource       String
+  entityId       String?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  actorUserId String
+  actorUser   User   @relation(fields: [actorUserId], references: [id])
+
+  @@index([organizationId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@index([resource, entityId])
 }
 
 model Cell {

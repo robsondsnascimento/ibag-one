@@ -6,6 +6,7 @@ import {
   Patch,
   Post,
   Delete,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 
@@ -23,6 +24,7 @@ import {
 import {
   OrganizationContext,
 } from '../../common/context/organization-context';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 
 
 @Controller('persons')
@@ -50,11 +52,13 @@ export class PersonController {
 
   @Get()
   findAll(
+    @Query() pagination: PaginationQueryDto,
     @CurrentOrganization() context: OrganizationContext,
   ) {
 
     return this.personService.findAll(
       context,
+      pagination,
     );
 
   }

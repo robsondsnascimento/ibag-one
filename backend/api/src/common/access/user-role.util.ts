@@ -5,6 +5,10 @@ export type UserWithAdditionalRoles = {
   additionalRoles?: { role: UserRole }[];
 };
 
+export type UserWithPastoralCampus = UserWithAdditionalRoles & {
+  person?: { campusId: string } | null;
+};
+
 export function hasAnyUserRole(user: UserWithAdditionalRoles | null | undefined, roles: UserRole[]) {
   if (!user) return false;
   const effectiveRoles = expandPastorSeniorRole(roles);
@@ -21,7 +25,16 @@ export function userRoleWhere(roles: UserRole[]): Prisma.UserWhereInput {
   };
 }
 
+export function hasPastoralCampusAccess(user: UserWithPastoralCampus | null | undefined, campusId: string) {
+  if (hasAnyUserRole(user, [UserRole.PASTOR_SENIOR])) return true;
+  return hasDirectUserRole(user, [UserRole.PASTOR]) && user?.person?.campusId === campusId;
+}
+
 function expandPastorSeniorRole(roles: UserRole[]): UserRole[] {
   if (!roles.includes(UserRole.PASTOR) || roles.includes(UserRole.PASTOR_SENIOR)) return roles;
   return [...roles, UserRole.PASTOR_SENIOR];
+}
+
+function hasDirectUserRole(user: UserWithAdditionalRoles | null | undefined, roles: UserRole[]) {
+  return user?.role != null && (roles.includes(user.role) || user.additionalRoles?.some(assignment => roles.includes(assignment.role)) === true);
 }

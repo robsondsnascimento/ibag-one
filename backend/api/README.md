@@ -40,6 +40,10 @@ npx jest --runInBand
 # Executar o teste integrado de infraestrutura da API
 npm run test:e2e
 
+# Executar os testes de integração com PostgreSQL isolado
+# Exige IBAG_TEST_DATABASE_URL apontando exclusivamente para ibag_one_test
+npm run test:integration
+
 # Gerar cliente Prisma após mudanças de schema
 npx prisma generate
 
@@ -54,6 +58,31 @@ npx prisma migrate dev --name nome_da_migracao
 - Funções globais coexistem com escopos por campus, área, equipe, célula e rede.
 - Histórico é preservado para alterações operacionais importantes, como escalas.
 - Escalas, eventos e Ordem de Culto possuem responsabilidades independentes.
+
+## Operação da API
+
+- Documentação OpenAPI: `GET /docs` e `GET /docs-json`.
+- Saúde: `GET /health`, `GET /health/live` e `GET /health/ready`.
+- Proteção: Helmet, CORS configurável, limite de 100 requisições por minuto e erros padronizados.
+- Auditoria: alterações autenticadas bem-sucedidas ficam registradas em `AuditLog`, sem gravar credenciais ou corpos de requisição.
+- Paginação: `GET /persons` e `GET /cells` aceitam `page` e `limit` (até 100) e retornam `data` e `meta`.
+
+Consulte [operação e homologação](../../docs/04-api/operation-and-homologation.md) e [notificações externas](../../docs/04-api/external-notifications.md) para a configuração detalhada.
+
+## Testes de integração com banco
+
+Os testes de integração exercitam serviços reais contra um PostgreSQL separado. Eles exigem a variável `IBAG_TEST_DATABASE_URL`, cujo banco deve se chamar exatamente `ibag_one_test`; a rotina recusa qualquer outro nome para evitar tocar na base local de desenvolvimento.
+
+Após criar esse banco e aplicar as migrações, execute no PowerShell:
+
+```powershell
+$env:IBAG_TEST_DATABASE_URL = "postgresql://USUARIO:SENHA@localhost:5432/ibag_one_test?schema=public"
+$env:DATABASE_URL = $env:IBAG_TEST_DATABASE_URL
+npx prisma migrate deploy
+npm run test:integration
+```
+
+Não versionar essa URL nem suas credenciais.
 
 ## Funcionalidades entregues
 

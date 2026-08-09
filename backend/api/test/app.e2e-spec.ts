@@ -1,9 +1,10 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/database/prisma.service';
+import { configureApplication } from '../src/app.factory';
 
 describe('Health (e2e)', () => {
   let app: INestApplication<App>;
@@ -18,7 +19,7 @@ describe('Health (e2e)', () => {
       .compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true, forbidNonWhitelisted: true }));
+    configureApplication(app);
     await app.init();
   });
 
@@ -35,6 +36,16 @@ describe('Health (e2e)', () => {
         service: 'IBAG One API',
         codename: 'Project Nehemiah',
         version: '0.1.0',
+      });
+  });
+
+  it('publica o contrato OpenAPI', async () => {
+    await request(app.getHttpServer())
+      .get('/docs-json')
+      .expect(200)
+      .expect(({ body }) => {
+        expect(body.info.title).toBe('IBAG One API');
+        expect(body.paths['/events']).toBeDefined();
       });
   });
 

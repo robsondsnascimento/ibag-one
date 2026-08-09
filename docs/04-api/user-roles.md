@@ -4,7 +4,9 @@
 
 Cada pessoa possui uma função principal (`role`) e pode receber funções adicionais. As funções adicionais somam permissões e não substituem a função principal.
 
-O papel `PASTOR` está ligado ao campus da pessoa e, nos fluxos pastorais, opera nesse escopo. `PASTOR_SENIOR` tem as mesmas responsabilidades pastorais com alcance em todos os campi da organização. Ambos podem receber funções adicionais, como `WORSHIP_ORDER_MANAGER`.
+O papel `PASTOR` está ligado ao campus da pessoa e opera nesse escopo nos fluxos pastorais, Eventos, Ordem de Culto, Repertório, IBAG Kids, notificações e famílias. `PASTOR_SENIOR` tem as mesmas responsabilidades pastorais com alcance em todos os campi da organização. Ambos podem receber funções adicionais, como `WORSHIP_ORDER_MANAGER`.
+
+Modelos de Ordem de Culto são recursos globais da organização; por isso sua gestão é reservada ao `PASTOR_SENIOR` e às funções centrais.
 
 O vínculo de coordenador de células não é um papel global: ele é registrado por campus e permanece subordinado ao pastor nos cuidados pastorais.
 

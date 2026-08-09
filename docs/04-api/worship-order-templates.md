@@ -19,7 +19,7 @@ Depois da cópia, a ordem do evento é independente. Por isso, um item excepcion
 
 ## Permissões
 
-`WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN` e `PASTOR` podem criar e manter modelos. Qualquer usuário autenticado da organização pode consultá-los.
+`WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN` e `PASTOR_SENIOR` podem criar e manter modelos. Como os modelos são globais à organização, `PASTOR` não os administra diretamente. Qualquer usuário autenticado da organização pode consultá-los.
 
 ## Endpoints
 

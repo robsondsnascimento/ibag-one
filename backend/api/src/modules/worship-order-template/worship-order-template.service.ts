@@ -169,7 +169,7 @@ export class WorshipOrderTemplateService {
       where: { id: context.userId, organizationId: context.organizationId, ativo: true },
       include: { additionalRoles: { select: { role: true } } },
     });
-    if (!hasAnyUserRole(user, ['SECRETARY', 'WORSHIP_ORDER_MANAGER', 'ADMIN', 'SUPER_ADMIN', 'PASTOR'])) {
+    if (!hasAnyUserRole(user, ['SECRETARY', 'WORSHIP_ORDER_MANAGER', 'ADMIN', 'SUPER_ADMIN', 'PASTOR_SENIOR'])) {
       throw new ForbiddenException('Somente a liderança central autorizada pode gerenciar modelos de ordem de culto');
     }
   }

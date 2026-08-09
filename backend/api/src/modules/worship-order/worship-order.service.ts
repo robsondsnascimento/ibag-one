@@ -8,11 +8,12 @@ import { CreateWorshipOrderItemDto } from './dto/create-worship-order-item.dto';
 import { CreateWorshipOrderMaterialDto } from './dto/create-worship-order-material.dto';
 import { CreateWorshipServiceDemandDto } from './dto/create-worship-service-demand.dto';
 import { SendWorshipOrderAlertDto } from './dto/send-worship-order-alert.dto';
-import { hasAnyUserRole } from '../../common/access/user-role.util';
+import { hasAnyUserRole, hasPastoralCampusAccess } from '../../common/access/user-role.util';
 import { ReorderWorshipOrderItemsDto } from './dto/reorder-worship-order-items.dto';
 import { UpdateWorshipOrderItemDto } from './dto/update-worship-order-item.dto';
 import { WorshipOrderTemplateService } from '../worship-order-template/worship-order-template.service';
 import { WorshipOrderPdfService } from './worship-order-pdf.service';
+import { NotificationDispatchService } from '../integrations/notification-dispatch.service';
 
 @Injectable()
 export class WorshipOrderService {
@@ -20,6 +21,7 @@ export class WorshipOrderService {
     private readonly prisma: PrismaService,
     private readonly templates: WorshipOrderTemplateService,
     private readonly pdf: WorshipOrderPdfService,
+    private readonly dispatch?: NotificationDispatchService,
   ) {}
 
   async create(dto: CreateWorshipOrderDto, context: OrganizationContext) {
@@ -201,7 +203,7 @@ export class WorshipOrderService {
     const recipientIds = await this.alertRecipients(order, context);
     if (!recipientIds.length) throw new BadRequestException('Não há participantes ativos para receber o alerta deste culto');
 
-    return this.prisma.notification.create({
+    const notification = await this.prisma.notification.create({
       data: {
         titulo: dto.titulo,
         mensagem: dto.mensagem,
@@ -212,6 +214,15 @@ export class WorshipOrderService {
       },
       include: { recipients: { include: { person: true } } },
     });
+    await this.dispatch?.publish({
+      notificationId: notification.id,
+      organizationId: context.organizationId,
+      title: notification.titulo,
+      message: notification.mensagem,
+      recipientPersonIds: recipientIds,
+      eventId: order.event.id,
+    });
+    return notification;
   }
 
   async generatePdf(id: string, context: OrganizationContext) {
@@ -377,13 +388,13 @@ export class WorshipOrderService {
     return area;
   }
 
-  private async assertManage(event: { createdByUserId: string; responsiblePersonId: string | null }, context: OrganizationContext) {
+  private async assertManage(event: { createdByUserId: string; responsiblePersonId: string | null; campusId: string }, context: OrganizationContext) {
     const user = await this.prisma.user.findFirst({
       where: { id: context.userId, organizationId: context.organizationId, ativo: true },
-      include: { additionalRoles: { select: { role: true } } },
+      include: { person: { select: { campusId: true } }, additionalRoles: { select: { role: true } } },
     });
     if (!user) throw new ForbiddenException('UsuÃ¡rio sem vÃ­nculo organizacional ativo');
-    if (hasAnyUserRole(user, ['SECRETARY', 'WORSHIP_ORDER_MANAGER', 'ADMIN', 'SUPER_ADMIN', 'PASTOR'])) return;
+    if (hasAnyUserRole(user, ['SECRETARY', 'WORSHIP_ORDER_MANAGER', 'ADMIN', 'SUPER_ADMIN']) || hasPastoralCampusAccess(user, event.campusId)) return;
     if (event.createdByUserId === context.userId || event.responsiblePersonId === context.personId) return;
     throw new ForbiddenException('Somente secretaria, administraÃ§Ã£o, pastoral ou a lideranÃ§a responsÃ¡vel pelo culto pode montar a ordem');
   }

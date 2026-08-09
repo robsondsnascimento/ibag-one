@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 import { DatabaseModule } from './database/database.module';
 
@@ -37,13 +39,24 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { HealthModule } from './modules/health/health.module';
 import { OrganizationModule } from './modules/organization/organization.module';
+import { validateEnvironment } from './config/environment.validation';
+import { AuditModule } from './modules/audit/audit.module';
+import { AuditInterceptor } from './modules/audit/audit.interceptor';
+import { IntegrationsModule } from './modules/integrations/integrations.module';
 
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      validate: validateEnvironment,
     }),
+
+    ThrottlerModule.forRoot([{ ttl: 60000, limit: 100 }]),
+
+    AuditModule,
+
+    IntegrationsModule,
 
     HealthModule,
 
@@ -114,6 +127,14 @@ import { OrganizationModule } from './modules/organization/organization.module';
 
   providers: [
     CampusService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuditInterceptor,
+    },
   ],
 })
 export class AppModule {}

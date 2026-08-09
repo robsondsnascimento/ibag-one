@@ -27,7 +27,8 @@ Cada ordem de culto pertence a um único evento do tipo `WORSHIP`. Ela estrutura
 
 ## Permissões
 
-- `WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN` e `PASTOR` podem montar, editar e publicar ordens em todos os campus da organização.
+- `WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN` e `PASTOR_SENIOR` podem montar, editar e publicar ordens em todos os campi da organização.
+- `PASTOR` pode montar, editar e publicar somente as ordens de culto do seu campus.
 - O criador do evento e a pessoa responsável pelo evento também podem montar a ordem.
 - Qualquer usuário autenticado pode consultar uma ordem da própria organização.
 - O responsável por uma demanda pode concluí-la; a liderança que monta a ordem também pode concluí-la ou cancelá-la.

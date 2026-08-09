@@ -9,7 +9,7 @@ import {
   WorshipOrderStatus,
   WorshipRepertoireStatus,
 } from '../../generated/prisma/client';
-import { hasAnyUserRole } from '../../common/access/user-role.util';
+import { hasAnyUserRole, hasPastoralCampusAccess } from '../../common/access/user-role.util';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 import {
@@ -297,7 +297,7 @@ export class WorshipRepertoireService {
 
   private async assertLeader(serviceAreaId: string, event: { campusId: string }, context: OrganizationContext) {
     const user = await this.user(context);
-    if (hasAnyUserRole(user, ['SECRETARY', 'WORSHIP_ORDER_MANAGER', 'ADMIN', 'SUPER_ADMIN', 'PASTOR'])) return;
+    if (hasAnyUserRole(user, ['SECRETARY', 'WORSHIP_ORDER_MANAGER', 'ADMIN', 'SUPER_ADMIN']) || hasPastoralCampusAccess(user, event.campusId)) return;
     const leader = await this.prisma.serviceMembership.findFirst({
       where: {
         personId: context.personId,
@@ -316,7 +316,7 @@ export class WorshipRepertoireService {
   private async user(context: OrganizationContext) {
     const user = await this.prisma.user.findFirst({
       where: { id: context.userId, organizationId: context.organizationId, ativo: true },
-      include: { additionalRoles: { select: { role: true } } },
+      include: { person: { select: { campusId: true } }, additionalRoles: { select: { role: true } } },
     });
     if (!user) throw new ForbiddenException('Usuário sem vínculo organizacional ativo');
     return user;
