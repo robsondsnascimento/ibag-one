@@ -5,6 +5,7 @@ export class CreateEventDto {
   @IsOptional() @IsString() @Length(3, 3000) descricao?: string;
   @IsEnum(EventType) type: EventType;
   @IsUUID() campusId: string;
+  @IsOptional() @IsUUID() cellId?: string;
   @IsDateString() inicio: string;
   @IsDateString() fim: string;
   @IsOptional() @IsUUID() responsiblePersonId?: string;

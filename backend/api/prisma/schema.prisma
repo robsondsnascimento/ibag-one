@@ -118,6 +118,13 @@ enum EventStatus {
   COMPLETED
 }
 
+enum GoogleCalendarSyncStatus {
+  PENDING
+  SYNCED
+  FAILED
+  CANCELLED
+}
+
 enum NotificationAudience {
   ORGANIZATION
   CAMPUS
@@ -393,6 +400,7 @@ model Cell {
   childCells            Cell[]               @relation("CellMother")
   meetings              CellMeeting[]
   location              CellLocation?
+  events                Event[]
 
   @@index([organizationId])
   @@index([campusId])
@@ -753,6 +761,8 @@ model Event {
   organization         Organization          @relation(fields: [organizationId], references: [id])
   campusId             String
   campus               Campus                @relation(fields: [campusId], references: [id])
+  cellId               String?
+  cell                 Cell?                 @relation(fields: [cellId], references: [id])
   createdByUserId      String
   createdByUser        User                  @relation("EventCreatedBy", fields: [createdByUserId], references: [id])
   responsiblePersonId  String?
@@ -768,10 +778,27 @@ model Event {
   kidsPreCheckIns      KidsPreCheckIn[]
   worshipOrder         WorshipOrder?
   worshipRepertoires   WorshipRepertoire[]
+  googleCalendarSync   GoogleCalendarEventSync?
 
   @@index([organizationId])
   @@index([campusId])
+  @@index([cellId])
   @@index([inicio])
+  @@index([status])
+}
+
+model GoogleCalendarEventSync {
+  id           String                   @id @default(uuid())
+  googleEventId String?                 @unique
+  status       GoogleCalendarSyncStatus @default(PENDING)
+  lastSyncedAt DateTime?
+  lastError    String?
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  eventId String @unique
+  event   Event  @relation(fields: [eventId], references: [id])
+
   @@index([status])
 }
 

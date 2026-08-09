@@ -24,6 +24,7 @@ Esta pasta descreve os fluxos de negócio expostos pela API do IBAG One. Todas a
 
 - [Operação, segurança e homologação](operation-and-homologation.md): health checks, Swagger, CORS, auditoria, paginação e checklist final.
 - [WhatsApp e ProPresenter](external-notifications.md): adaptadores externos opcionais e contrato de webhook.
+- [Agenda institucional e Google Calendar](google-calendar-agenda.md): calendário único, escopo das lideranças e sincronização unidirecional.
 
 ## Células e cuidado pastoral
 

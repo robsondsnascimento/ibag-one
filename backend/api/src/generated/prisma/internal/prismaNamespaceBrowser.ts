@@ -75,6 +75,7 @@ export const ModelName = {
   ServiceAreaApplicationStage: 'ServiceAreaApplicationStage',
   Space: 'Space',
   Event: 'Event',
+  GoogleCalendarEventSync: 'GoogleCalendarEventSync',
   WorshipOrder: 'WorshipOrder',
   WorshipOrderTemplate: 'WorshipOrderTemplate',
   WorshipOrderTemplateItem: 'WorshipOrderTemplateItem',
@@ -491,11 +492,26 @@ export const EventScalarFieldEnum = {
   updatedAt: 'updatedAt',
   organizationId: 'organizationId',
   campusId: 'campusId',
+  cellId: 'cellId',
   createdByUserId: 'createdByUserId',
   responsiblePersonId: 'responsiblePersonId'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const GoogleCalendarEventSyncScalarFieldEnum = {
+  id: 'id',
+  googleEventId: 'googleEventId',
+  status: 'status',
+  lastSyncedAt: 'lastSyncedAt',
+  lastError: 'lastError',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  eventId: 'eventId'
+} as const
+
+export type GoogleCalendarEventSyncScalarFieldEnum = (typeof GoogleCalendarEventSyncScalarFieldEnum)[keyof typeof GoogleCalendarEventSyncScalarFieldEnum]
 
 
 export const WorshipOrderScalarFieldEnum = {

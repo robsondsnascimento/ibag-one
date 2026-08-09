@@ -8,9 +8,11 @@ import { PrismaService } from '../src/database/prisma.service';
 import { configureApplication } from '../src/app.factory';
 
 type Fixture = {
+  organizationId: string;
   campusAId: string;
   campusBId: string;
   personBId: string;
+  cellAId: string;
   kidsAreaId: string;
   kidsTeamBId: string;
 };
@@ -132,6 +134,68 @@ describe('permissões HTTP multi-campus', () => {
       .expect(400);
   });
 
+  it('permite ao líder de célula consultar a agenda e solicitar somente eventos da sua célula', async () => {
+    const fixture = await createFixture(prisma);
+    const leaderToken = (await login(app, 'lider.celula@integration.test')).body.access_token;
+    const memberToken = (await login(app, 'membro.celula@integration.test')).body.access_token;
+
+    await request(app.getHttpServer())
+      .get('/events')
+      .set('Authorization', `Bearer ${memberToken}`)
+      .expect(403);
+
+    await request(app.getHttpServer())
+      .get('/events')
+      .set('Authorization', `Bearer ${leaderToken}`)
+      .expect(200)
+      .expect(({ body }) => expect(body).toEqual([]));
+
+    const otherCell = await prisma.cell.create({
+      data: { nome: 'Célula sem liderança do usuário', campusId: fixture.campusAId, organizationId: fixture.organizationId },
+    });
+    await request(app.getHttpServer())
+      .post('/events')
+      .set('Authorization', `Bearer ${leaderToken}`)
+      .send({
+        titulo: 'Encontro fora do escopo',
+        type: EventType.MEETING,
+        campusId: fixture.campusAId,
+        cellId: otherCell.id,
+        inicio: '2031-02-10T19:00:00.000Z',
+        fim: '2031-02-10T20:30:00.000Z',
+      })
+      .expect(403);
+
+    const created = await request(app.getHttpServer())
+      .post('/events')
+      .set('Authorization', `Bearer ${leaderToken}`)
+      .send({
+        titulo: 'Encontro da Célula A',
+        type: EventType.MEETING,
+        campusId: fixture.campusAId,
+        cellId: fixture.cellAId,
+        inicio: '2031-02-10T22:00:00.000Z',
+        fim: '2031-02-10T23:30:00.000Z',
+      })
+      .expect(201)
+      .expect(({ body }) => {
+        expect(body.status).toBe('REQUESTED');
+        expect(body.cellId).toBe(fixture.cellAId);
+      });
+
+    await request(app.getHttpServer())
+      .post(`/events/${created.body.id}/google-calendar/sync`)
+      .set('Authorization', `Bearer ${leaderToken}`)
+      .expect(201)
+      .expect(({ body }) => expect(body.status).toBe('DISABLED'));
+
+    await request(app.getHttpServer())
+      .get('/events/google-calendar/status')
+      .set('Authorization', `Bearer ${leaderToken}`)
+      .expect(200)
+      .expect(({ body }) => expect(body.configured).toBe(false));
+  });
+
   it('pagina listagens centrais e usa o formato padronizado de erro', async () => {
     await createFixture(prisma);
     const token = (await login(app, 'pastor.a@integration.test')).body.access_token;
@@ -142,7 +206,7 @@ describe('permissões HTTP multi-campus', () => {
       .expect(200)
       .expect(({ body }) => {
         expect(body.data).toHaveLength(1);
-        expect(body.meta).toEqual(expect.objectContaining({ page: 1, limit: 1, total: 3, totalPages: 3 }));
+        expect(body.meta).toEqual(expect.objectContaining({ page: 1, limit: 1, total: 5, totalPages: 5 }));
       });
 
     await request(app.getHttpServer())
@@ -172,16 +236,32 @@ async function createFixture(prisma: PrismaService): Promise<Fixture> {
   const campusB = await prisma.campus.create({
     data: { nome: 'Campus B', cidade: 'Cidade B', estado: 'SP', organizationId: organization.id },
   });
-  const [pastor, senior, personB] = await Promise.all([
+  const [pastor, senior, personB, cellLeader, cellMember] = await Promise.all([
     prisma.person.create({ data: { nome: 'Pastor do Campus A', email: 'pastor.a@integration.test', campusId: campusA.id, organizationId: organization.id } }),
     prisma.person.create({ data: { nome: 'Pastor Sênior', email: 'senior@integration.test', campusId: campusA.id, organizationId: organization.id } }),
     prisma.person.create({ data: { nome: 'Pessoa do Campus B', email: 'pessoa.b@integration.test', campusId: campusB.id, organizationId: organization.id } }),
+    prisma.person.create({ data: { nome: 'Líder da Célula A', email: 'lider.celula@integration.test', campusId: campusA.id, organizationId: organization.id } }),
+    prisma.person.create({ data: { nome: 'Membro da Célula A', email: 'membro.celula@integration.test', campusId: campusA.id, organizationId: organization.id } }),
   ]);
   const passwordHash = await bcrypt.hash('SenhaDeIntegracao@123', 4);
   await Promise.all([
     prisma.user.create({ data: { loginEmail: 'pastor.a@integration.test', passwordHash, personId: pastor.id, organizationId: organization.id, role: UserRole.PASTOR } }),
     prisma.user.create({ data: { loginEmail: 'senior@integration.test', passwordHash, personId: senior.id, organizationId: organization.id, role: UserRole.PASTOR_SENIOR } }),
+    prisma.user.create({ data: { loginEmail: 'lider.celula@integration.test', passwordHash, personId: cellLeader.id, organizationId: organization.id, role: UserRole.MEMBER } }),
+    prisma.user.create({ data: { loginEmail: 'membro.celula@integration.test', passwordHash, personId: cellMember.id, organizationId: organization.id, role: UserRole.MEMBER } }),
   ]);
+  const cellA = await prisma.cell.create({
+    data: { nome: 'Célula A', campusId: campusA.id, organizationId: organization.id },
+  });
+  await prisma.cellMembership.createMany({
+    data: [
+      { personId: cellLeader.id, cellId: cellA.id },
+      { personId: cellMember.id, cellId: cellA.id },
+    ],
+  });
+  await prisma.cellLeadership.create({
+    data: { personId: cellLeader.id, cellId: cellA.id },
+  });
   const kidsArea = await prisma.serviceArea.create({
     data: { nome: 'IBAG Kids', scope: 'GLOBAL', organizationId: organization.id },
   });
@@ -190,9 +270,11 @@ async function createFixture(prisma: PrismaService): Promise<Fixture> {
   });
 
   return {
+    organizationId: organization.id,
     campusAId: campusA.id,
     campusBId: campusB.id,
     personBId: personB.id,
+    cellAId: cellA.id,
     kidsAreaId: kidsArea.id,
     kidsTeamBId: kidsTeamB.id,
   };

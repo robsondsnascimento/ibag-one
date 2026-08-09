@@ -14,3 +14,7 @@ process.env.WHATSAPP_WEBHOOK_URL = '';
 process.env.WHATSAPP_WEBHOOK_TOKEN = '';
 process.env.PROPRESENTER_WEBHOOK_URL = '';
 process.env.PROPRESENTER_WEBHOOK_TOKEN = '';
+process.env.GOOGLE_CALENDAR_ID = '';
+process.env.GOOGLE_CALENDAR_CLIENT_ID = '';
+process.env.GOOGLE_CALENDAR_CLIENT_SECRET = '';
+process.env.GOOGLE_CALENDAR_REFRESH_TOKEN = '';

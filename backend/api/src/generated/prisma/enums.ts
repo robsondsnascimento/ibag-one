@@ -164,6 +164,16 @@ export const EventStatus = {
 export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
 
 
+export const GoogleCalendarSyncStatus = {
+  PENDING: 'PENDING',
+  SYNCED: 'SYNCED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type GoogleCalendarSyncStatus = (typeof GoogleCalendarSyncStatus)[keyof typeof GoogleCalendarSyncStatus]
+
+
 export const NotificationAudience = {
   ORGANIZATION: 'ORGANIZATION',
   CAMPUS: 'CAMPUS',

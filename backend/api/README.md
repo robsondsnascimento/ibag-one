@@ -67,7 +67,7 @@ npx prisma migrate dev --name nome_da_migracao
 - Auditoria: alterações autenticadas bem-sucedidas ficam registradas em `AuditLog`, sem gravar credenciais ou corpos de requisição.
 - Paginação: `GET /persons` e `GET /cells` aceitam `page` e `limit` (até 100) e retornam `data` e `meta`.
 
-Consulte [operação e homologação](../../docs/04-api/operation-and-homologation.md) e [notificações externas](../../docs/04-api/external-notifications.md) para a configuração detalhada.
+Consulte [operação e homologação](../../docs/04-api/operation-and-homologation.md), [notificações externas](../../docs/04-api/external-notifications.md) e [agenda institucional](../../docs/04-api/google-calendar-agenda.md) para a configuração detalhada.
 
 ## Testes de integração com banco
 

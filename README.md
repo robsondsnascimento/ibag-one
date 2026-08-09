@@ -4,7 +4,9 @@ Plataforma de cuidado pastoral, células, áreas de serviço, eventos e operaç�
 
 ## Estado atual
 
-O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. A suíte atual possui **29 suítes e 92 testes unitários**, além de testes HTTP e de integração com PostgreSQL isolado.
+O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. A suíte atual possui **31 suítes e 98 testes unitários**, além de testes HTTP e de integração com PostgreSQL isolado.
+
+A agenda institucional possui sincronização unidirecional opcional com um único Google Calendar compartilhado. O IBAG One permanece como fonte de verdade para solicitações, aprovações, alterações e cancelamentos.
 
 | Domínio | Entregas atuais |
 | --- | --- |
@@ -76,6 +78,7 @@ npm run test:integration
 - [Referência da API](docs/04-api/README.md)
 - [Operação e homologação](docs/04-api/operation-and-homologation.md)
 - [Notificações externas](docs/04-api/external-notifications.md)
+- [Agenda institucional e Google Calendar](docs/04-api/google-calendar-agenda.md)
 - [Visão do banco](docs/05-database/database-overview.md)
 
 ## Próximos passos

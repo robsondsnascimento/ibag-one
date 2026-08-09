@@ -508,6 +508,23 @@ export type EnumEventStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumEventStatusFilter<$PrismaModel>
 }
 
+export type EnumGoogleCalendarSyncStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoogleCalendarSyncStatus | Prisma.EnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.GoogleCalendarSyncStatus[] | Prisma.ListEnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoogleCalendarSyncStatus[] | Prisma.ListEnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoogleCalendarSyncStatusFilter<$PrismaModel> | $Enums.GoogleCalendarSyncStatus
+}
+
+export type EnumGoogleCalendarSyncStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoogleCalendarSyncStatus | Prisma.EnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.GoogleCalendarSyncStatus[] | Prisma.ListEnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoogleCalendarSyncStatus[] | Prisma.ListEnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoogleCalendarSyncStatusWithAggregatesFilter<$PrismaModel> | $Enums.GoogleCalendarSyncStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGoogleCalendarSyncStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGoogleCalendarSyncStatusFilter<$PrismaModel>
+}
+
 export type EnumWorshipOrderStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.WorshipOrderStatus | Prisma.EnumWorshipOrderStatusFieldRefInput<$PrismaModel>
   in?: $Enums.WorshipOrderStatus[] | Prisma.ListEnumWorshipOrderStatusFieldRefInput<$PrismaModel>
@@ -1183,6 +1200,23 @@ export type NestedEnumEventStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEventStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEventStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumGoogleCalendarSyncStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoogleCalendarSyncStatus | Prisma.EnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.GoogleCalendarSyncStatus[] | Prisma.ListEnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoogleCalendarSyncStatus[] | Prisma.ListEnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoogleCalendarSyncStatusFilter<$PrismaModel> | $Enums.GoogleCalendarSyncStatus
+}
+
+export type NestedEnumGoogleCalendarSyncStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoogleCalendarSyncStatus | Prisma.EnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.GoogleCalendarSyncStatus[] | Prisma.ListEnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoogleCalendarSyncStatus[] | Prisma.ListEnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoogleCalendarSyncStatusWithAggregatesFilter<$PrismaModel> | $Enums.GoogleCalendarSyncStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGoogleCalendarSyncStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGoogleCalendarSyncStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumWorshipOrderStatusFilter<$PrismaModel = never> = {
