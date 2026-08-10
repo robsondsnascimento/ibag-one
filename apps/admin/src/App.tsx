@@ -1,5 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
+import { login, validateSession } from './api/auth'
+import type { AuthSession } from './api/auth'
+import { clearSession, readSession, saveSession } from './auth/session'
 import './App.css'
 
 type Page =
@@ -104,12 +107,96 @@ const pageCopy: Record<Exclude<Page, 'dashboard' | 'agenda'>, { eyebrow: string;
   },
 }
 
+const roleLabels: Record<string, string> = {
+  MEMBER: 'Membro',
+  SECRETARY: 'Secretário(a)',
+  WORSHIP_ORDER_MANAGER: 'Responsável por ordem de culto',
+  ADMIN: 'Administrador(a)',
+  SUPER_ADMIN: 'Super administrador',
+  PASTOR: 'Pastor(a)',
+  PASTOR_SENIOR: 'Pastor(a) sênior',
+}
+
+function firstName(name: string) {
+  return name.trim().split(/\s+/)[0] || 'você'
+}
+
+function initials(name: string) {
+  return name
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('')
+    .toUpperCase() || 'IB'
+}
+
 function App() {
   const [activePage, setActivePage] = useState<Page>('dashboard')
   const [theme, setTheme] = useState<Theme>('light')
-  const [isAuthenticated, setIsAuthenticated] = useState(true)
+  const [session, setSession] = useState<AuthSession | null>(() => readSession())
+  const [isCheckingSession, setIsCheckingSession] = useState(Boolean(session))
+  const [authError, setAuthError] = useState('')
+  const [isSubmittingLogin, setIsSubmittingLogin] = useState(false)
   const [isCreateEventOpen, setIsCreateEventOpen] = useState(false)
   const [notice, setNotice] = useState('')
+
+  useEffect(() => {
+    if (!session) {
+      setIsCheckingSession(false)
+      return
+    }
+
+    let active = true
+    setIsCheckingSession(true)
+
+    void validateSession(session.access_token)
+      .then(() => {
+        if (active) setIsCheckingSession(false)
+      })
+      .catch(() => {
+        if (!active) return
+        clearSession()
+        setSession(null)
+        setAuthError('Sua sessão expirou. Entre novamente para continuar.')
+        setIsCheckingSession(false)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [session])
+
+  const submitLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const username = String(formData.get('username') ?? '').trim()
+    const password = String(formData.get('password') ?? '')
+    const keepSignedIn = formData.get('keepSignedIn') === 'on'
+
+    setAuthError('')
+    setIsSubmittingLogin(true)
+
+    try {
+      const nextSession = await login({ username, password })
+      saveSession(nextSession, keepSignedIn)
+      setIsCheckingSession(true)
+      setSession(nextSession)
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : 'Não foi possível entrar agora. Tente novamente.')
+    } finally {
+      setIsSubmittingLogin(false)
+    }
+  }
+
+  const signOut = () => {
+    clearSession()
+    setSession(null)
+    setActivePage('dashboard')
+    setNotice('')
+    setAuthError('')
+  }
 
   const openEventForm = () => {
     setNotice('')
@@ -122,7 +209,7 @@ function App() {
     setNotice('Evento salvo como solicitação. Ele seguirá para aprovação na agenda.')
   }
 
-  if (!isAuthenticated) {
+  if (!session) {
     return (
       <main className={`login-page theme-${theme}`}>
         <section className="login-intro">
@@ -140,28 +227,42 @@ function App() {
         </section>
 
         <section className="login-form-panel">
-          <form className="login-form" onSubmit={(event) => { event.preventDefault(); setIsAuthenticated(true) }}>
+          <form className="login-form" onSubmit={submitLogin}>
             <div className="login-heading">
               <p className="eyebrow">Boas-vindas</p>
               <h2>Entre na sua conta</h2>
               <p>Use seu acesso institucional para continuar.</p>
             </div>
             <label>
-              E-mail
-              <input type="email" placeholder="voce@ibag.one" required />
+              Usuário
+              <input name="username" type="text" placeholder="superadmin" autoComplete="username" required />
             </label>
             <label>
               Senha
-              <input type="password" placeholder="Sua senha" required />
+              <input name="password" type="password" placeholder="Sua senha" autoComplete="current-password" required />
             </label>
             <div className="login-options">
-              <label className="checkbox-label"><input type="checkbox" /> Manter conectado</label>
-              <button type="button" className="text-button">Esqueci minha senha</button>
+              <label className="checkbox-label"><input name="keepSignedIn" type="checkbox" /> Manter conectado</label>
+              <button type="button" className="text-button" disabled title="A recuperação de senha será disponibilizada em breve">Esqueci minha senha</button>
             </div>
-            <button className="primary-button primary-button--wide" type="submit">Entrar no IBAG One <span>→</span></button>
-            <p className="form-footnote">Tela demonstrativa. A autenticação será conectada à API NestJS na próxima etapa.</p>
+            {authError && <p className="login-error" role="alert">{authError}</p>}
+            <button className="primary-button primary-button--wide" type="submit" disabled={isSubmittingLogin}>
+              {isSubmittingLogin ? 'Validando acesso...' : <>Entrar no IBAG One <span>→</span></>}
+            </button>
+            <p className="form-footnote">Use apenas seu usuário. O domínio institucional é completado automaticamente.</p>
           </form>
         </section>
+      </main>
+    )
+  }
+
+  if (isCheckingSession) {
+    return (
+      <main className={`session-loading theme-${theme}`}>
+        <div>
+          <span className="brand-mark">i</span>
+          <p>Validando seu acesso...</p>
+        </div>
       </main>
     )
   }
@@ -175,8 +276,8 @@ function App() {
             <span>ibag<span>one</span></span>
           </div>
           <button className="organization-switcher" type="button">
-            <span className="organization-avatar">I</span>
-            <span><strong>IBAG</strong><small>Campus Centro</small></span>
+            <span className="organization-avatar">{initials(session.user.organization.nome).slice(0, 1)}</span>
+            <span><strong>{session.user.organization.nome}</strong><small>{session.user.person.campus?.nome ?? 'Campus não informado'}</small></span>
             <span className="chevron">⌄</span>
           </button>
         </div>
@@ -216,10 +317,10 @@ function App() {
             <span className="support-icon">?</span>
             <span><strong>Precisa de ajuda?</strong><small>Central de suporte</small></span>
           </button>
-          <button className="profile-card" type="button" onClick={() => setIsAuthenticated(false)}>
-            <span className="profile-avatar">RN</span>
-            <span><strong>Robson Nascimento</strong><small>Super administrador</small></span>
-            <span className="profile-more">•••</span>
+          <button className="profile-card" type="button" onClick={signOut} aria-label={`Sair da conta de ${session.user.person.nome}`}>
+            <span className="profile-avatar">{initials(session.user.person.nome)}</span>
+            <span><strong>{session.user.person.nome}</strong><small>{roleLabels[session.user.role] ?? session.user.role}</small></span>
+            <span className="profile-more">Sair</span>
           </button>
         </div>
       </aside>
@@ -228,7 +329,7 @@ function App() {
         <header className="topbar">
           <div>
             <p className="eyebrow">{activePage === 'dashboard' ? 'Segunda-feira, 11 de agosto' : activePage === 'agenda' ? 'Agenda institucional' : pageCopy[activePage].eyebrow}</p>
-            <h1>{activePage === 'dashboard' ? 'Bom dia, Robson.' : activePage === 'agenda' ? 'Tudo que acontece na IBAG' : pageCopy[activePage].title}</h1>
+            <h1>{activePage === 'dashboard' ? `Bom dia, ${firstName(session.user.person.nome)}.` : activePage === 'agenda' ? `Tudo que acontece na ${session.user.organization.nome}` : pageCopy[activePage].title}</h1>
           </div>
           <div className="topbar-actions">
             <button className="icon-button" type="button" aria-label="Buscar">⌕</button>

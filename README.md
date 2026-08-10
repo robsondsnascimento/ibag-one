@@ -4,7 +4,7 @@ Plataforma de cuidado pastoral, células, áreas de serviço, eventos e operaç�
 
 ## Estado atual
 
-O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. A suíte atual possui **31 suítes e 98 testes unitários**, além de testes HTTP e de integração com PostgreSQL isolado.
+O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. O painel administrativo React já possui login institucional integrado à API, sessão persistente opcional e identificação dinâmica de organização, campus e função. A suíte atual possui **31 suítes e 100 testes unitários**, além de testes HTTP e de integração com PostgreSQL isolado.
 
 A agenda institucional possui sincronização unidirecional opcional com um único Google Calendar compartilhado. O IBAG One permanece como fonte de verdade para solicitações, aprovações, alterações e cancelamentos.
 
@@ -41,7 +41,7 @@ A agenda institucional possui sincronização unidirecional opcional com um úni
 ibag-one/
 ├── backend/api/       API NestJS, Prisma e testes
 ├── docs/              Produto, domínio, arquitetura, API e banco
-├── apps/              Reservado para os futuros aplicativos
+├── apps/admin/        Painel administrativo React/Vite
 ├── packages/          Reservado para pacotes compartilhados
 └── infrastructure/    Reservado para deploy e integrações
 ```
@@ -58,6 +58,20 @@ npm run start:dev
 ```
 
 A API inicia, por padrão, em `http://localhost:3000`. A documentação está em `GET /docs`; os endpoints de saúde são `GET /health`, `GET /health/live` e `GET /health/ready`.
+
+## Executar o painel administrativo localmente
+
+Com a API em execução, abra outro terminal:
+
+```powershell
+cd apps/admin
+npm install
+npm run dev
+```
+
+O painel abre em `http://127.0.0.1:5173` e usa a API em `http://127.0.0.1:3000` por padrão. Para apontar para outro ambiente, copie `apps/admin/.env.example` para `apps/admin/.env.local` e ajuste `VITE_API_URL`. Nenhuma senha é armazenada pelo painel; apenas o token de sessão retornado pela API.
+
+No acesso da IBAG, informe apenas o usuário (por exemplo, `superadmin`); o domínio `@ibag.one` é completado automaticamente. Endereços de e-mail completos continuam aceitos para manter compatibilidade com contas já existentes.
 
 ## Verificações
 

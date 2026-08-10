@@ -11,6 +11,7 @@ generated/
 # Ambiente
 .env
 .env.*
+!apps/admin/.env.example
 
 # IDE
 .vscode/

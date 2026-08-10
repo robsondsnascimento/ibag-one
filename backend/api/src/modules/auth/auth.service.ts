@@ -4,6 +4,8 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 
+const defaultLoginDomain = 'ibag.one';
+
 @Injectable()
 export class AuthService {
 
@@ -17,16 +19,46 @@ export class AuthService {
     const user =
       await this.prisma.user.findUnique({
         where: {
-          loginEmail: dto.loginEmail,
+          loginEmail: this.normalizeLogin(dto.loginEmail),
         },
         include: {
-          person: true,
-          organization: true,
+          person: {
+            select: {
+              id: true,
+              nome: true,
+              ativo: true,
+              campusId: true,
+              campus: {
+                select: {
+                  nome: true,
+                },
+              },
+            },
+          },
+          organization: {
+            select: {
+              id: true,
+              nome: true,
+              ativo: true,
+            },
+          },
+          additionalRoles: {
+            select: {
+              role: true,
+            },
+          },
         },
       });
 
 
-    if (!user) {
+    if (
+      !user ||
+      !user.ativo ||
+      !user.person.ativo ||
+      !user.organizationId ||
+      !user.organization ||
+      !user.organization.ativo
+    ) {
       throw new UnauthorizedException(
         'Usuário ou senha inválidos',
       );
@@ -63,8 +95,25 @@ export class AuthService {
         loginEmail: user.loginEmail,
         personId: user.personId,
         organizationId: user.organizationId,
+        role: user.role,
+        additionalRoles: user.additionalRoles.map(item => item.role),
+        person: {
+          id: user.person.id,
+          nome: user.person.nome,
+          campusId: user.person.campusId,
+          campus: user.person.campus,
+        },
+        organization: {
+          id: user.organization.id,
+          nome: user.organization.nome,
+        },
       },
     };
+  }
+
+  private normalizeLogin(login: string) {
+    const value = login.trim().toLowerCase();
+    return value.includes('@') ? value : `${value}@${defaultLoginDomain}`;
   }
 
 }
