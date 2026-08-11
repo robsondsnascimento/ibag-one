@@ -129,6 +129,35 @@ export class CellService {
 
   }
 
+  async findMine(context: OrganizationContext) {
+    return this.prisma.cellMembership.findMany({
+      where: {
+        personId: context.personId,
+        ativo: true,
+        cell: {
+          organizationId: context.organizationId,
+          ativo: true,
+          status: CellStatus.ACTIVE,
+        },
+      },
+      include: {
+        cell: {
+          include: {
+            campus: {
+              select: {
+                id: true,
+                nome: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        inicio: 'desc',
+      },
+    });
+  }
+
 
   async findOne(
     id: string,

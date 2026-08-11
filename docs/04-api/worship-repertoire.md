@@ -14,10 +14,10 @@ Antes de usar o fluxo, configure as áreas globais **Música** e **Ordem de Cult
 2. O Ministro de Louvor envia para aprovação o repertório de qualquer culto em que esteja com escala confirmada.
 3. Líderes de área, campus ou equipe de Música podem aprovar ou devolver com um comentário.
 4. Após aprovado, a liderança encaminha o repertório para a área de Ordem de Culto.
-5. As músicas tornam-se materiais do item `Louvor` e uma pendência é criada para a equipe de Ordem de Culto.
+5. As músicas tornam-se materiais da Ordem de Culto e uma pendência é criada para a equipe responsável. Com o modelo Cachoeirinha, cada posição recebe o formato `Música 1 · Nome da música`, preservando momento, tom e link da versão.
 6. Quando essa equipe conclui a pendência, o repertório passa a `COMPLETED`.
 
-Quando a Ordem de Culto foi criada com o modelo de músicas do Culto Cachoeirinha, o encaminhamento pode ser feito sem selecionar um item manual. Cada música é distribuída para a posição que possui o mesmo momento registrado no repertório. Se uma música não tiver momento ou a ordem não possuir a posição correspondente, a liderança deve escolher manualmente um item de Louvor.
+Quando a Ordem de Culto foi criada com o modelo de músicas do Culto Cachoeirinha, o encaminhamento pode ser feito sem selecionar um item manual. As três posições automáticas são **Celebração · início do culto**, **Celebração ou POP** e **Celebração · final do culto**; cada música é distribuída para a posição que possui o mesmo momento registrado no repertório. Oração e Dízimos e ofertas não são posições de Música. Se uma música não tiver momento ou a ordem não possuir a posição correspondente, a liderança deve escolher manualmente um item de Louvor.
 
 ```mermaid
 flowchart LR

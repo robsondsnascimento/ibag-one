@@ -11,6 +11,7 @@ import {
 } from "./api/repertoire";
 import type { WorshipRepertoire } from "./api/repertoire";
 import type { AgendaEvent } from "./api/dashboard";
+import { getWorshipOrderByEvent } from "./api/worship";
 import type { WorshipOrder } from "./api/worship";
 
 const statusLabels: Record<WorshipRepertoire["status"], string> = {
@@ -34,11 +35,13 @@ export function WorshipRepertoirePanel({
   event,
   order,
   accessToken,
+  onOrderChange,
   onNotice,
 }: {
   event: AgendaEvent;
   order: WorshipOrder | null;
   accessToken: string;
+  onOrderChange: (order: WorshipOrder) => void;
   onNotice: (message: string) => void;
 }) {
   const [items, setItems] = useState<WorshipRepertoire[]>([]);
@@ -151,6 +154,7 @@ export function WorshipRepertoirePanel({
         },
       );
       replace(updated);
+      onOrderChange(await getWorshipOrderByEvent(accessToken, event.id));
       onNotice("Repertório encaminhado para a Ordem de Culto.");
     });
   };

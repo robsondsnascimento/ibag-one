@@ -92,6 +92,7 @@ describe('WorshipRepertoireService', () => {
     };
     const tx: any = {
       worshipOrderMaterial: { createMany: jest.fn().mockResolvedValue({ count: 2 }) },
+      worshipOrderItem: { update: jest.fn().mockResolvedValue({}) },
       worshipServiceDemand: { create: jest.fn().mockResolvedValue({ id: 'demand-1' }) },
       worshipRepertoire: { update: jest.fn().mockResolvedValue({}) },
     };
@@ -118,6 +119,14 @@ describe('WorshipRepertoireService', () => {
       ],
     }));
     expect(tx.worshipRepertoire.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ orderItemId: 'opening' }) }));
+    expect(tx.worshipOrderItem.update).toHaveBeenCalledWith(expect.objectContaining({
+      where: { id: 'opening' },
+      data: expect.objectContaining({ titulo: 'Música 1 · Canção de abertura' }),
+    }));
+    expect(tx.worshipOrderItem.update).toHaveBeenCalledWith(expect.objectContaining({
+      where: { id: 'closing' },
+      data: expect.objectContaining({ titulo: 'Música 2 · Canção final' }),
+    }));
   });
 
   it('bloqueia o envio quando o ministro não possui escala confirmada no culto', async () => {

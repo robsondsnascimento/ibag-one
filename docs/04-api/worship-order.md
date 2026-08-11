@@ -115,6 +115,16 @@ POST /worship-orders/items/:id/demands
 }
 ```
 
+## Itens e músicas na sequência
+
+O editor possui um campo **Criar novo item** para acrescentar qualquer momento do culto, como avisos, mensagem, teatro ou testemunho. O item entra na sequência em rascunho e pode ser movido, editado ou removido antes da publicação.
+
+A área **Itens adicionados e músicas enviadas** é a sequência final que será usada pela equipe. Além dos itens criados manualmente, ela mostra as músicas encaminhadas pelo Ministro de Louvor.
+
+Quando o repertório aprovado é encaminhado usando o modelo Cachoeirinha, cada posição musical passa a ser formatada como `Música 1 · Nome da música`, `Música 2 · Nome da música` e assim por diante. Na sequência visível da Ordem de Culto aparece somente esse texto; momento, tom, versão e link do YouTube permanecem no módulo de Repertório.
+
+No modelo padrão Cachoeirinha, somente **Celebração · início do culto**, **Celebração ou POP** e **Celebração · final do culto** são posições de Música. **Oração** e **Dízimos e ofertas** são itens neutros, sem demanda automática para a área de Música.
+
 ## Notificações
 
 - Ao criar uma demanda, todos os integrantes ativos da área de serviço indicada recebem uma notificação interna.

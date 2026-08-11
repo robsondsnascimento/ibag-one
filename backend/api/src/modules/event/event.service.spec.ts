@@ -42,4 +42,27 @@ describe('EventService pastoral campus scope', () => {
 
     await expect((service as any).assertAgendaAccess(context)).resolves.toBeUndefined();
   });
+  it('shows on mobile only approved events from the person campuses', async () => {
+    (prisma as any).event = { findMany: jest.fn().mockResolvedValue([{ id: 'event-1' }]) };
+    prisma.user.findFirst.mockResolvedValue({
+      role: 'MEMBER',
+      person: {
+        campusId: 'campus-1',
+        campusMemberships: [{ campusId: 'campus-2' }],
+      },
+      additionalRoles: [],
+    });
+
+    await expect(service.findVisibleToMe(undefined, undefined, context)).resolves.toEqual([{ id: 'event-1' }]);
+
+    expect((prisma as any).event.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          organizationId: 'org-1',
+          campusId: { in: ['campus-1', 'campus-2'] },
+          status: 'APPROVED',
+        }),
+      }),
+    );
+  });
 });

@@ -194,6 +194,19 @@ export class WorshipRepertoireService {
           itemId: destination.id,
         })),
       });
+      if (!dto.orderItemId) {
+        await Promise.all(
+          destinations.map(({ song, orderItem }) =>
+            tx.worshipOrderItem.update({
+              where: { id: orderItem.id },
+              data: {
+                titulo: `Música ${song.sequencia} · ${song.titulo}`,
+                observacoes: this.musicOrderItemDetails(song),
+              },
+            }),
+          ),
+        );
+      }
       const createdDemand = await tx.worshipServiceDemand.create({
         data: {
           descricao: `Preparar repertório aprovado: ${repertoire.songs.map(song => song.titulo).join(', ')}`,
@@ -235,15 +248,22 @@ export class WorshipRepertoireService {
   private async momentOrderItemDestinations(repertoire: any, context: OrganizationContext) {
     const order = await this.prisma.worshipOrder.findFirst({
       where: { eventId: repertoire.eventId, event: { organizationId: context.organizationId } },
-      include: { items: { select: { id: true, titulo: true, serviceAreaId: true } } },
+      include: { items: { select: { id: true, titulo: true, sequencia: true, serviceAreaId: true } } },
     });
     if (!order) throw new BadRequestException('Crie a Ordem de Culto antes de encaminhar o repertório');
     if (order.status !== WorshipOrderStatus.DRAFT) throw new BadRequestException('O repertório só pode ser encaminhado enquanto a ordem de culto estiver em rascunho');
     const musicItems = order.items.filter(item => item.serviceAreaId === repertoire.serviceAreaId);
+    const usedItemIds = new Set<string>();
     const destinations = repertoire.songs.map(song => {
       const moment = song.observacoes?.trim();
-      const orderItem = moment ? musicItems.find(item => this.sameMoment(item.titulo, moment)) : undefined;
+      const orderItem = moment
+        ? musicItems.find(item => this.sameMoment(item.titulo, moment))
+        : musicItems.find(item => !usedItemIds.has(item.id));
       if (!orderItem) throw new BadRequestException(`A música "${song.titulo}" precisa informar um momento do modelo que exista na Ordem de Culto, ou ser encaminhada manualmente para um item.`);
+      if (usedItemIds.has(orderItem.id)) {
+        throw new BadRequestException(`O momento "${moment}" foi informado para mais de uma música. Escolha momentos diferentes ou encaminhe manualmente.`);
+      }
+      usedItemIds.add(orderItem.id);
       return { song, orderItem };
     });
     if (!destinations.length) throw new BadRequestException('O repertório precisa conter ao menos uma música');
@@ -386,6 +406,15 @@ export class WorshipRepertoireService {
 
   private songTitle(song: { sequencia: number; titulo: string; tom: string | null }) {
     return `${song.sequencia}. ${song.titulo}${song.tom ? ` (${song.tom})` : ''}`;
+  }
+
+  private musicOrderItemDetails(song: { observacoes?: string | null; tom?: string | null; artista?: string | null; referencia?: string | null }) {
+    return [
+      song.observacoes?.trim() ? `Momento: ${song.observacoes.trim()}` : null,
+      song.tom ? `Tom: ${song.tom}` : null,
+      song.artista ? `Versão: ${song.artista}` : null,
+      song.referencia ? 'Link da versão disponível nos materiais.' : null,
+    ].filter(Boolean).join(' · ');
   }
 
   private async notifyMusicLeaders(repertoire: any, titulo: string, mensagem: string) {

@@ -54,6 +54,31 @@ describe('CellService', () => {
     expect(prisma.cell.findFirst).not.toHaveBeenCalled();
   });
 
+  it('lists only the active cell memberships of the authenticated person', async () => {
+    const prisma = {
+      cellMembership: {
+        findMany: jest.fn().mockResolvedValue([{ id: 'membership-id' }]),
+      },
+    };
+    const service = new CellService(prisma as unknown as PrismaService);
+
+    await expect(service.findMine(context)).resolves.toEqual([{ id: 'membership-id' }]);
+
+    expect(prisma.cellMembership.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          personId: 'person-id',
+          ativo: true,
+          cell: expect.objectContaining({
+            organizationId: 'organization-id',
+            ativo: true,
+            status: 'ACTIVE',
+          }),
+        }),
+      }),
+    );
+  });
+
   it('allows a directory manager to create a cell', async () => {
     const prisma = {
       user: {

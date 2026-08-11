@@ -46,9 +46,16 @@ Sem todas essas variáveis, a integração fica deliberadamente desligada e a AP
 
 O compartilhamento do calendário no Google deve ser configurado pela administração da conta institucional. A API não altera ACLs do Google Calendar nem distribui credenciais a usuários.
 
+## Acesso móvel aos eventos
+
+Integrantes sem uma liderança ativa não acessam a agenda administrativa compartilhada, mas podem consultar no aplicativo os eventos institucionais já aprovados de seus campi vinculados. A rota móvel não expõe eventos solicitados, cancelados, responsáveis, checklist, espaços ou histórico.
+
+- `GET /events/me`: agenda pessoal móvel, limitada aos eventos `APPROVED` dos campi ativos da pessoa autenticada.
+
 ## Rotas relevantes
 
 - `GET /events`: agenda compartilhada, disponível apenas para lideranças autorizadas.
+- `GET /events/me`: visão institucional pessoal para o aplicativo móvel.
 - `POST /events`: cria uma solicitação ou evento aprovado, segundo o perfil de quem cria.
 - `PATCH /events/:id`: atualiza o evento dentro do escopo de quem opera.
 - `POST /events/:id/google-calendar/sync`: repete a sincronização para quem pode operar o evento.

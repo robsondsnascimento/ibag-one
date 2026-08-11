@@ -34,7 +34,15 @@ export function WorshipTemplatePanel({
   const [error, setError] = useState("");
   const [serviceAreas, setServiceAreas] = useState<ServiceAreaListItem[]>([]);
   const [isLoadingAreas, setIsLoadingAreas] = useState(true);
-  const musicAreaCandidates = serviceAreas.filter((area) => area.scope === "GLOBAL");
+  const musicAreaCandidates = serviceAreas.filter(
+    (area) =>
+      area.scope === "GLOBAL" &&
+      area.nome
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .includes("musica"),
+  );
   useEffect(() => {
     let active = true;
     void listServiceAreas(accessToken)

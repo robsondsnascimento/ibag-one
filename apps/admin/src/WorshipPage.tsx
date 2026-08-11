@@ -348,28 +348,46 @@ export function WorshipPage({
                         {order.status === "DRAFT" ? "Em edição" : "Publicada"}
                       </span>
                     </header>
+                    <div className="worship-order-sequence-header">
+                      <div>
+                        <p className="eyebrow">Sequência do culto</p>
+                        <h4>Itens adicionados e músicas enviadas</h4>
+                      </div>
+                      <small>
+                        Os itens criados abaixo e as músicas aprovadas pelo
+                        ministro aparecem nesta ordem final.
+                      </small>
+                    </div>
                     <ol className="worship-item-list">
                       {order.items.map((item) => (
                         <li key={item.id}>
                           <span>{item.sequencia}</span>
                           <div>
                             <strong>{item.titulo}</strong>
-                            <small>
-                              {[
-                                item.horario,
-                                item.serviceArea?.nome,
-                                item.observacoes,
-                              ]
-                                .filter(Boolean)
-                                .join(" · ") || "Sem detalhes adicionais"}
-                            </small>
+                            {!item.materials.some(
+                              (material) => material.type === "MUSIC",
+                            ) && (
+                              <small>
+                                {[
+                                  item.horario,
+                                  item.serviceArea?.nome,
+                                  item.observacoes,
+                                ]
+                                  .filter(Boolean)
+                                  .join(" · ") || "Sem detalhes adicionais"}
+                              </small>
+                            )}
                           </div>
                         </li>
                       ))}
                     </ol>
                     {order.status === "DRAFT" && canManage && (
                       <form className="worship-item-form" onSubmit={addItem}>
-                        <h4>Adicionar item especial</h4>
+                        <h4>Criar novo item</h4>
+                        <p>
+                          Inclua qualquer momento do culto, como avisos,
+                          mensagem, teatro ou testemunho.
+                        </p>
                         <div className="form-grid">
                           <label>
                             Título
@@ -445,6 +463,7 @@ export function WorshipPage({
                     event={event!}
                     order={order}
                     accessToken={accessToken}
+                    onOrderChange={setOrder}
                     onNotice={onNotice}
                   />
                 </>

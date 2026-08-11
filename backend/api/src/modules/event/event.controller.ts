@@ -27,6 +27,15 @@ export class EventController {
     return this.service.findAll(campusId, start, end, context);
   }
 
+  @Get('me')
+  findVisibleToMe(
+    @Query('start') start: string | undefined,
+    @Query('end') end: string | undefined,
+    @CurrentOrganization() context: OrganizationContext,
+  ) {
+    return this.service.findVisibleToMe(start, end, context);
+  }
+
   @Get('google-calendar/status')
   googleCalendarStatus(@CurrentOrganization() context: OrganizationContext) {
     return this.service.googleCalendarStatus(context);

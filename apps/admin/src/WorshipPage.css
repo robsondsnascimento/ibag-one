@@ -122,6 +122,29 @@
   background: var(--green-soft);
   color: #208264;
 }
+.worship-order-sequence-header {
+  align-items: flex-end;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 15px 18px 12px;
+}
+.worship-order-sequence-header .eyebrow {
+  margin-bottom: 3px;
+}
+.worship-order-sequence-header h4 {
+  color: var(--ink);
+  font-size: 13px;
+  margin: 0;
+}
+.worship-order-sequence-header small {
+  color: var(--ink-soft);
+  font-size: 10px;
+  line-height: 1.4;
+  max-width: 275px;
+  text-align: right;
+}
 .worship-item-list {
   counter-reset: worship-item;
   display: grid;
@@ -179,6 +202,12 @@
   font-size: 12px;
   margin: 0;
 }
+.worship-item-form > p {
+  color: var(--ink-soft);
+  font-size: 10px;
+  line-height: 1.4;
+  margin: -5px 0 0;
+}
 .worship-item-form label {
   color: var(--ink);
   display: grid;
@@ -207,6 +236,14 @@
   .worship-create-actions .secondary-button,
   .worship-create-actions .primary-button {
     width: 100%;
+  }
+  .worship-order-sequence-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .worship-order-sequence-header small {
+    max-width: none;
+    text-align: left;
   }
 }
 .worship-operations {

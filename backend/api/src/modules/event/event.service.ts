@@ -67,6 +67,34 @@ export class EventService {
     });
   }
 
+  async findVisibleToMe(start: string | undefined, end: string | undefined, context: OrganizationContext) {
+    const user = await this.user(context);
+    const campusIds = Array.from(new Set([
+      user.person?.campusId,
+      ...(user.person?.campusMemberships?.map(membership => membership.campusId) ?? []),
+    ].filter((campusId): campusId is string => Boolean(campusId))));
+
+    if (!campusIds.length) return [];
+
+    const inicio = start || end
+      ? {
+        ...(start ? { gte: new Date(start) } : {}),
+        ...(end ? { lte: new Date(end) } : {}),
+      }
+      : undefined;
+
+    return this.prisma.event.findMany({
+      where: {
+        organizationId: context.organizationId,
+        campusId: { in: campusIds },
+        status: EventStatus.APPROVED,
+        ...(inicio ? { inicio } : {}),
+      },
+      include: this.mobileDetails,
+      orderBy: { inicio: 'asc' },
+    });
+  }
+
   async findOne(id: string, context: OrganizationContext) {
     await this.assertAgendaAccess(context);
     return this.event(id, context, true);
@@ -322,5 +350,24 @@ export class EventService {
     teams: { include: { team: true } },
     checklist: true,
     googleCalendarSync: true,
+  } as const;
+
+  private readonly mobileDetails = {
+    campus: {
+      select: {
+        id: true,
+        nome: true,
+      },
+    },
+    serviceAreas: {
+      include: {
+        serviceArea: {
+          select: {
+            id: true,
+            nome: true,
+          },
+        },
+      },
+    },
   } as const;
 }

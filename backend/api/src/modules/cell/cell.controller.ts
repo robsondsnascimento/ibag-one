@@ -66,6 +66,16 @@ export class CellController {
 
   }
 
+  @Get('me')
+  findMine(
+    @CurrentOrganization()
+    context: OrganizationContext,
+  ) {
+
+    return this.cellService.findMine(context);
+
+  }
+
 
   @Get(':id')
   findOne(
