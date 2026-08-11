@@ -332,3 +332,41 @@ export function listMyServiceSchedules(accessToken: string, filters: { start?: s
 export function listEventServiceSchedules(accessToken: string, eventId: string) {
   return apiRequest<ServiceAreaSchedule[]>(`/service-areas/events/${eventId}/schedules`, { accessToken })
 }
+
+export type ServiceOperationalRole = 'WORSHIP_MINISTER'
+
+export type ServiceOperationalRoleAssignment = {
+  id: string
+  role: ServiceOperationalRole
+  inicio: string
+  person: {
+    id: string
+    nome: string
+    telefone: string | null
+    email: string | null
+  }
+  serviceArea: {
+    id: string
+    nome: string
+  }
+}
+
+export function listServiceOperationalRoles(accessToken: string, teamId: string) {
+  return apiRequest<ServiceOperationalRoleAssignment[]>(`/service-areas/teams/${teamId}/operational-roles`, { accessToken })
+}
+
+export function assignServiceOperationalRole(accessToken: string, teamId: string, input: { personId: string; role: ServiceOperationalRole }) {
+  return apiRequest<ServiceOperationalRoleAssignment>(`/service-areas/teams/${teamId}/operational-roles`, {
+    method: 'POST',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export function endServiceOperationalRole(accessToken: string, assignmentId: string) {
+  return apiRequest<ServiceOperationalRoleAssignment>(`/service-areas/operational-roles/${assignmentId}/end`, {
+    method: 'PATCH',
+    accessToken,
+  })
+}

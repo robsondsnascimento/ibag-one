@@ -3,8 +3,8 @@ import type { FormEvent } from 'react'
 import { CellHierarchy } from './CellHierarchy'
 import { login, validateSession } from './api/auth'
 import type { AuthSession } from './api/auth'
-import { createAgendaEvent, loadAgenda, loadDashboard } from './api/dashboard'
-import type { AgendaEvent, DashboardSummary } from './api/dashboard'
+import { addAgendaEventChecklist, approveAgendaEvent, cancelAgendaEvent, createAgendaEvent, listEventSpaces, loadAgenda, loadDashboard, toggleAgendaEventChecklist, updateAgendaEvent } from './api/dashboard'
+import type { AgendaEvent, CreateAgendaEventInput, DashboardSummary, EventSpace } from './api/dashboard'
 import { closeCellMeeting, convertCellMeetingVisitorToMember, createCell, createCellLeadership, createCellMeetingVisitor, createCellMembership, createCellSupportRole, createPerson, endCellLeadership, endCellMembership, endCellSupportRole, getCellMeetingRoster, getCellOverview, getPerson, listCampuses, listCellMeetingVisitors, listCells, listPeople, saveCellMeetingRoster, updateCell, updatePerson } from './api/directory'
 import type { CampusListItem, CellListItem, CellMeetingRosterItem, CellMeetingVisitor, CellOverview, CellPersonReference, Paginated, PersonListItem } from './api/directory'
 import { assignCellToNetwork, createCellCampusCoordination, createCellNetwork, createCellNetworkSupervision, endCellCampusCoordination, endCellNetworkSupervision, listCellCampusCoordinations, listCellNetworks, listCellNetworkSupervisions, unassignCellFromNetwork } from './api/directory'
@@ -16,7 +16,8 @@ import type { ServiceAreaApplication, ServiceAreaDetail, ServiceAreaEntryStage, 
 import { ServiceAreaWorkspace } from './ServiceAreaWorkspace'
 import { ServiceAreaOnboardingDialog } from './ServiceAreaOnboardingDialog'
 import { MySchedulesPage } from './MySchedulesPage'
-import { EventSchedulesDialog } from './EventSchedulesDialog'
+import { EventDetailsDialog } from './EventDetailsDialog'
+import { EventFormDialog } from './EventFormDialog'
 import { NotificationDialog } from './NotificationDialog'
 import { listMyNotifications } from './api/notifications'
 import { ApiError } from './api/client'
@@ -197,6 +198,12 @@ function App() {
   const [isLoadingAgenda, setIsLoadingAgenda] = useState(false)
   const [agendaVersion, setAgendaVersion] = useState(0)
   const [selectedAgendaEvent, setSelectedAgendaEvent] = useState<AgendaEvent | null>(null)
+  const [eventFormDraft, setEventFormDraft] = useState<AgendaEvent | null>(null)
+  const [eventFormCampusId, setEventFormCampusId] = useState('')
+  const [eventFormCells, setEventFormCells] = useState<CellListItem[]>([])
+  const [eventFormAreas, setEventFormAreas] = useState<ServiceAreaDetail[]>([])
+  const [eventFormSpaces, setEventFormSpaces] = useState<EventSpace[]>([])
+  const [isLoadingEventReferences, setIsLoadingEventReferences] = useState(false)
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
   const [unreadNotificationCount, setUnreadNotificationCount] = useState(0)
   const [notificationsVersion, setNotificationsVersion] = useState(0)
@@ -292,6 +299,8 @@ function App() {
   const canManageStudies = ['SUPER_ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
   const canManageNetworks = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY', 'PASTOR', 'PASTOR_SENIOR'].some((role) => assignedRoles.includes(role))
   const canCentrallyManageServiceAreas = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
+  const canBlockCampusAgenda = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
+  const canApproveAgendaEvents = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY', 'PASTOR', 'PASTOR_SENIOR'].some((role) => assignedRoles.includes(role))
   const isCellSection = ['cells', 'cell-structure', 'studies'].includes(activePage)
   const isServiceSection = ['teams', 'kids'].includes(activePage)
   const selectedServiceArea = serviceAreas.find((area) => area.id === selectedServiceAreaId) ?? null
@@ -471,6 +480,50 @@ function App() {
       active = false
     }
   }, [creationMode, isCreateEventOpen, selectedRecord, session])
+
+  useEffect(() => {
+    if (!session || !isCreateEventOpen) return
+
+    let active = true
+    setIsLoadingEventReferences(true)
+    void Promise.all([listCells(session.access_token), listServiceAreas(session.access_token)])
+      .then(async ([cellResult, areaList]) => {
+        const areas = await Promise.all(areaList.map((area) => getServiceArea(session.access_token, area.id)))
+        if (!active) return
+        setEventFormCells(cellResult.data)
+        setEventFormAreas(areas)
+      })
+      .catch((error) => {
+        if (active) setEventFormError(error instanceof Error ? error.message : 'Não foi possível carregar os vínculos disponíveis para este evento.')
+      })
+      .finally(() => {
+        if (active) setIsLoadingEventReferences(false)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [isCreateEventOpen, session])
+
+  useEffect(() => {
+    if (!session || !isCreateEventOpen || !eventFormCampusId) {
+      setEventFormSpaces([])
+      return
+    }
+
+    let active = true
+    void listEventSpaces(session.access_token, eventFormCampusId)
+      .then((spaces) => {
+        if (active) setEventFormSpaces(spaces)
+      })
+      .catch((error) => {
+        if (active) setEventFormError(error instanceof Error ? error.message : 'Não foi possível carregar os espaços deste campus.')
+      })
+
+    return () => {
+      active = false
+    }
+  }, [eventFormCampusId, isCreateEventOpen, session])
 
   useEffect(() => {
     if (!session || (activePage !== 'cells' && activePage !== 'people') || (activePage === 'cells' && !canManageDirectory)) return
@@ -677,49 +730,74 @@ function App() {
     setAuthError('')
   }
 
-  const openEventForm = () => {
+  const openEventForm = (event: AgendaEvent | null = null) => {
     setNotice('')
     setEventFormError('')
+    setEventFormDraft(event)
+    setEventFormCampusId(event?.campus.id ?? '')
+    setEventFormSpaces([])
     setIsCreateEventOpen(true)
   }
 
-  const saveEvent = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const closeEventForm = () => {
+    setIsCreateEventOpen(false)
+    setEventFormDraft(null)
+    setEventFormCampusId('')
+    setEventFormError('')
+  }
+
+  const saveEvent = async (input: CreateAgendaEventInput) => {
     if (!session) return
-
-    const formData = new FormData(event.currentTarget)
-    const date = String(formData.get('date') ?? '')
-    const startTime = String(formData.get('startTime') ?? '')
-    const endTime = String(formData.get('endTime') ?? '')
-    const inicio = new Date(`${date}T${startTime}:00`)
-    const fim = new Date(`${date}T${endTime}:00`)
-
-    if (inicio >= fim) {
-      setEventFormError('O horário de término deve ser posterior ao horário de início.')
-      return
-    }
 
     setEventFormError('')
     setIsSubmittingEvent(true)
 
     try {
-      const created = await createAgendaEvent(session.access_token, {
-        titulo: String(formData.get('title') ?? '').trim(),
-        descricao: String(formData.get('description') ?? '').trim() || undefined,
-        type: String(formData.get('type') ?? 'MEETING'),
-        campusId: String(formData.get('campusId') ?? ''),
-        inicio: inicio.toISOString(),
-        fim: fim.toISOString(),
-      })
-      setIsCreateEventOpen(false)
+      const saved = eventFormDraft
+        ? await updateAgendaEvent(session.access_token, eventFormDraft.id, input)
+        : await createAgendaEvent(session.access_token, input)
+      closeEventForm()
+      setSelectedAgendaEvent(saved)
       setAgendaVersion((version) => version + 1)
       setDashboardVersion((version) => version + 1)
-      setNotice(created.status === 'APPROVED' ? 'Evento criado e aprovado na agenda.' : 'Evento enviado para aprovação na agenda.')
+      if (eventFormDraft) setNotice('Alterações do evento salvas na agenda.')
+      else setNotice(saved.status === 'APPROVED' ? 'Evento criado e aprovado na agenda.' : 'Evento enviado para aprovação na agenda.')
     } catch (error) {
-      setEventFormError(error instanceof Error ? error.message : 'Não foi possível criar o evento.')
+      setEventFormError(error instanceof Error ? error.message : 'Não foi possível salvar o evento.')
     } finally {
       setIsSubmittingEvent(false)
     }
+  }
+
+  const approveSelectedAgendaEvent = async () => {
+    if (!session || !selectedAgendaEvent) return
+    const updated = await approveAgendaEvent(session.access_token, selectedAgendaEvent.id)
+    setSelectedAgendaEvent(updated)
+    setAgendaVersion((version) => version + 1)
+    setDashboardVersion((version) => version + 1)
+    setNotice('Evento aprovado e incluído na agenda institucional.')
+  }
+
+  const cancelSelectedAgendaEvent = async () => {
+    if (!session || !selectedAgendaEvent) return
+    await cancelAgendaEvent(session.access_token, selectedAgendaEvent.id)
+    setSelectedAgendaEvent(null)
+    setAgendaVersion((version) => version + 1)
+    setDashboardVersion((version) => version + 1)
+    setNotice('Evento cancelado. O histórico foi preservado.')
+  }
+
+  const addSelectedAgendaChecklist = async (description: string) => {
+    if (!session || !selectedAgendaEvent) return
+    const item = await addAgendaEventChecklist(session.access_token, selectedAgendaEvent.id, description)
+    setSelectedAgendaEvent((current) => current?.id === selectedAgendaEvent.id ? { ...current, checklist: [...current.checklist, item] } : current)
+    setNotice('Item adicionado ao checklist do evento.')
+  }
+
+  const toggleSelectedAgendaChecklist = async (checklistId: string) => {
+    if (!session || !selectedAgendaEvent) return
+    const updated = await toggleAgendaEventChecklist(session.access_token, checklistId)
+    setSelectedAgendaEvent((current) => current?.id === selectedAgendaEvent.id ? { ...current, checklist: current.checklist.map((item) => item.id === updated.id ? updated : item) } : current)
   }
 
   const openDirectoryForm = (mode: 'cell' | 'person') => {
@@ -1566,7 +1644,7 @@ function App() {
       ? { label: '+ Nova célula', action: () => openDirectoryForm('cell') }
       : activePage === 'people' && canManageDirectory
         ? { label: '+ Nova pessoa', action: () => openDirectoryForm('person') }
-        : { label: '+ Novo evento', action: openEventForm }
+        : { label: '+ Novo evento', action: () => openEventForm() }
 
   if (!session) {
     return (
@@ -1735,7 +1813,7 @@ function App() {
         {notice && <div className="notice" role="status"><span>✓</span>{notice}<button type="button" onClick={() => setNotice('')} aria-label="Fechar aviso">×</button></div>}
 
         {activePage === 'dashboard' && <Dashboard summary={dashboard} error={dashboardError} isLoading={isLoadingDashboard} onRetry={() => setDashboardVersion((version) => version + 1)} onOpenAgenda={() => setActivePage('agenda')} onOpenCells={() => setActivePage('cells')} />}
-        {activePage === 'agenda' && <Agenda events={agendaEvents} error={agendaError} isLoading={isLoadingAgenda} weekStart={agendaWeekStart} onRetry={() => setAgendaVersion((version) => version + 1)} onPreviousWeek={() => setAgendaWeekStart((start) => addDays(start, -7))} onNextWeek={() => setAgendaWeekStart((start) => addDays(start, 7))} onToday={() => setAgendaWeekStart(startOfWeek(new Date()))} onCreateEvent={openEventForm} onSelectEvent={setSelectedAgendaEvent} />}
+        {activePage === 'agenda' && <Agenda events={agendaEvents} error={agendaError} isLoading={isLoadingAgenda} weekStart={agendaWeekStart} onRetry={() => setAgendaVersion((version) => version + 1)} onPreviousWeek={() => setAgendaWeekStart((start) => addDays(start, -7))} onNextWeek={() => setAgendaWeekStart((start) => addDays(start, 7))} onToday={() => setAgendaWeekStart(startOfWeek(new Date()))} onCreateEvent={() => openEventForm()} onSelectEvent={setSelectedAgendaEvent} />}
         {activePage === 'cells' && (canManageDirectory ? <CellsPage data={cells} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'cell', id })} /> : <CellDirectoryRestricted />)}
         {activePage === 'cell-structure' && <CellHierarchy campuses={hierarchy?.campuses ?? []} cells={hierarchy?.cells ?? []} coordinations={hierarchy?.coordinations ?? []} currentPersonId={session.user.personId} error={hierarchyError} isLoading={isLoadingHierarchy} isSaving={isSavingHierarchy} networks={hierarchy?.networks ?? []} people={hierarchy?.people ?? []} supervisions={hierarchy?.supervisions ?? []} canManageNetworks={canManageNetworks} onAssignCell={linkCellToNetwork} onCreateCoordination={saveCoordination} onCreateNetwork={saveNetwork} onCreateSupervision={saveSupervision} onEndCoordination={finishCoordination} onEndSupervision={finishSupervision} onUnassignCell={unlinkCellFromNetwork} />}
         {activePage === 'studies' && <StudiesPage canManage={canManageStudies} study={study} error={studyError} isLoading={isLoadingStudy} weekStart={studyWeekStart} isSubmitting={isSubmittingStudy} onWeekStartChange={setStudyWeekStart} onPublish={saveStudy} onDownload={downloadStudy} />}
@@ -1745,34 +1823,10 @@ function App() {
         {activePage !== 'dashboard' && activePage !== 'agenda' && activePage !== 'cells' && activePage !== 'cell-structure' && activePage !== 'studies' && activePage !== 'people' && activePage !== 'my-schedules' && (activePage !== 'teams' || !selectedServiceArea) && <ModulePreview copy={pageCopy[activePage]} />}
       </main>
 
-      {selectedAgendaEvent && <EventSchedulesDialog event={selectedAgendaEvent} accessToken={session.access_token} onClose={() => setSelectedAgendaEvent(null)} />}
+      {selectedAgendaEvent && <EventDetailsDialog event={selectedAgendaEvent} accessToken={session.access_token} canApprove={canApproveAgendaEvents} onClose={() => setSelectedAgendaEvent(null)} onEdit={() => { const event = selectedAgendaEvent; setSelectedAgendaEvent(null); openEventForm(event) }} onApprove={approveSelectedAgendaEvent} onCancel={cancelSelectedAgendaEvent} onAddChecklist={addSelectedAgendaChecklist} onToggleChecklist={toggleSelectedAgendaChecklist} />}
       {isNotificationsOpen && <NotificationDialog accessToken={session.access_token} onClose={() => setIsNotificationsOpen(false)} onUnreadCountChange={setUnreadNotificationCount} />}
 
-      {isCreateEventOpen && (
-        <div className="dialog-backdrop" role="presentation" onMouseDown={() => setIsCreateEventOpen(false)}>
-          <section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="event-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
-            <button className="dialog-close" type="button" onClick={() => setIsCreateEventOpen(false)} aria-label="Fechar">×</button>
-            <p className="eyebrow">Agenda institucional</p>
-            <h2 id="event-dialog-title">Novo evento</h2>
-            <p className="dialog-description">Informe os dados principais. O evento seguirá automaticamente o fluxo de aprovação definido para sua função.</p>
-            <form className="event-form" onSubmit={saveEvent}>
-              <label>Nome do evento<input name="title" required placeholder="Ex.: Encontro de líderes" /></label>
-              <div className="form-grid">
-                <label>Tipo<select name="type" defaultValue="MEETING"><option value="MEETING">Reunião</option><option value="WORSHIP">Culto</option><option value="TRAINING">Treinamento</option><option value="REHEARSAL">Ensaio</option><option value="PASTORAL">Pastoral</option><option value="SERVICE">Serviço</option><option value="CONFERENCE">Conferência</option><option value="SPECIAL_PROGRAM">Programação especial</option></select></label>
-                <label>Data<input name="date" type="date" required /></label>
-              </div>
-              <div className="form-grid">
-                <label>Início<input name="startTime" type="time" required /></label>
-                <label>Término<input name="endTime" type="time" required /></label>
-              </div>
-              <label>Campus<select name="campusId" defaultValue="" required disabled={isLoadingCampuses || campuses.length === 0}><option value="" disabled>{isLoadingCampuses ? 'Carregando campi...' : 'Selecione o campus'}</option>{campuses.map((campus) => <option key={campus.id} value={campus.id}>{campus.nome}</option>)}</select></label>
-              <label>Observação <span className="field-optional">(opcional)</span><input name="description" placeholder="Informação útil para a agenda" /></label>
-              {eventFormError && <p className="form-error" role="alert">{eventFormError}</p>}
-              <div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setIsCreateEventOpen(false)}>Cancelar</button><button className="primary-button" type="submit" disabled={isLoadingCampuses || campuses.length === 0 || isSubmittingEvent}>{isSubmittingEvent ? 'Salvando...' : 'Criar evento'}</button></div>
-            </form>
-          </section>
-        </div>
-      )}
+      {isCreateEventOpen && <EventFormDialog key={eventFormDraft?.id ?? 'new-event'} event={eventFormDraft} campuses={campuses} cells={eventFormCells} areas={eventFormAreas} spaces={eventFormSpaces} isLoading={isLoadingCampuses || isLoadingEventReferences} isSaving={isSubmittingEvent} error={eventFormError} canBlockCampusAgenda={canBlockCampusAgenda} onCampusChange={setEventFormCampusId} onClose={closeEventForm} onSubmit={(input) => void saveEvent(input)} />}
 
       {creationMode && (
         <div className="dialog-backdrop" role="presentation" onMouseDown={closeDirectoryForm}>

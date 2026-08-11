@@ -19,6 +19,10 @@ Pessoas com permissão de gestão veem ações conforme seu vínculo na área:
 
 O painel já permite criar equipes e vincular uma pessoa como integrante, liderança de equipe, liderança de campus ou liderança geral. A API permanece responsável pela validação final de escopo, campus, equipe e permissão.
 
+## Funções operacionais
+
+Cada Área de Serviço apresenta uma seção de **Funções operacionais** por equipe. A liderança autorizada pode atribuir ou encerrar o papel de **Ministro de Louvor** para uma pessoa que já seja integrante ativo daquela equipe. A função não substitui o vínculo de integrante ou liderança e permanece limitada à equipe escolhida; ela habilita o fluxo de repertório de cultos.
+
 ## Entrada e formação
 
 Na visão de uma área, lideranças autorizadas acessam **Entrada e formação** para:
@@ -51,8 +55,17 @@ O item **Minhas escalas** exibe os compromissos da própria pessoa em todas as �
 
 Na visão da Área de Serviço, lideranças autorizadas recebem um resumo das pendências do período filtrado: escalas aguardando confirmação e recusas que exigem substituição. Os cartões aplicam o filtro correspondente sem alterar o escopo validado pela API.
 
-## Escalas na agenda e notificações
+## Agenda institucional
 
-Ao selecionar um evento na Agenda, o painel abre uma consulta das escalas vinculadas. Essa consulta não permite alterar, concluir ou substituir pessoas: tais ações permanecem exclusivamente na Área de Serviço.
+O cadastro de evento permite selecionar, dentro do campus escolhido:
+
+- a célula relacionada, quando houver;
+- áreas de serviço e equipes envolvidas;
+- espaços reservados, com a validação de conflito mantida na API;
+- alertas do evento e, para secretaria ou administração, o bloqueio da agenda do campus.
+
+Ao selecionar um evento na Agenda, o painel apresenta seus vínculos, horários, checklist de preparação e a consulta somente leitura das escalas relacionadas. A pessoa autorizada pode editar o evento, incluir ou concluir itens do checklist, aprovar uma solicitação pendente ou cancelar o evento após confirmação. As ações de alteração, aprovação, cancelamento e permissão continuam sendo validadas exclusivamente pela API; a gestão de pessoas nas escalas permanece exclusivamente na Área de Serviço.
+
+## Notificações
 
 O sino do cabeçalho abre a central de notificações internas. Ela mostra avisos de escala, recusa, substituição e outros fluxos do sistema; ao abrir um aviso não lido, ele é marcado como lido. O mesmo registro interno servirá futuramente como origem para WhatsApp e ProPresenter.

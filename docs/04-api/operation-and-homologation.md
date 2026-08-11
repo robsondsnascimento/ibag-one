@@ -70,6 +70,8 @@ Com esses dados cadastrados, validar também:
 3. uma escala vinculada a evento aparece na consulta da Agenda, sem ações de edição;
 4. uma recusa, substituição ou nova escala aparece na central de notificações do destinatário;
 5. a criação em lote falha integralmente quando uma das pessoas possui conflito de agenda.
+6. um evento pode vincular célula, áreas, equipes e espaços compatíveis com seu campus; a solicitação é aprovada ou cancelada apenas por quem a API autoriza;
+7. o checklist do evento mantém os itens concluídos e a Agenda apresenta as escalas apenas para consulta.
 
 ## Verificação automática
 

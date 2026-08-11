@@ -1,4 +1,5 @@
 import type { ServiceAreaDetail } from './api/service-areas'
+import { ServiceOperationalRolesPanel } from './ServiceOperationalRolesPanel'
 import { ServiceAreaSchedulePanel } from './ServiceAreaSchedulePanel'
 
 const membershipRoleLabels: Record<ServiceAreaDetail['memberships'][number]['role'], string> = {
@@ -113,6 +114,7 @@ export function ServiceAreaWorkspace({
         {teamMembers.length ? <div className="service-membership-list">{teamMembers.map((membership) => <article className="service-membership-row" key={membership.id}><span className="service-person-symbol">{initials(membership.person.nome)}</span><div><strong>{membership.person.nome}</strong><small>{membership.team?.nome ?? 'Equipe não definida'} · desde {formatShortDate(membership.inicio)}</small></div><span>{membership.person.telefone || membership.person.email || 'Contato não informado'}</span></article>)}</div> : <p className="service-area-empty">Ainda não há integrantes ativos nas equipes desta área.</p>}
       </section>
 
+      <ServiceOperationalRolesPanel area={area} accessToken={accessToken} canManage={canManageMembers} onNotice={onNotice} />
       <ServiceAreaSchedulePanel key={area.id} area={area} accessToken={accessToken} currentPersonId={currentPersonId} canManage={canManageSchedules} onNotice={onNotice} />
     </section>
   )

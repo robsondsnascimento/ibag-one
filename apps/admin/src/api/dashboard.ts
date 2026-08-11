@@ -20,17 +20,63 @@ export type DashboardCell = {
 export type AgendaEvent = {
   id: string
   titulo: string
+  descricao: string | null
   inicio: string
   fim: string
-  status: 'REQUESTED' | 'APPROVED' | string
+  status: 'REQUESTED' | 'APPROVED' | 'CANCELLED' | string
   type: string
   campus: {
+    id: string
     nome: string
   }
   cell: {
     id: string
     nome: string
   } | null
+  alertEnabled: boolean
+  blocksCampusAgenda: boolean
+  createdByUserId: string
+  spaces: Array<{
+    spaceId: string
+    space: EventSpace
+  }>
+  serviceAreas: Array<{
+    serviceAreaId: string
+    serviceArea: EventServiceArea
+  }>
+  teams: Array<{
+    teamId: string
+    team: EventServiceTeam
+  }>
+  checklist: EventChecklistItem[]
+}
+
+export type EventSpace = {
+  id: string
+  nome: string
+  capacidade: number | null
+  recursos: string | null
+  campus: {
+    id: string
+    nome: string
+  }
+}
+
+export type EventServiceArea = {
+  id: string
+  nome: string
+}
+
+export type EventServiceTeam = {
+  id: string
+  nome: string
+}
+
+export type EventChecklistItem = {
+  id: string
+  descricao: string
+  concluido: boolean
+  concluidoEm: string | null
 }
 
 export type DashboardSummary = {
@@ -87,6 +133,12 @@ export type CreateAgendaEventInput = {
   campusId: string
   inicio: string
   fim: string
+  cellId?: string
+  alertEnabled?: boolean
+  blocksCampusAgenda?: boolean
+  spaceIds?: string[]
+  serviceAreaIds?: string[]
+  teamIds?: string[]
 }
 
 export function createAgendaEvent(accessToken: string, input: CreateAgendaEventInput) {
@@ -95,6 +147,49 @@ export function createAgendaEvent(accessToken: string, input: CreateAgendaEventI
     accessToken,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(input),
+  })
+}
+
+export function updateAgendaEvent(accessToken: string, eventId: string, input: Partial<CreateAgendaEventInput>) {
+  return apiRequest<AgendaEvent>(`/events/${eventId}`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export function approveAgendaEvent(accessToken: string, eventId: string) {
+  return apiRequest<AgendaEvent>(`/events/${eventId}/approve`, {
+    method: 'PATCH',
+    accessToken,
+  })
+}
+
+export function cancelAgendaEvent(accessToken: string, eventId: string) {
+  return apiRequest<AgendaEvent>(`/events/${eventId}/cancel`, {
+    method: 'PATCH',
+    accessToken,
+  })
+}
+
+export function listEventSpaces(accessToken: string, campusId: string) {
+  return apiRequest<EventSpace[]>(`/spaces?campusId=${encodeURIComponent(campusId)}`, { accessToken })
+}
+
+export function addAgendaEventChecklist(accessToken: string, eventId: string, descricao: string) {
+  return apiRequest<EventChecklistItem>(`/events/${eventId}/checklist`, {
+    method: 'POST',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ descricao }),
+  })
+}
+
+export function toggleAgendaEventChecklist(accessToken: string, checklistId: string) {
+  return apiRequest<EventChecklistItem>(`/events/checklist/${checklistId}/toggle`, {
+    method: 'PATCH',
+    accessToken,
   })
 }
 
