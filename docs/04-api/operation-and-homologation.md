@@ -59,6 +59,18 @@ Antes de liberar o frontend ou produção, validar com dados controlados:
 9. Notificação interna e, quando configurados, webhooks de WhatsApp e ProPresenter em ambiente de homologção.
 10. `GET /health/ready`, `GET /docs`, migrações e backup/restauração do PostgreSQL.
 
+### Fluxos do painel a validar
+
+Antes da homologação com dados reais, a secretaria deve disponibilizar a estrutura aprovada de organização, campi, áreas de serviço, equipes, lideranças e eventos. O sistema não cria essa estrutura por suposição.
+
+Com esses dados cadastrados, validar também:
+
+1. uma pessoa escalada confirma e recusa a própria escala em **Minhas escalas**;
+2. a liderança visualiza pendências e recusas da área dentro do seu escopo;
+3. uma escala vinculada a evento aparece na consulta da Agenda, sem ações de edição;
+4. uma recusa, substituição ou nova escala aparece na central de notificações do destinatário;
+5. a criação em lote falha integralmente quando uma das pessoas possui conflito de agenda.
+
 ## Verificação automática
 
 ```powershell

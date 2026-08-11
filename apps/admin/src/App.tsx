@@ -15,6 +15,10 @@ import { addServiceAreaMember, approveServiceAreaApplication, completeServiceAre
 import type { ServiceAreaApplication, ServiceAreaDetail, ServiceAreaEntryStage, ServiceAreaListItem, ServiceMembershipRole } from './api/service-areas'
 import { ServiceAreaWorkspace } from './ServiceAreaWorkspace'
 import { ServiceAreaOnboardingDialog } from './ServiceAreaOnboardingDialog'
+import { MySchedulesPage } from './MySchedulesPage'
+import { EventSchedulesDialog } from './EventSchedulesDialog'
+import { NotificationDialog } from './NotificationDialog'
+import { listMyNotifications } from './api/notifications'
 import { ApiError } from './api/client'
 import { clearSession, readSession, saveSession } from './auth/session'
 import './App.css'
@@ -25,6 +29,7 @@ import './CellLeadershipAutocomplete.css'
 import './CellNavigation.css'
 import './ServiceAreaWorkspace.css'
 import './ServiceAreaOnboardingDialog.css'
+import './ServiceSchedulePages.css'
 
 type Page =
   | 'dashboard'
@@ -34,6 +39,7 @@ type Page =
   | 'studies'
   | 'people'
   | 'teams'
+  | 'my-schedules'
   | 'kids'
   | 'worship'
   | 'reports'
@@ -67,6 +73,7 @@ const cellNavigation: NavigationItem[] = [
 
 const moduleNavigation: NavigationItem[] = [
   { page: 'people', label: 'Pessoas', icon: '◉' },
+  { page: 'my-schedules', label: 'Minhas escalas', icon: '◷' },
   { page: 'worship', label: 'Cultos', icon: '♬' },
   { page: 'reports', label: 'Relatórios', icon: '▤' },
 ]
@@ -96,6 +103,11 @@ const pageCopy: Record<Exclude<Page, 'dashboard' | 'agenda'>, { eyebrow: string;
     eyebrow: 'Áreas de Serviço',
     title: 'Servir com clareza e propósito',
     description: 'As áreas de serviço, equipes, lideranças, voluntários e escalas serão organizados aqui.',
+  },
+  'my-schedules': {
+    eyebrow: 'Minha agenda de serviço',
+    title: 'Minhas escalas',
+    description: 'Veja seus serviços e confirme sua disponibilidade.',
   },
   kids: {
     eyebrow: 'IBAG Kids',
@@ -184,6 +196,10 @@ function App() {
   const [agendaError, setAgendaError] = useState('')
   const [isLoadingAgenda, setIsLoadingAgenda] = useState(false)
   const [agendaVersion, setAgendaVersion] = useState(0)
+  const [selectedAgendaEvent, setSelectedAgendaEvent] = useState<AgendaEvent | null>(null)
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
+  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0)
+  const [notificationsVersion, setNotificationsVersion] = useState(0)
   const [campuses, setCampuses] = useState<CampusListItem[]>([])
   const [eventFormError, setEventFormError] = useState('')
   const [isLoadingCampuses, setIsLoadingCampuses] = useState(false)
@@ -414,6 +430,24 @@ function App() {
       active = false
     }
   }, [activePage, agendaVersion, agendaWeekStart, session])
+
+  useEffect(() => {
+    if (!session) {
+      setUnreadNotificationCount(0)
+      return
+    }
+    let active = true
+    void listMyNotifications(session.access_token)
+      .then((items) => {
+        if (active) setUnreadNotificationCount(items.filter((item) => !item.readAt).length)
+      })
+      .catch(() => {
+        if (active) setUnreadNotificationCount(0)
+      })
+    return () => {
+      active = false
+    }
+  }, [notificationsVersion, session])
 
   useEffect(() => {
     if (!session || (!isCreateEventOpen && !creationMode && !selectedRecord)) return
@@ -1693,7 +1727,7 @@ function App() {
           </div>
           <div className="topbar-actions">
             <button className="icon-button" type="button" aria-label="Buscar">⌕</button>
-            <button className="icon-button icon-button--notification" type="button" aria-label="Notificações">♧<span /></button>
+            <button className="icon-button icon-button--notification" type="button" aria-label="Notificações" onClick={() => setIsNotificationsOpen(true)}>♧{unreadNotificationCount > 0 && <span>{unreadNotificationCount > 9 ? '9+' : unreadNotificationCount}</span>}</button>
             {primaryAction && <button className="primary-button" type="button" onClick={primaryAction.action}>{primaryAction.label}</button>}
           </div>
         </header>
@@ -1701,14 +1735,18 @@ function App() {
         {notice && <div className="notice" role="status"><span>✓</span>{notice}<button type="button" onClick={() => setNotice('')} aria-label="Fechar aviso">×</button></div>}
 
         {activePage === 'dashboard' && <Dashboard summary={dashboard} error={dashboardError} isLoading={isLoadingDashboard} onRetry={() => setDashboardVersion((version) => version + 1)} onOpenAgenda={() => setActivePage('agenda')} onOpenCells={() => setActivePage('cells')} />}
-        {activePage === 'agenda' && <Agenda events={agendaEvents} error={agendaError} isLoading={isLoadingAgenda} weekStart={agendaWeekStart} onRetry={() => setAgendaVersion((version) => version + 1)} onPreviousWeek={() => setAgendaWeekStart((start) => addDays(start, -7))} onNextWeek={() => setAgendaWeekStart((start) => addDays(start, 7))} onToday={() => setAgendaWeekStart(startOfWeek(new Date()))} onCreateEvent={openEventForm} />}
+        {activePage === 'agenda' && <Agenda events={agendaEvents} error={agendaError} isLoading={isLoadingAgenda} weekStart={agendaWeekStart} onRetry={() => setAgendaVersion((version) => version + 1)} onPreviousWeek={() => setAgendaWeekStart((start) => addDays(start, -7))} onNextWeek={() => setAgendaWeekStart((start) => addDays(start, 7))} onToday={() => setAgendaWeekStart(startOfWeek(new Date()))} onCreateEvent={openEventForm} onSelectEvent={setSelectedAgendaEvent} />}
         {activePage === 'cells' && (canManageDirectory ? <CellsPage data={cells} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'cell', id })} /> : <CellDirectoryRestricted />)}
         {activePage === 'cell-structure' && <CellHierarchy campuses={hierarchy?.campuses ?? []} cells={hierarchy?.cells ?? []} coordinations={hierarchy?.coordinations ?? []} currentPersonId={session.user.personId} error={hierarchyError} isLoading={isLoadingHierarchy} isSaving={isSavingHierarchy} networks={hierarchy?.networks ?? []} people={hierarchy?.people ?? []} supervisions={hierarchy?.supervisions ?? []} canManageNetworks={canManageNetworks} onAssignCell={linkCellToNetwork} onCreateCoordination={saveCoordination} onCreateNetwork={saveNetwork} onCreateSupervision={saveSupervision} onEndCoordination={finishCoordination} onEndSupervision={finishSupervision} onUnassignCell={unlinkCellFromNetwork} />}
         {activePage === 'studies' && <StudiesPage canManage={canManageStudies} study={study} error={studyError} isLoading={isLoadingStudy} weekStart={studyWeekStart} isSubmitting={isSubmittingStudy} onWeekStartChange={setStudyWeekStart} onPublish={saveStudy} onDownload={downloadStudy} />}
         {activePage === 'people' && <PeoplePage data={people} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'person', id })} />}
+        {activePage === 'my-schedules' && <MySchedulesPage accessToken={session.access_token} onNotice={setNotice} onNotificationsChanged={() => setNotificationsVersion((version) => version + 1)} />}
         {activePage === 'teams' && selectedServiceArea && <ServiceAreaWorkspace area={serviceAreaDetail} error={serviceAreaDetailError} isLoading={isLoadingServiceAreaDetail} onRetry={() => setServiceAreaDetailVersion((version) => version + 1)} canCreateTeam={canCreateServiceTeam} canManageMembers={canManageServiceMembers} canManageOnboarding={canManageServiceMembers} canManageSchedules={canManageServiceMembers} accessToken={session.access_token} currentPersonId={session.user.personId} onNotice={setNotice} onCreateTeam={openServiceTeamForm} onAddMember={openServiceMemberForm} onOpenOnboarding={openServiceOnboarding} />}
-        {activePage !== 'dashboard' && activePage !== 'agenda' && activePage !== 'cells' && activePage !== 'cell-structure' && activePage !== 'studies' && activePage !== 'people' && (activePage !== 'teams' || !selectedServiceArea) && <ModulePreview copy={pageCopy[activePage]} />}
+        {activePage !== 'dashboard' && activePage !== 'agenda' && activePage !== 'cells' && activePage !== 'cell-structure' && activePage !== 'studies' && activePage !== 'people' && activePage !== 'my-schedules' && (activePage !== 'teams' || !selectedServiceArea) && <ModulePreview copy={pageCopy[activePage]} />}
       </main>
+
+      {selectedAgendaEvent && <EventSchedulesDialog event={selectedAgendaEvent} accessToken={session.access_token} onClose={() => setSelectedAgendaEvent(null)} />}
+      {isNotificationsOpen && <NotificationDialog accessToken={session.access_token} onClose={() => setIsNotificationsOpen(false)} onUnreadCountChange={setUnreadNotificationCount} />}
 
       {isCreateEventOpen && (
         <div className="dialog-backdrop" role="presentation" onMouseDown={() => setIsCreateEventOpen(false)}>
@@ -2222,6 +2260,7 @@ function Agenda({
   onNextWeek,
   onToday,
   onCreateEvent,
+  onSelectEvent,
 }: {
   events: AgendaEvent[]
   error: string
@@ -2232,6 +2271,7 @@ function Agenda({
   onNextWeek: () => void
   onToday: () => void
   onCreateEvent: () => void
+  onSelectEvent: (event: AgendaEvent) => void
 }) {
   const days = Array.from({ length: 7 }, (_, index) => addDays(weekStart, index))
   const today = new Date()
@@ -2240,13 +2280,13 @@ function Agenda({
     <div className="agenda-page">
       <section className="agenda-toolbar"><div className="agenda-navigation"><button type="button" onClick={onPreviousWeek} aria-label="Semana anterior">←</button><strong>{weekLabel(weekStart)}</strong><button type="button" onClick={onNextWeek} aria-label="Próxima semana">→</button></div><div><button type="button" className="secondary-button" onClick={onToday}>Hoje</button><button type="button" className="primary-button" onClick={onCreateEvent}>+ Novo evento</button></div></section>
       {error && <PageFeedback message={error} onRetry={onRetry} />}
-      <section className="agenda-board"><div className="agenda-weekdays">{days.map((day) => <span className={isSameDay(day, today) ? 'agenda-today' : ''} key={day.toISOString()}>{new Intl.DateTimeFormat('pt-BR', { weekday: 'short' }).format(day).replace('.', '').toUpperCase()} <b>{day.getDate()}</b></span>)}</div><div className="agenda-grid"><div className="time-column"><span>08:00</span><span>10:00</span><span>12:00</span><span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span></div><div className="agenda-events">{events.map((event, index) => <AgendaEventCard event={event} index={index} weekStart={weekStart} key={event.id} />)}{events.length === 0 && <p className="agenda-empty">{isLoading ? 'Carregando eventos...' : 'Não há eventos nesta semana.'}</p>}</div></div></section>
+      <section className="agenda-board"><div className="agenda-weekdays">{days.map((day) => <span className={isSameDay(day, today) ? 'agenda-today' : ''} key={day.toISOString()}>{new Intl.DateTimeFormat('pt-BR', { weekday: 'short' }).format(day).replace('.', '').toUpperCase()} <b>{day.getDate()}</b></span>)}</div><div className="agenda-grid"><div className="time-column"><span>08:00</span><span>10:00</span><span>12:00</span><span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span></div><div className="agenda-events">{events.map((event, index) => <AgendaEventCard event={event} index={index} weekStart={weekStart} onSelect={onSelectEvent} key={event.id} />)}{events.length === 0 && <p className="agenda-empty">{isLoading ? 'Carregando eventos...' : 'Não há eventos nesta semana.'}</p>}</div></div></section>
       <section className="agenda-note"><span>◈</span><p><strong>Calendário institucional compartilhado.</strong> Eventos aprovados são sincronizados automaticamente com o Google Calendar quando a integração estiver ativa.</p></section>
     </div>
   )
 }
 
-function AgendaEventCard({ event, index, weekStart }: { event: AgendaEvent; index: number; weekStart: Date }) {
+function AgendaEventCard({ event, index, weekStart, onSelect }: { event: AgendaEvent; index: number; weekStart: Date; onSelect: (event: AgendaEvent) => void }) {
   const start = new Date(event.inicio)
   const end = new Date(event.fim)
   const tone = ['blue', 'orange', 'green', 'purple'][index % 4]
@@ -2256,7 +2296,7 @@ function AgendaEventCard({ event, index, weekStart }: { event: AgendaEvent; inde
   const time = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(start)
   const endTime = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(end)
 
-  return <article className={`calendar-event calendar-event--${tone}`} style={{ left: `calc(${(dayIndex * 100) / 7}% + 3px)`, top, height: duration, width: 'calc(14.285% - 6px)' }}><small>{time} — {endTime}</small><strong>{event.titulo}</strong><span>{event.cell?.nome ?? event.campus.nome}</span></article>
+  return <button className={`calendar-event calendar-event--${tone}`} type="button" aria-label={`Consultar escalas de ${event.titulo}`} onClick={() => onSelect(event)} style={{ left: `calc(${(dayIndex * 100) / 7}% + 3px)`, top, height: duration, width: 'calc(14.285% - 6px)' }}><small>{time} — {endTime}</small><strong>{event.titulo}</strong><span>{event.cell?.nome ?? event.campus.nome}</span></button>
 }
 
 function weekLabel(weekStart: Date) {

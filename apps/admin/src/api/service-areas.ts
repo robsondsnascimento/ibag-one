@@ -223,6 +223,10 @@ export type ServiceAreaSchedule = {
   team: {
     id: string
     nome: string
+    serviceArea: {
+      id: string
+      nome: string
+    }
     campus: {
       id: string
       nome: string
@@ -251,6 +255,17 @@ export type ServiceScheduleHistory = {
   }
 }
 
+export type ServiceScheduleEventCandidate = {
+  id: string
+  titulo: string
+  inicio: string
+  fim: string
+  status: 'APPROVED' | string
+  teams: Array<{
+    teamId: string
+  }>
+}
+
 export function listServiceAreaSchedules(accessToken: string, areaId: string, filters: { start?: string; end?: string; teamId?: string; status?: ServiceScheduleStatus }) {
   const search = new URLSearchParams()
   if (filters.start) search.set('start', filters.start)
@@ -261,13 +276,27 @@ export function listServiceAreaSchedules(accessToken: string, areaId: string, fi
   return apiRequest<ServiceAreaSchedule[]>(`/service-areas/${areaId}/schedules${suffix}`, { accessToken })
 }
 
-export function createServiceSchedule(accessToken: string, teamId: string, input: { personId: string; data: string; funcao: string; observacao?: string }) {
+export function createServiceSchedule(accessToken: string, teamId: string, input: { personId: string; data: string; funcao: string; observacao?: string; eventId?: string }) {
   return apiRequest<ServiceAreaSchedule>(`/service-areas/teams/${teamId}/schedules`, {
     method: 'POST',
     accessToken,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(input),
   })
+}
+
+export function createServiceScheduleBatch(accessToken: string, teamId: string, input: { schedules: Array<{ personId: string; data: string; funcao: string; observacao?: string; eventId?: string }> }) {
+  return apiRequest<ServiceAreaSchedule[]>(`/service-areas/teams/${teamId}/schedules/batch`, {
+    method: 'POST',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export async function listApprovedScheduleEvents(accessToken: string, start: string, end: string) {
+  const events = await apiRequest<ServiceScheduleEventCandidate[]>(`/events?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`, { accessToken })
+  return events.filter((event) => event.status === 'APPROVED')
 }
 
 export function updateServiceScheduleStatus(accessToken: string, scheduleId: string, input: { status: ServiceScheduleStatus; reason?: string }) {
@@ -290,4 +319,16 @@ export function substituteServiceSchedule(accessToken: string, scheduleId: strin
 
 export function listServiceScheduleHistory(accessToken: string, scheduleId: string) {
   return apiRequest<ServiceScheduleHistory[]>(`/service-areas/schedules/${scheduleId}/history`, { accessToken })
+}
+
+export function listMyServiceSchedules(accessToken: string, filters: { start?: string; end?: string } = {}) {
+  const search = new URLSearchParams()
+  if (filters.start) search.set('start', filters.start)
+  if (filters.end) search.set('end', filters.end)
+  const suffix = search.size ? `?${search.toString()}` : ''
+  return apiRequest<ServiceAreaSchedule[]>(`/service-areas/schedules/me${suffix}`, { accessToken })
+}
+
+export function listEventServiceSchedules(accessToken: string, eventId: string) {
+  return apiRequest<ServiceAreaSchedule[]>(`/service-areas/events/${eventId}/schedules`, { accessToken })
 }

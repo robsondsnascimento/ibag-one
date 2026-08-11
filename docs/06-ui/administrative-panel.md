@@ -36,11 +36,23 @@ A aprovação cria a membresia de integrante na equipe em uma única operação.
 Cada Área de Serviço exibe sua visão consolidada de escalas, sempre filtrada pelo escopo que a API autoriza à pessoa conectada. O painel permite:
 
 - consultar escalas por período, equipe e status;
-- criar uma escala individual para uma pessoa com vínculo ativo na equipe;
+- criar uma escala individual ou em lote para pessoas com vínculo ativo na mesma equipe, de forma independente ou vinculada a um evento aprovado que envolva a equipe;
 - visualizar a função, a pessoa, a equipe, o evento relacionado quando existir e observações;
 - confirmar ou recusar a própria escala, com motivo opcional na recusa;
 - concluir ou reabrir uma escala pela liderança autorizada;
 - substituir a pessoa escalada por outra integrante da mesma equipe, preservando a solicitação de nova confirmação;
 - consultar o histórico auditável de criação, respostas e substituições.
 
-O painel não replica regras de agenda: conflitos, permissões, escopo da equipe e notificações são validados exclusivamente pela API. O vínculo com evento é exibido quando a escala já o possui; a criação inicial no painel atende escalas independentes da agenda.
+O painel não replica regras de agenda: conflitos, permissões, escopo da equipe e notificações são validados exclusivamente pela API. Ao escolher um evento aprovado, o formulário filtra pela equipe selecionada e preenche seu horário; a escala continua sendo administrada exclusivamente pela Área de Serviço, enquanto o evento apenas a consulta. Na criação em lote, o sistema envia todas as escalas em uma única operação: se uma delas for inválida, nenhuma é criada.
+
+## Minhas escalas e pendências
+
+O item **Minhas escalas** exibe os compromissos da própria pessoa em todas as áreas de serviço. Uma escala pendente pode ser confirmada ou recusada; a recusa aceita motivo opcional e gera o alerta interno para as lideranças responsáveis.
+
+Na visão da Área de Serviço, lideranças autorizadas recebem um resumo das pendências do período filtrado: escalas aguardando confirmação e recusas que exigem substituição. Os cartões aplicam o filtro correspondente sem alterar o escopo validado pela API.
+
+## Escalas na agenda e notificações
+
+Ao selecionar um evento na Agenda, o painel abre uma consulta das escalas vinculadas. Essa consulta não permite alterar, concluir ou substituir pessoas: tais ações permanecem exclusivamente na Área de Serviço.
+
+O sino do cabeçalho abre a central de notificações internas. Ela mostra avisos de escala, recusa, substituição e outros fluxos do sistema; ao abrir um aviso não lido, ele é marcado como lido. O mesmo registro interno servirá futuramente como origem para WhatsApp e ProPresenter.

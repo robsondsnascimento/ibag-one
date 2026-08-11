@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
-import { createServiceSchedule, listServiceAreaSchedules, listServiceScheduleHistory, substituteServiceSchedule, updateServiceScheduleStatus } from './api/service-areas'
-import type { ServiceAreaDetail, ServiceAreaSchedule, ServiceScheduleHistory, ServiceScheduleStatus } from './api/service-areas'
+import { createServiceSchedule, createServiceScheduleBatch, listApprovedScheduleEvents, listServiceAreaSchedules, listServiceScheduleHistory, substituteServiceSchedule, updateServiceScheduleStatus } from './api/service-areas'
+import type { ServiceAreaDetail, ServiceAreaSchedule, ServiceScheduleEventCandidate, ServiceScheduleHistory, ServiceScheduleStatus } from './api/service-areas'
 
 const statusLabels: Record<ServiceScheduleStatus, string> = {
   SCHEDULED: 'A confirmar',
@@ -15,6 +15,16 @@ function toDateInputValue(date: Date) {
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
   return `${year}-${month}-${day}`
+}
+
+function toDateTimeLocalValue(value: string) {
+  const date = new Date(value)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hour = String(date.getHours()).padStart(2, '0')
+  const minute = String(date.getMinutes()).padStart(2, '0')
+  return `${year}-${month}-${day}T${hour}:${minute}`
 }
 
 function defaultPeriod() {
@@ -74,6 +84,11 @@ export function ServiceAreaSchedulePanel({
   const [error, setError] = useState('')
   const [version, setVersion] = useState(0)
   const [isCreateOpen, setIsCreateOpen] = useState(false)
+  const [isBatchOpen, setIsBatchOpen] = useState(false)
+  const [createDate, setCreateDate] = useState('')
+  const [eventCandidates, setEventCandidates] = useState<ServiceScheduleEventCandidate[]>([])
+  const [isLoadingEvents, setIsLoadingEvents] = useState(false)
+  const [eventError, setEventError] = useState('')
   const [action, setAction] = useState<ScheduleAction | null>(null)
   const [activeHistoryId, setActiveHistoryId] = useState<string | null>(null)
   const [history, setHistory] = useState<ServiceScheduleHistory[]>([])
@@ -104,6 +119,30 @@ export function ServiceAreaSchedulePanel({
     }
   }, [accessToken, area.id, end, start, status, teamId, version])
 
+  useEffect(() => {
+    if (!isCreateOpen && !isBatchOpen) return
+    const firstDay = new Date()
+    firstDay.setDate(firstDay.getDate() - 7)
+    const lastDay = new Date()
+    lastDay.setFullYear(lastDay.getFullYear() + 1)
+    let active = true
+    setIsLoadingEvents(true)
+    setEventError('')
+    void listApprovedScheduleEvents(accessToken, firstDay.toISOString(), lastDay.toISOString())
+      .then((items) => {
+        if (active) setEventCandidates(items)
+      })
+      .catch((reason) => {
+        if (active) setEventError(reason instanceof Error ? reason.message : 'Não foi possível carregar os eventos aprovados.')
+      })
+      .finally(() => {
+        if (active) setIsLoadingEvents(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [accessToken, isBatchOpen, isCreateOpen])
+
   const refresh = () => setVersion((value) => value + 1)
   const selectedTeamMembers = (selectedTeamId: string) => {
     const people = area.memberships
@@ -111,6 +150,8 @@ export function ServiceAreaSchedulePanel({
       .map((membership) => membership.person)
     return [...new Map(people.map((person) => [person.id, person])).values()]
   }
+  const pendingCount = schedules.filter((schedule) => schedule.status === 'SCHEDULED').length
+  const declinedCount = schedules.filter((schedule) => schedule.status === 'DECLINED').length
 
   const saveSchedule = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -126,12 +167,35 @@ export function ServiceAreaSchedulePanel({
         data: new Date(data).toISOString(),
         funcao: String(form.get('funcao') ?? ''),
         observacao: String(form.get('observacao') ?? '') || undefined,
+        eventId: String(form.get('eventId') ?? '') || undefined,
       })
       setIsCreateOpen(false)
       refresh()
       onNotice('Escala criada e enviada para confirmação da pessoa.')
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : 'Não foi possível criar esta escala.')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const saveScheduleBatch = async (input: { teamId: string; data: string; eventId?: string; observacao?: string; schedules: Array<{ personId: string; funcao: string }> }) => {
+    setIsSaving(true)
+    setError('')
+    try {
+      await createServiceScheduleBatch(accessToken, input.teamId, {
+        schedules: input.schedules.map((schedule) => ({
+          ...schedule,
+          data: new Date(input.data).toISOString(),
+          eventId: input.eventId,
+          observacao: input.observacao,
+        })),
+      })
+      setIsBatchOpen(false)
+      refresh()
+      onNotice(`${input.schedules.length} escalas foram criadas e enviadas para confirmação.`)
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : 'Não foi possível criar este lote de escalas.')
     } finally {
       setIsSaving(false)
     }
@@ -197,7 +261,7 @@ export function ServiceAreaSchedulePanel({
     <section className="service-area-panel service-area-panel--schedules">
       <header>
         <div><p className="eyebrow">Escalas</p><h2>Serviços da área</h2></div>
-        {canManage && <button className="primary-button" type="button" disabled={area.teams.length === 0} onClick={() => setIsCreateOpen(true)}>+ Nova escala</button>}
+        {canManage && <div className="service-schedule-header-actions"><button className="secondary-button" type="button" disabled={area.teams.length === 0} onClick={() => { setEventCandidates([]); setIsBatchOpen(true) }}>Escala em lote</button><button className="primary-button" type="button" disabled={area.teams.length === 0} onClick={() => { setCreateDate(''); setEventCandidates([]); setIsCreateOpen(true) }}>+ Nova escala</button></div>}
       </header>
 
       <form className="service-schedule-filters" onSubmit={(event) => { event.preventDefault(); refresh() }}>
@@ -207,6 +271,8 @@ export function ServiceAreaSchedulePanel({
         <label>Status<select value={status} onChange={(event) => setStatus(event.target.value as ServiceScheduleStatus | '')}><option value="">Todos os status</option>{Object.entries(statusLabels).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
         <button className="secondary-button" type="submit">Atualizar</button>
       </form>
+
+      {canManage && !isLoading && <section className="service-schedule-pending"><div><span>Pendências no período</span><strong>{pendingCount + declinedCount}</strong></div><button type="button" className={status === 'SCHEDULED' ? 'service-pending-card service-pending-card--active' : 'service-pending-card'} onClick={() => setStatus(status === 'SCHEDULED' ? '' : 'SCHEDULED')}><strong>{pendingCount}</strong><span>Aguardando confirmação</span></button><button type="button" className={status === 'DECLINED' ? 'service-pending-card service-pending-card--active service-pending-card--declined' : 'service-pending-card service-pending-card--declined'} onClick={() => setStatus(status === 'DECLINED' ? '' : 'DECLINED')}><strong>{declinedCount}</strong><span>Recusas para resolver</span></button></section>}
 
       {error && <p className="form-error service-schedule-error" role="alert">{error}</p>}
       {isLoading ? <p className="service-area-empty">Carregando escalas...</p> : schedules.length ? <div className="service-schedule-list">{schedules.map((schedule) => {
@@ -227,7 +293,9 @@ export function ServiceAreaSchedulePanel({
         </article>
       })}</div> : <p className="service-area-empty">Não há escalas neste período para os filtros escolhidos.</p>}
 
-      {isCreateOpen && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setIsCreateOpen(false)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="schedule-create-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setIsCreateOpen(false)}>×</button><p className="eyebrow">{area.nome}</p><h2 id="schedule-create-title">Nova escala</h2><p className="dialog-description">A escala pertence à equipe. A pessoa receberá uma solicitação para confirmar ou recusar.</p><form className="event-form" onSubmit={saveSchedule}><SchedulePersonSelect area={area} /><label>Data e horário<input name="data" type="datetime-local" required /></label><label>Função<input name="funcao" required minLength={2} maxLength={100} placeholder="Ex.: Recepção" /></label><label>Observação <span className="field-optional">(opcional)</span><input name="observacao" maxLength={1000} placeholder="Informação útil para a pessoa escalada" /></label><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setIsCreateOpen(false)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving}>{isSaving ? 'Criando...' : 'Criar escala'}</button></div></form></section></div>}
+      {isCreateOpen && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setIsCreateOpen(false)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="schedule-create-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setIsCreateOpen(false)}>×</button><p className="eyebrow">{area.nome}</p><h2 id="schedule-create-title">Nova escala</h2><p className="dialog-description">A escala pertence à equipe. Quando houver evento, ele apenas exibirá a escala — a gestão continua sendo da área.</p><form className="event-form" onSubmit={saveSchedule}><SchedulePersonSelect area={area} events={eventCandidates} isLoadingEvents={isLoadingEvents} eventError={eventError} onEventSelect={(selectedEvent) => setCreateDate(selectedEvent ? toDateTimeLocalValue(selectedEvent.inicio) : '')} /><label>Data e horário<input name="data" type="datetime-local" required value={createDate} onChange={(event) => setCreateDate(event.target.value)} /></label><label>Função<input name="funcao" required minLength={2} maxLength={100} placeholder="Ex.: Recepção" /></label><label>Observação <span className="field-optional">(opcional)</span><input name="observacao" maxLength={1000} placeholder="Informação útil para a pessoa escalada" /></label><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setIsCreateOpen(false)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving}>{isSaving ? 'Criando...' : 'Criar escala'}</button></div></form></section></div>}
+
+      {isBatchOpen && <ServiceScheduleBatchDialog area={area} events={eventCandidates} isLoadingEvents={isLoadingEvents} eventError={eventError} isSaving={isSaving} onClose={() => setIsBatchOpen(false)} onSave={saveScheduleBatch} />}
 
       {action?.type === 'decline' && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setAction(null)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="schedule-decline-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setAction(null)}>×</button><p className="eyebrow">Sua escala</p><h2 id="schedule-decline-title">Recusar escala</h2><p className="dialog-description">A liderança da área será avisada para providenciar uma substituição.</p><form className="event-form" onSubmit={(event) => { event.preventDefault(); const form = new FormData(event.currentTarget); void changeStatus(action.schedule, 'DECLINED', String(form.get('reason') ?? '') || undefined) }}><label>Motivo <span className="field-optional">(opcional)</span><textarea name="reason" maxLength={1000} placeholder="Ex.: Estarei fora da cidade neste fim de semana." /></label><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setAction(null)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving}>{isSaving ? 'Registrando...' : 'Confirmar recusa'}</button></div></form></section></div>}
 
@@ -236,10 +304,73 @@ export function ServiceAreaSchedulePanel({
   )
 }
 
-function SchedulePersonSelect({ area }: { area: ServiceAreaDetail }) {
+function ServiceScheduleBatchDialog({
+  area,
+  events,
+  isLoadingEvents,
+  eventError,
+  isSaving,
+  onClose,
+  onSave,
+}: {
+  area: ServiceAreaDetail
+  events: ServiceScheduleEventCandidate[]
+  isLoadingEvents: boolean
+  eventError: string
+  isSaving: boolean
+  onClose: () => void
+  onSave: (input: { teamId: string; data: string; eventId?: string; observacao?: string; schedules: Array<{ personId: string; funcao: string }> }) => Promise<void>
+}) {
   const [teamId, setTeamId] = useState('')
+  const [eventId, setEventId] = useState('')
+  const [data, setData] = useState('')
+  const [selectedPeople, setSelectedPeople] = useState<string[]>([])
+  const [formError, setFormError] = useState('')
+  const people = area.memberships.filter((membership) => membership.team?.id === teamId).map((membership) => membership.person)
+  const teamPeople = [...new Map(people.map((person) => [person.id, person])).values()]
+  const teamEvents = events.filter((event) => event.teams.some((item) => item.teamId === teamId))
+
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!teamId || !data || selectedPeople.length === 0) {
+      setFormError('Escolha a equipe, a data e ao menos uma pessoa para criar o lote.')
+      return
+    }
+    const form = new FormData(event.currentTarget)
+    void onSave({
+      teamId,
+      data,
+      eventId: eventId || undefined,
+      observacao: String(form.get('observacao') ?? '') || undefined,
+      schedules: selectedPeople.map((personId) => ({
+        personId,
+        funcao: String(form.get(`funcao-${personId}`) ?? ''),
+      })),
+    })
+  }
+
+  return <div className="dialog-backdrop" role="presentation" onMouseDown={onClose}><section className="event-dialog event-dialog--schedule-batch" role="dialog" aria-modal="true" aria-labelledby="schedule-batch-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={onClose}>×</button><p className="eyebrow">{area.nome}</p><h2 id="schedule-batch-title">Escala em lote</h2><p className="dialog-description">Escolha uma equipe e selecione as pessoas. O lote é criado por inteiro ou não é criado, caso exista algum conflito.</p><form className="event-form" onSubmit={submit}><label>Equipe<select value={teamId} required onChange={(event) => { setTeamId(event.target.value); setEventId(''); setData(''); setSelectedPeople([]); setFormError('') }}><option value="" disabled>Selecione a equipe</option>{area.teams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Evento <span className="field-optional">(opcional)</span><select value={eventId} disabled={!teamId || isLoadingEvents} onChange={(event) => { const selected = teamEvents.find((item) => item.id === event.target.value); setEventId(event.target.value); setData(selected ? toDateTimeLocalValue(selected.inicio) : '') }}><option value="">{isLoadingEvents ? 'Carregando eventos aprovados...' : teamId ? 'Escala independente de evento' : 'Escolha uma equipe antes'}</option>{teamEvents.map((event) => <option value={event.id} key={event.id}>{event.titulo} · {formatScheduleDate(event.inicio)}</option>)}</select>{eventError && <small className="form-error">{eventError}</small>}</label><label>Data e horário<input type="datetime-local" required value={data} onChange={(event) => setData(event.target.value)} /></label><label>Observação para o grupo <span className="field-optional">(opcional)</span><input name="observacao" maxLength={1000} placeholder="Orientação comum para as pessoas escaladas" /></label><section className="schedule-batch-people"><header><strong>Pessoas da equipe</strong><span>{selectedPeople.length} selecionada{selectedPeople.length === 1 ? '' : 's'}</span></header>{teamId && teamPeople.length ? teamPeople.map((person) => { const selected = selectedPeople.includes(person.id); return <label className={`schedule-batch-person ${selected ? 'schedule-batch-person--selected' : ''}`} key={person.id}><input type="checkbox" value={person.id} checked={selected} onChange={(event) => setSelectedPeople((current) => event.target.checked ? [...current, person.id] : current.filter((id) => id !== person.id))} /><span>{person.nome}</span><input name={`funcao-${person.id}`} disabled={!selected} required={selected} minLength={2} maxLength={100} defaultValue="Integrante" aria-label={`Função de ${person.nome}`} /></label> }) : <p>{teamId ? 'Não há pessoas vinculadas a esta equipe.' : 'Escolha uma equipe para selecionar as pessoas.'}</p>}</section>{formError && <p className="form-error" role="alert">{formError}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={onClose}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving || selectedPeople.length === 0}>{isSaving ? 'Criando lote...' : 'Criar escalas'}</button></div></form></section></div>
+}
+
+function SchedulePersonSelect({
+  area,
+  events,
+  isLoadingEvents,
+  eventError,
+  onEventSelect,
+}: {
+  area: ServiceAreaDetail
+  events: ServiceScheduleEventCandidate[]
+  isLoadingEvents: boolean
+  eventError: string
+  onEventSelect: (event: ServiceScheduleEventCandidate | null) => void
+}) {
+  const [teamId, setTeamId] = useState('')
+  const [personId, setPersonId] = useState('')
+  const [eventId, setEventId] = useState('')
   const people = area.memberships.filter((membership) => membership.team?.id === teamId).map((membership) => membership.person)
   const uniquePeople = [...new Map(people.map((person) => [person.id, person])).values()]
+  const teamEvents = events.filter((event) => event.teams.some((item) => item.teamId === teamId))
 
-  return <><label>Equipe<select name="teamId" value={teamId} onChange={(event) => setTeamId(event.target.value)} required><option value="" disabled>Selecione a equipe</option>{area.teams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Pessoa<select name="personId" required defaultValue="" disabled={!teamId || uniquePeople.length === 0}><option value="" disabled>{teamId ? uniquePeople.length ? 'Selecione a pessoa' : 'Não há pessoas vinculadas a esta equipe' : 'Escolha uma equipe antes'}</option>{uniquePeople.map((person) => <option key={person.id} value={person.id}>{person.nome}</option>)}</select></label></>
+  return <><label>Equipe<select name="teamId" value={teamId} onChange={(event) => { setTeamId(event.target.value); setPersonId(''); setEventId(''); onEventSelect(null) }} required><option value="" disabled>Selecione a equipe</option>{area.teams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Pessoa<select name="personId" required value={personId} disabled={!teamId || uniquePeople.length === 0} onChange={(event) => setPersonId(event.target.value)}><option value="" disabled>{teamId ? uniquePeople.length ? 'Selecione a pessoa' : 'Não há pessoas vinculadas a esta equipe' : 'Escolha uma equipe antes'}</option>{uniquePeople.map((person) => <option key={person.id} value={person.id}>{person.nome}</option>)}</select></label><label>Evento <span className="field-optional">(opcional)</span><select name="eventId" value={eventId} disabled={!teamId || isLoadingEvents} onChange={(event) => { setEventId(event.target.value); onEventSelect(teamEvents.find((item) => item.id === event.target.value) ?? null) }}><option value="">{isLoadingEvents ? 'Carregando eventos aprovados...' : teamId ? 'Escala independente de evento' : 'Escolha uma equipe antes'}</option>{teamEvents.map((event) => <option value={event.id} key={event.id}>{event.titulo} · {formatScheduleDate(event.inicio)}</option>)}</select>{eventError && <small className="form-error">{eventError}</small>}</label><small className="schedule-event-note">Ao selecionar um evento, a data e o horário são preenchidos automaticamente.</small></>
 }
