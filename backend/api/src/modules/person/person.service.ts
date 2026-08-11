@@ -28,31 +28,11 @@ export class PersonService {
 
     await this.assertDirectoryManager(context);
 
-    const campus =
-      await this.prisma.campus.findUnique({
-        where: {
-          id: createPersonDto.campusId,
-        },
-      });
-
-
-    if (!campus) {
-      throw new Error(
-        'Campus não encontrado',
-      );
-    }
-
-
-    if (
-      campus.organizationId !==
-      context.organizationId
-    ) {
-
-      throw new Error(
-        'Campus não pertence à organização atual',
-      );
-
-    }
+    const campusIds = this.uniqueCampusIds(
+      createPersonDto.campusId,
+      createPersonDto.campusIds,
+    );
+    await this.assertOrganizationCampuses(campusIds, context.organizationId);
 
 
     return this.prisma.person.create({
@@ -95,7 +75,16 @@ export class PersonService {
         organizationId:
           context.organizationId,
 
+        campusMemberships: {
+          create: campusIds.map((campusId) => ({
+            campusId,
+            organizationId: context.organizationId,
+          })),
+        },
+
       },
+
+      include: this.personDetails,
 
     });
 
@@ -118,6 +107,12 @@ export class PersonService {
       include: {
 
         campus: true,
+
+        campusMemberships: {
+          where: { ativo: true },
+          include: { campus: true },
+          orderBy: { campus: { nome: 'asc' } },
+        },
 
       },
 
@@ -152,6 +147,24 @@ export class PersonService {
       include: {
 
         campus: true,
+
+        campusMemberships: {
+          where: { ativo: true },
+          include: { campus: true },
+          orderBy: { campus: { nome: 'asc' } },
+        },
+
+        serviceMemberships: {
+          where: { ativo: true },
+          select: {
+            id: true,
+            role: true,
+            inicio: true,
+            funcoes: true,
+            serviceArea: { select: { id: true, nome: true } },
+            team: { select: { id: true, nome: true } },
+          },
+        },
 
       },
 
@@ -192,37 +205,64 @@ export class PersonService {
     }
 
 
-    if (updatePersonDto.campusId) {
-      const campus = await this.prisma.campus.findFirst({
-        where: {
-          id: updatePersonDto.campusId,
-          organizationId: context.organizationId,
-        },
-      });
+    const primaryCampusId = updatePersonDto.campusId ?? person.campusId;
+    const campusIds = updatePersonDto.campusIds
+      ? this.uniqueCampusIds(primaryCampusId, updatePersonDto.campusIds)
+      : undefined;
 
-      if (!campus) {
-        throw new BadRequestException(
-          'Campus não pertence à organização atual',
-        );
-      }
+    if (campusIds) {
+      await this.assertOrganizationCampuses(campusIds, context.organizationId);
+    } else if (updatePersonDto.campusId) {
+      await this.assertOrganizationCampuses([primaryCampusId], context.organizationId);
     }
 
-    const { organizationId: _organizationId, ...personData } = updatePersonDto;
+    const {
+      organizationId: _organizationId,
+      campusIds: _campusIds,
+      ...personData
+    } = updatePersonDto;
 
-    return this.prisma.person.update({
+    return this.prisma.$transaction(async (transaction) => {
+      if (campusIds) {
+        await transaction.personCampusMembership.updateMany({
+          where: {
+            personId: id,
+            ativo: true,
+            campusId: { notIn: campusIds },
+          },
+          data: { ativo: false },
+        });
 
-      where: {
+        await Promise.all(campusIds.map((campusId) =>
+          transaction.personCampusMembership.upsert({
+            where: { personId_campusId: { personId: id, campusId } },
+            create: {
+              personId: id,
+              campusId,
+              organizationId: context.organizationId,
+              ativo: true,
+            },
+            update: { ativo: true },
+          }),
+        ));
+      } else if (updatePersonDto.campusId) {
+        await transaction.personCampusMembership.upsert({
+          where: { personId_campusId: { personId: id, campusId: primaryCampusId } },
+          create: {
+            personId: id,
+            campusId: primaryCampusId,
+            organizationId: context.organizationId,
+            ativo: true,
+          },
+          update: { ativo: true },
+        });
+      }
 
-        id,
-
-      },
-
-      data: personData,
-
-      include: {
-        campus: true,
-      },
-
+      return transaction.person.update({
+        where: { id },
+        data: personData,
+        include: this.personDetails,
+      });
     });
 
   }
@@ -292,5 +332,33 @@ export class PersonService {
       );
     }
   }
+
+  private uniqueCampusIds(primaryCampusId: string, campusIds?: string[]) {
+    return [...new Set([primaryCampusId, ...(campusIds ?? [])])];
+  }
+
+  private async assertOrganizationCampuses(campusIds: string[], organizationId: string) {
+    const campuses = await this.prisma.campus.findMany({
+      where: {
+        id: { in: campusIds },
+        organizationId,
+      },
+      select: { id: true },
+    });
+    if (campuses.length !== campusIds.length) {
+      throw new BadRequestException(
+        'Um ou mais campi não pertencem à organização atual',
+      );
+    }
+  }
+
+  private readonly personDetails = {
+    campus: true,
+    campusMemberships: {
+      where: { ativo: true },
+      include: { campus: true },
+      orderBy: { campus: { nome: 'asc' } },
+    },
+  } as const;
 
 }

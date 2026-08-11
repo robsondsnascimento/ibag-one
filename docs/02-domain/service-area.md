@@ -33,7 +33,9 @@ Papéis de vínculo disponíveis:
 - `TEAM_LEADER`
 - `MEMBER`
 
-Funções operacionais complementam o vínculo de equipe. O primeiro papel implementado é `WORSHIP_MINISTER`, destinado ao integrante que pode enviar repertórios de cultos. O vínculo também pode registrar funções de escala, como Guitarra, Baixo ou Vocal, sem substituir seu papel de liderança ou integrante.
+As funções de serviço complementam o vínculo de equipe, sem substituir seu papel de liderança ou integrante. Na Área de Serviço **Música**, a função **Ministro** identifica quem pode preparar e enviar repertórios de cultos.
+
+Na Área de Serviço **Música**, as funções de escala são escolhidas em seleção múltipla para manter nomes consistentes nas escalas e nas solicitações de troca: Ministro, Backing Vocal, Guitarra, Violão, Baixo, Tecladista, Bateria e Percussão. Uma pessoa pode receber mais de uma delas. Por exemplo, a mesma pessoa pode ser Tecladista na escala e Ministro de Louvor na equipe; a função Ministro libera o repertório quando ela estiver escalada e confirmada no culto.
 
 ## Entrada e formação
 
@@ -62,6 +64,16 @@ O integrante escalado pode solicitar uma troca antes do horário previsto. A bus
 ## Histórico
 
 Vínculos são encerrados, não apagados. Escalas mantêm histórico auditável com usuário responsável, status anterior/novo, pessoas envolvidas em substituição e motivo opcional.
+
+## Administração e disponibilidade
+
+Áreas de Serviço e equipes possuem nome, descrição e status de disponibilidade. O escopo da área e o campus de origem de uma equipe são estruturais: não são alterados depois da criação, evitando que vínculos, escalas e histórico mudem de contexto.
+
+- Secretaria, administração e super administração podem editar e ativar/inativar uma Área de Serviço.
+- Lideranças autorizadas da área podem editar e ativar/inativar as equipes dentro do escopo que já administram; a API confirma essa permissão.
+- Ao inativar uma área, todas as equipes ativas dela também são inativadas na mesma operação. Pessoas, funções operacionais, escalas e seus históricos permanecem preservados.
+- Ao reativar uma área, suas equipes continuam inativas até que uma liderança as reative explicitamente. Isso evita a reabertura acidental de uma operação inteira.
+- Uma equipe não pode ser reativada enquanto sua área estiver inativa. Equipes ou áreas inativas não recebem novos vínculos, funções operacionais ou escalas.
 
 ## Extensão futura
 

@@ -97,7 +97,7 @@ export class NotificationService {
   private async authorize(dto: CreateNotificationDto, context: OrganizationContext) {
     const user = await this.prisma.user.findFirst({
       where: { id: context.userId, organizationId: context.organizationId },
-      include: { person: { select: { campusId: true } }, additionalRoles: { select: { role: true } } },
+      include: { person: { select: { campusId: true, campusMemberships: { where: { ativo: true }, select: { campusId: true } } } }, additionalRoles: { select: { role: true } } },
     });
     if (hasAnyUserRole(user, ['SECRETARY', 'ADMIN', 'SUPER_ADMIN', 'PASTOR_SENIOR'])) return;
     if (!hasAnyUserRole(user, ['PASTOR'])) throw new ForbiddenException('Somente liderança autorizada pode enviar notificações');

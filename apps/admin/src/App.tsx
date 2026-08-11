@@ -14,12 +14,14 @@ import type { CellStudy } from './api/cell-studies'
 import { addServiceAreaMember, approveServiceAreaApplication, completeServiceAreaApplicationStage, createServiceAreaApplication, createServiceAreaEntryStage, createServiceTeam, getServiceArea, listServiceAreaApplications, listServiceAreaEntryStages, listServiceAreas, rejectServiceAreaApplication, reorderServiceAreaEntryStages, startServiceAreaApplication, updateServiceAreaEntryStage, withdrawServiceAreaApplication } from './api/service-areas'
 import type { ServiceAreaApplication, ServiceAreaDetail, ServiceAreaEntryStage, ServiceAreaListItem, ServiceMembershipRole } from './api/service-areas'
 import { ServiceAreaWorkspace } from './ServiceAreaWorkspace'
+import { ServiceFunctionsField } from './ServiceFunctionsField'
 import { ServiceAreaOnboardingDialog } from './ServiceAreaOnboardingDialog'
 import { MySchedulesPage } from './MySchedulesPage'
 import { EventDetailsDialog } from './EventDetailsDialog'
 import { EventFormDialog } from './EventFormDialog'
 import { WorshipPage } from './WorshipPage'
 import { NotificationDialog } from './NotificationDialog'
+import { PersonRegistrationPanel } from './PersonRegistrationPanel'
 import { listMyNotifications } from './api/notifications'
 import { ApiError } from './api/client'
 import { clearSession, readSession, saveSession } from './auth/session'
@@ -190,6 +192,7 @@ function App() {
   const [isCheckingSession, setIsCheckingSession] = useState(Boolean(session))
   const [authError, setAuthError] = useState('')
   const [isSubmittingLogin, setIsSubmittingLogin] = useState(false)
+  const [showLoginPassword, setShowLoginPassword] = useState(false)
   const [dashboard, setDashboard] = useState<DashboardSummary | null>(null)
   const [dashboardError, setDashboardError] = useState('')
   const [isLoadingDashboard, setIsLoadingDashboard] = useState(false)
@@ -281,6 +284,7 @@ function App() {
   const [isLoadingServiceForm, setIsLoadingServiceForm] = useState(false)
   const [isSavingServiceForm, setIsSavingServiceForm] = useState(false)
   const [serviceMembershipRole, setServiceMembershipRole] = useState<ServiceMembershipRole>('MEMBER')
+  const [serviceMemberFunctions, setServiceMemberFunctions] = useState<string[]>([])
   const [serviceOnboardingArea, setServiceOnboardingArea] = useState<ServiceAreaDetail | null>(null)
   const [serviceOnboardingStages, setServiceOnboardingStages] = useState<ServiceAreaEntryStage[]>([])
   const [serviceOnboardingApplications, setServiceOnboardingApplications] = useState<ServiceAreaApplication[]>([])
@@ -288,8 +292,8 @@ function App() {
   const [serviceOnboardingError, setServiceOnboardingError] = useState('')
   const [isLoadingServiceOnboarding, setIsLoadingServiceOnboarding] = useState(false)
   const [isSavingServiceOnboarding, setIsSavingServiceOnboarding] = useState(false)
-  const [isCellsMenuExpanded, setIsCellsMenuExpanded] = useState(true)
-  const [isServiceMenuExpanded, setIsServiceMenuExpanded] = useState(true)
+  const [isCellsMenuExpanded, setIsCellsMenuExpanded] = useState(false)
+  const [isServiceMenuExpanded, setIsServiceMenuExpanded] = useState(false)
   const [studyWeekStart, setStudyWeekStart] = useState(() => toDateInputValue(startOfWeek(new Date())))
   const [study, setStudy] = useState<CellStudy | null>(null)
   const [studyError, setStudyError] = useState('')
@@ -298,6 +302,7 @@ function App() {
   const [notice, setNotice] = useState('')
   const assignedRoles = [session?.user.role, ...(session?.user.additionalRoles ?? [])]
   const canManageDirectory = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
+  const canManagePersonAccess = ['SUPER_ADMIN', 'ADMIN'].some((role) => assignedRoles.includes(role))
   const canManageStudies = ['SUPER_ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
   const canManageNetworks = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY', 'PASTOR', 'PASTOR_SENIOR'].some((role) => assignedRoles.includes(role))
   const canCentrallyManageServiceAreas = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
@@ -308,6 +313,7 @@ function App() {
   const isCellSection = ['cells', 'cell-structure', 'studies'].includes(activePage)
   const isServiceSection = ['teams', 'kids'].includes(activePage)
   const selectedServiceArea = serviceAreas.find((area) => area.id === selectedServiceAreaId) ?? null
+  const activeServiceMemberTeams = serviceMemberArea?.teams.filter((team) => team.ativo) ?? []
   const ownServiceAreaMemberships = serviceAreaDetail?.memberships.filter((membership) => membership.person.id === session?.user.personId) ?? []
   const canCreateServiceTeam = canCentrallyManageServiceAreas || ownServiceAreaMemberships.some((membership) => membership.role === 'GENERAL_LEADER')
   const canManageServiceMembers = canCentrallyManageServiceAreas || ownServiceAreaMemberships.some((membership) => membership.role !== 'MEMBER')
@@ -337,7 +343,7 @@ function App() {
     return () => {
       active = false
     }
-  }, [serviceAreasVersion, session])
+  }, [session])
 
   useEffect(() => {
     if (!session) {
@@ -348,7 +354,7 @@ function App() {
 
     let active = true
     setIsLoadingServiceAreas(true)
-    void listServiceAreas(session.access_token)
+    void listServiceAreas(session.access_token, canCentrallyManageServiceAreas)
       .then((areas) => {
         if (active) setServiceAreas(areas)
       })
@@ -362,7 +368,7 @@ function App() {
     return () => {
       active = false
     }
-  }, [session])
+  }, [canCentrallyManageServiceAreas, serviceAreasVersion, session])
 
   useEffect(() => {
     if (!session || activePage !== 'teams' || !selectedServiceAreaId) {
@@ -660,6 +666,12 @@ function App() {
       active = false
     }
   }, [selectedRecord, session])
+
+  useEffect(() => {
+    if (selectedRecord?.kind !== 'person') return
+    document.body.classList.add('modal-open')
+    return () => document.body.classList.remove('modal-open')
+  }, [selectedRecord])
 
   useEffect(() => {
     if (!session || !membershipCell) return
@@ -1140,6 +1152,7 @@ function App() {
     setServiceFormPeople([])
     setServiceFormCampuses([])
     setServiceMembershipRole('MEMBER')
+    setServiceMemberFunctions([])
     setServiceFormError('')
     setIsLoadingServiceForm(true)
     try {
@@ -1161,6 +1174,7 @@ function App() {
     setServiceFormPeople([])
     setServiceFormCampuses([])
     setServiceMembershipRole('MEMBER')
+    setServiceMemberFunctions([])
     setServiceFormError('')
   }
 
@@ -1171,7 +1185,7 @@ function App() {
     const formData = new FormData(event.currentTarget)
     const personId = String(formData.get('personId') ?? '')
     const teamId = String(formData.get('teamId') ?? '')
-    const funcoes = String(formData.get('funcoes') ?? '').split(',').map((value) => value.trim()).filter(Boolean)
+    const funcoes = (serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') ? serviceMemberFunctions : []
     const campusId = serviceMemberArea.scope === 'CAMPUS'
       ? serviceMemberArea.campus?.id ?? ''
       : String(formData.get('campusId') ?? '')
@@ -1582,14 +1596,16 @@ function App() {
         })
         setNotice('Célula criada com sucesso.')
       } else {
-        await createPerson(session.access_token, {
+        const created = await createPerson(session.access_token, {
           nome,
           telefone: String(formData.get('phone') ?? '').trim() || undefined,
           email: String(formData.get('email') ?? '').trim() || undefined,
           campusId,
+          campusIds: formData.getAll('campusIds').map(String),
           organizationId: session.user.organizationId,
         })
-        setNotice('Pessoa cadastrada com sucesso.')
+        setSelectedRecord({ kind: 'person', id: created.id })
+        setNotice('Pessoa cadastrada. Complete abaixo o acesso e o vínculo de serviço, se necessário.')
       }
 
       setCreationMode(null)
@@ -1628,6 +1644,7 @@ function App() {
         await updatePerson(session.access_token, recordDetail.data.id, {
           nome,
           campusId,
+          campusIds: formData.getAll('campusIds').map(String),
           telefone: String(formData.get('phone') ?? '').trim() || null,
           email: String(formData.get('email') ?? '').trim() || null,
         })
@@ -1682,7 +1699,7 @@ function App() {
             </label>
             <label>
               Senha
-              <input name="password" type="password" placeholder="Sua senha" autoComplete="current-password" required />
+              <span className="password-field"><input name="password" type={showLoginPassword ? 'text' : 'password'} placeholder="Sua senha" autoComplete="current-password" required /><button className="password-visibility-toggle" type="button" onClick={() => setShowLoginPassword((visible) => !visible)} aria-label={showLoginPassword ? 'Ocultar senha' : 'Mostrar senha'}>{showLoginPassword ? 'Ocultar' : 'Mostrar'}</button></span>
             </label>
             <div className="login-options">
               <label className="checkbox-label"><input name="keepSignedIn" type="checkbox" /> Manter conectado</label>
@@ -1758,7 +1775,7 @@ function App() {
             </div>
             {isServiceMenuExpanded && <div className="navigation-submenu" id="service-submenu">
               {isLoadingServiceAreas && <p className="navigation-submenu-loading">Carregando áreas...</p>}
-              {serviceAreas.filter((area) => area.nome.trim().toLocaleLowerCase('pt-BR') !== 'ibag kids').map((area) => <button className={`navigation-subitem ${activePage === 'teams' && selectedServiceAreaId === area.id ? 'navigation-subitem--active' : ''}`} type="button" key={area.id} onClick={() => { setSelectedServiceAreaId(area.id); setActivePage('teams') }} aria-current={activePage === 'teams' && selectedServiceAreaId === area.id ? 'page' : undefined}><span aria-hidden="true">◇</span>{area.nome}</button>)}
+              {serviceAreas.filter((area) => area.nome.trim().toLocaleLowerCase('pt-BR') !== 'ibag kids').map((area) => <button className={`navigation-subitem ${!area.ativo ? 'navigation-subitem--inactive' : ''} ${activePage === 'teams' && selectedServiceAreaId === area.id ? 'navigation-subitem--active' : ''}`} type="button" key={area.id} onClick={() => { setSelectedServiceAreaId(area.id); setActivePage('teams') }} aria-current={activePage === 'teams' && selectedServiceAreaId === area.id ? 'page' : undefined}><span aria-hidden="true">◇</span>{area.nome}{!area.ativo ? ' · Inativa' : ''}</button>)}
               <button className={`navigation-subitem ${activePage === 'kids' ? 'navigation-subitem--active' : ''}`} type="button" onClick={() => { setSelectedServiceAreaId(null); setActivePage('kids') }} aria-current={activePage === 'kids' ? 'page' : undefined}><span aria-hidden="true">☆</span>IBAG Kids</button>
             </div>}
           </div>
@@ -1826,7 +1843,7 @@ function App() {
         {activePage === 'people' && <PeoplePage data={people} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'person', id })} />}
         {activePage === 'my-schedules' && <MySchedulesPage accessToken={session.access_token} onNotice={setNotice} onNotificationsChanged={() => setNotificationsVersion((version) => version + 1)} />}
         {activePage === 'worship' && <WorshipPage accessToken={session.access_token} currentUserId={session.user.id} canManageAnyOrder={canManageAnyWorshipOrder} canManageTemplates={canManageWorshipTemplates} onNotice={setNotice} />}
-        {activePage === 'teams' && selectedServiceArea && <ServiceAreaWorkspace area={serviceAreaDetail} error={serviceAreaDetailError} isLoading={isLoadingServiceAreaDetail} onRetry={() => setServiceAreaDetailVersion((version) => version + 1)} canCreateTeam={canCreateServiceTeam} canManageMembers={canManageServiceMembers} canManageOnboarding={canManageServiceMembers} canManageSchedules={canManageServiceMembers} accessToken={session.access_token} currentPersonId={session.user.personId} onNotice={setNotice} onCreateTeam={openServiceTeamForm} onAddMember={openServiceMemberForm} onOpenOnboarding={openServiceOnboarding} />}
+        {activePage === 'teams' && selectedServiceArea && <ServiceAreaWorkspace area={serviceAreaDetail} error={serviceAreaDetailError} isLoading={isLoadingServiceAreaDetail} onRetry={() => setServiceAreaDetailVersion((version) => version + 1)} canManageArea={canCentrallyManageServiceAreas} canCreateTeam={canCreateServiceTeam} canManageTeams={canManageServiceMembers} canManageMembers={canManageServiceMembers} canManageOnboarding={canManageServiceMembers} canManageSchedules={canManageServiceMembers} accessToken={session.access_token} currentPersonId={session.user.personId} onNotice={setNotice} onCreateTeam={openServiceTeamForm} onAddMember={openServiceMemberForm} onOpenOnboarding={openServiceOnboarding} onStructureChange={(areaIsActive) => { setServiceAreaDetailVersion((version) => version + 1); setServiceAreasVersion((version) => version + 1); if (!areaIsActive) setSelectedServiceAreaId(null) }} />}
         {activePage !== 'dashboard' && activePage !== 'agenda' && activePage !== 'cells' && activePage !== 'cell-structure' && activePage !== 'studies' && activePage !== 'people' && activePage !== 'my-schedules' && activePage !== 'worship' && (activePage !== 'teams' || !selectedServiceArea) && <ModulePreview copy={pageCopy[activePage]} />}
       </main>
 
@@ -1845,7 +1862,8 @@ function App() {
             <form className="event-form" onSubmit={saveDirectoryEntry}>
               <label>{creationMode === 'cell' ? 'Nome da célula' : 'Nome completo'}<input name="name" required placeholder={creationMode === 'cell' ? 'Ex.: Célula Esperança' : 'Ex.: Nome da pessoa'} /></label>
               {creationMode === 'cell' ? <><label>Descrição <span className="field-optional">(opcional)</span><input name="description" placeholder="Uma breve identificação da célula" /></label><div className="form-grid"><label>Dia do encontro<select name="meetingDay" defaultValue=""><option value="">Ainda não definido</option><option value="MONDAY">Segunda-feira</option><option value="TUESDAY">Terça-feira</option><option value="WEDNESDAY">Quarta-feira</option><option value="THURSDAY">Quinta-feira</option><option value="FRIDAY">Sexta-feira</option><option value="SATURDAY">Sábado</option><option value="SUNDAY">Domingo</option></select></label><label>Horário <span className="field-optional">(opcional)</span><input name="meetingTime" type="time" /></label></div></> : <><div className="form-grid"><label>Telefone <span className="field-optional">(opcional)</span><input name="phone" type="tel" placeholder="(51) 00000-0000" /></label><label>E-mail <span className="field-optional">(opcional)</span><input name="email" type="email" placeholder="pessoa@email.com" /></label></div></>}
-              <label>Campus<select name="campusId" defaultValue="" required disabled={isLoadingCampuses || campuses.length === 0}><option value="" disabled>{isLoadingCampuses ? 'Carregando campi...' : 'Selecione o campus'}</option>{campuses.map((campus) => <option key={campus.id} value={campus.id}>{campus.nome}</option>)}</select></label>
+              <label>Campus principal<select name="campusId" defaultValue="" required disabled={isLoadingCampuses || campuses.length === 0}><option value="" disabled>{isLoadingCampuses ? 'Carregando campi...' : 'Selecione o campus'}</option>{campuses.map((campus) => <option key={campus.id} value={campus.id}>{campus.nome}</option>)}</select></label>
+              {creationMode === 'person' && <CampusMembershipField campuses={campuses} selectedCampusIds={[]} disabled={isLoadingCampuses} />}
               {directoryFormError && <p className="form-error" role="alert">{directoryFormError}</p>}
               <div className="dialog-actions"><button className="secondary-button" type="button" onClick={closeDirectoryForm}>Cancelar</button><button className="primary-button" type="submit" disabled={isLoadingCampuses || campuses.length === 0 || isSubmittingDirectory}>{isSubmittingDirectory ? 'Salvando...' : creationMode === 'cell' ? 'Criar célula' : 'Cadastrar pessoa'}</button></div>
             </form>
@@ -1882,8 +1900,8 @@ function App() {
               <label>Pessoa<select name="personId" required defaultValue="" disabled={isLoadingServiceForm || serviceFormPeople.length === 0}><option value="" disabled>{isLoadingServiceForm ? 'Carregando pessoas...' : 'Selecione uma pessoa'}</option>{serviceFormPeople.map((person) => <option key={person.id} value={person.id}>{person.nome}{person.campus.nome ? ` · ${person.campus.nome}` : ''}</option>)}</select></label>
               <label>Função na área<select value={serviceMembershipRole} onChange={(event) => setServiceMembershipRole(event.target.value as ServiceMembershipRole)}><option value="MEMBER">Integrante</option><option value="TEAM_LEADER">Liderança de equipe</option><option value="CAMPUS_LEADER">Liderança de campus</option><option value="GENERAL_LEADER">Liderança geral</option></select></label>
               {serviceMembershipRole === 'CAMPUS_LEADER' && (serviceMemberArea.scope === 'CAMPUS' && serviceMemberArea.campus ? <p className="record-detail-note">A liderança será vinculada ao <strong>{serviceMemberArea.campus.nome}</strong>.</p> : <label>Campus<select name="campusId" required defaultValue="" disabled={isLoadingServiceForm || serviceFormCampuses.length === 0}><option value="" disabled>{isLoadingServiceForm ? 'Carregando campi...' : 'Selecione o campus'}</option>{serviceFormCampuses.map((campus) => <option value={campus.id} key={campus.id}>{campus.nome}</option>)}</select></label>)}
-              {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <label>Equipe<select name="teamId" required defaultValue="" disabled={serviceMemberArea.teams.length === 0}><option value="" disabled>{serviceMemberArea.teams.length ? 'Selecione a equipe' : 'Crie uma equipe antes'}</option>{serviceMemberArea.teams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label>}
-              {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <label>Funções de serviço <span className="field-optional">(opcional)</span><input name="funcoes" maxLength={500} placeholder="Ex.: Guitarra, Vocal" /><small className="field-help">Separe por vírgulas. Essas funções definem quem pode receber solicitações de troca.</small></label>}
+              {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <label>Equipe<select name="teamId" required defaultValue="" disabled={activeServiceMemberTeams.length === 0}><option value="" disabled>{activeServiceMemberTeams.length ? 'Selecione a equipe' : 'Crie uma equipe ativa antes'}</option>{activeServiceMemberTeams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label>}
+              {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <ServiceFunctionsField areaName={serviceMemberArea.nome} value={serviceMemberFunctions} onChange={setServiceMemberFunctions} disabled={isSavingServiceForm} />}
               {serviceFormError && <p className="form-error" role="alert">{serviceFormError}</p>}
               <div className="dialog-actions"><button className="secondary-button" type="button" onClick={closeServiceMemberForm}>Cancelar</button><button className="primary-button" type="submit" disabled={isLoadingServiceForm || serviceFormPeople.length === 0 || isSavingServiceForm}>{isSavingServiceForm ? 'Vinculando...' : 'Vincular pessoa'}</button></div>
             </form>
@@ -1895,12 +1913,12 @@ function App() {
 
       {selectedRecord && (
         <div className="dialog-backdrop" role="presentation" onMouseDown={closeRecordDetail}>
-          <section className={`event-dialog ${selectedRecord.kind === 'cell' ? 'event-dialog--cell-details' : ''}`} role="dialog" aria-modal="true" aria-labelledby="record-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
+          <section className={`event-dialog event-dialog--record-details ${selectedRecord.kind === 'cell' ? 'event-dialog--cell-details' : ''}`} role="dialog" aria-modal="true" aria-labelledby="record-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
             <button className="dialog-close" type="button" onClick={closeRecordDetail} aria-label="Fechar">×</button>
             {isLoadingRecordDetail && <p className="dialog-description">Carregando cadastro...</p>}
             {!isLoadingRecordDetail && recordDetailError && !recordDetail && <p className="form-error" role="alert">{recordDetailError}</p>}
             {!isLoadingRecordDetail && recordDetail?.kind === 'cell' && <CellDetailForm data={recordDetail.data} overview={cellOverview} campuses={campuses} isLoadingCampuses={isLoadingCampuses} canEdit={canManageDirectory} isSaving={isSavingRecord} error={recordDetailError} onCancel={closeRecordDetail} onSubmit={saveRecordDetail} onAddMember={() => openMembershipForm(recordDetail.data)} onEndMembership={endMembership} onAssignLeadership={() => openLeadershipForm(recordDetail.data, cellOverview?.memberships.map((membership) => membership.person) ?? [])} onEndLeadership={endLeadershipAssignment} onOpenRoster={openRosterForm} onOpenVisitors={openVisitorForm} onFinishMeeting={finishMeeting} />}
-            {!isLoadingRecordDetail && recordDetail?.kind === 'person' && <PersonDetailForm data={recordDetail.data} campuses={campuses} isLoadingCampuses={isLoadingCampuses} canEdit={canManageDirectory} isSaving={isSavingRecord} error={recordDetailError} onCancel={closeRecordDetail} onSubmit={saveRecordDetail} />}
+            {!isLoadingRecordDetail && recordDetail?.kind === 'person' && <div className="person-detail-layout"><PersonDetailForm data={recordDetail.data} campuses={campuses} isLoadingCampuses={isLoadingCampuses} canEdit={canManageDirectory} isSaving={isSavingRecord} error={recordDetailError} onCancel={closeRecordDetail} onSubmit={saveRecordDetail} /><PersonRegistrationPanel accessToken={session.access_token} person={recordDetail.data} canManageAccess={canManagePersonAccess} canManageServiceAreas={canCentrallyManageServiceAreas} onPersonChange={(person) => setRecordDetail({ kind: 'person', data: person })} onNotice={setNotice} /></div>}
           </section>
         </div>
       )}
@@ -2264,16 +2282,22 @@ function PersonDetailForm({ data, campuses, isLoadingCampuses, canEdit, isSaving
     <form className="event-form" onSubmit={canEdit ? onSubmit : undefined}>
       <p className="eyebrow">Pessoas</p>
       <h2 id="record-dialog-title">Cadastro da pessoa</h2>
-      <p className="dialog-description">Mantenha os dados de contato e o vínculo com o campus sempre atualizados.</p>
+      <p className="dialog-description">Mantenha os dados de contato, o campus principal e os demais vínculos sempre atualizados.</p>
       <label>Nome completo<input name="name" required defaultValue={data.nome} disabled={!canEdit} /></label>
       <div className="form-grid"><label>Telefone <span className="field-optional">(opcional)</span><input name="phone" type="tel" defaultValue={data.telefone ?? ''} disabled={!canEdit} /></label><label>E-mail <span className="field-optional">(opcional)</span><input name="email" type="email" defaultValue={data.email ?? ''} disabled={!canEdit} /></label></div>
-      <label>Campus<select name="campusId" defaultValue={data.campus.id} required disabled={!canEdit || isLoadingCampuses || campuses.length === 0}><option value={data.campus.id}>{isLoadingCampuses ? 'Carregando campi...' : data.campus.nome}</option>{campuses.filter((campus) => campus.id !== data.campus.id).map((campus) => <option key={campus.id} value={campus.id}>{campus.nome}</option>)}</select></label>
+      <label>Campus principal<select name="campusId" defaultValue={data.campus.id} required disabled={!canEdit || isLoadingCampuses || campuses.length === 0}><option value={data.campus.id}>{isLoadingCampuses ? 'Carregando campi...' : data.campus.nome}</option>{campuses.filter((campus) => campus.id !== data.campus.id).map((campus) => <option key={campus.id} value={campus.id}>{campus.nome}</option>)}</select></label>
+      <CampusMembershipField campuses={campuses} selectedCampusIds={data.campusMemberships?.map((membership) => membership.campusId) ?? [data.campus.id]} disabled={!canEdit || isLoadingCampuses} />
       <p className="record-detail-note">Status atual: <strong>{data.ativo ? 'Ativa' : 'Inativa'}</strong></p>
       {!canEdit && <p className="dialog-description">Seu perfil pode consultar este cadastro, mas não alterá-lo.</p>}
       {error && <p className="form-error" role="alert">{error}</p>}
       <DetailActions canEdit={canEdit} isSaving={isSaving} onCancel={onCancel} saveLabel="Salvar alterações" />
     </form>
   )
+}
+
+function CampusMembershipField({ campuses, selectedCampusIds, disabled }: { campuses: CampusListItem[]; selectedCampusIds: string[]; disabled: boolean }) {
+  if (campuses.length < 2) return null
+  return <fieldset className="campus-membership-field" disabled={disabled}><legend>Campi vinculados</legend><p>Marque todos os campi em que esta pessoa pode atuar. O login continua único para toda a organização.</p><div>{campuses.map((campus) => <label key={campus.id}><input type="checkbox" name="campusIds" value={campus.id} defaultChecked={selectedCampusIds.includes(campus.id)} /><span>{campus.nome}</span></label>)}</div></fieldset>
 }
 
 function DetailActions({ canEdit, isSaving, onCancel, saveLabel }: { canEdit: boolean; isSaving: boolean; onCancel: () => void; saveLabel: string }) {

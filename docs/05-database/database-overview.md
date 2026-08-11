@@ -20,7 +20,7 @@ Organization
 
 | Grupo | Entidades principais |
 | --- | --- |
-| Pessoas e acesso | `Person`, `User`, `UserRoleAssignment`, `Family`, `PersonJourneyEvent` |
+| Pessoas e acesso | `Person`, `PersonCampusMembership`, `User`, `UserRoleAssignment`, `Family`, `PersonJourneyEvent` |
 | Células | `Cell`, `CellMembership`, `CellLeadership`, `CellNetworkSupervision`, `CellCampusCoordination`, `CellMeeting`, `CellStudy`, `CellMultiplication` |
 | Áreas de serviço | `ServiceArea`, `ServiceTeam`, `ServiceMembership`, `ServiceSchedule`, `ServiceScheduleHistory`, `ServiceScheduleSwapRequest` |
 | Formação | `ServiceAreaEntryStage`, `ServiceAreaApplication`, `ServiceAreaApplicationStage` |

@@ -22,7 +22,7 @@ export * as $Enums from './enums'
 export * from "./enums"
 /**
  * ## Prisma Client
- * 
+ *
  * Type-safe database client for TypeScript
  * @example
  * ```
@@ -49,6 +49,11 @@ export type Campus = Prisma.CampusModel
  * 
  */
 export type Person = Prisma.PersonModel
+/**
+ * Model PersonCampusMembership
+ *
+ */
+export type PersonCampusMembership = Prisma.PersonCampusMembershipModel
 /**
  * Model User
  * 

@@ -299,7 +299,7 @@ export class EventService {
   }
 
   private async user(context: OrganizationContext) {
-    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId }, include: { person: { select: { campusId: true } }, additionalRoles: { select: { role: true } } } });
+    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId }, include: { person: { select: { campusId: true, campusMemberships: { where: { ativo: true }, select: { campusId: true } } } }, additionalRoles: { select: { role: true } } } });
     if (!user) throw new ForbiddenException('Usuário sem vínculo organizacional');
     return user;
   }

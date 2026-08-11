@@ -1,8 +1,23 @@
 # Painel administrativo
 
+## Pessoas
+
+Depois de criar uma pessoa, o painel abre seu cadastro automaticamente. Além dos dados básicos, a seção **Acesso e serviço** permite decidir, de forma independente e opcional, se ela receberá login ou se atua em uma Área de Serviço:
+
+- definir um campus principal e marcar os demais campi em que a mesma pessoa pode atuar, sem gerar cadastro ou login duplicado;
+- informar se a pessoa receberá login no IBAG One e definir a senha inicial; a ação fica restrita a administração e super administração;
+- mostrar ou ocultar a senha enquanto ela é digitada, tanto no login quanto na definição da senha inicial;
+- visualizar o usuário institucional que foi gerado;
+- escolher uma Área de Serviço, sua equipe e funções de serviço, criando o vínculo de integrante diretamente no cadastro;
+- consultar os vínculos ativos já existentes da pessoa.
+
+A equipe é obrigatória para o vínculo de integrante, pois ela define o campus e o escopo das escalas. A API confirma a permissão de quem faz a vinculação e impede duplicidade de vínculos ativos.
+
+O cadastro aberto da pessoa possui rolagem interna quando seu conteúdo ultrapassa a altura disponível da tela, mantendo acessíveis os campos de acesso, campi e vínculo de serviço.
+
 ## Áreas de Serviço
 
-O menu lateral agrupa as áreas cadastradas abaixo de **Áreas de Serviço**. O grupo pode ser recolhido e expandido; cada área abre seu próprio espaço no painel.
+O menu lateral agrupa as áreas cadastradas abaixo de **Áreas de Serviço**. Os grupos de Células e Áreas de Serviço iniciam recolhidos e podem ser expandidos; cada área abre seu próprio espaço no painel.
 
 A visão da área selecionada consulta `GET /service-areas/:id` e apresenta, respeitando a organização autenticada:
 
@@ -19,9 +34,13 @@ Pessoas com permissão de gestão veem ações conforme seu vínculo na área:
 
 O painel já permite criar equipes e vincular uma pessoa como integrante, liderança de equipe, liderança de campus ou liderança geral. A API permanece responsável pela validação final de escopo, campus, equipe e permissão.
 
+Secretaria, administração e super administração também veem **Configurar área**, onde podem editar nome e descrição e ativar/inativar a área. A inativação da área interrompe suas equipes ativas, mas não remove pessoas, escalas ou histórico. Ao reativar uma área, cada equipe permanece inativa até ser reativada manualmente. As lideranças autorizadas veem **Gerenciar** em suas equipes para editar nome e descrição ou alterar o status da própria equipe. O campus da equipe e o escopo da área permanecem informativos e não podem ser mudados nessa tela.
+
+Áreas inativas aparecem identificadas no submenu apenas para a gestão central, permitindo sua reativação sem expô-las às operações diárias. Dentro da área, cada equipe mostra claramente se está ativa ou inativa.
+
 ## Funções operacionais
 
-Cada Área de Serviço apresenta uma seção de **Funções operacionais** por equipe. A liderança autorizada pode atribuir ou encerrar o papel de **Ministro de Louvor** para uma pessoa que já seja integrante ativo daquela equipe. A função não substitui o vínculo de integrante ou liderança e permanece limitada à equipe escolhida; ela habilita o fluxo de repertório de cultos.
+A Área de Serviço **Música** apresenta uma seção de **Funções operacionais** por equipe. Ela mostra os **Ministros de Louvor** cadastrados nas funções de serviço de cada integrante. A liderança autorizada marca ou remove `Ministro` diretamente no cadastro da pessoa; a função permanece limitada à equipe escolhida e habilita o fluxo de repertório de cultos quando houver escala confirmada.
 
 ## Entrada e formação
 
@@ -46,7 +65,7 @@ Cada Área de Serviço exibe sua visão consolidada de escalas, sempre filtrada 
 - concluir ou reabrir uma escala pela liderança autorizada;
 - substituir a pessoa escalada por outra integrante da mesma equipe, preservando a solicitação de nova confirmação;
 - consultar o histórico auditável de criação, respostas e substituições;
-- cadastrar as funções de cada integrante da equipe, como Guitarra, Baixo ou Vocal.
+- cadastrar as funções de cada integrante da equipe, como Guitarra, Baixo ou Ministro. Na Área de Serviço Música, o painel oferece seleção múltipla de Ministro, Backing Vocal, Guitarra, Violão, Baixo, Tecladista, Bateria e Percussão; uma mesma pessoa pode marcar quantas funções exercer. Marcar Ministro também habilita o fluxo de repertório.
 
 O painel não replica regras de agenda: conflitos, permissões, escopo da equipe e notificações são validados exclusivamente pela API. Ao escolher um evento aprovado, o formulário filtra pela equipe selecionada e preenche seu horário; a escala continua sendo administrada exclusivamente pela Área de Serviço, enquanto o evento apenas a consulta. Na criação em lote, o sistema envia todas as escalas em uma única operação: se uma delas for inválida, nenhuma é criada.
 

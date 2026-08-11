@@ -4,6 +4,8 @@
 
 Uma escala pertence à área de serviço e à equipe da pessoa escalada, como Louvor, Dança, Multimídia ou Som. Ela pode ser associada a um evento aprovado, mas não pertence à Ordem de Culto. A Ordem de Culto apenas consulta as escalas do seu evento.
 
+Uma pessoa recebe apenas uma escala por equipe e horário. A função de serviço **Ministro** é complementar: uma pessoa pode ser escalada como `Tecladista` e também ser Ministro de Louvor, sem gerar uma segunda escala nem conflito de agenda. A função é válida somente na equipe em que foi cadastrada e libera o repertório quando houver escala confirmada no culto.
+
 ## Endpoints
 
 | Método | Rota | Finalidade |
@@ -34,7 +36,7 @@ POST /service-areas/teams/:teamId/schedules
 {
   "personId": "uuid-da-pessoa",
   "data": "2026-08-09T19:00:00.000Z",
-  "funcao": "Vocal",
+  "funcao": "Ministro",
   "eventId": "uuid-do-culto"
 }
 ```
@@ -46,9 +48,9 @@ POST /service-areas/teams/:teamId/schedules/batch
 {
   "schedules": [
     {
-      "personId": "uuid-vocal",
+      "personId": "uuid-ministro",
       "data": "2026-08-09T19:00:00.000Z",
-      "funcao": "Vocal",
+      "funcao": "Ministro",
       "eventId": "uuid-do-culto"
     },
     {
@@ -93,7 +95,7 @@ A pessoa retirada recebe o alerta de transferência e a pessoa incluída recebe 
 
 O integrante escalado pode solicitar uma troca antes do horário da escala. Ele não altera a escala diretamente: informa uma pessoa disponível e a solicitação fica como `PENDING` até a decisão da liderança de Louvor/equipe.
 
-Para que a lista seja segura, cada integrante pode ter uma ou mais **funções de serviço** registradas no vínculo com a equipe, como `Guitarra`, `Baixo` ou `Vocal`. A busca de candidatos mostra somente pessoas que:
+Para que a lista seja segura, cada integrante pode ter uma ou mais **funções de serviço** registradas no vínculo com a equipe, como `Guitarra`, `Baixo` ou `Ministro`. Na Área de Serviço Música, o painel registra por seleção múltipla os valores padronizados `Ministro`, `Backing Vocal`, `Guitarra`, `Violão`, `Baixo`, `Tecladista`, `Bateria` e `Percussão`. A busca de candidatos mostra somente pessoas que:
 
 - pertencem ativamente à mesma equipe;
 - possuem a mesma função da escala;

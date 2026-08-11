@@ -74,14 +74,14 @@ describe('KidsService — QR de retirada', () => {
     await expect(service.childAttendance('child-1', context)).rejects.toBeInstanceOf(require('@nestjs/common').ForbiddenException);
   });
 
-  it('limita a listagem de turmas ao campus do pastor', async () => {
-    prisma.user.findFirst.mockResolvedValue({ role: 'PASTOR', person: { campusId: 'campus-1' }, additionalRoles: [] });
+  it('limita a listagem de turmas aos campi vinculados ao pastor', async () => {
+    prisma.user.findFirst.mockResolvedValue({ role: 'PASTOR', person: { campusId: 'campus-1', campusMemberships: [{ campusId: 'campus-2' }] }, additionalRoles: [] });
     prisma.kidsClass.findMany.mockResolvedValue([]);
 
     await service.classes(context);
 
     expect(prisma.kidsClass.findMany).toHaveBeenCalledWith(expect.objectContaining({
-      where: expect.objectContaining({ campusId: 'campus-1' }),
+      where: expect.objectContaining({ campusId: { in: ['campus-1', 'campus-2'] } }),
     }));
   });
 

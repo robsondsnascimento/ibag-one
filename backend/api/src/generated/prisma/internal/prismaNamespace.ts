@@ -399,6 +399,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Campus: 'Campus',
   Person: 'Person',
+  PersonCampusMembership: 'PersonCampusMembership',
   User: 'User',
   UserRoleAssignment: 'UserRoleAssignment',
   Organization: 'Organization',
@@ -474,7 +475,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "campus" | "person" | "user" | "userRoleAssignment" | "organization" | "auditLog" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceOperationalRoleAssignment" | "serviceSchedule" | "serviceScheduleSwapRequest" | "serviceScheduleHistory" | "serviceAreaEntryStage" | "serviceAreaApplication" | "serviceAreaApplicationStage" | "space" | "event" | "googleCalendarEventSync" | "worshipOrder" | "worshipOrderTemplate" | "worshipOrderTemplateItem" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "worshipRepertoire" | "worshipRepertoireSong" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellCampusCoordination" | "cellMembership" | "cellLeadership"
+    modelProps: "campus" | "person" | "personCampusMembership" | "user" | "userRoleAssignment" | "organization" | "auditLog" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceOperationalRoleAssignment" | "serviceSchedule" | "serviceScheduleSwapRequest" | "serviceScheduleHistory" | "serviceAreaEntryStage" | "serviceAreaApplication" | "serviceAreaApplicationStage" | "space" | "event" | "googleCalendarEventSync" | "worshipOrder" | "worshipOrderTemplate" | "worshipOrderTemplateItem" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "worshipRepertoire" | "worshipRepertoireSong" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellCampusCoordination" | "cellMembership" | "cellLeadership"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -623,6 +624,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PersonCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PersonCountAggregateOutputType> | number
+        }
+      }
+    }
+    PersonCampusMembership: {
+      payload: Prisma.$PersonCampusMembershipPayload<ExtArgs>
+      fields: Prisma.PersonCampusMembershipFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PersonCampusMembershipFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PersonCampusMembershipFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload>
+        }
+        findFirst: {
+          args: Prisma.PersonCampusMembershipFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PersonCampusMembershipFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload>
+        }
+        findMany: {
+          args: Prisma.PersonCampusMembershipFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload>[]
+        }
+        create: {
+          args: Prisma.PersonCampusMembershipCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload>
+        }
+        createMany: {
+          args: Prisma.PersonCampusMembershipCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PersonCampusMembershipCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload>[]
+        }
+        delete: {
+          args: Prisma.PersonCampusMembershipDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload>
+        }
+        update: {
+          args: Prisma.PersonCampusMembershipUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload>
+        }
+        deleteMany: {
+          args: Prisma.PersonCampusMembershipDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PersonCampusMembershipUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PersonCampusMembershipUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload>[]
+        }
+        upsert: {
+          args: Prisma.PersonCampusMembershipUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PersonCampusMembershipPayload>
+        }
+        aggregate: {
+          args: Prisma.PersonCampusMembershipAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePersonCampusMembership>
+        }
+        groupBy: {
+          args: Prisma.PersonCampusMembershipGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PersonCampusMembershipGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PersonCampusMembershipCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PersonCampusMembershipCountAggregateOutputType> | number
         }
       }
     }
@@ -5140,6 +5215,19 @@ export const PersonScalarFieldEnum = {
 export type PersonScalarFieldEnum = (typeof PersonScalarFieldEnum)[keyof typeof PersonScalarFieldEnum]
 
 
+export const PersonCampusMembershipScalarFieldEnum = {
+  id: 'id',
+  ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  personId: 'personId',
+  campusId: 'campusId',
+  organizationId: 'organizationId'
+} as const
+
+export type PersonCampusMembershipScalarFieldEnum = (typeof PersonCampusMembershipScalarFieldEnum)[keyof typeof PersonCampusMembershipScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   loginEmail: 'loginEmail',
@@ -6626,6 +6714,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   campus?: Prisma.CampusOmit
   person?: Prisma.PersonOmit
+  personCampusMembership?: Prisma.PersonCampusMembershipOmit
   user?: Prisma.UserOmit
   userRoleAssignment?: Prisma.UserRoleAssignmentOmit
   organization?: Prisma.OrganizationOmit

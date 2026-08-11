@@ -10,7 +10,7 @@ A agenda institucional possui sincronização unidirecional opcional com um úni
 
 | Domínio | Entregas atuais |
 | --- | --- |
-| Pessoas e acesso | Pessoas, contas, papéis adicionais, super administração, campus, famílias e jornada da pessoa. |
+| Pessoas e acesso | Pessoas, campus principal e vínculos adicionais por campus, contas, papéis adicionais, super administração, famílias e jornada da pessoa. |
 | Células | Coordenação por campus, redes, supervisão, liderança, apoio, presença/falta, visitantes, conclusão de reunião, estudos semanais, localização e multiplicação. |
 | Cuidado pastoral | Registros de acompanhamento e visão pastoral consolidada com escopo de campus. |
 | Áreas de serviço | Áreas globais ou por campus, equipes, membros, lideranças, funções operacionais, escalas e solicitações de troca por função. |
@@ -36,7 +36,8 @@ A agenda institucional possui sincronização unidirecional opcional com um úni
 - A presença em células permite registrar ausência; visitantes são identificados pelo telefone e, após três encontros na mesma célula, podem ser incluídos como participantes ativos sem se tornarem membros formais automaticamente.
 - Estudos semanais são globais à organização e dependem do registro da célula anterior, com exceção prevista para células novas.
 - A coordenação de células é um vínculo por campus; no cuidado pastoral, atua abaixo do pastor e acima da supervisão de rede.
-- `PASTOR` possui escopo do próprio campus; `PASTOR_SENIOR` herda as responsabilidades pastorais em todos os campi da organização.
+- Uma pessoa pode manter um único cadastro e login, com um campus principal e vínculos ativos em um ou mais campi da organização.
+- `PASTOR` possui escopo dos campi ativos vinculados à sua pessoa; `PASTOR_SENIOR` herda as responsabilidades pastorais em todos os campi da organização.
 
 ## Estrutura
 

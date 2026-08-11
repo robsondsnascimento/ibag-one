@@ -12,6 +12,13 @@ export type AuthUser = {
     campus: {
       nome: string
     }
+    campusMemberships: Array<{
+      campusId: string
+      campus: {
+        id: string
+        nome: string
+      }
+    }>
   }
   organization: {
     id: string

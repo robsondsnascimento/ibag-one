@@ -2,6 +2,7 @@ import {
   IsBoolean,
   IsDateString,
   IsEmail,
+  IsArray,
   IsOptional,
   IsString,
   IsUUID,
@@ -62,6 +63,11 @@ export class CreatePersonDto {
 
   @IsUUID()
   campusId: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsUUID('4', { each: true })
+  campusIds?: string[];
 
 
   @IsOptional()

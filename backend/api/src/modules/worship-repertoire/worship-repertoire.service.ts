@@ -296,18 +296,31 @@ export class WorshipRepertoireService {
     return area;
   }
 
-  private async assertMinister(serviceAreaId: string, context: OrganizationContext) {
-    const minister = await this.prisma.serviceOperationalRoleAssignment.findFirst({
+  private async assertMinister(serviceAreaId: string, context: OrganizationContext, teamId?: string) {
+    const operationalRole = await this.prisma.serviceOperationalRoleAssignment.findFirst({
       where: {
         personId: context.personId,
         serviceAreaId,
         organizationId: context.organizationId,
         role: ServiceOperationalRole.WORSHIP_MINISTER,
         ativo: true,
+        ...(teamId ? { teamId } : {}),
         team: { ativo: true, memberships: { some: { personId: context.personId, ativo: true } } },
       },
     });
-    if (!minister) throw new ForbiddenException('Somente o Ministro de Louvor ativo da equipe pode preparar o repertório');
+    if (operationalRole) return;
+
+    const ministerMembership = await this.prisma.serviceMembership.findFirst({
+      where: {
+        personId: context.personId,
+        serviceAreaId,
+        ativo: true,
+        funcoes: { has: 'Ministro' },
+        ...(teamId ? { teamId } : {}),
+        team: { ativo: true },
+      },
+    });
+    if (!ministerMembership) throw new ForbiddenException('Somente quem possui a função Ministro ativa na equipe pode preparar o repertório');
   }
 
   private async assertConfirmedSchedule(repertoire: { eventId: string; serviceAreaId: string }, context: OrganizationContext) {
@@ -318,11 +331,12 @@ export class WorshipRepertoireService {
         status: 'CONFIRMED',
         team: { serviceAreaId: repertoire.serviceAreaId, ativo: true },
       },
-      select: { id: true },
+      select: { id: true, teamId: true },
     });
     if (!schedule) {
       throw new ForbiddenException('O Ministro de Louvor precisa possuir uma escala confirmada neste culto para enviar o repertório');
     }
+    await this.assertMinister(repertoire.serviceAreaId, context, schedule.teamId);
   }
 
   private async assertSubmitter(repertoire: { submittedByPersonId: string; serviceAreaId: string }, context: OrganizationContext) {
@@ -351,7 +365,7 @@ export class WorshipRepertoireService {
   private async user(context: OrganizationContext) {
     const user = await this.prisma.user.findFirst({
       where: { id: context.userId, organizationId: context.organizationId, ativo: true },
-      include: { person: { select: { campusId: true } }, additionalRoles: { select: { role: true } } },
+      include: { person: { select: { campusId: true, campusMemberships: { where: { ativo: true }, select: { campusId: true } } } }, additionalRoles: { select: { role: true } } },
     });
     if (!user) throw new ForbiddenException('Usuário sem vínculo organizacional ativo');
     return user;

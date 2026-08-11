@@ -42,6 +42,27 @@ export type PersonListItem = {
     id: string
     nome: string
   }
+  campusMemberships?: Array<{
+    campusId: string
+    campus: {
+      id: string
+      nome: string
+    }
+  }>
+  serviceMemberships?: Array<{
+    id: string
+    role: 'GENERAL_LEADER' | 'CAMPUS_LEADER' | 'TEAM_LEADER' | 'MEMBER'
+    inicio: string
+    funcoes: string[]
+    serviceArea: {
+      id: string
+      nome: string
+    }
+    team: {
+      id: string
+      nome: string
+    } | null
+  }>
 }
 
 export type CampusListItem = {
@@ -95,6 +116,7 @@ export type CreatePersonInput = {
   telefone?: string
   email?: string
   campusId: string
+  campusIds?: string[]
   organizationId: string
 }
 
@@ -112,6 +134,7 @@ export type UpdatePersonInput = {
   telefone?: string | null
   email?: string | null
   campusId?: string
+  campusIds?: string[]
 }
 
 export type CellPersonReference = {

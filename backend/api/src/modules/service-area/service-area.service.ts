@@ -1,5 +1,5 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { NotificationAudience, ServiceMembershipRole, ServiceScheduleHistoryAction, ServiceScheduleStatus, ServiceScheduleSwapRequestStatus } from '../../generated/prisma/client';
+import { NotificationAudience, ServiceMembershipRole, ServiceOperationalRole, ServiceScheduleHistoryAction, ServiceScheduleStatus, ServiceScheduleSwapRequestStatus } from '../../generated/prisma/client';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 import { AddServiceMemberDto } from './dto/add-service-member.dto';
@@ -13,6 +13,8 @@ import { RejectServiceScheduleSwapRequestDto } from './dto/reject-service-schedu
 import { SubstituteServiceScheduleDto } from './dto/substitute-service-schedule.dto';
 import { UpdateServiceMemberFunctionsDto } from './dto/update-service-member-functions.dto';
 import { UpdateServiceScheduleStatusDto } from './dto/update-service-schedule-status.dto';
+import { UpdateServiceAreaDto } from './dto/update-service-area.dto';
+import { UpdateServiceTeamDto } from './dto/update-service-team.dto';
 import { userRoleWhere } from '../../common/access/user-role.util';
 
 @Injectable()
@@ -27,23 +29,57 @@ export class ServiceAreaService {
     return this.prisma.serviceArea.create({ data: { ...dto, organizationId: context.organizationId } });
   }
 
-  async findAll(context: OrganizationContext) {
+  async findAll(context: OrganizationContext, includeInactive = false) {
+    if (includeInactive) await this.assertCentralManagement(context);
     return this.prisma.serviceArea.findMany({
-      where: { organizationId: context.organizationId, ativo: true },
+      where: { organizationId: context.organizationId, ...(includeInactive ? {} : { ativo: true }) },
       include: { campus: true, _count: { select: { teams: { where: { ativo: true } }, memberships: { where: { ativo: true } } } } },
       orderBy: { nome: 'asc' },
     });
   }
 
   async findOne(id: string, context: OrganizationContext) {
-    const area = await this.area(id, context);
+    const area = await this.areaForManagement(id, context);
+    if (!area.ativo) await this.assertCentralManagement(context);
     return this.prisma.serviceArea.findUnique({
       where: { id: area.id },
       include: {
         campus: true,
-        teams: { where: { ativo: true }, include: { campus: true }, orderBy: { nome: 'asc' } },
+        teams: { include: { campus: true }, orderBy: { nome: 'asc' } },
         memberships: { where: { ativo: true }, include: { person: true, team: true, campus: true }, orderBy: { inicio: 'desc' } },
       },
+    });
+  }
+
+  async update(id: string, dto: UpdateServiceAreaDto, context: OrganizationContext) {
+    const area = await this.areaForManagement(id, context);
+    await this.assertCentralManagement(context);
+
+    if (dto.ativo === false && area.ativo) {
+      const [updated] = await this.prisma.$transaction([
+        this.prisma.serviceArea.update({ where: { id: area.id }, data: dto }),
+        this.prisma.serviceTeam.updateMany({
+          where: { serviceAreaId: area.id, ativo: true },
+          data: { ativo: false },
+        }),
+      ]);
+      return updated;
+    }
+
+    return this.prisma.serviceArea.update({ where: { id: area.id }, data: dto });
+  }
+
+  async updateTeam(id: string, dto: UpdateServiceTeamDto, context: OrganizationContext) {
+    const team = await this.teamForManagement(id, context);
+    const area = await this.areaForManagement(team.serviceAreaId, context);
+    await this.assertAreaManagement(area.id, context, team.id, team.campusId);
+    if (dto.ativo && !area.ativo) {
+      throw new BadRequestException('Reative a área de serviço antes de reativar uma equipe');
+    }
+    return this.prisma.serviceTeam.update({
+      where: { id: team.id },
+      data: dto,
+      include: { campus: true, serviceArea: true },
     });
   }
 
@@ -77,6 +113,7 @@ export class ServiceAreaService {
     const membership = await this.prisma.serviceMembership.findFirst({ where: { id, ativo: true, serviceArea: { organizationId: context.organizationId } } });
     if (!membership) throw new NotFoundException('Vínculo ativo não encontrado na organização atual');
     if (!membership.teamId) throw new BadRequestException('Funções de serviço só podem ser definidas para integrantes de uma equipe');
+    await this.team(membership.teamId, context);
     await this.assertAreaManagement(membership.serviceAreaId, context, membership.teamId, membership.campusId ?? undefined, membership.role);
     return this.prisma.serviceMembership.update({
       where: { id },
@@ -590,9 +627,25 @@ export class ServiceAreaService {
     return area;
   }
 
+  private async areaForManagement(id: string, context: OrganizationContext) {
+    const area = await this.prisma.serviceArea.findFirst({
+      where: { id, organizationId: context.organizationId },
+    });
+    if (!area) throw new NotFoundException('Área de serviço não encontrada na organização atual');
+    return area;
+  }
+
   private async team(id: string, context: OrganizationContext) {
     const team = await this.prisma.serviceTeam.findFirst({ where: { id, organizationId: context.organizationId, ativo: true } });
     if (!team) throw new NotFoundException('Equipe ativa não encontrada na organização atual');
+    return team;
+  }
+
+  private async teamForManagement(id: string, context: OrganizationContext) {
+    const team = await this.prisma.serviceTeam.findFirst({
+      where: { id, organizationId: context.organizationId },
+    });
+    if (!team) throw new NotFoundException('Equipe não encontrada na organização atual');
     return team;
   }
 
@@ -635,7 +688,18 @@ export class ServiceAreaService {
   }
 
   private readonly scheduleDetails = {
-    person: true,
+    person: {
+      include: {
+        serviceOperationalRoles: {
+          where: { ativo: true, role: ServiceOperationalRole.WORSHIP_MINISTER },
+          select: { role: true, teamId: true },
+        },
+        serviceMemberships: {
+          where: { ativo: true },
+          select: { teamId: true, funcoes: true },
+        },
+      },
+    },
     team: { include: { serviceArea: true, campus: true } },
     event: true,
   } as const;

@@ -6,7 +6,7 @@ O repertório é um fluxo próprio, ligado ao culto e à área de Música, mas i
 
 ## Preparação organizacional
 
-Antes de usar o fluxo, configure as áreas globais **Música** e **Ordem de Culto**, suas equipes e integrantes. Na equipe de louvor, a liderança deve atribuir a função operacional `WORSHIP_MINISTER` ao participante que será o Ministro de Louvor. No evento de culto, inclua ambas as áreas. A ordem de culto deve conter o item `Louvor` vinculado à área de Música.
+Antes de usar o fluxo, configure as áreas globais **Música** e **Ordem de Culto**, suas equipes e integrantes. Na equipe de louvor, marque a função de serviço **Ministro** no cadastro do participante que será o Ministro de Louvor. No evento de culto, inclua ambas as áreas. A ordem de culto deve conter o item `Louvor` vinculado à área de Música.
 
 ## Fluxo
 
@@ -50,7 +50,7 @@ flowchart LR
 
 ## Permissões
 
-- Somente o participante com a função operacional ativa `WORSHIP_MINISTER` na equipe de louvor pode criar, editar e enviar o próprio repertório.
+- Somente o participante com a função de serviço ativa `Ministro` na equipe de louvor pode criar, editar e enviar o próprio repertório. Para enviar, sua escala confirmada precisa pertencer a essa mesma equipe.
 - `GENERAL_LEADER`, `CAMPUS_LEADER` e `TEAM_LEADER` ativos da área de Música revisam e encaminham repertórios do respectivo campus.
 - `WORSHIP_ORDER_MANAGER`, `SECRETARY`, `ADMIN`, `SUPER_ADMIN` e `PASTOR_SENIOR` podem operar o fluxo em todos os campi; `PASTOR` opera apenas os repertórios de seu campus.
 - Integrantes ativos da área que recebeu a pendência podem concluí-la na ordem de culto.
@@ -71,7 +71,7 @@ flowchart LR
 | `PATCH` | `/worship-repertoires/:id/approve` | Aprova o repertório. |
 | `PATCH` | `/worship-repertoires/:id/send-to-worship-order` | Encaminha músicas e pendência para a Ordem de Culto; `orderItemId` é opcional para usar as posições do modelo. |
 
-A atribuição de Ministro de Louvor é feita no módulo de áreas de serviço, descrito em [Funções Operacionais de Equipe](service-operational-roles.md).
+A atribuição de Ministro de Louvor é feita em **Funções de serviço** no cadastro do integrante da equipe de Música.
 
 ## Criar e enviar
 

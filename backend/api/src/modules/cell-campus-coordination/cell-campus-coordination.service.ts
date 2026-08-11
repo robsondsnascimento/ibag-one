@@ -1,5 +1,5 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { hasAnyUserRole } from '../../common/access/user-role.util';
+import { hasAnyUserRole, pastoralCampusIds } from '../../common/access/user-role.util';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 import { CreateCellCampusCoordinationDto } from './dto/create-cell-campus-coordination.dto';
@@ -71,11 +71,11 @@ export class CellCampusCoordinationService {
   private async accessibleCampusIds(context: OrganizationContext): Promise<string[] | undefined> {
     const user = await this.prisma.user.findFirst({
       where: { id: context.userId, organizationId: context.organizationId },
-      include: { person: { select: { campusId: true } }, additionalRoles: { select: { role: true } } },
+      include: { person: { select: { campusId: true, campusMemberships: { where: { ativo: true }, select: { campusId: true } } } }, additionalRoles: { select: { role: true } } },
     });
     if (!user) throw new ForbiddenException('Usuário sem vínculo organizacional');
     if (hasAnyUserRole(user, ['SECRETARY', 'ADMIN', 'SUPER_ADMIN', 'PASTOR_SENIOR'])) return undefined;
-    if (hasAnyUserRole(user, ['PASTOR'])) return [user.person.campusId];
+    if (hasAnyUserRole(user, ['PASTOR'])) return pastoralCampusIds(user);
     const coordinations = await this.prisma.cellCampusCoordination.findMany({ where: { personId: context.personId, ativo: true, campus: { organizationId: context.organizationId } }, select: { campusId: true } });
     if (!coordinations.length) throw new ForbiddenException('Sem acesso à coordenação de células');
     return coordinations.map(coordination => coordination.campusId);

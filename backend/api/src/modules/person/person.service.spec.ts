@@ -26,15 +26,20 @@ describe('PersonService', () => {
 
     it('keeps the person in the current organization when updating', async () => {
       const prisma = {
+        $transaction: jest.fn(async (callback) => callback(prisma)),
         user: {
           findFirst: jest.fn().mockResolvedValue({ id: 'user-id' }),
         },
         person: {
-          findFirst: jest.fn().mockResolvedValue({ id: 'person-id' }),
+          findFirst: jest.fn().mockResolvedValue({ id: 'person-id', campusId: 'campus-id' }),
           update: jest.fn().mockResolvedValue({ id: 'person-id' }),
         },
         campus: {
-          findFirst: jest.fn().mockResolvedValue({ id: 'campus-id' }),
+          findMany: jest.fn().mockResolvedValue([{ id: 'campus-id' }]),
+        },
+        personCampusMembership: {
+          updateMany: jest.fn(),
+          upsert: jest.fn(),
         },
       };
       const personService = new PersonService(prisma as unknown as PrismaService);
@@ -49,20 +54,20 @@ describe('PersonService', () => {
         context,
       );
 
-      expect(prisma.campus.findFirst).toHaveBeenCalledWith({
+      expect(prisma.campus.findMany).toHaveBeenCalledWith({
         where: {
-          id: 'campus-id',
+          id: { in: ['campus-id'] },
           organizationId: context.organizationId,
         },
+        select: { id: true },
       });
-      expect(prisma.person.update).toHaveBeenCalledWith({
+      expect(prisma.personCampusMembership.upsert).toHaveBeenCalledWith(expect.objectContaining({
+        where: { personId_campusId: { personId: 'person-id', campusId: 'campus-id' } },
+      }));
+      expect(prisma.person.update).toHaveBeenCalledWith(expect.objectContaining({
         where: { id: 'person-id' },
-        data: {
-          nome: 'Pessoa Atualizada',
-          campusId: 'campus-id',
-        },
-        include: { campus: true },
-      });
+        data: { nome: 'Pessoa Atualizada', campusId: 'campus-id' },
+      }));
     });
 
     it('rejects a campus from another organization when updating', async () => {
@@ -71,11 +76,11 @@ describe('PersonService', () => {
           findFirst: jest.fn().mockResolvedValue({ id: 'user-id' }),
         },
         person: {
-          findFirst: jest.fn().mockResolvedValue({ id: 'person-id' }),
+          findFirst: jest.fn().mockResolvedValue({ id: 'person-id', campusId: 'campus-id' }),
           update: jest.fn(),
         },
         campus: {
-          findFirst: jest.fn().mockResolvedValue(null),
+          findMany: jest.fn().mockResolvedValue([]),
         },
       };
       const personService = new PersonService(prisma as unknown as PrismaService);
@@ -86,7 +91,7 @@ describe('PersonService', () => {
           { campusId: 'foreign-campus-id' },
           context,
         ),
-      ).rejects.toThrow('Campus não pertence à organização atual');
+      ).rejects.toThrow('Um ou mais campi não pertencem à organização atual');
 
       expect(prisma.person.update).not.toHaveBeenCalled();
     });
@@ -110,5 +115,38 @@ describe('PersonService', () => {
       expect(prisma.person.findFirst).not.toHaveBeenCalled();
       expect(prisma.person.update).not.toHaveBeenCalled();
     });
+  });
+
+  it('creates active links for the primary and additional campuses', async () => {
+    const context = {
+      userId: 'user-id',
+      personId: 'person-id',
+      organizationId: 'organization-id',
+    };
+    const prisma = {
+      user: { findFirst: jest.fn().mockResolvedValue({ id: 'user-id' }) },
+      campus: { findMany: jest.fn().mockResolvedValue([{ id: 'campus-a' }, { id: 'campus-b' }]) },
+      person: { create: jest.fn().mockResolvedValue({ id: 'person-id' }) },
+    };
+    const personService = new PersonService(prisma as unknown as PrismaService);
+
+    await personService.create({
+      nome: 'Pessoa em dois campi',
+      campusId: 'campus-a',
+      campusIds: ['campus-a', 'campus-b'],
+      organizationId: context.organizationId,
+    }, context);
+
+    expect(prisma.person.create).toHaveBeenCalledWith(expect.objectContaining({
+      data: expect.objectContaining({
+        campusId: 'campus-a',
+        campusMemberships: {
+          create: [
+            { campusId: 'campus-a', organizationId: context.organizationId },
+            { campusId: 'campus-b', organizationId: context.organizationId },
+          ],
+        },
+      }),
+    }));
   });
 });

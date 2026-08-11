@@ -140,6 +140,25 @@ describe('WorshipRepertoireService', () => {
     await expect(service.submit('repertoire-1', context)).rejects.toThrow('escala confirmada');
   });
 
+  it('reconhece a função Ministro no vínculo ativo da equipe', async () => {
+    const prisma: any = {
+      serviceOperationalRoleAssignment: { findFirst: jest.fn().mockResolvedValue(null) },
+      serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-minister' }) },
+    };
+    const service: any = new WorshipRepertoireService(prisma);
+
+    await expect(service.assertMinister('area-music', context, 'team-1')).resolves.toBeUndefined();
+    expect(prisma.serviceMembership.findFirst).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({
+        personId: 'person-1',
+        serviceAreaId: 'area-music',
+        teamId: 'team-1',
+        ativo: true,
+        funcoes: { has: 'Ministro' },
+      }),
+    }));
+  });
+
   it('permite o envio atrasado e alerta os líderes de louvor', async () => {
     const repertoire = {
       id: 'repertoire-1',

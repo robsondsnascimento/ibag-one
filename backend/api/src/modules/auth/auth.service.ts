@@ -33,6 +33,13 @@ export class AuthService {
                   nome: true,
                 },
               },
+              campusMemberships: {
+                where: { ativo: true },
+                select: {
+                  campusId: true,
+                  campus: { select: { id: true, nome: true } },
+                },
+              },
             },
           },
           organization: {
@@ -102,6 +109,7 @@ export class AuthService {
           nome: user.person.nome,
           campusId: user.person.campusId,
           campus: user.person.campus,
+          campusMemberships: user.person.campusMemberships,
         },
         organization: {
           id: user.organization.id,

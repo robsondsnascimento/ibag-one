@@ -297,6 +297,7 @@ export type PersonWhereInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireListRelationFilter
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireListRelationFilter
   serviceAreaApplications?: Prisma.ServiceAreaApplicationListRelationFilter
+  campusMemberships?: Prisma.PersonCampusMembershipListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -350,6 +351,7 @@ export type PersonOrderByWithRelationInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireOrderByRelationAggregateInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireOrderByRelationAggregateInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationOrderByRelationAggregateInput
+  campusMemberships?: Prisma.PersonCampusMembershipOrderByRelationAggregateInput
 }
 
 export type PersonWhereUniqueInput = Prisma.AtLeast<{
@@ -406,6 +408,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireListRelationFilter
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireListRelationFilter
   serviceAreaApplications?: Prisma.ServiceAreaApplicationListRelationFilter
+  campusMemberships?: Prisma.PersonCampusMembershipListRelationFilter
 }, "id" | "cpf" | "email">
 
 export type PersonOrderByWithAggregationInput = {
@@ -499,6 +502,7 @@ export type PersonCreateInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -550,6 +554,7 @@ export type PersonUncheckedCreateInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUpdateInput = {
@@ -601,6 +606,7 @@ export type PersonUpdateInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -652,6 +658,7 @@ export type PersonUncheckedUpdateInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -824,6 +831,20 @@ export type PersonUncheckedUpdateManyWithoutCampusNestedInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type PersonCreateNestedOneWithoutCampusMembershipsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCampusMembershipsInput, Prisma.PersonUncheckedCreateWithoutCampusMembershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCampusMembershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutCampusMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCampusMembershipsInput, Prisma.PersonUncheckedCreateWithoutCampusMembershipsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCampusMembershipsInput
+  upsert?: Prisma.PersonUpsertWithoutCampusMembershipsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCampusMembershipsInput, Prisma.PersonUpdateWithoutCampusMembershipsInput>, Prisma.PersonUncheckedUpdateWithoutCampusMembershipsInput>
 }
 
 export type PersonCreateNestedOneWithoutUserInput = {
@@ -1388,6 +1409,7 @@ export type PersonCreateWithoutCampusInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutCampusInput = {
@@ -1438,6 +1460,7 @@ export type PersonUncheckedCreateWithoutCampusInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCampusInput = {
@@ -1485,6 +1508,226 @@ export type PersonScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   campusId?: Prisma.StringFilter<"Person"> | string
   organizationId?: Prisma.StringNullableFilter<"Person"> | string | null
+}
+
+export type PersonCreateWithoutCampusMembershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutCampusMembershipsInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutCampusMembershipsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCampusMembershipsInput, Prisma.PersonUncheckedCreateWithoutCampusMembershipsInput>
+}
+
+export type PersonUpsertWithoutCampusMembershipsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutCampusMembershipsInput, Prisma.PersonUncheckedUpdateWithoutCampusMembershipsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCampusMembershipsInput, Prisma.PersonUncheckedCreateWithoutCampusMembershipsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutCampusMembershipsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutCampusMembershipsInput, Prisma.PersonUncheckedUpdateWithoutCampusMembershipsInput>
+}
+
+export type PersonUpdateWithoutCampusMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutCampusMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutUserInput = {
@@ -1535,6 +1778,7 @@ export type PersonCreateWithoutUserInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutUserInput = {
@@ -1585,6 +1829,7 @@ export type PersonUncheckedCreateWithoutUserInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutUserInput = {
@@ -1651,6 +1896,7 @@ export type PersonUpdateWithoutUserInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutUserInput = {
@@ -1701,6 +1947,7 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutOrganizationInput = {
@@ -1751,6 +1998,7 @@ export type PersonCreateWithoutOrganizationInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutOrganizationInput = {
@@ -1801,6 +2049,7 @@ export type PersonUncheckedCreateWithoutOrganizationInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutOrganizationInput = {
@@ -1877,6 +2126,7 @@ export type PersonCreateWithoutCellSupportRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
@@ -1927,6 +2177,7 @@ export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCellSupportRolesInput = {
@@ -1993,6 +2244,7 @@ export type PersonUpdateWithoutCellSupportRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
@@ -2043,6 +2295,7 @@ export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutJourneyEventsInput = {
@@ -2093,6 +2346,7 @@ export type PersonCreateWithoutJourneyEventsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutJourneyEventsInput = {
@@ -2143,6 +2397,7 @@ export type PersonUncheckedCreateWithoutJourneyEventsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutJourneyEventsInput = {
@@ -2209,6 +2464,7 @@ export type PersonUpdateWithoutJourneyEventsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
@@ -2259,6 +2515,7 @@ export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutFamilyMembershipsInput = {
@@ -2309,6 +2566,7 @@ export type PersonCreateWithoutFamilyMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
@@ -2359,6 +2617,7 @@ export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutFamilyMembershipsInput = {
@@ -2425,6 +2684,7 @@ export type PersonUpdateWithoutFamilyMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
@@ -2475,6 +2735,7 @@ export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutServiceMembershipsInput = {
@@ -2525,6 +2786,7 @@ export type PersonCreateWithoutServiceMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
@@ -2575,6 +2837,7 @@ export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutServiceMembershipsInput = {
@@ -2641,6 +2904,7 @@ export type PersonUpdateWithoutServiceMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
@@ -2691,6 +2955,7 @@ export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutServiceOperationalRolesInput = {
@@ -2741,6 +3006,7 @@ export type PersonCreateWithoutServiceOperationalRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutServiceOperationalRolesInput = {
@@ -2791,6 +3057,7 @@ export type PersonUncheckedCreateWithoutServiceOperationalRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutServiceOperationalRolesInput = {
@@ -2857,6 +3124,7 @@ export type PersonUpdateWithoutServiceOperationalRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceOperationalRolesInput = {
@@ -2907,6 +3175,7 @@ export type PersonUncheckedUpdateWithoutServiceOperationalRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutServiceSchedulesInput = {
@@ -2957,6 +3226,7 @@ export type PersonCreateWithoutServiceSchedulesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
@@ -3007,6 +3277,7 @@ export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutServiceSchedulesInput = {
@@ -3073,6 +3344,7 @@ export type PersonUpdateWithoutServiceSchedulesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
@@ -3123,6 +3395,7 @@ export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutServiceScheduleSwapRequestsMadeInput = {
@@ -3173,6 +3446,7 @@ export type PersonCreateWithoutServiceScheduleSwapRequestsMadeInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput = {
@@ -3223,6 +3497,7 @@ export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutServiceScheduleSwapRequestsMadeInput = {
@@ -3278,6 +3553,7 @@ export type PersonCreateWithoutServiceScheduleSwapRequestsReceivedInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput = {
@@ -3328,6 +3604,7 @@ export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutServiceScheduleSwapRequestsReceivedInput = {
@@ -3394,6 +3671,7 @@ export type PersonUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
@@ -3444,6 +3722,7 @@ export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUpsertWithoutServiceScheduleSwapRequestsReceivedInput = {
@@ -3505,6 +3784,7 @@ export type PersonUpdateWithoutServiceScheduleSwapRequestsReceivedInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsReceivedInput = {
@@ -3555,6 +3835,7 @@ export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsReceivedInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutServiceAreaApplicationsInput = {
@@ -3605,6 +3886,7 @@ export type PersonCreateWithoutServiceAreaApplicationsInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutServiceAreaApplicationsInput = {
@@ -3655,6 +3937,7 @@ export type PersonUncheckedCreateWithoutServiceAreaApplicationsInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutServiceAreaApplicationsInput = {
@@ -3721,6 +4004,7 @@ export type PersonUpdateWithoutServiceAreaApplicationsInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutServiceAreaApplicationsInput = {
@@ -3771,6 +4055,7 @@ export type PersonUncheckedUpdateWithoutServiceAreaApplicationsInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutEventsResponsibleInput = {
@@ -3821,6 +4106,7 @@ export type PersonCreateWithoutEventsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
@@ -3871,6 +4157,7 @@ export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutEventsResponsibleInput = {
@@ -3937,6 +4224,7 @@ export type PersonUpdateWithoutEventsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
@@ -3987,6 +4275,7 @@ export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutWorshipOrderItemsResponsibleInput = {
@@ -4037,6 +4326,7 @@ export type PersonCreateWithoutWorshipOrderItemsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput = {
@@ -4087,6 +4377,7 @@ export type PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutWorshipOrderItemsResponsibleInput = {
@@ -4153,6 +4444,7 @@ export type PersonUpdateWithoutWorshipOrderItemsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput = {
@@ -4203,6 +4495,7 @@ export type PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutWorshipDemandsResponsibleInput = {
@@ -4253,6 +4546,7 @@ export type PersonCreateWithoutWorshipDemandsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput = {
@@ -4303,6 +4597,7 @@ export type PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutWorshipDemandsResponsibleInput = {
@@ -4369,6 +4664,7 @@ export type PersonUpdateWithoutWorshipDemandsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput = {
@@ -4419,6 +4715,7 @@ export type PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutWorshipRepertoiresSubmittedInput = {
@@ -4469,6 +4766,7 @@ export type PersonCreateWithoutWorshipRepertoiresSubmittedInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutWorshipRepertoiresSubmittedInput = {
@@ -4519,6 +4817,7 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresSubmittedInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutWorshipRepertoiresSubmittedInput = {
@@ -4574,6 +4873,7 @@ export type PersonCreateWithoutWorshipRepertoiresApprovedInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutWorshipRepertoiresApprovedInput = {
@@ -4624,6 +4924,7 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresApprovedInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutWorshipRepertoiresApprovedInput = {
@@ -4690,6 +4991,7 @@ export type PersonUpdateWithoutWorshipRepertoiresSubmittedInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutWorshipRepertoiresSubmittedInput = {
@@ -4740,6 +5042,7 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresSubmittedInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUpsertWithoutWorshipRepertoiresApprovedInput = {
@@ -4801,6 +5104,7 @@ export type PersonUpdateWithoutWorshipRepertoiresApprovedInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutWorshipRepertoiresApprovedInput = {
@@ -4851,6 +5155,7 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresApprovedInput = {
   worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutNotificationRecipientsInput = {
@@ -4901,6 +5206,7 @@ export type PersonCreateWithoutNotificationRecipientsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
@@ -4951,6 +5257,7 @@ export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutNotificationRecipientsInput = {
@@ -5017,6 +5324,7 @@ export type PersonUpdateWithoutNotificationRecipientsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
@@ -5067,6 +5375,7 @@ export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutKidsEnrollmentsInput = {
@@ -5117,6 +5426,7 @@ export type PersonCreateWithoutKidsEnrollmentsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
@@ -5167,6 +5477,7 @@ export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsEnrollmentsInput = {
@@ -5233,6 +5544,7 @@ export type PersonUpdateWithoutKidsEnrollmentsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
@@ -5283,6 +5595,7 @@ export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -5333,6 +5646,7 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -5383,6 +5697,7 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -5438,6 +5753,7 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -5488,6 +5804,7 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInp
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -5554,6 +5871,7 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
@@ -5604,6 +5922,7 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUpsertWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -5665,6 +5984,7 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
@@ -5715,6 +6035,7 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInp
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutKidsCheckInsInput = {
@@ -5765,6 +6086,7 @@ export type PersonCreateWithoutKidsCheckInsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
@@ -5815,6 +6137,7 @@ export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsCheckInsInput = {
@@ -5881,6 +6204,7 @@ export type PersonUpdateWithoutKidsCheckInsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
@@ -5931,6 +6255,7 @@ export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutKidsPreCheckInsInput = {
@@ -5981,6 +6306,7 @@ export type PersonCreateWithoutKidsPreCheckInsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsPreCheckInsInput = {
@@ -6031,6 +6357,7 @@ export type PersonUncheckedCreateWithoutKidsPreCheckInsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsPreCheckInsInput = {
@@ -6097,6 +6424,7 @@ export type PersonUpdateWithoutKidsPreCheckInsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsPreCheckInsInput = {
@@ -6147,6 +6475,7 @@ export type PersonUncheckedUpdateWithoutKidsPreCheckInsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutKidsIdentityInput = {
@@ -6197,6 +6526,7 @@ export type PersonCreateWithoutKidsIdentityInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsIdentityInput = {
@@ -6247,6 +6577,7 @@ export type PersonUncheckedCreateWithoutKidsIdentityInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsIdentityInput = {
@@ -6313,6 +6644,7 @@ export type PersonUpdateWithoutKidsIdentityInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
@@ -6363,6 +6695,7 @@ export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutKidsOperationalRolesInput = {
@@ -6413,6 +6746,7 @@ export type PersonCreateWithoutKidsOperationalRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
@@ -6463,6 +6797,7 @@ export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsOperationalRolesInput = {
@@ -6529,6 +6864,7 @@ export type PersonUpdateWithoutKidsOperationalRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
@@ -6579,6 +6915,7 @@ export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutKidsResourceRequestsInput = {
@@ -6629,6 +6966,7 @@ export type PersonCreateWithoutKidsResourceRequestsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
@@ -6679,6 +7017,7 @@ export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsResourceRequestsInput = {
@@ -6745,6 +7084,7 @@ export type PersonUpdateWithoutKidsResourceRequestsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
@@ -6795,6 +7135,7 @@ export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutKidsCareProfileInput = {
@@ -6845,6 +7186,7 @@ export type PersonCreateWithoutKidsCareProfileInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
@@ -6895,6 +7237,7 @@ export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutKidsCareProfileInput = {
@@ -6961,6 +7304,7 @@ export type PersonUpdateWithoutKidsCareProfileInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
@@ -7011,6 +7355,7 @@ export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutMeetingVisitorInput = {
@@ -7061,6 +7406,7 @@ export type PersonCreateWithoutMeetingVisitorInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
@@ -7111,6 +7457,7 @@ export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutMeetingVisitorInput = {
@@ -7177,6 +7524,7 @@ export type PersonUpdateWithoutMeetingVisitorInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
@@ -7227,6 +7575,7 @@ export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
@@ -7277,6 +7626,7 @@ export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
@@ -7327,6 +7677,7 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutPastoralCaresAsSubjectInput = {
@@ -7382,6 +7733,7 @@ export type PersonCreateWithoutPastoralCaresAsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
@@ -7432,6 +7784,7 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutPastoralCaresAsResponsibleInput = {
@@ -7498,6 +7851,7 @@ export type PersonUpdateWithoutPastoralCaresAsSubjectInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
@@ -7548,6 +7902,7 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUpsertWithoutPastoralCaresAsResponsibleInput = {
@@ -7609,6 +7964,7 @@ export type PersonUpdateWithoutPastoralCaresAsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
@@ -7659,6 +8015,7 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutMeetingAttendancesInput = {
@@ -7709,6 +8066,7 @@ export type PersonCreateWithoutMeetingAttendancesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
@@ -7759,6 +8117,7 @@ export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutMeetingAttendancesInput = {
@@ -7825,6 +8184,7 @@ export type PersonUpdateWithoutMeetingAttendancesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
@@ -7875,6 +8235,7 @@ export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutCellNetworkSupervisionsInput = {
@@ -7925,6 +8286,7 @@ export type PersonCreateWithoutCellNetworkSupervisionsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
@@ -7975,6 +8337,7 @@ export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCellNetworkSupervisionsInput = {
@@ -8041,6 +8404,7 @@ export type PersonUpdateWithoutCellNetworkSupervisionsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
@@ -8091,6 +8455,7 @@ export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutCellCampusCoordinationsInput = {
@@ -8141,6 +8506,7 @@ export type PersonCreateWithoutCellCampusCoordinationsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutCellCampusCoordinationsInput = {
@@ -8191,6 +8557,7 @@ export type PersonUncheckedCreateWithoutCellCampusCoordinationsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCellCampusCoordinationsInput = {
@@ -8257,6 +8624,7 @@ export type PersonUpdateWithoutCellCampusCoordinationsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellCampusCoordinationsInput = {
@@ -8307,6 +8675,7 @@ export type PersonUncheckedUpdateWithoutCellCampusCoordinationsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutCellMembershipsInput = {
@@ -8357,6 +8726,7 @@ export type PersonCreateWithoutCellMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutCellMembershipsInput = {
@@ -8407,6 +8777,7 @@ export type PersonUncheckedCreateWithoutCellMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCellMembershipsInput = {
@@ -8473,6 +8844,7 @@ export type PersonUpdateWithoutCellMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
@@ -8523,6 +8895,7 @@ export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateWithoutCellLeadershipsInput = {
@@ -8573,6 +8946,7 @@ export type PersonCreateWithoutCellLeadershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
@@ -8623,6 +8997,7 @@ export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonCreateOrConnectWithoutCellLeadershipsInput = {
@@ -8689,6 +9064,7 @@ export type PersonUpdateWithoutCellLeadershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
@@ -8739,6 +9115,7 @@ export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyCampusInput = {
@@ -8806,6 +9183,7 @@ export type PersonUpdateWithoutCampusInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCampusInput = {
@@ -8856,6 +9234,7 @@ export type PersonUncheckedUpdateWithoutCampusInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutCampusInput = {
@@ -8940,6 +9319,7 @@ export type PersonUpdateWithoutOrganizationInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutOrganizationInput = {
@@ -8990,6 +9370,7 @@ export type PersonUncheckedUpdateWithoutOrganizationInput = {
   worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
   worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
   serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateManyWithoutOrganizationInput = {
@@ -9044,6 +9425,7 @@ export type PersonCountOutputType = {
   worshipRepertoiresSubmitted: number
   worshipRepertoiresApproved: number
   serviceAreaApplications: number
+  campusMemberships: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -9076,6 +9458,7 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   worshipRepertoiresSubmitted?: boolean | PersonCountOutputTypeCountWorshipRepertoiresSubmittedArgs
   worshipRepertoiresApproved?: boolean | PersonCountOutputTypeCountWorshipRepertoiresApprovedArgs
   serviceAreaApplications?: boolean | PersonCountOutputTypeCountServiceAreaApplicationsArgs
+  campusMemberships?: boolean | PersonCountOutputTypeCountCampusMembershipsArgs
 }
 
 /**
@@ -9291,6 +9674,13 @@ export type PersonCountOutputTypeCountServiceAreaApplicationsArgs<ExtArgs extend
   where?: Prisma.ServiceAreaApplicationWhereInput
 }
 
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountCampusMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PersonCampusMembershipWhereInput
+}
+
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -9343,6 +9733,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   worshipRepertoiresSubmitted?: boolean | Prisma.Person$worshipRepertoiresSubmittedArgs<ExtArgs>
   worshipRepertoiresApproved?: boolean | Prisma.Person$worshipRepertoiresApprovedArgs<ExtArgs>
   serviceAreaApplications?: boolean | Prisma.Person$serviceAreaApplicationsArgs<ExtArgs>
+  campusMemberships?: boolean | Prisma.Person$campusMembershipsArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
@@ -9441,6 +9832,7 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   worshipRepertoiresSubmitted?: boolean | Prisma.Person$worshipRepertoiresSubmittedArgs<ExtArgs>
   worshipRepertoiresApproved?: boolean | Prisma.Person$worshipRepertoiresApprovedArgs<ExtArgs>
   serviceAreaApplications?: boolean | Prisma.Person$serviceAreaApplicationsArgs<ExtArgs>
+  campusMemberships?: boolean | Prisma.Person$campusMembershipsArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -9490,6 +9882,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     worshipRepertoiresSubmitted: Prisma.$WorshipRepertoirePayload<ExtArgs>[]
     worshipRepertoiresApproved: Prisma.$WorshipRepertoirePayload<ExtArgs>[]
     serviceAreaApplications: Prisma.$ServiceAreaApplicationPayload<ExtArgs>[]
+    campusMemberships: Prisma.$PersonCampusMembershipPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -9936,6 +10329,7 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   worshipRepertoiresSubmitted<T extends Prisma.Person$worshipRepertoiresSubmittedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$worshipRepertoiresSubmittedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorshipRepertoirePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   worshipRepertoiresApproved<T extends Prisma.Person$worshipRepertoiresApprovedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$worshipRepertoiresApprovedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorshipRepertoirePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceAreaApplications<T extends Prisma.Person$serviceAreaApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceAreaApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceAreaApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  campusMemberships<T extends Prisma.Person$campusMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$campusMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PersonCampusMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11169,6 +11563,30 @@ export type Person$serviceAreaApplicationsArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.ServiceAreaApplicationScalarFieldEnum | Prisma.ServiceAreaApplicationScalarFieldEnum[]
+}
+
+/**
+ * Person.campusMemberships
+ */
+export type Person$campusMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PersonCampusMembership
+   */
+  select?: Prisma.PersonCampusMembershipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PersonCampusMembership
+   */
+  omit?: Prisma.PersonCampusMembershipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PersonCampusMembershipInclude<ExtArgs> | null
+  where?: Prisma.PersonCampusMembershipWhereInput
+  orderBy?: Prisma.PersonCampusMembershipOrderByWithRelationInput | Prisma.PersonCampusMembershipOrderByWithRelationInput[]
+  cursor?: Prisma.PersonCampusMembershipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PersonCampusMembershipScalarFieldEnum | Prisma.PersonCampusMembershipScalarFieldEnum[]
 }
 
 /**

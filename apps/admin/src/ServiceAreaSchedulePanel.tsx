@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
-import { approveServiceScheduleSwapRequest, createServiceSchedule, createServiceScheduleBatch, listApprovedScheduleEvents, listServiceAreaSchedules, listServiceScheduleHistory, listTeamServiceScheduleSwapRequests, rejectServiceScheduleSwapRequest, substituteServiceSchedule, updateServiceScheduleStatus } from './api/service-areas'
+import { approveServiceScheduleSwapRequest, createServiceSchedule, createServiceScheduleBatch, hasWorshipMinisterRole, listApprovedScheduleEvents, listServiceAreaSchedules, listServiceScheduleHistory, listTeamServiceScheduleSwapRequests, rejectServiceScheduleSwapRequest, substituteServiceSchedule, updateServiceScheduleStatus } from './api/service-areas'
 import type { ServiceAreaDetail, ServiceAreaSchedule, ServiceScheduleEventCandidate, ServiceScheduleHistory, ServiceScheduleStatus, ServiceScheduleSwapRequest } from './api/service-areas'
 
 const statusLabels: Record<ServiceScheduleStatus, string> = {
@@ -98,6 +98,7 @@ export function ServiceAreaSchedulePanel({
   const [swapRequests, setSwapRequests] = useState<ServiceScheduleSwapRequest[]>([])
   const [isLoadingSwapRequests, setIsLoadingSwapRequests] = useState(false)
   const [swapRequestsError, setSwapRequestsError] = useState('')
+  const activeTeams = useMemo(() => area.teams.filter((team) => team.ativo), [area.teams])
 
   useEffect(() => {
     let active = true
@@ -131,7 +132,7 @@ export function ServiceAreaSchedulePanel({
     let active = true
     setIsLoadingSwapRequests(true)
     setSwapRequestsError('')
-    void Promise.allSettled(area.teams.map((team) => listTeamServiceScheduleSwapRequests(accessToken, team.id)))
+    void Promise.allSettled(activeTeams.map((team) => listTeamServiceScheduleSwapRequests(accessToken, team.id)))
       .then((results) => {
         if (active) setSwapRequests(results.flatMap((result) => result.status === 'fulfilled' ? result.value : []))
       })
@@ -144,7 +145,7 @@ export function ServiceAreaSchedulePanel({
     return () => {
       active = false
     }
-  }, [accessToken, area.teams, canManage, version])
+  }, [accessToken, activeTeams, canManage, version])
 
   useEffect(() => {
     if (!isCreateOpen && !isBatchOpen) return
@@ -320,13 +321,13 @@ export function ServiceAreaSchedulePanel({
     <section className="service-area-panel service-area-panel--schedules">
       <header>
         <div><p className="eyebrow">Escalas</p><h2>Serviços da área</h2></div>
-        {canManage && <div className="service-schedule-header-actions"><button className="secondary-button" type="button" disabled={area.teams.length === 0} onClick={() => { setEventCandidates([]); setIsBatchOpen(true) }}>Escala em lote</button><button className="primary-button" type="button" disabled={area.teams.length === 0} onClick={() => { setCreateDate(''); setEventCandidates([]); setIsCreateOpen(true) }}>+ Nova escala</button></div>}
+        {canManage && <div className="service-schedule-header-actions"><button className="secondary-button" type="button" disabled={activeTeams.length === 0} onClick={() => { setEventCandidates([]); setIsBatchOpen(true) }}>Escala em lote</button><button className="primary-button" type="button" disabled={activeTeams.length === 0} onClick={() => { setCreateDate(''); setEventCandidates([]); setIsCreateOpen(true) }}>+ Nova escala</button></div>}
       </header>
 
       <form className="service-schedule-filters" onSubmit={(event) => { event.preventDefault(); refresh() }}>
         <label>De<input type="date" value={start} onChange={(event) => setStart(event.target.value)} /></label>
         <label>Até<input type="date" value={end} onChange={(event) => setEnd(event.target.value)} /></label>
-        <label>Equipe<select value={teamId} onChange={(event) => setTeamId(event.target.value)}><option value="">Todas as equipes</option>{area.teams.map((team) => <option value={team.id} key={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label>
+        <label>Equipe<select value={teamId} onChange={(event) => setTeamId(event.target.value)}><option value="">Todas as equipes</option>{activeTeams.map((team) => <option value={team.id} key={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label>
         <label>Status<select value={status} onChange={(event) => setStatus(event.target.value as ServiceScheduleStatus | '')}><option value="">Todos os status</option>{Object.entries(statusLabels).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
         <button className="secondary-button" type="submit">Atualizar</button>
       </form>
@@ -339,9 +340,10 @@ export function ServiceAreaSchedulePanel({
       {isLoading ? <p className="service-area-empty">Carregando escalas...</p> : schedules.length ? <div className="service-schedule-list">{schedules.map((schedule) => {
         const ownSchedule = schedule.person.id === currentPersonId
         const canSubstitute = canManage && schedule.status !== 'COMPLETED'
+        const isWorshipMinister = hasWorshipMinisterRole(schedule)
         return <article className="service-schedule-row" key={schedule.id}>
           <div className="service-schedule-date"><strong>{new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short' }).format(new Date(schedule.data)).replace('.', '')}</strong><span>{new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(new Date(schedule.data))}</span></div>
-          <div className="service-schedule-main"><strong>{schedule.funcao}</strong><span>{schedule.person.nome} · {schedule.team.nome}</span>{schedule.event && <small>{schedule.event.titulo}</small>}{schedule.observacao && <small>{schedule.observacao}</small>}</div>
+          <div className="service-schedule-main"><strong>{schedule.funcao}</strong><span>{schedule.person.nome} · {schedule.team.nome}{isWorshipMinister ? ' · Ministro de Louvor' : ''}</span>{schedule.event && <small>{schedule.event.titulo}</small>}{schedule.observacao && <small>{schedule.observacao}</small>}</div>
           <span className={`service-schedule-status service-schedule-status--${schedule.status.toLocaleLowerCase('pt-BR')}`}>{statusLabels[schedule.status]}</span>
           <div className="service-schedule-actions">
             {ownSchedule && schedule.status === 'SCHEDULED' && <><button type="button" className="schedule-action schedule-action--confirm" disabled={isSaving} onClick={() => void changeStatus(schedule, 'CONFIRMED')}>Confirmar</button><button type="button" className="schedule-action" disabled={isSaving} onClick={() => setAction({ type: 'decline', schedule })}>Recusar</button></>}
@@ -388,6 +390,7 @@ function ServiceScheduleBatchDialog({
   const [data, setData] = useState('')
   const [selectedPeople, setSelectedPeople] = useState<string[]>([])
   const [formError, setFormError] = useState('')
+  const activeTeams = area.teams.filter((team) => team.ativo)
   const people = area.memberships.filter((membership) => membership.team?.id === teamId).map((membership) => membership.person)
   const teamPeople = [...new Map(people.map((person) => [person.id, person])).values()]
   const teamEvents = events.filter((event) => event.teams.some((item) => item.teamId === teamId))
@@ -411,7 +414,7 @@ function ServiceScheduleBatchDialog({
     })
   }
 
-  return <div className="dialog-backdrop" role="presentation" onMouseDown={onClose}><section className="event-dialog event-dialog--schedule-batch" role="dialog" aria-modal="true" aria-labelledby="schedule-batch-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={onClose}>×</button><p className="eyebrow">{area.nome}</p><h2 id="schedule-batch-title">Escala em lote</h2><p className="dialog-description">Escolha uma equipe e selecione as pessoas. O lote é criado por inteiro ou não é criado, caso exista algum conflito.</p><form className="event-form" onSubmit={submit}><label>Equipe<select value={teamId} required onChange={(event) => { setTeamId(event.target.value); setEventId(''); setData(''); setSelectedPeople([]); setFormError('') }}><option value="" disabled>Selecione a equipe</option>{area.teams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Evento <span className="field-optional">(opcional)</span><select value={eventId} disabled={!teamId || isLoadingEvents} onChange={(event) => { const selected = teamEvents.find((item) => item.id === event.target.value); setEventId(event.target.value); setData(selected ? toDateTimeLocalValue(selected.inicio) : '') }}><option value="">{isLoadingEvents ? 'Carregando eventos aprovados...' : teamId ? 'Escala independente de evento' : 'Escolha uma equipe antes'}</option>{teamEvents.map((event) => <option value={event.id} key={event.id}>{event.titulo} · {formatScheduleDate(event.inicio)}</option>)}</select>{eventError && <small className="form-error">{eventError}</small>}</label><label>Data e horário<input type="datetime-local" required value={data} onChange={(event) => setData(event.target.value)} /></label><label>Observação para o grupo <span className="field-optional">(opcional)</span><input name="observacao" maxLength={1000} placeholder="Orientação comum para as pessoas escaladas" /></label><section className="schedule-batch-people"><header><strong>Pessoas da equipe</strong><span>{selectedPeople.length} selecionada{selectedPeople.length === 1 ? '' : 's'}</span></header>{teamId && teamPeople.length ? teamPeople.map((person) => { const selected = selectedPeople.includes(person.id); return <label className={`schedule-batch-person ${selected ? 'schedule-batch-person--selected' : ''}`} key={person.id}><input type="checkbox" value={person.id} checked={selected} onChange={(event) => setSelectedPeople((current) => event.target.checked ? [...current, person.id] : current.filter((id) => id !== person.id))} /><span>{person.nome}</span><input name={`funcao-${person.id}`} disabled={!selected} required={selected} minLength={2} maxLength={100} defaultValue="Integrante" aria-label={`Função de ${person.nome}`} /></label> }) : <p>{teamId ? 'Não há pessoas vinculadas a esta equipe.' : 'Escolha uma equipe para selecionar as pessoas.'}</p>}</section>{formError && <p className="form-error" role="alert">{formError}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={onClose}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving || selectedPeople.length === 0}>{isSaving ? 'Criando lote...' : 'Criar escalas'}</button></div></form></section></div>
+  return <div className="dialog-backdrop" role="presentation" onMouseDown={onClose}><section className="event-dialog event-dialog--schedule-batch" role="dialog" aria-modal="true" aria-labelledby="schedule-batch-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={onClose}>×</button><p className="eyebrow">{area.nome}</p><h2 id="schedule-batch-title">Escala em lote</h2><p className="dialog-description">Escolha uma equipe e selecione as pessoas. O lote é criado por inteiro ou não é criado, caso exista algum conflito.</p><form className="event-form" onSubmit={submit}><label>Equipe<select value={teamId} required onChange={(event) => { setTeamId(event.target.value); setEventId(''); setData(''); setSelectedPeople([]); setFormError('') }}><option value="" disabled>Selecione a equipe</option>{activeTeams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Evento <span className="field-optional">(opcional)</span><select value={eventId} disabled={!teamId || isLoadingEvents} onChange={(event) => { const selected = teamEvents.find((item) => item.id === event.target.value); setEventId(event.target.value); setData(selected ? toDateTimeLocalValue(selected.inicio) : '') }}><option value="">{isLoadingEvents ? 'Carregando eventos aprovados...' : teamId ? 'Escala independente de evento' : 'Escolha uma equipe antes'}</option>{teamEvents.map((event) => <option value={event.id} key={event.id}>{event.titulo} · {formatScheduleDate(event.inicio)}</option>)}</select>{eventError && <small className="form-error">{eventError}</small>}</label><label>Data e horário<input type="datetime-local" required value={data} onChange={(event) => setData(event.target.value)} /></label><label>Observação para o grupo <span className="field-optional">(opcional)</span><input name="observacao" maxLength={1000} placeholder="Orientação comum para as pessoas escaladas" /></label><section className="schedule-batch-people"><header><strong>Pessoas da equipe</strong><span>{selectedPeople.length} selecionada{selectedPeople.length === 1 ? '' : 's'}</span></header>{teamId && teamPeople.length ? teamPeople.map((person) => { const selected = selectedPeople.includes(person.id); return <label className={`schedule-batch-person ${selected ? 'schedule-batch-person--selected' : ''}`} key={person.id}><input type="checkbox" value={person.id} checked={selected} onChange={(event) => setSelectedPeople((current) => event.target.checked ? [...current, person.id] : current.filter((id) => id !== person.id))} /><span>{person.nome}</span><input name={`funcao-${person.id}`} disabled={!selected} required={selected} minLength={2} maxLength={100} defaultValue="Integrante" aria-label={`Função de ${person.nome}`} /></label> }) : <p>{teamId ? 'Não há pessoas vinculadas a esta equipe.' : 'Escolha uma equipe para selecionar as pessoas.'}</p>}</section>{formError && <p className="form-error" role="alert">{formError}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={onClose}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving || selectedPeople.length === 0}>{isSaving ? 'Criando lote...' : 'Criar escalas'}</button></div></form></section></div>
 }
 
 function SchedulePersonSelect({
@@ -430,9 +433,10 @@ function SchedulePersonSelect({
   const [teamId, setTeamId] = useState('')
   const [personId, setPersonId] = useState('')
   const [eventId, setEventId] = useState('')
+  const activeTeams = area.teams.filter((team) => team.ativo)
   const people = area.memberships.filter((membership) => membership.team?.id === teamId).map((membership) => membership.person)
   const uniquePeople = [...new Map(people.map((person) => [person.id, person])).values()]
   const teamEvents = events.filter((event) => event.teams.some((item) => item.teamId === teamId))
 
-  return <><label>Equipe<select name="teamId" value={teamId} onChange={(event) => { setTeamId(event.target.value); setPersonId(''); setEventId(''); onEventSelect(null) }} required><option value="" disabled>Selecione a equipe</option>{area.teams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Pessoa<select name="personId" required value={personId} disabled={!teamId || uniquePeople.length === 0} onChange={(event) => setPersonId(event.target.value)}><option value="" disabled>{teamId ? uniquePeople.length ? 'Selecione a pessoa' : 'Não há pessoas vinculadas a esta equipe' : 'Escolha uma equipe antes'}</option>{uniquePeople.map((person) => <option key={person.id} value={person.id}>{person.nome}</option>)}</select></label><label>Evento <span className="field-optional">(opcional)</span><select name="eventId" value={eventId} disabled={!teamId || isLoadingEvents} onChange={(event) => { setEventId(event.target.value); onEventSelect(teamEvents.find((item) => item.id === event.target.value) ?? null) }}><option value="">{isLoadingEvents ? 'Carregando eventos aprovados...' : teamId ? 'Escala independente de evento' : 'Escolha uma equipe antes'}</option>{teamEvents.map((event) => <option value={event.id} key={event.id}>{event.titulo} · {formatScheduleDate(event.inicio)}</option>)}</select>{eventError && <small className="form-error">{eventError}</small>}</label><small className="schedule-event-note">Ao selecionar um evento, a data e o horário são preenchidos automaticamente.</small></>
+  return <><label>Equipe<select name="teamId" value={teamId} onChange={(event) => { setTeamId(event.target.value); setPersonId(''); setEventId(''); onEventSelect(null) }} required><option value="" disabled>Selecione a equipe</option>{activeTeams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Pessoa<select name="personId" required value={personId} disabled={!teamId || uniquePeople.length === 0} onChange={(event) => setPersonId(event.target.value)}><option value="" disabled>{teamId ? uniquePeople.length ? 'Selecione a pessoa' : 'Não há pessoas vinculadas a esta equipe' : 'Escolha uma equipe antes'}</option>{uniquePeople.map((person) => <option key={person.id} value={person.id}>{person.nome}</option>)}</select></label><label>Evento <span className="field-optional">(opcional)</span><select name="eventId" value={eventId} disabled={!teamId || isLoadingEvents} onChange={(event) => { setEventId(event.target.value); onEventSelect(teamEvents.find((item) => item.id === event.target.value) ?? null) }}><option value="">{isLoadingEvents ? 'Carregando eventos aprovados...' : teamId ? 'Escala independente de evento' : 'Escolha uma equipe antes'}</option>{teamEvents.map((event) => <option value={event.id} key={event.id}>{event.titulo} · {formatScheduleDate(event.inicio)}</option>)}</select>{eventError && <small className="form-error">{eventError}</small>}</label><small className="schedule-event-note">Ao selecionar um evento, a data e o horário são preenchidos automaticamente.</small></>
 }

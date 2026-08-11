@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { hasAnyUserRole } from '../../common/access/user-role.util';
+import { hasAnyUserRole, pastoralCampusIds } from '../../common/access/user-role.util';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 
@@ -139,7 +139,7 @@ export class PastoralDashboardService {
     const user = await this.prisma.user.findFirst({
       where: { id: context.userId, organizationId: context.organizationId },
       include: {
-        person: { select: { campusId: true } },
+        person: { select: { campusId: true, campusMemberships: { where: { ativo: true }, select: { campusId: true } } } },
         additionalRoles: { select: { role: true } },
       },
     });
@@ -150,7 +150,7 @@ export class PastoralDashboardService {
       return undefined;
     }
     if (hasAnyUserRole(user, ['PASTOR'])) {
-      return [user.person.campusId];
+      return pastoralCampusIds(user);
     }
     const coordinations = await this.prisma.cellCampusCoordination.findMany({
       where: {

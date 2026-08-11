@@ -735,7 +735,7 @@ export class WorshipOrderService {
         ativo: true,
       },
       include: {
-        person: { select: { campusId: true } },
+        person: { select: { campusId: true, campusMemberships: { where: { ativo: true }, select: { campusId: true } } } },
         additionalRoles: { select: { role: true } },
       },
     });

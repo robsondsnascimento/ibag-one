@@ -203,7 +203,8 @@ model Campus {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  persons              Person[]
+  persons              Person[]                 @relation("PersonPrimaryCampus")
+  personCampusMemberships PersonCampusMembership[]
   cells                Cell[]
   cellNetworks         CellNetwork[]
   cellCampusCoordinations CellCampusCoordination[]
@@ -236,7 +237,7 @@ model Person {
   updatedAt      DateTime  @updatedAt
 
   campusId String
-  campus   Campus @relation(fields: [campusId], references: [id])
+  campus   Campus @relation("PersonPrimaryCampus", fields: [campusId], references: [id])
 
   user User?
 
@@ -275,6 +276,27 @@ model Person {
   worshipRepertoiresSubmitted           WorshipRepertoire[]             @relation("WorshipRepertoireSubmittedBy")
   worshipRepertoiresApproved            WorshipRepertoire[]             @relation("WorshipRepertoireApprovedBy")
   serviceAreaApplications               ServiceAreaApplication[]
+  campusMemberships                     PersonCampusMembership[]
+}
+
+model PersonCampusMembership {
+  id             String   @id @default(uuid())
+  ativo          Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  personId String
+  person   Person @relation(fields: [personId], references: [id])
+
+  campusId String
+  campus   Campus @relation(fields: [campusId], references: [id])
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  @@unique([personId, campusId])
+  @@index([organizationId, campusId])
+  @@index([personId, ativo])
 }
 
 model User {
@@ -334,6 +356,7 @@ model Organization {
 
   campuses              Campus[]
   persons               Person[]
+  personCampusMemberships PersonCampusMembership[]
   users                 User[]
   cells                 Cell[]
   cellNetworks          CellNetwork[]

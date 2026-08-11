@@ -3,6 +3,39 @@ import { ServiceAreaService } from './service-area.service';
 describe('ServiceAreaService', () => {
   const context = { userId: 'user-1', personId: 'person-1', organizationId: 'org-1' };
 
+  it('inativa a área e todas as equipes ativas, sem apagar histórico', async () => {
+    const updatedArea = { id: 'area-1', ativo: false };
+    const prisma: any = {
+      serviceArea: {
+        findFirst: jest.fn().mockResolvedValue({ id: 'area-1', ativo: true }),
+        update: jest.fn().mockResolvedValue(updatedArea),
+      },
+      serviceTeam: { updateMany: jest.fn().mockResolvedValue({ count: 2 }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+      $transaction: jest.fn((operations) => Promise.all(operations)),
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.update('area-1', { ativo: false }, context)).resolves.toEqual(updatedArea);
+    expect(prisma.serviceArea.update).toHaveBeenCalledWith({ where: { id: 'area-1' }, data: { ativo: false } });
+    expect(prisma.serviceTeam.updateMany).toHaveBeenCalledWith({
+      where: { serviceAreaId: 'area-1', ativo: true },
+      data: { ativo: false },
+    });
+  });
+
+  it('impede reativar equipe enquanto sua área estiver inativa', async () => {
+    const prisma: any = {
+      serviceTeam: { findFirst: jest.fn().mockResolvedValue({ id: 'team-1', serviceAreaId: 'area-1' }), update: jest.fn() },
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-1', ativo: false }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.updateTeam('team-1', { ativo: true }, context)).rejects.toThrow('Reative a área de serviço antes de reativar uma equipe');
+    expect(prisma.serviceTeam.update).not.toHaveBeenCalled();
+  });
+
   it('atribui Ministro de Louvor apenas a integrante ativo da equipe', async () => {
     const prisma: any = {
       serviceTeam: { findFirst: jest.fn().mockResolvedValue({ id: 'team-1', serviceAreaId: 'area-music', campusId: 'campus-1' }) },
@@ -22,6 +55,30 @@ describe('ServiceAreaService', () => {
         teamId: 'team-1',
         serviceAreaId: 'area-music',
         role: 'WORSHIP_MINISTER',
+      }),
+    }));
+  });
+
+  it('retorna a atribuição ativa de Ministro de Louvor junto à escala da pessoa', async () => {
+    const prisma: any = { serviceSchedule: { findMany: jest.fn().mockResolvedValue([]) } };
+    const service = new ServiceAreaService(prisma);
+
+    await service.findMySchedules(undefined, undefined, context);
+
+    expect(prisma.serviceSchedule.findMany).toHaveBeenCalledWith(expect.objectContaining({
+      include: expect.objectContaining({
+        person: {
+          include: {
+            serviceOperationalRoles: {
+              where: { ativo: true, role: 'WORSHIP_MINISTER' },
+              select: { role: true, teamId: true },
+            },
+            serviceMemberships: {
+              where: { ativo: true },
+              select: { teamId: true, funcoes: true },
+            },
+          },
+        },
       }),
     }));
   });

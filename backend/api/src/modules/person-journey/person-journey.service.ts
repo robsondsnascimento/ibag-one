@@ -1,2 +1,95 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common'; import { PrismaService } from '../../database/prisma.service'; import { OrganizationContext } from '../../common/context/organization-context'; import { CreatePersonJourneyEventDto } from './dto/create-person-journey-event.dto'; import { hasAnyUserRole } from '../../common/access/user-role.util';
-@Injectable() export class PersonJourneyService { constructor(private readonly prisma: PrismaService) {} async create(dto: CreatePersonJourneyEventDto, context: OrganizationContext) { const person = await this.person(dto.personId, context); await this.authorize(person, context); const data = dto.data ? new Date(dto.data) : new Date(); const update = dto.stage === 'DECISION' ? { dataDecisao: data } : dto.stage === 'FORMAL_MEMBER' ? { dataMembresia: data } : {}; return this.prisma.$transaction(async tx => { await tx.person.update({ where: { id: person.id }, data: update }); return tx.personJourneyEvent.create({ data: { personId: person.id, organizationId: context.organizationId, createdByUserId: context.userId, stage: dto.stage, data } }); }); } async findByPerson(personId: string, context: OrganizationContext) { const person = await this.person(personId, context); await this.authorize(person, context); return this.prisma.personJourneyEvent.findMany({ where: { personId }, include: { createdByUser: { select: { id: true, loginEmail: true } } }, orderBy: { data: 'desc' } }); } private async person(id: string, context: OrganizationContext) { const person = await this.prisma.person.findFirst({ where: { id, organizationId: context.organizationId } }); if (!person) throw new NotFoundException('Pessoa não encontrada na organização atual'); return person; } private async authorize(person: any, context: OrganizationContext) { const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId }, include: { person: true, additionalRoles: { select: { role: true } } } }); if (!user) throw new ForbiddenException('Usuário sem vínculo organizacional'); if (hasAnyUserRole(user, ['SECRETARY','ADMIN','SUPER_ADMIN','PASTOR_SENIOR']) || (hasAnyUserRole(user, ['PASTOR']) && user.person.campusId === person.campusId)) return; const membership = await this.prisma.cellMembership.findFirst({ where: { personId: person.id, ativo: true } }); if (!membership) throw new ForbiddenException('Sem acesso à jornada desta pessoa'); const leader = await this.prisma.cellLeadership.findFirst({ where: { personId: context.personId, cellId: membership.cellId, ativo: true } }); if (leader) return; const cell = await this.prisma.cell.findUnique({ where: { id: membership.cellId } }); if (cell?.networkId && await this.prisma.cellNetworkSupervision.findFirst({ where: { personId: context.personId, networkId: cell.networkId, ativo: true } })) return; throw new ForbiddenException('Sem acesso à jornada desta pessoa'); } }
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { hasAnyUserRole, hasPastoralCampusAccess } from '../../common/access/user-role.util';
+import { OrganizationContext } from '../../common/context/organization-context';
+import { PrismaService } from '../../database/prisma.service';
+import { CreatePersonJourneyEventDto } from './dto/create-person-journey-event.dto';
+
+@Injectable()
+export class PersonJourneyService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(dto: CreatePersonJourneyEventDto, context: OrganizationContext) {
+    const person = await this.person(dto.personId, context);
+    await this.authorize(person, context);
+    const data = dto.data ? new Date(dto.data) : new Date();
+    const update = dto.stage === 'DECISION'
+      ? { dataDecisao: data }
+      : dto.stage === 'FORMAL_MEMBER'
+        ? { dataMembresia: data }
+        : {};
+
+    return this.prisma.$transaction(async (transaction) => {
+      await transaction.person.update({ where: { id: person.id }, data: update });
+      return transaction.personJourneyEvent.create({
+        data: {
+          personId: person.id,
+          organizationId: context.organizationId,
+          createdByUserId: context.userId,
+          stage: dto.stage,
+          data,
+        },
+      });
+    });
+  }
+
+  async findByPerson(personId: string, context: OrganizationContext) {
+    const person = await this.person(personId, context);
+    await this.authorize(person, context);
+    return this.prisma.personJourneyEvent.findMany({
+      where: { personId },
+      include: { createdByUser: { select: { id: true, loginEmail: true } } },
+      orderBy: { data: 'desc' },
+    });
+  }
+
+  private async person(id: string, context: OrganizationContext) {
+    const person = await this.prisma.person.findFirst({
+      where: { id, organizationId: context.organizationId },
+    });
+    if (!person) throw new NotFoundException('Pessoa não encontrada na organização atual');
+    return person;
+  }
+
+  private async authorize(person: { id: string; campusId: string }, context: OrganizationContext) {
+    const user = await this.prisma.user.findFirst({
+      where: { id: context.userId, organizationId: context.organizationId },
+      include: {
+        person: {
+          select: {
+            campusId: true,
+            campusMemberships: {
+              where: { ativo: true },
+              select: { campusId: true },
+            },
+          },
+        },
+        additionalRoles: { select: { role: true } },
+      },
+    });
+    if (!user) throw new ForbiddenException('Usuário sem vínculo organizacional');
+    if (
+      hasAnyUserRole(user, ['SECRETARY', 'ADMIN', 'SUPER_ADMIN', 'PASTOR_SENIOR'])
+      || (hasAnyUserRole(user, ['PASTOR']) && hasPastoralCampusAccess(user, person.campusId))
+    ) return;
+
+    const membership = await this.prisma.cellMembership.findFirst({
+      where: { personId: person.id, ativo: true },
+    });
+    if (!membership) throw new ForbiddenException('Sem acesso à jornada desta pessoa');
+
+    const leader = await this.prisma.cellLeadership.findFirst({
+      where: { personId: context.personId, cellId: membership.cellId, ativo: true },
+    });
+    if (leader) return;
+
+    const cell = await this.prisma.cell.findUnique({ where: { id: membership.cellId } });
+    if (
+      cell?.networkId
+      && await this.prisma.cellNetworkSupervision.findFirst({
+        where: { personId: context.personId, networkId: cell.networkId, ativo: true },
+      })
+    ) return;
+
+    throw new ForbiddenException('Sem acesso à jornada desta pessoa');
+  }
+}

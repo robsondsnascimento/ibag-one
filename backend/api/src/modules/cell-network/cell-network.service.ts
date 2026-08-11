@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { hasAnyUserRole } from '../../common/access/user-role.util';
+import { hasAnyUserRole, pastoralCampusIds } from '../../common/access/user-role.util';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 import { CreateCellNetworkDto } from './dto/create-cell-network.dto';
@@ -175,7 +175,7 @@ export class CellNetworkService {
     const user = await this.prisma.user.findFirst({
       where: { id: context.userId, organizationId: context.organizationId },
       include: {
-        person: { select: { campusId: true } },
+        person: { select: { campusId: true, campusMemberships: { where: { ativo: true }, select: { campusId: true } } } },
         additionalRoles: { select: { role: true } },
       },
     });
@@ -185,7 +185,7 @@ export class CellNetworkService {
     if (hasAnyUserRole(user, ['SECRETARY', 'ADMIN', 'SUPER_ADMIN', 'PASTOR_SENIOR'])) {
       return;
     }
-    if (hasAnyUserRole(user, ['PASTOR']) && user.person.campusId === campusId) {
+    if (hasAnyUserRole(user, ['PASTOR']) && pastoralCampusIds(user).includes(campusId)) {
       return;
     }
     throw new ForbiddenException('Sem permissão para administrar redes neste campus');
@@ -202,7 +202,7 @@ export class CellNetworkService {
     const user = await this.prisma.user.findFirst({
       where: { id: context.userId, organizationId: context.organizationId },
       include: {
-        person: { select: { campusId: true } },
+        person: { select: { campusId: true, campusMemberships: { where: { ativo: true }, select: { campusId: true } } } },
         additionalRoles: { select: { role: true } },
       },
     });
@@ -213,7 +213,7 @@ export class CellNetworkService {
       return undefined;
     }
     if (hasAnyUserRole(user, ['PASTOR'])) {
-      return [user.person.campusId];
+      return pastoralCampusIds(user);
     }
 
     const coordinations = await this.prisma.cellCampusCoordination.findMany({

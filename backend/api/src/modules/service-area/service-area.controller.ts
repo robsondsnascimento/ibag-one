@@ -14,6 +14,8 @@ import { RejectServiceScheduleSwapRequestDto } from './dto/reject-service-schedu
 import { SubstituteServiceScheduleDto } from './dto/substitute-service-schedule.dto';
 import { UpdateServiceMemberFunctionsDto } from './dto/update-service-member-functions.dto';
 import { UpdateServiceScheduleStatusDto } from './dto/update-service-schedule-status.dto';
+import { UpdateServiceAreaDto } from './dto/update-service-area.dto';
+import { UpdateServiceTeamDto } from './dto/update-service-team.dto';
 import { ServiceAreaService } from './service-area.service';
 
 @Controller('service-areas')
@@ -22,8 +24,10 @@ export class ServiceAreaController {
   constructor(private readonly service: ServiceAreaService) {}
 
   @Post() create(@Body() dto: CreateServiceAreaDto, @CurrentOrganization() context: OrganizationContext) { return this.service.create(dto, context); }
-  @Get() findAll(@CurrentOrganization() context: OrganizationContext) { return this.service.findAll(context); }
+  @Get() findAll(@Query('includeInactive') includeInactive: string | undefined, @CurrentOrganization() context: OrganizationContext) { return this.service.findAll(context, includeInactive === 'true'); }
   @Get(':id') findOne(@Param('id') id: string, @CurrentOrganization() context: OrganizationContext) { return this.service.findOne(id, context); }
+  @Patch('teams/:id') updateTeam(@Param('id') id: string, @Body() dto: UpdateServiceTeamDto, @CurrentOrganization() context: OrganizationContext) { return this.service.updateTeam(id, dto, context); }
+  @Patch(':id') update(@Param('id') id: string, @Body() dto: UpdateServiceAreaDto, @CurrentOrganization() context: OrganizationContext) { return this.service.update(id, dto, context); }
   @Post(':id/teams') createTeam(@Param('id') id: string, @Body() dto: CreateServiceTeamDto, @CurrentOrganization() context: OrganizationContext) { return this.service.createTeam(id, dto, context); }
   @Post(':id/members') addMember(@Param('id') id: string, @Body() dto: AddServiceMemberDto, @CurrentOrganization() context: OrganizationContext) { return this.service.addMember(id, dto, context); }
   @Get(':id/schedules') findAreaSchedules(@Param('id') id: string, @Query('start') start: string | undefined, @Query('end') end: string | undefined, @Query('teamId') teamId: string | undefined, @Query('status') status: ServiceScheduleStatus | undefined, @CurrentOrganization() context: OrganizationContext) { return this.service.findAreaSchedules(id, start, end, teamId, status, context); }

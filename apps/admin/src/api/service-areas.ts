@@ -5,6 +5,7 @@ export type ServiceAreaListItem = {
   nome: string
   descricao: string | null
   scope: 'GLOBAL' | 'CAMPUS'
+  ativo: boolean
   campus: {
     id: string
     nome: string
@@ -29,6 +30,7 @@ export type ServiceAreaDetail = {
     id: string
     nome: string
     descricao: string | null
+    ativo: boolean
     campus: {
       id: string
       nome: string
@@ -39,6 +41,10 @@ export type ServiceAreaDetail = {
     role: 'GENERAL_LEADER' | 'CAMPUS_LEADER' | 'TEAM_LEADER' | 'MEMBER'
     inicio: string
     funcoes: string[]
+    serviceArea: {
+      id: string
+      nome: string
+    }
     person: {
       id: string
       nome: string
@@ -94,12 +100,30 @@ export type ServiceAreaApplication = {
   }>
 }
 
-export function listServiceAreas(accessToken: string) {
-  return apiRequest<ServiceAreaListItem[]>('/service-areas', { accessToken })
+export function listServiceAreas(accessToken: string, includeInactive = false) {
+  return apiRequest<ServiceAreaListItem[]>(`/service-areas${includeInactive ? '?includeInactive=true' : ''}`, { accessToken })
 }
 
 export function getServiceArea(accessToken: string, id: string) {
   return apiRequest<ServiceAreaDetail>(`/service-areas/${id}`, { accessToken })
+}
+
+export function updateServiceArea(accessToken: string, areaId: string, input: { nome?: string; descricao?: string | null; ativo?: boolean }) {
+  return apiRequest<ServiceAreaDetail>(`/service-areas/${areaId}`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export function updateServiceTeam(accessToken: string, teamId: string, input: { nome?: string; descricao?: string | null; ativo?: boolean }) {
+  return apiRequest<ServiceAreaDetail['teams'][number]>(`/service-areas/teams/${teamId}`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
 }
 
 export function createServiceTeam(accessToken: string, areaId: string, input: { nome: string; descricao?: string; campusId: string }) {
@@ -112,7 +136,7 @@ export function createServiceTeam(accessToken: string, areaId: string, input: { 
 }
 
 export function addServiceAreaMember(accessToken: string, areaId: string, input: { personId: string; role: ServiceMembershipRole; campusId?: string; teamId?: string; funcoes?: string[] }) {
-  return apiRequest<unknown>(`/service-areas/${areaId}/members`, {
+  return apiRequest<ServiceAreaDetail['memberships'][number]>(`/service-areas/${areaId}/members`, {
     method: 'POST',
     accessToken,
     headers: { 'content-type': 'application/json' },
@@ -229,6 +253,14 @@ export type ServiceAreaSchedule = {
     nome: string
     telefone: string | null
     email: string | null
+    operationalRoles?: Array<{
+      role: 'WORSHIP_MINISTER'
+      teamId: string
+    }>
+    serviceMemberships?: Array<{
+      teamId: string | null
+      funcoes: string[]
+    }>
   }
   team: {
     id: string
@@ -248,6 +280,12 @@ export type ServiceAreaSchedule = {
     inicio: string
     fim: string
   } | null
+}
+
+export function hasWorshipMinisterRole(schedule: ServiceAreaSchedule) {
+  const hasLegacyOperationalRole = schedule.person.operationalRoles?.some((assignment) => assignment.role === 'WORSHIP_MINISTER' && assignment.teamId === schedule.team.id) ?? false
+  const hasMinisterFunction = schedule.person.serviceMemberships?.some((membership) => membership.teamId === schedule.team.id && membership.funcoes.some((functionName) => functionName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLocaleLowerCase('pt-BR') === 'ministro')) ?? false
+  return hasLegacyOperationalRole || hasMinisterFunction
 }
 
 export type ServiceScheduleHistory = {

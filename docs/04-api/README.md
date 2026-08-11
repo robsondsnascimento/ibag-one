@@ -4,7 +4,8 @@ Esta pasta descreve os fluxos de negócio expostos pela API do IBAG One. Todas a
 
 ## Áreas de serviço e formação
 
-- [Funções operacionais](service-operational-roles.md): papéis extras dentro de equipes, como Ministro de Louvor.
+- [Áreas de Serviço e equipes](service-areas.md): consulta, administração de disponibilidade e preservação de histórico.
+- [Funções operacionais](service-operational-roles.md): compatibilidade de papéis extras já registrados; novos Ministros de Louvor são definidos nas funções de serviço.
 - [Escalas de serviço](service-schedules.md): criação em lote, confirmação, recusa, substituição, solicitação de troca por função, conflitos e histórico.
 - [Entrada e formação](service-area-onboarding.md): interesse, etapas por área, aprovação e criação de integrante.
 

@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { PrismaService } from '../../database/prisma.service';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { CreatePastoralCareDto } from './dto/create-pastoral-care.dto';
-import { hasAnyUserRole } from '../../common/access/user-role.util';
+import { hasAnyUserRole, hasPastoralCampusAccess } from '../../common/access/user-role.util';
 @Injectable()
 export class PastoralCareService {
   constructor(private readonly prisma: PrismaService) {}
@@ -25,10 +25,10 @@ export class PastoralCareService {
   }
   private async person(id: string, organizationId: string) { const person = await this.prisma.person.findFirst({ where: { id, organizationId } }); if (!person) throw new NotFoundException('Pessoa não encontrada na organização atual'); return person; }
   private async assertAccess(subject: any, context: OrganizationContext) {
-    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId }, include: { person: true, additionalRoles: { select: { role: true } } } });
+    const user = await this.prisma.user.findFirst({ where: { id: context.userId, organizationId: context.organizationId }, include: { person: { include: { campusMemberships: { where: { ativo: true }, select: { campusId: true } } } }, additionalRoles: { select: { role: true } } } });
     if (!user) throw new ForbiddenException('Usuário sem vínculo organizacional');
     if (hasAnyUserRole(user, ['ADMIN', 'SUPER_ADMIN', 'PASTOR_SENIOR'])) return;
-    if (hasAnyUserRole(user, ['PASTOR']) && user.person.campusId === subject.campusId) return;
+    if (hasAnyUserRole(user, ['PASTOR']) && hasPastoralCampusAccess(user, subject.campusId)) return;
     const membership = await this.prisma.cellMembership.findFirst({ where: { personId: subject.id, ativo: true } });
     if (!membership) throw new ForbiddenException('Sem acesso a este acompanhamento');
     const leadership = await this.prisma.cellLeadership.findFirst({ where: { personId: context.personId, cellId: membership.cellId, ativo: true } });

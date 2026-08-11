@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CreatePersonLoginDto } from './dto/create-person-login.dto';
 import * as bcrypt from 'bcrypt';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { OrganizationContext } from '../../common/context/organization-context';
@@ -17,6 +18,38 @@ export class UserService {
     private prisma: PrismaService,
   ) {}
 
+
+  async createForPerson(personId: string, dto: CreatePersonLoginDto, context: OrganizationContext) {
+    await this.assertAdministrator(context);
+    const person = await this.prisma.person.findFirst({
+      where: { id: personId, organizationId: context.organizationId, ativo: true },
+      include: { organization: true },
+    });
+    if (!person) throw new NotFoundException('Pessoa ativa não encontrada na organização atual');
+    if (!person.organization) throw new ForbiddenException('Pessoa sem organização vinculada');
+    const existing = await this.prisma.user.findUnique({ where: { personId: person.id } });
+    if (existing) throw new ForbiddenException('Esta pessoa já possui acesso ao sistema');
+
+    const loginEmail = await this.generateAvailableLogin(person.nome, person.organization.dominio);
+    const passwordHash = await bcrypt.hash(dto.password, 10);
+    return this.prisma.user.create({
+      data: {
+        loginEmail,
+        passwordHash,
+        personId: person.id,
+        organizationId: context.organizationId,
+      },
+      select: { id: true, loginEmail: true, ativo: true, role: true },
+    });
+  }
+
+  async findByPerson(personId: string, context: OrganizationContext) {
+    await this.assertAdministrator(context);
+    return this.prisma.user.findFirst({
+      where: { personId, organizationId: context.organizationId },
+      select: { id: true, loginEmail: true, ativo: true, role: true },
+    });
+  }
 
   async create(
     dto: CreateUserDto,
@@ -181,6 +214,19 @@ export class UserService {
 
 
     return `${parts[0]}.${parts[parts.length - 1]}@${dominio}`;
+  }
+
+  private async generateAvailableLogin(nome: string, dominio: string) {
+    const normalized = nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const parts = normalized.split(/\s+/).filter(Boolean);
+    const prefix = `${parts[0]}.${parts[parts.length - 1]}`;
+    let suffix = 1;
+    let loginEmail = `${prefix}@${dominio}`;
+    while (await this.prisma.user.findUnique({ where: { loginEmail }, select: { id: true } })) {
+      suffix += 1;
+      loginEmail = `${prefix}${suffix}@${dominio}`;
+    }
+    return loginEmail;
   }
 
 }

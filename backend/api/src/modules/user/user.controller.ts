@@ -22,6 +22,7 @@ import {
 } from '../../common/context/organization-context';
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { AssignUserRoleDto } from './dto/assign-user-role.dto';
+import { CreatePersonLoginDto } from './dto/create-person-login.dto';
 import { UserRole } from '../../generated/prisma/client';
 
 
@@ -44,6 +45,18 @@ export class UserController {
       context.organizationId,
     );
 
+  }
+
+  @Get('persons/:personId')
+  @UseGuards(JwtAuthGuard)
+  findByPerson(@Param('personId') personId: string, @CurrentOrganization() context: OrganizationContext) {
+    return this.userService.findByPerson(personId, context);
+  }
+
+  @Post('persons/:personId')
+  @UseGuards(JwtAuthGuard)
+  createForPerson(@Param('personId') personId: string, @Body() dto: CreatePersonLoginDto, @CurrentOrganization() context: OrganizationContext) {
+    return this.userService.createForPerson(personId, dto, context);
   }
 
   @Patch(':id/role')
