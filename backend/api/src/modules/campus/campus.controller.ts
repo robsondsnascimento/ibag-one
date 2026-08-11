@@ -1,7 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { CurrentOrganization } from '../../common/decorators/current-organization.decorator';
+import { OrganizationContext } from '../../common/context/organization-context';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CampusService } from './campus.service';
 
 @Controller('campuses')
+@UseGuards(JwtAuthGuard)
 export class CampusController {
 
   constructor(
@@ -9,8 +13,8 @@ export class CampusController {
   ) {}
 
   @Get()
-  findAll() {
-    return this.campusService.findAll();
+  findAll(@CurrentOrganization() context: OrganizationContext) {
+    return this.campusService.findAll(context);
   }
 
   @Post()

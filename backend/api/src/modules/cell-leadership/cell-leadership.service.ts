@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -11,6 +12,7 @@ import { CreateCellLeadershipDto } from './dto/create-cell-leadership.dto';
 import {
   OrganizationContext,
 } from '../../common/context/organization-context';
+import { userRoleWhere } from '../../common/access/user-role.util';
 
 
 @Injectable()
@@ -25,6 +27,8 @@ export class CellLeadershipService {
     dto: CreateCellLeadershipDto,
     context: OrganizationContext,
   ) {
+
+    await this.assertDirectoryManager(context);
 
     const person =
       await this.prisma.person.findFirst({
@@ -194,6 +198,8 @@ export class CellLeadershipService {
     context: OrganizationContext,
   ) {
 
+    await this.assertDirectoryManager(context);
+
     const leadership =
       await this.prisma.cellLeadership.findFirst({
         where: {
@@ -244,6 +250,8 @@ export class CellLeadershipService {
     cellId: string,
     context: OrganizationContext,
   ) {
+
+    await this.assertDirectoryManager(context);
 
     const leadership =
       await this.prisma.cellLeadership.findFirst({
@@ -367,6 +375,22 @@ export class CellLeadershipService {
 
     });
 
+  }
+
+  private async assertDirectoryManager(context: OrganizationContext) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: context.userId,
+        organizationId: context.organizationId,
+        ...userRoleWhere(['SECRETARY', 'ADMIN', 'SUPER_ADMIN']),
+      },
+    });
+
+    if (!user) {
+      throw new ForbiddenException(
+        'Somente administradores e secretários podem gerenciar lideranças de células',
+      );
+    }
   }
 
 }

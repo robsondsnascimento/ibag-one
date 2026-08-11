@@ -81,6 +81,20 @@ export class CellController {
 
   }
 
+  @Get(':id/overview')
+  findOverview(
+    @Param('id') id: string,
+    @CurrentOrganization()
+    context: OrganizationContext,
+  ) {
+
+    return this.cellService.findOverview(
+      id,
+      context,
+    );
+
+  }
+
 
   @Patch(':id')
   update(

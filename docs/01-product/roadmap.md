@@ -46,6 +46,8 @@
 - Catálogo de treinamentos, turmas, frequência e certificados para complementar as etapas de entrada em áreas.
 - Métricas específicas de formação e voluntariado no painel pastoral.
 - Lembretes automáticos de escalas, repertório e pendências operacionais.
+- Modo Bíblia: experiência de leitura e consulta bíblica a ser detalhada, incluindo traduções autorizadas, busca, favoritos e o escopo de acesso público ou autenticado.
+- Contribua: experiência para apresentar formas de contribuição à IBAG, a ser definida com a tesouraria antes de qualquer integração de pagamento, dados financeiros ou comprovantes.
 
 ### Integrações externas
 

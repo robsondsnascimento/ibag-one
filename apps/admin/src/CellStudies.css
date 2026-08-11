@@ -1,0 +1,27 @@
+.studies-page { display: grid; gap: 18px; }
+
+.studies-intro { align-items: end; display: flex; justify-content: space-between; }
+.studies-intro h2, .study-publish-card h3, .study-card h3 { color: var(--ink); font-family: 'Playfair Display', Georgia, serif; letter-spacing: -.04em; margin: 0; }
+.studies-intro h2 { font-size: 29px; }
+.studies-intro > div > p:last-child, .study-publish-card > div > p:last-child, .study-card-copy > p:not(.eyebrow) { color: var(--ink-soft); font-size: 12px; line-height: 1.6; margin: 8px 0 0; max-width: 580px; }
+.study-week-picker { color: var(--ink-soft); display: grid; font-size: 10px; font-weight: 700; gap: 6px; min-width: 145px; }
+.study-week-picker input { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); font: inherit; height: 37px; padding: 0 8px; }
+.study-card, .study-publish-card { background: var(--surface); border: 1px solid var(--line); border-radius: 15px; }
+.study-card { align-items: center; display: grid; gap: 16px; grid-template-columns: 44px minmax(0, 1fr) auto; padding: 23px; }
+.study-card-icon { align-items: center; background: var(--blue-soft); border-radius: 12px; color: var(--blue); display: inline-flex; font-size: 21px; height: 44px; justify-content: center; width: 44px; }
+.study-card h3 { font-size: 23px; }
+.study-card-copy small { color: var(--ink-soft); display: block; font-size: 10px; margin-top: 11px; }
+.study-publish-card { display: grid; gap: 25px; grid-template-columns: minmax(230px, .7fr) minmax(300px, 1fr); padding: 25px; }
+.study-publish-card h3 { font-size: 24px; }
+.study-publish-card .event-form { align-content: start; }
+.study-form-actions { display: flex; justify-content: flex-end; margin-top: 3px; }
+.theme-night .study-week-picker input { background: #20262f; border-color: #34404e; }
+
+@media (max-width: 700px) {
+  .studies-intro, .study-card { align-items: stretch; display: grid; gap: 14px; }
+  .study-week-picker { max-width: 180px; }
+  .study-card { grid-template-columns: 44px 1fr; }
+  .study-card .primary-button { grid-column: 1 / -1; width: 100%; }
+  .study-publish-card { grid-template-columns: 1fr; }
+  .study-form-actions .primary-button { width: 100%; }
+}

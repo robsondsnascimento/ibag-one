@@ -1,0 +1,6 @@
+.leadership-autocomplete { position: relative; }
+.leadership-autocomplete input { width: 100%; }
+.leadership-autocomplete-list { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 25px rgba(20, 39, 67, .14); left: 0; margin-top: 4px; max-height: 188px; overflow-y: auto; position: absolute; right: 0; top: 100%; z-index: 3; }
+.leadership-autocomplete-option { align-items: center; background: transparent; border: 0; border-top: 1px solid var(--line); color: var(--ink); cursor: pointer; display: flex; font: inherit; gap: 9px; padding: 9px 10px; text-align: left; width: 100%; }
+.leadership-autocomplete-option:first-child { border-top: 0; }.leadership-autocomplete-option:hover, .leadership-autocomplete-option--selected { background: var(--blue-soft); }.leadership-autocomplete-option span { color: var(--ink-soft); font-size: 10px; }.leadership-autocomplete-empty { color: var(--ink-soft); font-size: 11px; margin: 0; padding: 11px; }.theme-night .leadership-autocomplete-list { background: #20262f; border-color: #34404e; }
+.leadership-autocomplete-option > span:last-child { display: grid; gap: 2px; }.leadership-autocomplete-option strong { color: var(--ink); font-size: 11px; }.leadership-autocomplete-option small { color: var(--ink-soft); font-size: 9px; }

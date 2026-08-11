@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -58,6 +60,20 @@ export class CellMembershipController {
   ) {
 
     return this.cellMembershipService.findAll(
+      context,
+    );
+
+  }
+
+  @Patch(':id/end')
+  end(
+    @Param('id') id: string,
+    @CurrentOrganization()
+    context: OrganizationContext,
+  ) {
+
+    return this.cellMembershipService.end(
+      id,
       context,
     );
 

@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { CreateCellMembershipDto } from './dto/create-cell-membership.dto';
 import {
   OrganizationContext,
 } from '../../common/context/organization-context';
+import { userRoleWhere } from '../../common/access/user-role.util';
 
 
 @Injectable()
@@ -26,6 +28,8 @@ export class CellMembershipService {
     dto: CreateCellMembershipDto,
     context: OrganizationContext,
   ) {
+
+    await this.assertDirectoryManager(context);
 
     const person =
       await this.prisma.person.findFirst({
@@ -207,6 +211,78 @@ export class CellMembershipService {
 
     });
 
+  }
+
+  async end(
+    id: string,
+    context: OrganizationContext,
+  ) {
+
+    await this.assertDirectoryManager(context);
+
+    const membership = await this.prisma.cellMembership.findFirst({
+      where: {
+        id,
+        ativo: true,
+        cell: {
+          organizationId: context.organizationId,
+        },
+      },
+    });
+
+    if (!membership) {
+      throw new NotFoundException(
+        'Membresia ativa não encontrada na organização atual',
+      );
+    }
+
+    const [leadership, supportRole] = await Promise.all([
+      this.prisma.cellLeadership.findFirst({
+        where: {
+          personId: membership.personId,
+          cellId: membership.cellId,
+          ativo: true,
+        },
+      }),
+      this.prisma.cellSupportRole.findFirst({
+        where: {
+          personId: membership.personId,
+          cellId: membership.cellId,
+          ativo: true,
+        },
+      }),
+    ]);
+
+    if (leadership || supportRole) {
+      throw new ConflictException(
+        'Encerre primeiro as funções ativas desta pessoa na célula antes de remover sua membresia',
+      );
+    }
+
+    return this.prisma.cellMembership.update({
+      where: { id },
+      data: {
+        ativo: false,
+        fim: new Date(),
+      },
+    });
+
+  }
+
+  private async assertDirectoryManager(context: OrganizationContext) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: context.userId,
+        organizationId: context.organizationId,
+        ...userRoleWhere(['SECRETARY', 'ADMIN', 'SUPER_ADMIN']),
+      },
+    });
+
+    if (!user) {
+      throw new ForbiddenException(
+        'Somente administradores e secretários podem gerenciar membros de células',
+      );
+    }
   }
 
 }

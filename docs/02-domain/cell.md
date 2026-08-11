@@ -111,6 +111,8 @@ Campus Cachoeirinha
 
 Outro Campus pode possuir redes com os mesmos nomes, porém são entidades diferentes.
 
+Cada rede possui no máximo um Supervisor ativo. O Coordenador de Células acompanha as redes do campus sob sua coordenação e pode atribuir ou encerrar suas supervisões. A Secretaria, administração e pastores autorizados organizam as redes e os vínculos das células.
+
 ---
 
 # 🌱 Nascimento de uma Célula
@@ -162,6 +164,8 @@ Célula
 │
 └── Participantes
 ```
+
+Uma função interna da célula só pode ser atribuída a uma pessoa com vínculo ativo nela. O painel oferece busca por nome entre essas pessoas para tornar a atribuição rápida sem ampliar esse escopo.
 
 ---
 
@@ -316,6 +320,14 @@ Um visitante pode:
 - criar relacionamento;
 - ser acompanhado;
 - futuramente iniciar uma jornada na igreja.
+
+---
+
+# 📚 Estudos semanais
+
+O Secretário publica um único estudo por semana para toda a organização. O mesmo material atende todas as células, em todos os campus.
+
+O estudo da semana atual é disponibilizado ao membro somente depois de concluído o registro do encontro da semana anterior de sua célula. Essa condição não impede a geração do próximo encontro semanal. Células novas, sem encontro anterior, podem acessar o estudo publicado.
 
 ---
 

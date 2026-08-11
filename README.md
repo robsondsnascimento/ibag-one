@@ -30,7 +30,7 @@ A agenda institucional possui sincronização unidirecional opcional com um úni
 - Uma pessoa só se torna integrante após aprovação no processo da área.
 - A Ordem de Culto é independente da escala e pode ser montada a partir de modelos editáveis.
 - O repertório é enviado pelo Ministro de Louvor, aprovado pela liderança e entregue à equipe de Ordem de Culto.
-- A presença em células permite registrar ausência; visitantes podem ser sugeridos como membros após três encontros.
+- A presença em células permite registrar ausência; visitantes são identificados pelo telefone e, após três encontros na mesma célula, podem ser incluídos como participantes ativos sem se tornarem membros formais automaticamente.
 - Estudos semanais são globais à organização e dependem do registro da célula anterior, com exceção prevista para células novas.
 - A coordenação de células é um vínculo por campus; no cuidado pastoral, atua abaixo do pastor e acima da supervisão de rede.
 - `PASTOR` possui escopo do próprio campus; `PASTOR_SENIOR` herda as responsabilidades pastorais em todos os campi da organização.
@@ -93,6 +93,7 @@ npm run test:integration
 - [Operação e homologação](docs/04-api/operation-and-homologation.md)
 - [Notificações externas](docs/04-api/external-notifications.md)
 - [Agenda institucional e Google Calendar](docs/04-api/google-calendar-agenda.md)
+- [Painel administrativo](docs/06-ui/administrative-panel.md)
 - [Visão do banco](docs/05-database/database-overview.md)
 
 ## Próximos passos

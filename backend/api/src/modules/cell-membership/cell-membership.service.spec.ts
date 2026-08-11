@@ -21,6 +21,9 @@ describe('CellMembershipService', () => {
 
   const prisma = {
     $transaction: jest.fn(),
+    user: {
+      findFirst: jest.fn(),
+    },
     person: {
       findFirst: jest.fn(),
     },
@@ -32,6 +35,12 @@ describe('CellMembershipService', () => {
       findFirst: jest.fn(),
       update: jest.fn(),
     },
+    cellLeadership: {
+      findFirst: jest.fn(),
+    },
+    cellSupportRole: {
+      findFirst: jest.fn(),
+    },
   };
 
   let service: CellMembershipService;
@@ -39,6 +48,8 @@ describe('CellMembershipService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    prisma.user.findFirst.mockResolvedValue({ id: context.userId });
 
     service = new CellMembershipService(prisma as never);
   });
@@ -108,6 +119,43 @@ describe('CellMembershipService', () => {
           cellId: dto.cellId,
           ativo: true,
         }),
+      }),
+    );
+  });
+
+  it('does not remove a member while the person has an active role in the cell', async () => {
+    prisma.cellMembership.findFirst.mockResolvedValue({
+      id: 'membership-id',
+      personId: dto.personId,
+      cellId: dto.cellId,
+    });
+    prisma.cellLeadership.findFirst.mockResolvedValue({ id: 'leadership-id' });
+    prisma.cellSupportRole.findFirst.mockResolvedValue(null);
+
+    await expect(service.end('membership-id', context)).rejects.toBeInstanceOf(ConflictException);
+
+    expect(prisma.cellMembership.update).not.toHaveBeenCalled();
+  });
+
+  it('ends a member with no active role in the cell', async () => {
+    prisma.cellMembership.findFirst.mockResolvedValue({
+      id: 'membership-id',
+      personId: dto.personId,
+      cellId: dto.cellId,
+    });
+    prisma.cellLeadership.findFirst.mockResolvedValue(null);
+    prisma.cellSupportRole.findFirst.mockResolvedValue(null);
+    prisma.cellMembership.update.mockResolvedValue({ id: 'membership-id', ativo: false });
+
+    await expect(service.end('membership-id', context)).resolves.toEqual({
+      id: 'membership-id',
+      ativo: false,
+    });
+
+    expect(prisma.cellMembership.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: 'membership-id' },
+        data: expect.objectContaining({ ativo: false }),
       }),
     );
   });

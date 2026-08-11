@@ -21,6 +21,9 @@ describe('CellLeadershipService', () => {
 
   const prisma = {
     $transaction: jest.fn(),
+    user: {
+      findFirst: jest.fn(),
+    },
     person: {
       findFirst: jest.fn(),
     },
@@ -43,6 +46,7 @@ describe('CellLeadershipService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    prisma.user.findFirst.mockResolvedValue({ id: context.userId });
 
     service = new CellLeadershipService(prisma as never);
   });

@@ -1,6 +1,82 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+
+import { userRoleWhere } from '../../common/access/user-role.util';
 import { OrganizationContext } from '../../common/context/organization-context';
+import { PrismaService } from '../../database/prisma.service';
 import { CreateCellSupportRoleDto } from './dto/create-cell-support-role.dto';
+
 @Injectable()
-export class CellSupportRoleService { constructor(private readonly prisma: PrismaService) {} async create(dto: CreateCellSupportRoleDto, context: OrganizationContext) { const person = await this.prisma.person.findFirst({ where: { id: dto.personId, organizationId: context.organizationId, ativo: true } }); const cell = await this.prisma.cell.findFirst({ where: { id: dto.cellId, organizationId: context.organizationId, ativo: true } }); if (!person || !cell) throw new NotFoundException('Pessoa ou célula ativa não encontrada na organização atual'); const membership = await this.prisma.cellMembership.findFirst({ where: { personId: dto.personId, cellId: dto.cellId, ativo: true } }); if (!membership) throw new BadRequestException('A pessoa precisa possuir membresia ativa nesta célula'); const exists = await this.prisma.cellSupportRole.findFirst({ where: { ...dto, ativo: true } }); if (exists) throw new BadRequestException('A pessoa já possui este papel ativo nesta célula'); return this.prisma.cellSupportRole.create({ data: { ...dto, inicio: new Date(), ativo: true }, include: { person: true, cell: true } }); } async end(id: string, context: OrganizationContext) { const role = await this.prisma.cellSupportRole.findFirst({ where: { id, ativo: true, cell: { organizationId: context.organizationId } } }); if (!role) throw new NotFoundException('Papel ativo não encontrado na organização atual'); return this.prisma.cellSupportRole.update({ where: { id }, data: { ativo: false, fim: new Date() } }); } }
+export class CellSupportRoleService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(dto: CreateCellSupportRoleDto, context: OrganizationContext) {
+    await this.assertDirectoryManager(context);
+
+    const person = await this.prisma.person.findFirst({
+      where: { id: dto.personId, organizationId: context.organizationId, ativo: true },
+    });
+    const cell = await this.prisma.cell.findFirst({
+      where: { id: dto.cellId, organizationId: context.organizationId, ativo: true },
+    });
+
+    if (!person || !cell) {
+      throw new NotFoundException('Pessoa ou célula ativa não encontrada na organização atual');
+    }
+
+    const membership = await this.prisma.cellMembership.findFirst({
+      where: { personId: dto.personId, cellId: dto.cellId, ativo: true },
+    });
+    if (!membership) {
+      throw new BadRequestException('A pessoa precisa possuir membresia ativa nesta célula');
+    }
+
+    const exists = await this.prisma.cellSupportRole.findFirst({
+      where: { ...dto, ativo: true },
+    });
+    if (exists) {
+      throw new BadRequestException('A pessoa já possui este papel ativo nesta célula');
+    }
+
+    return this.prisma.cellSupportRole.create({
+      data: { ...dto, inicio: new Date(), ativo: true },
+      include: { person: true, cell: true },
+    });
+  }
+
+  async end(id: string, context: OrganizationContext) {
+    await this.assertDirectoryManager(context);
+
+    const role = await this.prisma.cellSupportRole.findFirst({
+      where: { id, ativo: true, cell: { organizationId: context.organizationId } },
+    });
+    if (!role) {
+      throw new NotFoundException('Papel ativo não encontrado na organização atual');
+    }
+
+    return this.prisma.cellSupportRole.update({
+      where: { id },
+      data: { ativo: false, fim: new Date() },
+    });
+  }
+
+  private async assertDirectoryManager(context: OrganizationContext) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: context.userId,
+        organizationId: context.organizationId,
+        ...userRoleWhere(['SECRETARY', 'ADMIN', 'SUPER_ADMIN']),
+      },
+    });
+
+    if (!user) {
+      throw new ForbiddenException(
+        'Somente administradores e secretários podem gerenciar funções de células',
+      );
+    }
+  }
+}

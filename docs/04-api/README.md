@@ -29,6 +29,9 @@ Esta pasta descreve os fluxos de negócio expostos pela API do IBAG One. Todas a
 ## Células e cuidado pastoral
 
 - [Coordenação de Células](cell-campus-coordination.md): vínculo por campus, administração de supervisão e escopo pastoral.
+- [Redes e supervisão de células](cell-networks.md): criação de redes, vínculo de células e supervisão por rede.
+- [Estudos semanais de célula](cell-studies.md): publicação institucional, acesso condicionado ao encontro anterior e download do anexo.
+- [Visitantes e participantes de célula](cell-visitors.md): registro por telefone, sugestão após três encontros e transferência confirmada.
 
 ## Endpoints de fundação
 

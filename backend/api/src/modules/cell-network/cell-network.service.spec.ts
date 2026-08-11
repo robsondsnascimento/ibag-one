@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   NotFoundException,
 } from '@nestjs/common';
 
@@ -15,6 +16,9 @@ describe('CellNetworkService', () => {
   };
 
   const prisma = {
+    user: {
+      findFirst: jest.fn(),
+    },
     campus: {
       findFirst: jest.fn(),
     },
@@ -28,6 +32,9 @@ describe('CellNetworkService', () => {
       findMany: jest.fn(),
       update: jest.fn(),
     },
+    cellCampusCoordination: {
+      findMany: jest.fn(),
+    },
   };
 
   let service: CellNetworkService;
@@ -35,8 +42,27 @@ describe('CellNetworkService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    prisma.user.findFirst.mockResolvedValue({
+      id: context.userId,
+      role: 'ADMIN',
+      person: { campusId: 'campus-id' },
+      additionalRoles: [],
+    });
 
     service = new CellNetworkService(prisma as never);
+  });
+
+  it('rejects network administration by a person without an authorized scope', async () => {
+    prisma.campus.findFirst.mockResolvedValue({ id: 'campus-id' });
+    prisma.user.findFirst.mockResolvedValue({
+      id: context.userId,
+      role: 'MEMBER',
+      person: { campusId: 'campus-id' },
+      additionalRoles: [],
+    });
+
+    await expect(service.create({ nome: 'Rede Norte', campusId: 'campus-id' }, context))
+      .rejects.toBeInstanceOf(ForbiddenException);
   });
 
 

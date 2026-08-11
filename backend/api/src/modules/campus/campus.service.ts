@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 
 @Injectable()
@@ -7,8 +8,12 @@ export class CampusService {
     private readonly prisma: PrismaService,
   ) {}
 
-  async findAll() {
+  async findAll(context: OrganizationContext) {
     return this.prisma.campus.findMany({
+      where: {
+        organizationId: context.organizationId,
+        ativo: true,
+      },
       orderBy: {
         nome: 'asc',
       },

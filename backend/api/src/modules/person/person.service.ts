@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 
 import { PrismaService } from '../../database/prisma.service';
 
@@ -10,6 +10,7 @@ import {
 } from '../../common/context/organization-context';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { paginatedResult } from '../../common/pagination/paginated-result';
+import { userRoleWhere } from '../../common/access/user-role.util';
 
 
 @Injectable()
@@ -24,6 +25,8 @@ export class PersonService {
     createPersonDto: CreatePersonDto,
     context: OrganizationContext,
   ) {
+
+    await this.assertDirectoryManager(context);
 
     const campus =
       await this.prisma.campus.findUnique({
@@ -163,6 +166,8 @@ export class PersonService {
     context: OrganizationContext,
   ) {
 
+    await this.assertDirectoryManager(context);
+
     const person =
       await this.prisma.person.findFirst({
 
@@ -187,6 +192,23 @@ export class PersonService {
     }
 
 
+    if (updatePersonDto.campusId) {
+      const campus = await this.prisma.campus.findFirst({
+        where: {
+          id: updatePersonDto.campusId,
+          organizationId: context.organizationId,
+        },
+      });
+
+      if (!campus) {
+        throw new BadRequestException(
+          'Campus não pertence à organização atual',
+        );
+      }
+    }
+
+    const { organizationId: _organizationId, ...personData } = updatePersonDto;
+
     return this.prisma.person.update({
 
       where: {
@@ -195,7 +217,11 @@ export class PersonService {
 
       },
 
-      data: updatePersonDto,
+      data: personData,
+
+      include: {
+        campus: true,
+      },
 
     });
 
@@ -206,6 +232,8 @@ export class PersonService {
     id: string,
     context: OrganizationContext,
   ) {
+
+    await this.assertDirectoryManager(context);
 
     const person =
       await this.prisma.person.findFirst({
@@ -247,6 +275,22 @@ export class PersonService {
 
     });
 
+  }
+
+  private async assertDirectoryManager(context: OrganizationContext) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: context.userId,
+        organizationId: context.organizationId,
+        ...userRoleWhere(['SECRETARY', 'ADMIN', 'SUPER_ADMIN']),
+      },
+    });
+
+    if (!user) {
+      throw new ForbiddenException(
+        'Somente administradores e secretários podem gerenciar cadastros de pessoas',
+      );
+    }
   }
 
 }
