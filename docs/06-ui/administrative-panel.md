@@ -69,3 +69,15 @@ Ao selecionar um evento na Agenda, o painel apresenta seus vínculos, horários,
 ## Notificações
 
 O sino do cabeçalho abre a central de notificações internas. Ela mostra avisos de escala, recusa, substituição e outros fluxos do sistema; ao abrir um aviso não lido, ele é marcado como lido. O mesmo registro interno servirá futuramente como origem para WhatsApp e ProPresenter.
+
+## Cultos — Ordem de Culto
+
+A área de **Cultos** lista os eventos de culto já aprovados na Agenda e permite consultar a ordem correspondente. Para quem possui permissão, o fluxo inicial permite:
+
+- criar uma ordem em branco ou aplicar um modelo ativo da organização;
+- acompanhar o status de rascunho ou publicação;
+- incluir, editar, reorganizar ou remover itens excepcionais na sequência, como um Teatro Minuto, indicando horário, área envolvida e observações;
+- associar materiais e criar demandas para as áreas já envolvidas no culto;
+- publicar a ordem quando houver ao menos um item e, depois disso, enviar alerta aos participantes ou baixar seu PDF consolidado.
+
+O painel usa apenas cultos aprovados e não replica as regras de escopo: a autorização para criar, editar, publicar, alertar e gerar PDF é sempre confirmada pela API. A próxima etapa deste módulo é o repertório de louvor e a administração completa dos modelos de ordem de culto.

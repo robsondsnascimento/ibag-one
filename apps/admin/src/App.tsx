@@ -18,6 +18,7 @@ import { ServiceAreaOnboardingDialog } from './ServiceAreaOnboardingDialog'
 import { MySchedulesPage } from './MySchedulesPage'
 import { EventDetailsDialog } from './EventDetailsDialog'
 import { EventFormDialog } from './EventFormDialog'
+import { WorshipPage } from './WorshipPage'
 import { NotificationDialog } from './NotificationDialog'
 import { listMyNotifications } from './api/notifications'
 import { ApiError } from './api/client'
@@ -31,6 +32,7 @@ import './CellNavigation.css'
 import './ServiceAreaWorkspace.css'
 import './ServiceAreaOnboardingDialog.css'
 import './ServiceSchedulePages.css'
+import './WorshipPage.css'
 
 type Page =
   | 'dashboard'
@@ -301,6 +303,7 @@ function App() {
   const canCentrallyManageServiceAreas = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
   const canBlockCampusAgenda = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
   const canApproveAgendaEvents = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY', 'PASTOR', 'PASTOR_SENIOR'].some((role) => assignedRoles.includes(role))
+  const canManageAnyWorshipOrder = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY', 'WORSHIP_ORDER_MANAGER', 'PASTOR', 'PASTOR_SENIOR'].some((role) => assignedRoles.includes(role))
   const isCellSection = ['cells', 'cell-structure', 'studies'].includes(activePage)
   const isServiceSection = ['teams', 'kids'].includes(activePage)
   const selectedServiceArea = serviceAreas.find((area) => area.id === selectedServiceAreaId) ?? null
@@ -1819,8 +1822,9 @@ function App() {
         {activePage === 'studies' && <StudiesPage canManage={canManageStudies} study={study} error={studyError} isLoading={isLoadingStudy} weekStart={studyWeekStart} isSubmitting={isSubmittingStudy} onWeekStartChange={setStudyWeekStart} onPublish={saveStudy} onDownload={downloadStudy} />}
         {activePage === 'people' && <PeoplePage data={people} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'person', id })} />}
         {activePage === 'my-schedules' && <MySchedulesPage accessToken={session.access_token} onNotice={setNotice} onNotificationsChanged={() => setNotificationsVersion((version) => version + 1)} />}
+        {activePage === 'worship' && <WorshipPage accessToken={session.access_token} currentUserId={session.user.id} canManageAnyOrder={canManageAnyWorshipOrder} onNotice={setNotice} />}
         {activePage === 'teams' && selectedServiceArea && <ServiceAreaWorkspace area={serviceAreaDetail} error={serviceAreaDetailError} isLoading={isLoadingServiceAreaDetail} onRetry={() => setServiceAreaDetailVersion((version) => version + 1)} canCreateTeam={canCreateServiceTeam} canManageMembers={canManageServiceMembers} canManageOnboarding={canManageServiceMembers} canManageSchedules={canManageServiceMembers} accessToken={session.access_token} currentPersonId={session.user.personId} onNotice={setNotice} onCreateTeam={openServiceTeamForm} onAddMember={openServiceMemberForm} onOpenOnboarding={openServiceOnboarding} />}
-        {activePage !== 'dashboard' && activePage !== 'agenda' && activePage !== 'cells' && activePage !== 'cell-structure' && activePage !== 'studies' && activePage !== 'people' && activePage !== 'my-schedules' && (activePage !== 'teams' || !selectedServiceArea) && <ModulePreview copy={pageCopy[activePage]} />}
+        {activePage !== 'dashboard' && activePage !== 'agenda' && activePage !== 'cells' && activePage !== 'cell-structure' && activePage !== 'studies' && activePage !== 'people' && activePage !== 'my-schedules' && activePage !== 'worship' && (activePage !== 'teams' || !selectedServiceArea) && <ModulePreview copy={pageCopy[activePage]} />}
       </main>
 
       {selectedAgendaEvent && <EventDetailsDialog event={selectedAgendaEvent} accessToken={session.access_token} canApprove={canApproveAgendaEvents} onClose={() => setSelectedAgendaEvent(null)} onEdit={() => { const event = selectedAgendaEvent; setSelectedAgendaEvent(null); openEventForm(event) }} onApprove={approveSelectedAgendaEvent} onCancel={cancelSelectedAgendaEvent} onAddChecklist={addSelectedAgendaChecklist} onToggleChecklist={toggleSelectedAgendaChecklist} />}
