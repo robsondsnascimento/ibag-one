@@ -41,6 +41,7 @@ export function EventFormDialog({ event, campuses, cells, areas, spaces, isLoadi
   const [spaceIds, setSpaceIds] = useState(event?.spaces.map((item) => item.spaceId) ?? [])
   const [serviceAreaIds, setServiceAreaIds] = useState(event?.serviceAreas.map((item) => item.serviceAreaId) ?? [])
   const [teamIds, setTeamIds] = useState(event?.teams.map((item) => item.teamId) ?? [])
+  const [localError, setLocalError] = useState('')
 
   useEffect(() => {
     setCampusId(event?.campus.id ?? '')
@@ -48,6 +49,7 @@ export function EventFormDialog({ event, campuses, cells, areas, spaces, isLoadi
     setSpaceIds(event?.spaces.map((item) => item.spaceId) ?? [])
     setServiceAreaIds(event?.serviceAreas.map((item) => item.serviceAreaId) ?? [])
     setTeamIds(event?.teams.map((item) => item.teamId) ?? [])
+    setLocalError('')
   }, [event])
 
   const availableAreas = useMemo(() => areas.filter((area) => area.scope === 'GLOBAL' || area.campus?.id === campusId), [areas, campusId])
@@ -72,7 +74,12 @@ export function EventFormDialog({ event, campuses, cells, areas, spaces, isLoadi
     const inicio = new Date(`${date}T${startTime}:00`)
     const fim = new Date(`${date}T${endTime}:00`)
 
-    if (inicio >= fim) return
+    if (inicio >= fim) {
+      setLocalError('O horário de término deve ser posterior ao horário de início.')
+      return
+    }
+
+    setLocalError('')
 
     onSubmit({
       titulo: String(data.get('title') ?? '').trim(),
@@ -117,7 +124,7 @@ export function EventFormDialog({ event, campuses, cells, areas, spaces, isLoadi
         <EventSelection title="Espaços reservados" description="O sistema impede reservas simultâneas no mesmo espaço." items={spaces.map((space) => ({ id: space.id, label: space.capacidade ? `${space.nome} · ${space.capacidade} lugares` : space.nome }))} selectedIds={spaceIds} onToggle={(id) => setSpaceIds((current) => toggle(current, id))} emptyMessage={campusId ? 'Não há espaços cadastrados neste campus.' : 'Escolha o campus para consultar espaços.'} />
         <label>Observação <span className="field-optional">(opcional)</span><input name="description" defaultValue={event?.descricao ?? ''} placeholder="Informação útil para a agenda" /></label>
         <div className="event-form-options"><label className="checkbox-label checkbox-label--form"><input name="alertEnabled" type="checkbox" defaultChecked={event?.alertEnabled ?? false} /> Habilitar alertas do evento</label>{canBlockCampusAgenda && <label className="checkbox-label checkbox-label--form"><input name="blocksCampusAgenda" type="checkbox" defaultChecked={event?.blocksCampusAgenda ?? false} /> Bloquear a agenda do campus neste horário</label>}</div>
-        {error && <p className="form-error" role="alert">{error}</p>}
+        {(localError || error) && <p className="form-error" role="alert">{localError || error}</p>}
         <div className="dialog-actions"><button className="secondary-button" type="button" onClick={onClose}>Cancelar</button><button className="primary-button" type="submit" disabled={isLoading || !campusId || isSaving}>{isSaving ? 'Salvando...' : event ? 'Salvar alterações' : 'Criar evento'}</button></div>
       </form>
     </section>
