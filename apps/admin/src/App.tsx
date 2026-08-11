@@ -11,9 +11,10 @@ import { assignCellToNetwork, createCellCampusCoordination, createCellNetwork, c
 import type { CellCampusCoordination, CellNetworkListItem, CellNetworkSupervision } from './api/directory'
 import { downloadCurrentCellStudy, getCurrentCellStudy, getStudyForWeek, publishCellStudy } from './api/cell-studies'
 import type { CellStudy } from './api/cell-studies'
-import { getServiceArea, listServiceAreas } from './api/service-areas'
-import type { ServiceAreaDetail, ServiceAreaListItem } from './api/service-areas'
+import { addServiceAreaMember, approveServiceAreaApplication, completeServiceAreaApplicationStage, createServiceAreaApplication, createServiceAreaEntryStage, createServiceTeam, getServiceArea, listServiceAreaApplications, listServiceAreaEntryStages, listServiceAreas, rejectServiceAreaApplication, reorderServiceAreaEntryStages, startServiceAreaApplication, updateServiceAreaEntryStage, withdrawServiceAreaApplication } from './api/service-areas'
+import type { ServiceAreaApplication, ServiceAreaDetail, ServiceAreaEntryStage, ServiceAreaListItem, ServiceMembershipRole } from './api/service-areas'
 import { ServiceAreaWorkspace } from './ServiceAreaWorkspace'
+import { ServiceAreaOnboardingDialog } from './ServiceAreaOnboardingDialog'
 import { ApiError } from './api/client'
 import { clearSession, readSession, saveSession } from './auth/session'
 import './App.css'
@@ -23,6 +24,7 @@ import './CellHierarchyCells.css'
 import './CellLeadershipAutocomplete.css'
 import './CellNavigation.css'
 import './ServiceAreaWorkspace.css'
+import './ServiceAreaOnboardingDialog.css'
 
 type Page =
   | 'dashboard'
@@ -240,11 +242,27 @@ function App() {
   const [hierarchyVersion, setHierarchyVersion] = useState(0)
   const [serviceAreas, setServiceAreas] = useState<ServiceAreaListItem[]>([])
   const [isLoadingServiceAreas, setIsLoadingServiceAreas] = useState(false)
+  const [serviceAreasVersion, setServiceAreasVersion] = useState(0)
   const [selectedServiceAreaId, setSelectedServiceAreaId] = useState<string | null>(null)
   const [serviceAreaDetail, setServiceAreaDetail] = useState<ServiceAreaDetail | null>(null)
   const [serviceAreaDetailError, setServiceAreaDetailError] = useState('')
   const [isLoadingServiceAreaDetail, setIsLoadingServiceAreaDetail] = useState(false)
   const [serviceAreaDetailVersion, setServiceAreaDetailVersion] = useState(0)
+  const [serviceTeamArea, setServiceTeamArea] = useState<ServiceAreaDetail | null>(null)
+  const [serviceMemberArea, setServiceMemberArea] = useState<ServiceAreaDetail | null>(null)
+  const [serviceFormCampuses, setServiceFormCampuses] = useState<CampusListItem[]>([])
+  const [serviceFormPeople, setServiceFormPeople] = useState<PersonListItem[]>([])
+  const [serviceFormError, setServiceFormError] = useState('')
+  const [isLoadingServiceForm, setIsLoadingServiceForm] = useState(false)
+  const [isSavingServiceForm, setIsSavingServiceForm] = useState(false)
+  const [serviceMembershipRole, setServiceMembershipRole] = useState<ServiceMembershipRole>('MEMBER')
+  const [serviceOnboardingArea, setServiceOnboardingArea] = useState<ServiceAreaDetail | null>(null)
+  const [serviceOnboardingStages, setServiceOnboardingStages] = useState<ServiceAreaEntryStage[]>([])
+  const [serviceOnboardingApplications, setServiceOnboardingApplications] = useState<ServiceAreaApplication[]>([])
+  const [serviceOnboardingPeople, setServiceOnboardingPeople] = useState<PersonListItem[]>([])
+  const [serviceOnboardingError, setServiceOnboardingError] = useState('')
+  const [isLoadingServiceOnboarding, setIsLoadingServiceOnboarding] = useState(false)
+  const [isSavingServiceOnboarding, setIsSavingServiceOnboarding] = useState(false)
   const [isCellsMenuExpanded, setIsCellsMenuExpanded] = useState(true)
   const [isServiceMenuExpanded, setIsServiceMenuExpanded] = useState(true)
   const [studyWeekStart, setStudyWeekStart] = useState(() => toDateInputValue(startOfWeek(new Date())))
@@ -257,9 +275,14 @@ function App() {
   const canManageDirectory = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
   const canManageStudies = ['SUPER_ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
   const canManageNetworks = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY', 'PASTOR', 'PASTOR_SENIOR'].some((role) => assignedRoles.includes(role))
+  const canCentrallyManageServiceAreas = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
   const isCellSection = ['cells', 'cell-structure', 'studies'].includes(activePage)
   const isServiceSection = ['teams', 'kids'].includes(activePage)
   const selectedServiceArea = serviceAreas.find((area) => area.id === selectedServiceAreaId) ?? null
+  const ownServiceAreaMemberships = serviceAreaDetail?.memberships.filter((membership) => membership.person.id === session?.user.personId) ?? []
+  const canCreateServiceTeam = canCentrallyManageServiceAreas || ownServiceAreaMemberships.some((membership) => membership.role === 'GENERAL_LEADER')
+  const canManageServiceMembers = canCentrallyManageServiceAreas || ownServiceAreaMemberships.some((membership) => membership.role !== 'MEMBER')
+  const canManageServiceEntryStages = canCentrallyManageServiceAreas || ownServiceAreaMemberships.some((membership) => membership.role === 'GENERAL_LEADER')
 
   useEffect(() => {
     if (!session) {
@@ -285,7 +308,7 @@ function App() {
     return () => {
       active = false
     }
-  }, [session])
+  }, [serviceAreasVersion, session])
 
   useEffect(() => {
     if (!session) {
@@ -937,6 +960,338 @@ function App() {
     }
   }
 
+  const openServiceTeamForm = async (area: ServiceAreaDetail) => {
+    if (!session) return
+
+    setServiceTeamArea(area)
+    setServiceFormCampuses([])
+    setServiceFormError('')
+    setIsLoadingServiceForm(true)
+    try {
+      setServiceFormCampuses(await listCampuses(session.access_token))
+    } catch (error) {
+      setServiceFormError(error instanceof Error ? error.message : 'Não foi possível carregar os campi para esta equipe.')
+    } finally {
+      setIsLoadingServiceForm(false)
+    }
+  }
+
+  const closeServiceTeamForm = () => {
+    setServiceTeamArea(null)
+    setServiceFormCampuses([])
+    setServiceFormError('')
+  }
+
+  const saveServiceTeam = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!session || !serviceTeamArea) return
+
+    const formData = new FormData(event.currentTarget)
+    const nome = String(formData.get('name') ?? '').trim()
+    const descricao = String(formData.get('description') ?? '').trim()
+    const campusId = serviceTeamArea.scope === 'CAMPUS'
+      ? serviceTeamArea.campus?.id ?? ''
+      : String(formData.get('campusId') ?? '')
+
+    if (!campusId) {
+      setServiceFormError('Selecione o campus da equipe.')
+      return
+    }
+
+    setServiceFormError('')
+    setIsSavingServiceForm(true)
+    try {
+      await createServiceTeam(session.access_token, serviceTeamArea.id, {
+        nome,
+        campusId,
+        ...(descricao ? { descricao } : {}),
+      })
+      closeServiceTeamForm()
+      setServiceAreaDetailVersion((version) => version + 1)
+      setServiceAreasVersion((version) => version + 1)
+      setNotice('Equipe criada com sucesso.')
+    } catch (error) {
+      setServiceFormError(error instanceof Error ? error.message : 'Não foi possível criar a equipe.')
+    } finally {
+      setIsSavingServiceForm(false)
+    }
+  }
+
+  const openServiceMemberForm = async (area: ServiceAreaDetail) => {
+    if (!session) return
+
+    setServiceMemberArea(area)
+    setServiceFormPeople([])
+    setServiceFormCampuses([])
+    setServiceMembershipRole('MEMBER')
+    setServiceFormError('')
+    setIsLoadingServiceForm(true)
+    try {
+      const [peopleResult, availableCampuses] = await Promise.all([
+        listPeople(session.access_token),
+        listCampuses(session.access_token),
+      ])
+      setServiceFormPeople(peopleResult.data.filter((person) => person.ativo))
+      setServiceFormCampuses(availableCampuses)
+    } catch (error) {
+      setServiceFormError(error instanceof Error ? error.message : 'Não foi possível carregar as pessoas e os campi disponíveis.')
+    } finally {
+      setIsLoadingServiceForm(false)
+    }
+  }
+
+  const closeServiceMemberForm = () => {
+    setServiceMemberArea(null)
+    setServiceFormPeople([])
+    setServiceFormCampuses([])
+    setServiceMembershipRole('MEMBER')
+    setServiceFormError('')
+  }
+
+  const saveServiceMember = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!session || !serviceMemberArea) return
+
+    const formData = new FormData(event.currentTarget)
+    const personId = String(formData.get('personId') ?? '')
+    const teamId = String(formData.get('teamId') ?? '')
+    const campusId = serviceMemberArea.scope === 'CAMPUS'
+      ? serviceMemberArea.campus?.id ?? ''
+      : String(formData.get('campusId') ?? '')
+
+    if (!personId) {
+      setServiceFormError('Selecione uma pessoa.')
+      return
+    }
+
+    if (serviceMembershipRole === 'CAMPUS_LEADER' && !campusId) {
+      setServiceFormError('Selecione o campus desta liderança.')
+      return
+    }
+
+    if ((serviceMembershipRole === 'TEAM_LEADER' || serviceMembershipRole === 'MEMBER') && !teamId) {
+      setServiceFormError('Selecione a equipe da pessoa.')
+      return
+    }
+
+    setServiceFormError('')
+    setIsSavingServiceForm(true)
+    try {
+      await addServiceAreaMember(session.access_token, serviceMemberArea.id, {
+        personId,
+        role: serviceMembershipRole,
+        ...(serviceMembershipRole === 'CAMPUS_LEADER' ? { campusId } : {}),
+        ...((serviceMembershipRole === 'TEAM_LEADER' || serviceMembershipRole === 'MEMBER') ? { teamId } : {}),
+      })
+      closeServiceMemberForm()
+      setServiceAreaDetailVersion((version) => version + 1)
+      setServiceAreasVersion((version) => version + 1)
+      setNotice('Pessoa vinculada à área de serviço com sucesso.')
+    } catch (error) {
+      setServiceFormError(error instanceof Error ? error.message : 'Não foi possível vincular a pessoa à área de serviço.')
+    } finally {
+      setIsSavingServiceForm(false)
+    }
+  }
+
+  const refreshServiceOnboarding = async (area: ServiceAreaDetail) => {
+    if (!session) return false
+
+    setServiceOnboardingError('')
+    setIsLoadingServiceOnboarding(true)
+    try {
+      const [stages, applications, peopleResult] = await Promise.all([
+        listServiceAreaEntryStages(session.access_token, area.id),
+        listServiceAreaApplications(session.access_token, area.id),
+        listPeople(session.access_token),
+      ])
+      setServiceOnboardingStages(stages)
+      setServiceOnboardingApplications(applications)
+      setServiceOnboardingPeople(peopleResult.data.filter((person) => person.ativo))
+      return true
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível carregar a jornada de entrada desta área.')
+      return false
+    } finally {
+      setIsLoadingServiceOnboarding(false)
+    }
+  }
+
+  const openServiceOnboarding = async (area: ServiceAreaDetail) => {
+    setServiceOnboardingArea(area)
+    setServiceOnboardingStages([])
+    setServiceOnboardingApplications([])
+    setServiceOnboardingPeople([])
+    setServiceOnboardingError('')
+    await refreshServiceOnboarding(area)
+  }
+
+  const closeServiceOnboarding = () => {
+    setServiceOnboardingArea(null)
+    setServiceOnboardingStages([])
+    setServiceOnboardingApplications([])
+    setServiceOnboardingPeople([])
+    setServiceOnboardingError('')
+  }
+
+  const createServiceEntryStage = async (input: { nome: string; descricao?: string; obrigatoria: boolean }) => {
+    if (!session || !serviceOnboardingArea) return false
+
+    setServiceOnboardingError('')
+    setIsSavingServiceOnboarding(true)
+    try {
+      await createServiceAreaEntryStage(session.access_token, serviceOnboardingArea.id, input)
+      const refreshed = await refreshServiceOnboarding(serviceOnboardingArea)
+      if (refreshed) setNotice('Etapa de entrada adicionada com sucesso.')
+      return refreshed
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível adicionar a etapa de entrada.')
+      return false
+    } finally {
+      setIsSavingServiceOnboarding(false)
+    }
+  }
+
+  const updateServiceEntryStage = async (stageId: string, input: { nome: string; descricao?: string; obrigatoria: boolean; ativo: boolean }) => {
+    if (!session || !serviceOnboardingArea) return false
+
+    setServiceOnboardingError('')
+    setIsSavingServiceOnboarding(true)
+    try {
+      await updateServiceAreaEntryStage(session.access_token, stageId, input)
+      const refreshed = await refreshServiceOnboarding(serviceOnboardingArea)
+      if (refreshed) setNotice(input.ativo ? 'Etapa atualizada com sucesso.' : 'Etapa desativada. O histórico existente foi preservado.')
+      return refreshed
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível atualizar esta etapa.')
+      return false
+    } finally {
+      setIsSavingServiceOnboarding(false)
+    }
+  }
+
+  const reorderServiceEntryStages = async (stageIds: string[]) => {
+    if (!session || !serviceOnboardingArea) return
+
+    setServiceOnboardingError('')
+    setIsSavingServiceOnboarding(true)
+    try {
+      await reorderServiceAreaEntryStages(session.access_token, serviceOnboardingArea.id, stageIds)
+      if (await refreshServiceOnboarding(serviceOnboardingArea)) setNotice('Ordem das etapas atualizada.')
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível reorganizar as etapas.')
+    } finally {
+      setIsSavingServiceOnboarding(false)
+    }
+  }
+
+  const createServiceEntryApplication = async (input: { personId: string; desiredTeamId?: string; observacao?: string }) => {
+    if (!session || !serviceOnboardingArea) return false
+
+    setServiceOnboardingError('')
+    setIsSavingServiceOnboarding(true)
+    try {
+      await createServiceAreaApplication(session.access_token, {
+        serviceAreaId: serviceOnboardingArea.id,
+        ...input,
+      })
+      const refreshed = await refreshServiceOnboarding(serviceOnboardingArea)
+      if (refreshed) setNotice('Interesse registrado e pronto para acompanhamento.')
+      return refreshed
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível registrar o interesse nesta área.')
+      return false
+    } finally {
+      setIsSavingServiceOnboarding(false)
+    }
+  }
+
+  const startServiceEntryApplication = async (applicationId: string) => {
+    if (!session || !serviceOnboardingArea) return
+
+    setServiceOnboardingError('')
+    setIsSavingServiceOnboarding(true)
+    try {
+      await startServiceAreaApplication(session.access_token, applicationId)
+      if (await refreshServiceOnboarding(serviceOnboardingArea)) setNotice('Processo de entrada iniciado.')
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível iniciar o processo de entrada.')
+    } finally {
+      setIsSavingServiceOnboarding(false)
+    }
+  }
+
+  const completeServiceEntryStage = async (applicationId: string, stageId: string) => {
+    if (!session || !serviceOnboardingArea) return
+
+    setServiceOnboardingError('')
+    setIsSavingServiceOnboarding(true)
+    try {
+      await completeServiceAreaApplicationStage(session.access_token, applicationId, stageId)
+      if (await refreshServiceOnboarding(serviceOnboardingArea)) setNotice('Etapa concluída no acompanhamento da pessoa.')
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível concluir esta etapa.')
+    } finally {
+      setIsSavingServiceOnboarding(false)
+    }
+  }
+
+  const approveServiceEntryApplication = async (applicationId: string, teamId: string) => {
+    if (!session || !serviceOnboardingArea) return
+
+    setServiceOnboardingError('')
+    setIsSavingServiceOnboarding(true)
+    try {
+      await approveServiceAreaApplication(session.access_token, applicationId, teamId)
+      const refreshed = await refreshServiceOnboarding(serviceOnboardingArea)
+      if (refreshed) {
+        setServiceAreaDetailVersion((version) => version + 1)
+        setServiceAreasVersion((version) => version + 1)
+        setNotice('Pessoa aprovada e incluída na equipe.')
+      }
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível aprovar esta pessoa.')
+    } finally {
+      setIsSavingServiceOnboarding(false)
+    }
+  }
+
+  const rejectServiceEntryApplication = async (applicationId: string, motivo: string) => {
+    if (!session || !serviceOnboardingArea) return false
+
+    setServiceOnboardingError('')
+    setIsSavingServiceOnboarding(true)
+    try {
+      await rejectServiceAreaApplication(session.access_token, applicationId, motivo)
+      const refreshed = await refreshServiceOnboarding(serviceOnboardingArea)
+      if (refreshed) setNotice('Processo encerrado como não aprovado.')
+      return refreshed
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível recusar este processo.')
+      return false
+    } finally {
+      setIsSavingServiceOnboarding(false)
+    }
+  }
+
+  const withdrawServiceEntryApplication = async (applicationId: string, motivo?: string) => {
+    if (!session || !serviceOnboardingArea) return false
+
+    setServiceOnboardingError('')
+    setIsSavingServiceOnboarding(true)
+    try {
+      await withdrawServiceAreaApplication(session.access_token, applicationId, motivo)
+      const refreshed = await refreshServiceOnboarding(serviceOnboardingArea)
+      if (refreshed) setNotice('Desistência registrada e histórico preservado.')
+      return refreshed
+    } catch (error) {
+      setServiceOnboardingError(error instanceof Error ? error.message : 'Não foi possível registrar a desistência.')
+      return false
+    } finally {
+      setIsSavingServiceOnboarding(false)
+    }
+  }
+
   const saveRoster = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!session || !rosterMeeting) return
@@ -1351,7 +1706,7 @@ function App() {
         {activePage === 'cell-structure' && <CellHierarchy campuses={hierarchy?.campuses ?? []} cells={hierarchy?.cells ?? []} coordinations={hierarchy?.coordinations ?? []} currentPersonId={session.user.personId} error={hierarchyError} isLoading={isLoadingHierarchy} isSaving={isSavingHierarchy} networks={hierarchy?.networks ?? []} people={hierarchy?.people ?? []} supervisions={hierarchy?.supervisions ?? []} canManageNetworks={canManageNetworks} onAssignCell={linkCellToNetwork} onCreateCoordination={saveCoordination} onCreateNetwork={saveNetwork} onCreateSupervision={saveSupervision} onEndCoordination={finishCoordination} onEndSupervision={finishSupervision} onUnassignCell={unlinkCellFromNetwork} />}
         {activePage === 'studies' && <StudiesPage canManage={canManageStudies} study={study} error={studyError} isLoading={isLoadingStudy} weekStart={studyWeekStart} isSubmitting={isSubmittingStudy} onWeekStartChange={setStudyWeekStart} onPublish={saveStudy} onDownload={downloadStudy} />}
         {activePage === 'people' && <PeoplePage data={people} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'person', id })} />}
-        {activePage === 'teams' && selectedServiceArea && <ServiceAreaWorkspace area={serviceAreaDetail} error={serviceAreaDetailError} isLoading={isLoadingServiceAreaDetail} onRetry={() => setServiceAreaDetailVersion((version) => version + 1)} />}
+        {activePage === 'teams' && selectedServiceArea && <ServiceAreaWorkspace area={serviceAreaDetail} error={serviceAreaDetailError} isLoading={isLoadingServiceAreaDetail} onRetry={() => setServiceAreaDetailVersion((version) => version + 1)} canCreateTeam={canCreateServiceTeam} canManageMembers={canManageServiceMembers} canManageOnboarding={canManageServiceMembers} onCreateTeam={openServiceTeamForm} onAddMember={openServiceMemberForm} onOpenOnboarding={openServiceOnboarding} />}
         {activePage !== 'dashboard' && activePage !== 'agenda' && activePage !== 'cells' && activePage !== 'cell-structure' && activePage !== 'studies' && activePage !== 'people' && (activePage !== 'teams' || !selectedServiceArea) && <ModulePreview copy={pageCopy[activePage]} />}
       </main>
 
@@ -1398,6 +1753,45 @@ function App() {
           </section>
         </div>
       )}
+
+      {serviceTeamArea && (
+        <div className="dialog-backdrop" role="presentation" onMouseDown={closeServiceTeamForm}>
+          <section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="service-team-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
+            <button className="dialog-close" type="button" onClick={closeServiceTeamForm} aria-label="Fechar">×</button>
+            <p className="eyebrow">{serviceTeamArea.nome}</p>
+            <h2 id="service-team-dialog-title">Nova equipe</h2>
+            <p className="dialog-description">Uma equipe pertence a esta área e a um campus. Depois, as pessoas poderão ser vinculadas a ela.</p>
+            <form className="event-form" onSubmit={saveServiceTeam}>
+              <label>Nome da equipe<input name="name" required minLength={3} placeholder="Ex.: Recepção de domingo" /></label>
+              <label>Descrição <span className="field-optional">(opcional)</span><input name="description" placeholder="Uma breve identificação da equipe" /></label>
+              {serviceTeamArea.scope === 'CAMPUS' && serviceTeamArea.campus ? <p className="record-detail-note">Esta área pertence ao <strong>{serviceTeamArea.campus.nome}</strong>; a equipe será criada nesse mesmo campus.</p> : <label>Campus<select name="campusId" required defaultValue="" disabled={isLoadingServiceForm || serviceFormCampuses.length === 0}><option value="" disabled>{isLoadingServiceForm ? 'Carregando campi...' : 'Selecione o campus'}</option>{serviceFormCampuses.map((campus) => <option value={campus.id} key={campus.id}>{campus.nome}</option>)}</select></label>}
+              {serviceFormError && <p className="form-error" role="alert">{serviceFormError}</p>}
+              <div className="dialog-actions"><button className="secondary-button" type="button" onClick={closeServiceTeamForm}>Cancelar</button><button className="primary-button" type="submit" disabled={isLoadingServiceForm || isSavingServiceForm}>{isSavingServiceForm ? 'Criando...' : 'Criar equipe'}</button></div>
+            </form>
+          </section>
+        </div>
+      )}
+
+      {serviceMemberArea && (
+        <div className="dialog-backdrop" role="presentation" onMouseDown={closeServiceMemberForm}>
+          <section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="service-member-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
+            <button className="dialog-close" type="button" onClick={closeServiceMemberForm} aria-label="Fechar">×</button>
+            <p className="eyebrow">{serviceMemberArea.nome}</p>
+            <h2 id="service-member-dialog-title">Vincular pessoa</h2>
+            <p className="dialog-description">Defina onde a pessoa servirá ou qual responsabilidade assumirá dentro desta área.</p>
+            <form className="event-form" onSubmit={saveServiceMember}>
+              <label>Pessoa<select name="personId" required defaultValue="" disabled={isLoadingServiceForm || serviceFormPeople.length === 0}><option value="" disabled>{isLoadingServiceForm ? 'Carregando pessoas...' : 'Selecione uma pessoa'}</option>{serviceFormPeople.map((person) => <option key={person.id} value={person.id}>{person.nome}{person.campus.nome ? ` · ${person.campus.nome}` : ''}</option>)}</select></label>
+              <label>Função na área<select value={serviceMembershipRole} onChange={(event) => setServiceMembershipRole(event.target.value as ServiceMembershipRole)}><option value="MEMBER">Integrante</option><option value="TEAM_LEADER">Liderança de equipe</option><option value="CAMPUS_LEADER">Liderança de campus</option><option value="GENERAL_LEADER">Liderança geral</option></select></label>
+              {serviceMembershipRole === 'CAMPUS_LEADER' && (serviceMemberArea.scope === 'CAMPUS' && serviceMemberArea.campus ? <p className="record-detail-note">A liderança será vinculada ao <strong>{serviceMemberArea.campus.nome}</strong>.</p> : <label>Campus<select name="campusId" required defaultValue="" disabled={isLoadingServiceForm || serviceFormCampuses.length === 0}><option value="" disabled>{isLoadingServiceForm ? 'Carregando campi...' : 'Selecione o campus'}</option>{serviceFormCampuses.map((campus) => <option value={campus.id} key={campus.id}>{campus.nome}</option>)}</select></label>)}
+              {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <label>Equipe<select name="teamId" required defaultValue="" disabled={serviceMemberArea.teams.length === 0}><option value="" disabled>{serviceMemberArea.teams.length ? 'Selecione a equipe' : 'Crie uma equipe antes'}</option>{serviceMemberArea.teams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label>}
+              {serviceFormError && <p className="form-error" role="alert">{serviceFormError}</p>}
+              <div className="dialog-actions"><button className="secondary-button" type="button" onClick={closeServiceMemberForm}>Cancelar</button><button className="primary-button" type="submit" disabled={isLoadingServiceForm || serviceFormPeople.length === 0 || isSavingServiceForm}>{isSavingServiceForm ? 'Vinculando...' : 'Vincular pessoa'}</button></div>
+            </form>
+          </section>
+        </div>
+      )}
+
+      {serviceOnboardingArea && <ServiceAreaOnboardingDialog area={serviceOnboardingArea} stages={serviceOnboardingStages} applications={serviceOnboardingApplications} people={serviceOnboardingPeople} error={serviceOnboardingError} isLoading={isLoadingServiceOnboarding} isSaving={isSavingServiceOnboarding} canManageStages={canManageServiceEntryStages} canManageApplications={canManageServiceMembers} onClose={closeServiceOnboarding} onCreateStage={createServiceEntryStage} onUpdateStage={updateServiceEntryStage} onReorderStages={(stageIds) => void reorderServiceEntryStages(stageIds)} onCreateApplication={createServiceEntryApplication} onStartApplication={(applicationId) => void startServiceEntryApplication(applicationId)} onCompleteStage={(applicationId, stageId) => void completeServiceEntryStage(applicationId, stageId)} onApproveApplication={(applicationId, teamId) => void approveServiceEntryApplication(applicationId, teamId)} onRejectApplication={rejectServiceEntryApplication} onWithdrawApplication={withdrawServiceEntryApplication} />}
 
       {selectedRecord && (
         <div className="dialog-backdrop" role="presentation" onMouseDown={closeRecordDetail}>

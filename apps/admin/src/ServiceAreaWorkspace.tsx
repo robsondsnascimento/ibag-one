@@ -31,11 +31,23 @@ export function ServiceAreaWorkspace({
   error,
   isLoading,
   onRetry,
+  canCreateTeam,
+  canManageMembers,
+  canManageOnboarding,
+  onCreateTeam,
+  onAddMember,
+  onOpenOnboarding,
 }: {
   area: ServiceAreaDetail | null
   error: string
   isLoading: boolean
   onRetry: () => void
+  canCreateTeam: boolean
+  canManageMembers: boolean
+  canManageOnboarding: boolean
+  onCreateTeam: (area: ServiceAreaDetail) => void
+  onAddMember: (area: ServiceAreaDetail) => void
+  onOpenOnboarding: (area: ServiceAreaDetail) => void
 }) {
   if (isLoading) {
     return <section className="service-area-page"><p className="service-area-feedback">Carregando a área de serviço...</p></section>
@@ -61,7 +73,7 @@ export function ServiceAreaWorkspace({
           <p>{area.descricao || 'Acompanhe as equipes, lideranças e integrantes desta área de serviço.'}</p>
           <small>{area.scope === 'GLOBAL' ? 'Atuação em toda a organização' : `Atuação no ${area.campus?.nome ?? 'campus definido'}`}</small>
         </div>
-        <span className="service-area-scope">{area.scope === 'GLOBAL' ? 'Área global' : 'Área de campus'}</span>
+        <div className="service-area-actions"><span className="service-area-scope">{area.scope === 'GLOBAL' ? 'Área global' : 'Área de campus'}</span>{canManageOnboarding && <button className="secondary-button" type="button" onClick={() => onOpenOnboarding(area)}>Entrada e formação</button>}{canCreateTeam && <button className="secondary-button" type="button" onClick={() => onCreateTeam(area)}>+ Nova equipe</button>}{canManageMembers && <button className="primary-button" type="button" onClick={() => onAddMember(area)}>+ Vincular pessoa</button>}</div>
       </header>
 
       <div className="service-area-summary">

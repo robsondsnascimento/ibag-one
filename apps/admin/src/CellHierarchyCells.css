@@ -1,3 +1,6 @@
 .network-cell-list { display: flex; flex-wrap: wrap; gap: 5px; }
 .network-cell-list span { align-items: center; background: var(--blue-soft); border-radius: 99px; color: var(--blue); display: inline-flex; font-size: 9px; font-weight: 700; gap: 4px; padding: 4px 5px 4px 8px; }
 .network-cell-list button { background: rgba(46, 111, 232, .15); border: 0; border-radius: 50%; color: var(--blue); cursor: pointer; font-size: 13px; height: 16px; line-height: 1; padding: 0; width: 16px; }
+.network-supervisor-list { display: grid; gap: 5px; }
+.network-supervisor-list > div { align-items: center; display: flex; gap: 7px; justify-content: space-between; }
+.network-supervisor-list button { margin: 0; }

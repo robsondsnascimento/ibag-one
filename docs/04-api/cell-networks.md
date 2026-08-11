@@ -15,7 +15,7 @@ As redes organizam as células dentro de um campus. Cada célula pertence, no m�
 - Uma rede pertence a um único campus e uma célula vinculada deve pertencer ao mesmo campus.
 - Não pode haver duas redes ativas com o mesmo nome no mesmo campus.
 - Uma rede inativa não recebe novas células.
-- Cada rede possui, no máximo, um supervisor ativo.
+- Cada rede pode possuir até dois supervisores ativos, sempre pessoas distintas.
 - A coordenação e a supervisão são vínculos históricos: ao encerrar, o registro é preservado.
 - No painel, uma célula é removida explicitamente antes de ser vinculada a outra rede, evitando transferência acidental.
 

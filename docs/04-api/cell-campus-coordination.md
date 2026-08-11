@@ -38,6 +38,6 @@ Para transferir:
 - A mesma pessoa não pode ter duas coordenações ativas no mesmo campus.
 - O histórico é preservado por `inicio`, `fim` e `ativo`.
 - Um coordenador pode consultar apenas os registros dos campi que coordena.
-- Nas redes desses campi, o coordenador pode criar, encerrar e transferir supervisões; a regra de apenas um supervisor ativo por rede continua obrigatória.
+- Nas redes desses campi, o coordenador pode criar, encerrar e transferir supervisões; o limite de até dois supervisores ativos por rede continua obrigatório.
 - No painel pastoral, o coordenador vê somente dados de seus campi.
 - No cuidado pastoral, ele atende somente pessoas com vínculo ativo em células de seus campi. O pastor do campus possui escopo mais amplo e pode atender também pessoas sem vínculo de célula.

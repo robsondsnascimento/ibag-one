@@ -75,4 +75,30 @@ describe('ServiceAreaOnboardingService', () => {
       data: expect.objectContaining({ personId: 'person-1', serviceAreaId: 'area-music', teamId: 'team-1', role: 'MEMBER' }),
     }));
   });
+
+  it('reordena somente as etapas ativas da área', async () => {
+    const transaction = {
+      serviceAreaEntryStage: { update: jest.fn().mockResolvedValue({}) },
+    };
+    const prisma: any = {
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-music' }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ id: 'user-1' }) },
+      serviceAreaEntryStage: {
+        findMany: jest.fn()
+          .mockResolvedValueOnce([{ id: 'stage-1', ordem: 1 }, { id: 'stage-2', ordem: 2 }])
+          .mockResolvedValueOnce([{ id: 'stage-2', ordem: 1 }, { id: 'stage-1', ordem: 2 }]),
+      },
+      $transaction: jest.fn(callback => callback(transaction)),
+    };
+    const service = new ServiceAreaOnboardingService(prisma);
+
+    await expect(service.reorderStages('area-music', { stageIds: ['stage-2', 'stage-1'] }, context)).resolves.toEqual([
+      { id: 'stage-2', ordem: 1 },
+      { id: 'stage-1', ordem: 2 },
+    ]);
+
+    expect(prisma.serviceAreaEntryStage.findMany).toHaveBeenNthCalledWith(1, expect.objectContaining({
+      where: { serviceAreaId: 'area-music', ativo: true },
+    }));
+  });
 });

@@ -111,7 +111,7 @@ Campus Cachoeirinha
 
 Outro Campus pode possuir redes com os mesmos nomes, porém são entidades diferentes.
 
-Cada rede possui no máximo um Supervisor ativo. O Coordenador de Células acompanha as redes do campus sob sua coordenação e pode atribuir ou encerrar suas supervisões. A Secretaria, administração e pastores autorizados organizam as redes e os vínculos das células.
+Cada rede pode possuir até dois Supervisores ativos, sempre pessoas distintas. O Coordenador de Células acompanha as redes do campus sob sua coordenação e pode atribuir ou encerrar suas supervisões. A Secretaria, administração e pastores autorizados organizam as redes e os vínculos das células.
 
 ---
 

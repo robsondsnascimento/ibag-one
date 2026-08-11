@@ -17,7 +17,7 @@ export class CellNetworkSupervisionService {
     await this.ensureActivePerson(dto.personId, context.organizationId);
     const network = await this.ensureActiveNetwork(dto.networkId, context.organizationId);
     await this.assertNetworkManagement(network.campusId, context);
-    await this.ensureNetworkWithoutActiveSupervisor(dto.networkId);
+    await this.ensureNetworkSupervisorCapacity(dto.networkId, dto.personId);
 
     return this.prisma.cellNetworkSupervision.create({
       data: {
@@ -88,7 +88,7 @@ export class CellNetworkSupervisionService {
 
     const destinationNetwork = await this.ensureActiveNetwork(networkId, context.organizationId);
     await this.assertNetworkManagement(destinationNetwork.campusId, context);
-    await this.ensureNetworkWithoutActiveSupervisor(networkId);
+    await this.ensureNetworkSupervisorCapacity(networkId, supervision.personId);
 
     return this.prisma.$transaction(async (tx) => {
       await tx.cellNetworkSupervision.update({
@@ -126,12 +126,16 @@ export class CellNetworkSupervisionService {
     return network;
   }
 
-  private async ensureNetworkWithoutActiveSupervisor(networkId: string) {
-    const activeSupervision = await this.prisma.cellNetworkSupervision.findFirst({
+  private async ensureNetworkSupervisorCapacity(networkId: string, personId: string) {
+    const activeSupervisions = await this.prisma.cellNetworkSupervision.findMany({
       where: { networkId, ativo: true },
+      select: { personId: true },
     });
-    if (activeSupervision) {
-      throw new BadRequestException('A rede já possui um supervisor ativo');
+    if (activeSupervisions.some((supervision) => supervision.personId === personId)) {
+      throw new BadRequestException('A pessoa já possui supervisão ativa nesta rede');
+    }
+    if (activeSupervisions.length >= 2) {
+      throw new BadRequestException('A rede já possui dois supervisores ativos');
     }
   }
 

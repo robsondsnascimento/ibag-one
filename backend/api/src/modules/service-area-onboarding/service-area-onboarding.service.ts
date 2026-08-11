@@ -40,7 +40,7 @@ export class ServiceAreaOnboardingService {
   async reorderStages(areaId: string, dto: ReorderServiceAreaEntryStagesDto, context: OrganizationContext) {
     const area = await this.area(areaId, context);
     await this.assertStageManagement(area, context);
-    const stages = await this.prisma.serviceAreaEntryStage.findMany({ where: { serviceAreaId: area.id }, orderBy: { ordem: 'asc' } });
+    const stages = await this.prisma.serviceAreaEntryStage.findMany({ where: { serviceAreaId: area.id, ativo: true }, orderBy: { ordem: 'asc' } });
     if (stages.length !== dto.stageIds.length || new Set(dto.stageIds).size !== dto.stageIds.length || stages.some(stage => !dto.stageIds.includes(stage.id))) throw new BadRequestException('A nova ordem deve conter exatamente as etapas desta área');
     const offset = Math.max(...stages.map(stage => stage.ordem), 0) + stages.length + 1;
     await this.prisma.$transaction(async transaction => {

@@ -5,9 +5,7 @@ import {
 
 import { CellNetworkSupervisionService } from './cell-network-supervision.service';
 
-
 describe('CellNetworkSupervisionService', () => {
-
   const context = {
     userId: 'user-id',
     personId: 'authenticated-person-id',
@@ -42,56 +40,46 @@ describe('CellNetworkSupervisionService', () => {
 
   let service: CellNetworkSupervisionService;
 
-
   beforeEach(() => {
     jest.clearAllMocks();
-
     service = new CellNetworkSupervisionService(prisma as never);
   });
 
+  const mockAuthorizedCreate = () => {
+    prisma.person.findFirst.mockResolvedValue({ id: dto.personId });
+    prisma.cellNetwork.findFirst.mockResolvedValue({
+      id: dto.networkId,
+      campusId: 'campus-id',
+    });
+    prisma.user.findFirst.mockResolvedValue({
+      id: context.userId,
+      person: { campusId: 'campus-id' },
+      role: 'ADMIN',
+    });
+  };
 
   it('rejects a supervisor outside the current organization', async () => {
     prisma.person.findFirst.mockResolvedValue(null);
 
-    await expect(service.create(dto, context))
-      .rejects.toBeInstanceOf(NotFoundException);
+    await expect(service.create(dto, context)).rejects.toBeInstanceOf(
+      NotFoundException,
+    );
 
     expect(prisma.cellNetwork.findFirst).not.toHaveBeenCalled();
   });
 
-
-  it('rejects assigning a second active supervisor to a network', async () => {
-    prisma.person.findFirst.mockResolvedValue({ id: dto.personId });
-    prisma.cellNetwork.findFirst.mockResolvedValue({ id: dto.networkId, campusId: 'campus-id' });
-    prisma.user.findFirst.mockResolvedValue({ id: context.userId, person: { campusId: 'campus-id' }, role: 'ADMIN' });
-    prisma.cellNetworkSupervision.findFirst.mockResolvedValue({
-      id: 'existing-supervision-id',
+  it('allows a second active supervisor in the same network', async () => {
+    mockAuthorizedCreate();
+    prisma.cellNetworkSupervision.findMany.mockResolvedValue([
+      { personId: 'first-supervisor-id' },
+    ]);
+    prisma.cellNetworkSupervision.create.mockResolvedValue({
+      id: 'supervision-id',
     });
 
-    await expect(service.create(dto, context))
-      .rejects.toBeInstanceOf(BadRequestException);
-
-    expect(prisma.cellNetworkSupervision.create).not.toHaveBeenCalled();
-    expect(prisma.cellNetworkSupervision.findFirst).toHaveBeenCalledWith({
-      where: {
-        networkId: dto.networkId,
-        ativo: true,
-      },
+    await expect(service.create(dto, context)).resolves.toEqual({
+      id: 'supervision-id',
     });
-  });
-
-
-  it('creates the first active supervisor for a network', async () => {
-    const supervision = { id: 'supervision-id' };
-
-    prisma.person.findFirst.mockResolvedValue({ id: dto.personId });
-    prisma.cellNetwork.findFirst.mockResolvedValue({ id: dto.networkId, campusId: 'campus-id' });
-    prisma.user.findFirst.mockResolvedValue({ id: context.userId, person: { campusId: 'campus-id' }, role: 'ADMIN' });
-    prisma.cellNetworkSupervision.findFirst.mockResolvedValue(null);
-    prisma.cellNetworkSupervision.create.mockResolvedValue(supervision);
-
-    await expect(service.create(dto, context))
-      .resolves.toEqual(supervision);
 
     expect(prisma.cellNetworkSupervision.create).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -104,15 +92,58 @@ describe('CellNetworkSupervisionService', () => {
     );
   });
 
-  it('allows a coordinator to manage supervision only in a coordinated campus', async () => {
-    prisma.person.findFirst.mockResolvedValue({ id: dto.personId });
-    prisma.cellNetwork.findFirst.mockResolvedValue({ id: dto.networkId, campusId: 'campus-id' });
-    prisma.user.findFirst.mockResolvedValue({ id: context.userId, person: { campusId: 'another-campus-id' }, role: 'MEMBER' });
-    prisma.cellCampusCoordination.findMany.mockResolvedValue([{ campusId: 'campus-id' }]);
-    prisma.cellNetworkSupervision.findFirst.mockResolvedValue(null);
-    prisma.cellNetworkSupervision.create.mockResolvedValue({ id: 'supervision-id' });
+  it('rejects a third active supervisor in the same network', async () => {
+    mockAuthorizedCreate();
+    prisma.cellNetworkSupervision.findMany.mockResolvedValue([
+      { personId: 'first-supervisor-id' },
+      { personId: 'second-supervisor-id' },
+    ]);
 
-    await expect(service.create(dto, context)).resolves.toEqual({ id: 'supervision-id' });
+    await expect(service.create(dto, context)).rejects.toBeInstanceOf(
+      BadRequestException,
+    );
+
+    expect(prisma.cellNetworkSupervision.create).not.toHaveBeenCalled();
+    expect(prisma.cellNetworkSupervision.findMany).toHaveBeenCalledWith({
+      where: { networkId: dto.networkId, ativo: true },
+      select: { personId: true },
+    });
   });
 
+  it('rejects a duplicate supervision for the same person and network', async () => {
+    mockAuthorizedCreate();
+    prisma.cellNetworkSupervision.findMany.mockResolvedValue([
+      { personId: dto.personId },
+    ]);
+
+    await expect(service.create(dto, context)).rejects.toBeInstanceOf(
+      BadRequestException,
+    );
+
+    expect(prisma.cellNetworkSupervision.create).not.toHaveBeenCalled();
+  });
+
+  it('allows a coordinator to manage supervision only in a coordinated campus', async () => {
+    prisma.person.findFirst.mockResolvedValue({ id: dto.personId });
+    prisma.cellNetwork.findFirst.mockResolvedValue({
+      id: dto.networkId,
+      campusId: 'campus-id',
+    });
+    prisma.user.findFirst.mockResolvedValue({
+      id: context.userId,
+      person: { campusId: 'another-campus-id' },
+      role: 'MEMBER',
+    });
+    prisma.cellCampusCoordination.findMany.mockResolvedValue([
+      { campusId: 'campus-id' },
+    ]);
+    prisma.cellNetworkSupervision.findMany.mockResolvedValue([]);
+    prisma.cellNetworkSupervision.create.mockResolvedValue({
+      id: 'supervision-id',
+    });
+
+    await expect(service.create(dto, context)).resolves.toEqual({
+      id: 'supervision-id',
+    });
+  });
 });
