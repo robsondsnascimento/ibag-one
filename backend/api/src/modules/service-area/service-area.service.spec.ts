@@ -157,6 +157,77 @@ describe('ServiceAreaService', () => {
     expect(prisma.notification.create).toHaveBeenCalledTimes(2);
   });
 
+  it('cria uma solicitação de troca somente para integrante disponível com a mesma função', async () => {
+    const schedule = {
+      id: 'schedule-1', personId: 'person-1', teamId: 'team-1', eventId: 'event-1', status: 'CONFIRMED', funcao: 'Guitarra', data: new Date('2027-08-16T22:30:00.000Z'),
+      person: { id: 'person-1', nome: 'Pessoa Escalada' },
+      team: { serviceAreaId: 'area-music', campusId: 'campus-1' },
+      event: { id: 'event-1', titulo: 'Culto de Domingo', inicio: new Date('2027-08-16T22:30:00.000Z'), fim: new Date('2027-08-16T23:50:00.000Z') },
+    };
+    const request = { id: 'swap-1', requesterPerson: schedule.person, replacementPerson: { id: 'person-2', nome: 'Outro Guitarrista' }, schedule };
+    const prisma: any = {
+      serviceSchedule: { findFirst: jest.fn().mockResolvedValueOnce(schedule).mockResolvedValue(null) },
+      serviceMembership: {
+        findFirst: jest.fn().mockResolvedValue({ id: 'membership-2', funcoes: ['Guitarra'], person: { nome: 'Outro Guitarrista' } }),
+        findMany: jest.fn().mockResolvedValue([{ personId: 'leader-1' }]),
+      },
+      serviceScheduleSwapRequest: { findFirst: jest.fn().mockResolvedValue(null), create: jest.fn().mockResolvedValue(request) },
+      notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.createScheduleSwapRequest('schedule-1', { replacementPersonId: 'person-2', reason: 'Estarei viajando.' }, context)).resolves.toEqual(request);
+    expect(prisma.serviceScheduleSwapRequest.create).toHaveBeenCalledWith(expect.objectContaining({
+      data: expect.objectContaining({ scheduleId: 'schedule-1', requesterPersonId: 'person-1', replacementPersonId: 'person-2' }),
+    }));
+    expect(prisma.notification.create).toHaveBeenCalledWith(expect.objectContaining({
+      data: expect.objectContaining({ titulo: 'Solicitação de troca de escala', recipients: { create: [{ personId: 'leader-1' }] } }),
+    }));
+  });
+
+  it('impede solicitação de troca quando a pessoa indicada não possui a função escalada', async () => {
+    const schedule = {
+      id: 'schedule-1', personId: 'person-1', teamId: 'team-1', eventId: null, status: 'SCHEDULED', funcao: 'Guitarra', data: new Date('2027-08-16T22:30:00.000Z'),
+      person: { id: 'person-1', nome: 'Pessoa Escalada' },
+      team: { serviceAreaId: 'area-music', campusId: 'campus-1' }, event: null,
+    };
+    const prisma: any = {
+      serviceSchedule: { findFirst: jest.fn().mockResolvedValue(schedule) },
+      serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-2', funcoes: ['Vocal'], person: { nome: 'Vocalista' } }) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.createScheduleSwapRequest('schedule-1', { replacementPersonId: 'person-2' }, context)).rejects.toThrow('não possui a função Guitarra');
+  });
+
+  it('efetiva a troca somente quando a liderança aprova a solicitação pendente', async () => {
+    const schedule = {
+      id: 'schedule-1', personId: 'person-1', teamId: 'team-1', eventId: null, status: 'CONFIRMED', funcao: 'Guitarra', data: new Date('2027-08-16T22:30:00.000Z'),
+      person: { id: 'person-1', nome: 'Pessoa Escalada' },
+      team: { serviceAreaId: 'area-music', campusId: 'campus-1' }, event: null,
+    };
+    const request = {
+      id: 'swap-1', status: 'PENDING', requesterPersonId: 'person-1', replacementPersonId: 'person-2', scheduleId: 'schedule-1', reason: 'Viagem',
+      requesterPerson: schedule.person, replacementPerson: { id: 'person-2', nome: 'Outro Guitarrista' }, schedule,
+    };
+    const updated = { ...schedule, personId: 'person-2', status: 'SCHEDULED', person: { id: 'person-2', nome: 'Outro Guitarrista' } };
+    const prisma: any = {
+      serviceScheduleSwapRequest: { findFirst: jest.fn().mockResolvedValue(request), update: jest.fn().mockResolvedValue({ ...request, status: 'APPROVED' }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+      serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-2', funcoes: ['Guitarra'], person: { nome: 'Outro Guitarrista' } }) },
+      serviceSchedule: { findFirst: jest.fn().mockResolvedValue(null), update: jest.fn().mockResolvedValue(updated) },
+      $transaction: jest.fn((operations) => Promise.all(operations)),
+      notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.approveScheduleSwapRequest('swap-1', context)).resolves.toEqual(expect.objectContaining({ status: 'APPROVED' }));
+    expect(prisma.serviceSchedule.update).toHaveBeenCalledWith(expect.objectContaining({
+      data: expect.objectContaining({ personId: 'person-2', status: 'SCHEDULED' }),
+    }));
+    expect(prisma.notification.create).toHaveBeenCalledTimes(2);
+  });
+
   it('permite à pessoa escalada consultar o histórico da própria escala', async () => {
     const prisma: any = {
       serviceSchedule: { findFirst: jest.fn().mockResolvedValue({ id: 'schedule-1', personId: 'person-1', teamId: 'team-1', team: { serviceAreaId: 'area-1', campusId: 'campus-1' } }) },

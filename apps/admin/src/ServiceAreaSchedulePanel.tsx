@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
-import { createServiceSchedule, createServiceScheduleBatch, listApprovedScheduleEvents, listServiceAreaSchedules, listServiceScheduleHistory, substituteServiceSchedule, updateServiceScheduleStatus } from './api/service-areas'
-import type { ServiceAreaDetail, ServiceAreaSchedule, ServiceScheduleEventCandidate, ServiceScheduleHistory, ServiceScheduleStatus } from './api/service-areas'
+import { approveServiceScheduleSwapRequest, createServiceSchedule, createServiceScheduleBatch, listApprovedScheduleEvents, listServiceAreaSchedules, listServiceScheduleHistory, listTeamServiceScheduleSwapRequests, rejectServiceScheduleSwapRequest, substituteServiceSchedule, updateServiceScheduleStatus } from './api/service-areas'
+import type { ServiceAreaDetail, ServiceAreaSchedule, ServiceScheduleEventCandidate, ServiceScheduleHistory, ServiceScheduleStatus, ServiceScheduleSwapRequest } from './api/service-areas'
 
 const statusLabels: Record<ServiceScheduleStatus, string> = {
   SCHEDULED: 'A confirmar',
@@ -59,6 +59,7 @@ function historyLabel(item: ServiceScheduleHistory) {
 type ScheduleAction =
   | { type: 'decline'; schedule: ServiceAreaSchedule }
   | { type: 'substitute'; schedule: ServiceAreaSchedule }
+  | { type: 'reject-swap'; request: ServiceScheduleSwapRequest }
 
 export function ServiceAreaSchedulePanel({
   area,
@@ -94,6 +95,9 @@ export function ServiceAreaSchedulePanel({
   const [history, setHistory] = useState<ServiceScheduleHistory[]>([])
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
   const [historyError, setHistoryError] = useState('')
+  const [swapRequests, setSwapRequests] = useState<ServiceScheduleSwapRequest[]>([])
+  const [isLoadingSwapRequests, setIsLoadingSwapRequests] = useState(false)
+  const [swapRequestsError, setSwapRequestsError] = useState('')
 
   useEffect(() => {
     let active = true
@@ -118,6 +122,29 @@ export function ServiceAreaSchedulePanel({
       active = false
     }
   }, [accessToken, area.id, end, start, status, teamId, version])
+
+  useEffect(() => {
+    if (!canManage) {
+      setSwapRequests([])
+      return
+    }
+    let active = true
+    setIsLoadingSwapRequests(true)
+    setSwapRequestsError('')
+    void Promise.allSettled(area.teams.map((team) => listTeamServiceScheduleSwapRequests(accessToken, team.id)))
+      .then((results) => {
+        if (active) setSwapRequests(results.flatMap((result) => result.status === 'fulfilled' ? result.value : []))
+      })
+      .catch((reason) => {
+        if (active) setSwapRequestsError(reason instanceof Error ? reason.message : 'Não foi possível carregar as solicitações de troca.')
+      })
+      .finally(() => {
+        if (active) setIsLoadingSwapRequests(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [accessToken, area.teams, canManage, version])
 
   useEffect(() => {
     if (!isCreateOpen && !isBatchOpen) return
@@ -237,6 +264,38 @@ export function ServiceAreaSchedulePanel({
     }
   }
 
+  const approveSwapRequest = async (request: ServiceScheduleSwapRequest) => {
+    setIsSaving(true)
+    setError('')
+    try {
+      await approveServiceScheduleSwapRequest(accessToken, request.id)
+      refresh()
+      onNotice('Troca aprovada. A nova pessoa foi escalada e precisa confirmar presença.')
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : 'Não foi possível aprovar a solicitação de troca.')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const rejectSwapRequest = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!action || action.type !== 'reject-swap') return
+    const form = new FormData(event.currentTarget)
+    setIsSaving(true)
+    setError('')
+    try {
+      await rejectServiceScheduleSwapRequest(accessToken, action.request.id, String(form.get('reason') ?? '') || undefined)
+      setAction(null)
+      refresh()
+      onNotice('Solicitação de troca recusada. A pessoa solicitante foi avisada.')
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : 'Não foi possível recusar a solicitação de troca.')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
   const toggleHistory = async (scheduleId: string) => {
     if (activeHistoryId === scheduleId) {
       setActiveHistoryId(null)
@@ -274,6 +333,8 @@ export function ServiceAreaSchedulePanel({
 
       {canManage && !isLoading && <section className="service-schedule-pending"><div><span>Pendências no período</span><strong>{pendingCount + declinedCount}</strong></div><button type="button" className={status === 'SCHEDULED' ? 'service-pending-card service-pending-card--active' : 'service-pending-card'} onClick={() => setStatus(status === 'SCHEDULED' ? '' : 'SCHEDULED')}><strong>{pendingCount}</strong><span>Aguardando confirmação</span></button><button type="button" className={status === 'DECLINED' ? 'service-pending-card service-pending-card--active service-pending-card--declined' : 'service-pending-card service-pending-card--declined'} onClick={() => setStatus(status === 'DECLINED' ? '' : 'DECLINED')}><strong>{declinedCount}</strong><span>Recusas para resolver</span></button></section>}
 
+      {canManage && <section className="service-schedule-swap-requests"><header><div><p className="eyebrow">Trocas</p><h3>Solicitações para aprovar</h3></div><span>{swapRequests.length}</span></header>{isLoadingSwapRequests ? <p className="service-area-empty">Carregando solicitações de troca...</p> : swapRequestsError ? <p className="form-error">{swapRequestsError}</p> : swapRequests.length ? <div className="service-schedule-swap-list">{swapRequests.map((request) => <article key={request.id}><div><strong>{request.schedule.funcao} · {request.schedule.team.nome}</strong><span>{request.requesterPerson.nome} → {request.replacementPerson.nome}</span><small>{formatScheduleDate(request.schedule.data)}{request.schedule.event ? ` · ${request.schedule.event.titulo}` : ''}</small>{request.reason && <small>Motivo: {request.reason}</small>}</div><div className="service-schedule-actions"><button type="button" className="schedule-action schedule-action--confirm" disabled={isSaving} onClick={() => void approveSwapRequest(request)}>Aprovar</button><button type="button" className="schedule-action" disabled={isSaving} onClick={() => setAction({ type: 'reject-swap', request })}>Recusar</button></div></article>)}</div> : <p className="service-area-empty">Não há solicitações de troca pendentes.</p>}</section>}
+
       {error && <p className="form-error service-schedule-error" role="alert">{error}</p>}
       {isLoading ? <p className="service-area-empty">Carregando escalas...</p> : schedules.length ? <div className="service-schedule-list">{schedules.map((schedule) => {
         const ownSchedule = schedule.person.id === currentPersonId
@@ -300,6 +361,7 @@ export function ServiceAreaSchedulePanel({
       {action?.type === 'decline' && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setAction(null)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="schedule-decline-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setAction(null)}>×</button><p className="eyebrow">Sua escala</p><h2 id="schedule-decline-title">Recusar escala</h2><p className="dialog-description">A liderança da área será avisada para providenciar uma substituição.</p><form className="event-form" onSubmit={(event) => { event.preventDefault(); const form = new FormData(event.currentTarget); void changeStatus(action.schedule, 'DECLINED', String(form.get('reason') ?? '') || undefined) }}><label>Motivo <span className="field-optional">(opcional)</span><textarea name="reason" maxLength={1000} placeholder="Ex.: Estarei fora da cidade neste fim de semana." /></label><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setAction(null)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving}>{isSaving ? 'Registrando...' : 'Confirmar recusa'}</button></div></form></section></div>}
 
       {action?.type === 'substitute' && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setAction(null)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="schedule-substitute-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setAction(null)}>×</button><p className="eyebrow">{action.schedule.team.nome}</p><h2 id="schedule-substitute-title">Substituir pessoa escalada</h2><p className="dialog-description">A nova pessoa receberá uma solicitação de confirmação. O sistema verificará conflitos de horário.</p><form className="event-form" onSubmit={saveSubstitution}><label>Nova pessoa<select name="personId" required defaultValue=""><option value="" disabled>Selecione uma pessoa da equipe</option>{selectedTeamMembers(action.schedule.team.id).filter((person) => person.id !== action.schedule.person.id).map((person) => <option value={person.id} key={person.id}>{person.nome}</option>)}</select></label><label>Motivo <span className="field-optional">(opcional)</span><textarea name="reason" maxLength={1000} placeholder="Ex.: Substituição após recusa." /></label><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setAction(null)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving}>{isSaving ? 'Substituindo...' : 'Confirmar substituição'}</button></div></form></section></div>}
+      {action?.type === 'reject-swap' && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setAction(null)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="schedule-swap-reject-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setAction(null)}>×</button><p className="eyebrow">Solicitação de troca</p><h2 id="schedule-swap-reject-title">Recusar troca</h2><p className="dialog-description">A escala permanecerá com {action.request.requesterPerson.nome}. Você pode informar o motivo para orientar a pessoa.</p><form className="event-form" onSubmit={rejectSwapRequest}><label>Motivo <span className="field-optional">(opcional)</span><textarea name="reason" maxLength={1000} placeholder="Ex.: Precisamos manter a composição atual deste culto." /></label><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setAction(null)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving}>{isSaving ? 'Recusando...' : 'Recusar solicitação'}</button></div></form></section></div>}
     </section>
   )
 }

@@ -17,6 +17,11 @@ Uma escala pertence à área de serviço e à equipe da pessoa escalada, como Lo
 | `GET` | `/service-areas/schedules/:id/history` | Consulta o histórico auditável da escala. |
 | `PATCH` | `/service-areas/schedules/:id/status` | Confirma, recusa, conclui ou reabre uma escala conforme a permissão. |
 | `PATCH` | `/service-areas/schedules/:id/substitute` | Substitui a pessoa escalada e solicita nova confirmação. |
+| `GET` | `/service-areas/schedules/:id/swap-candidates` | Lista integrantes disponíveis com a mesma função da escala. |
+| `POST` | `/service-areas/schedules/:id/swap-requests` | A pessoa escalada solicita uma troca para um integrante indicado. |
+| `GET` | `/service-areas/teams/:teamId/swap-requests` | Lista solicitações pendentes para a liderança da equipe. |
+| `PATCH` | `/service-areas/swap-requests/:id/approve` | Aprova a troca e efetiva a substituição na escala. |
+| `PATCH` | `/service-areas/swap-requests/:id/reject` | Recusa a troca, mantendo a escala original. |
 
 Os status disponíveis são `SCHEDULED`, `CONFIRMED`, `DECLINED` e `COMPLETED`.
 
@@ -83,6 +88,32 @@ PATCH /service-areas/schedules/:scheduleId/substitute
 ```
 
 A pessoa retirada recebe o alerta de transferência e a pessoa incluída recebe o alerta de nova escala.
+
+## Solicitação de troca pelo integrante
+
+O integrante escalado pode solicitar uma troca antes do horário da escala. Ele não altera a escala diretamente: informa uma pessoa disponível e a solicitação fica como `PENDING` até a decisão da liderança de Louvor/equipe.
+
+Para que a lista seja segura, cada integrante pode ter uma ou mais **funções de serviço** registradas no vínculo com a equipe, como `Guitarra`, `Baixo` ou `Vocal`. A busca de candidatos mostra somente pessoas que:
+
+- pertencem ativamente à mesma equipe;
+- possuem a mesma função da escala;
+- estão ativas no cadastro;
+- não possuem conflito de horário ou outra escala ativa na equipe.
+
+```json
+POST /service-areas/schedules/:scheduleId/swap-requests
+{
+  "replacementPersonId": "uuid-do-guitarrista-disponivel",
+  "reason": "Estarei viajando neste domingo."
+}
+```
+
+Ao receber a solicitação, a liderança da equipe pode aprovar ou recusar. Na aprovação, o sistema revalida o vínculo, a função e os conflitos de agenda; só então transfere a escala, registra o histórico e envia a nova confirmação para a pessoa indicada. Uma recusa preserva a escala original e notifica quem a solicitou.
+
+```text
+PATCH /service-areas/swap-requests/:requestId/approve
+PATCH /service-areas/swap-requests/:requestId/reject
+```
 
 ## Histórico auditável
 

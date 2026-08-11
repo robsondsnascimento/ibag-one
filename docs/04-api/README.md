@@ -5,15 +5,15 @@ Esta pasta descreve os fluxos de negócio expostos pela API do IBAG One. Todas a
 ## Áreas de serviço e formação
 
 - [Funções operacionais](service-operational-roles.md): papéis extras dentro de equipes, como Ministro de Louvor.
-- [Escalas de serviço](service-schedules.md): criação em lote, confirmação, recusa, substituição, conflitos e histórico.
+- [Escalas de serviço](service-schedules.md): criação em lote, confirmação, recusa, substituição, solicitação de troca por função, conflitos e histórico.
 - [Entrada e formação](service-area-onboarding.md): interesse, etapas por área, aprovação e criação de integrante.
 
 ## Cultos e eventos
 
-- [Ordem de Culto](worship-order.md): criação, itens, materiais, demandas e publicação.
+- [Ordem de Culto](worship-order.md): criação, itens, demandas automáticas por área, materiais e publicação.
 - [Modelos de Ordem de Culto](worship-order-templates.md): estruturas reutilizáveis e editáveis.
 - [Alertas e PDF](worship-order-alerts-and-pdf.md): comunicação aos participantes e exportação.
-- [Repertório](worship-repertoire.md): envio pelo Ministro de Louvor, aprovação e entrega à Ordem de Culto.
+- [Repertório](worship-repertoire.md): envio pelo Ministro de Louvor, aprovação, link de versão e entrega ao modelo de músicas da Ordem de Culto.
 
 ## IBAG Kids e acesso
 

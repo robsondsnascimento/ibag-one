@@ -17,6 +17,8 @@ Antes de usar o fluxo, configure as áreas globais **Música** e **Ordem de Cult
 5. As músicas tornam-se materiais do item `Louvor` e uma pendência é criada para a equipe de Ordem de Culto.
 6. Quando essa equipe conclui a pendência, o repertório passa a `COMPLETED`.
 
+Quando a Ordem de Culto foi criada com o modelo de músicas do Culto Cachoeirinha, o encaminhamento pode ser feito sem selecionar um item manual. Cada música é distribuída para a posição que possui o mesmo momento registrado no repertório. Se uma música não tiver momento ou a ordem não possuir a posição correspondente, a liderança deve escolher manualmente um item de Louvor.
+
 ```mermaid
 flowchart LR
   A["Rascunho"] --> B["Enviado pelo ministro"]
@@ -67,7 +69,7 @@ flowchart LR
 | `PATCH` | `/worship-repertoires/:id/submit` | Envia ao líder de louvor. |
 | `PATCH` | `/worship-repertoires/:id/return` | Devolve para ajuste. |
 | `PATCH` | `/worship-repertoires/:id/approve` | Aprova o repertório. |
-| `PATCH` | `/worship-repertoires/:id/send-to-worship-order` | Encaminha músicas e pendência para a Ordem de Culto. |
+| `PATCH` | `/worship-repertoires/:id/send-to-worship-order` | Encaminha músicas e pendência para a Ordem de Culto; `orderItemId` é opcional para usar as posições do modelo. |
 
 A atribuição de Ministro de Louvor é feita no módulo de áreas de serviço, descrito em [Funções Operacionais de Equipe](service-operational-roles.md).
 

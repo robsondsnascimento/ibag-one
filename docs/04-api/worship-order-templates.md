@@ -6,6 +6,18 @@ Um modelo concentra a sequência recorrente de um culto — por exemplo, abertur
 
 Depois da cópia, a ordem do evento é independente. Por isso, um item excepcional como `Teatro Minuto` pode ser incluído, movido ou removido somente no culto de amanhã, sem alterar o modelo de domingo seguinte.
 
+## Modelo de músicas do Culto Cachoeirinha
+
+O painel disponibiliza a criação assistida do modelo **Culto Cachoeirinha · roteiro de músicas**. Ao escolher a Área de Música global, são criadas cinco posições editáveis vinculadas a essa área:
+
+1. `Celebração · início do culto`
+2. `Celebração ou POP`
+3. `Oração`
+4. `Dízimos e ofertas`
+5. `Celebração · final do culto`
+
+Elas são um ponto de partida. A Ordem de Culto de cada evento continua livre para receber, mover ou remover itens especiais.
+
 ## Regras
 
 - A organização pode manter vários modelos, mas somente um modelo ativo pode ser marcado como padrão.

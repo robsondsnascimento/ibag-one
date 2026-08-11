@@ -81,6 +81,45 @@ describe('WorshipRepertoireService', () => {
     }));
   });
 
+  it('distribui as músicas nas posições do modelo de Cachoeirinha quando não há item manual', async () => {
+    const repertoire = {
+      id: 'repertoire-1', status: 'APPROVED', organizationId: 'org-1', eventId: 'event-1', serviceAreaId: 'area-music',
+      songs: [
+        { sequencia: 1, titulo: 'Canção de abertura', tom: 'G', referencia: null, observacoes: 'Celebração · início do culto' },
+        { sequencia: 2, titulo: 'Canção final', tom: 'D', referencia: null, observacoes: 'Celebração · final do culto' },
+      ],
+      event: { id: 'event-1', titulo: 'Culto Domingo', inicio: new Date('2099-08-13T22:30:00.000Z'), campusId: 'campus-1', serviceAreas: [{ serviceAreaId: 'area-music' }, { serviceAreaId: 'area-order' }] },
+    };
+    const tx: any = {
+      worshipOrderMaterial: { createMany: jest.fn().mockResolvedValue({ count: 2 }) },
+      worshipServiceDemand: { create: jest.fn().mockResolvedValue({ id: 'demand-1' }) },
+      worshipRepertoire: { update: jest.fn().mockResolvedValue({}) },
+    };
+    const prisma: any = {
+      worshipRepertoire: { findFirst: jest.fn().mockResolvedValue(repertoire) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'WORSHIP_ORDER_MANAGER' }) },
+      worshipOrder: { findFirst: jest.fn().mockResolvedValue({ status: 'DRAFT', items: [
+        { id: 'opening', titulo: 'Celebração · início do culto', serviceAreaId: 'area-music' },
+        { id: 'closing', titulo: 'Celebração · final do culto', serviceAreaId: 'area-music' },
+      ] }) },
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-order' }) },
+      $transaction: jest.fn(callback => callback(tx)),
+      serviceMembership: { findMany: jest.fn().mockResolvedValue([{ personId: 'order-person-1' }]) },
+      notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
+    };
+    const service = new WorshipRepertoireService(prisma);
+
+    await service.sendToWorshipOrder('repertoire-1', { receivingServiceAreaId: 'area-order' }, context);
+
+    expect(tx.worshipOrderMaterial.createMany).toHaveBeenCalledWith(expect.objectContaining({
+      data: [
+        expect.objectContaining({ itemId: 'opening', titulo: '1. Canção de abertura (G)' }),
+        expect.objectContaining({ itemId: 'closing', titulo: '2. Canção final (D)' }),
+      ],
+    }));
+    expect(tx.worshipRepertoire.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ orderItemId: 'opening' }) }));
+  });
+
   it('bloqueia o envio quando o ministro não possui escala confirmada no culto', async () => {
     const repertoire = {
       id: 'repertoire-1',

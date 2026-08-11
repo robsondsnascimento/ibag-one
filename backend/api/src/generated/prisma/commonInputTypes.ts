@@ -369,6 +369,23 @@ export type EnumServiceScheduleStatusWithAggregatesFilter<$PrismaModel = never> 
   _max?: Prisma.NestedEnumServiceScheduleStatusFilter<$PrismaModel>
 }
 
+export type EnumServiceScheduleSwapRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ServiceScheduleSwapRequestStatus | Prisma.EnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ServiceScheduleSwapRequestStatus[] | Prisma.ListEnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ServiceScheduleSwapRequestStatus[] | Prisma.ListEnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumServiceScheduleSwapRequestStatusFilter<$PrismaModel> | $Enums.ServiceScheduleSwapRequestStatus
+}
+
+export type EnumServiceScheduleSwapRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ServiceScheduleSwapRequestStatus | Prisma.EnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ServiceScheduleSwapRequestStatus[] | Prisma.ListEnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ServiceScheduleSwapRequestStatus[] | Prisma.ListEnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumServiceScheduleSwapRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.ServiceScheduleSwapRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumServiceScheduleSwapRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumServiceScheduleSwapRequestStatusFilter<$PrismaModel>
+}
+
 export type EnumServiceScheduleHistoryActionFilter<$PrismaModel = never> = {
   equals?: $Enums.ServiceScheduleHistoryAction | Prisma.EnumServiceScheduleHistoryActionFieldRefInput<$PrismaModel>
   in?: $Enums.ServiceScheduleHistoryAction[] | Prisma.ListEnumServiceScheduleHistoryActionFieldRefInput<$PrismaModel>
@@ -1061,6 +1078,23 @@ export type NestedEnumServiceScheduleStatusWithAggregatesFilter<$PrismaModel = n
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumServiceScheduleStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumServiceScheduleStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumServiceScheduleSwapRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ServiceScheduleSwapRequestStatus | Prisma.EnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ServiceScheduleSwapRequestStatus[] | Prisma.ListEnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ServiceScheduleSwapRequestStatus[] | Prisma.ListEnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumServiceScheduleSwapRequestStatusFilter<$PrismaModel> | $Enums.ServiceScheduleSwapRequestStatus
+}
+
+export type NestedEnumServiceScheduleSwapRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ServiceScheduleSwapRequestStatus | Prisma.EnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ServiceScheduleSwapRequestStatus[] | Prisma.ListEnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ServiceScheduleSwapRequestStatus[] | Prisma.ListEnumServiceScheduleSwapRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumServiceScheduleSwapRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.ServiceScheduleSwapRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumServiceScheduleSwapRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumServiceScheduleSwapRequestStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumServiceScheduleHistoryActionFilter<$PrismaModel = never> = {

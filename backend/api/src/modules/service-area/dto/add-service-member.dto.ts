@@ -1,5 +1,5 @@
 import { ServiceMembershipRole } from '../../../generated/prisma/client';
-import { IsEnum, IsOptional, IsUUID } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsEnum, IsOptional, IsString, IsUUID, Length } from 'class-validator';
 
 export class AddServiceMemberDto {
   @IsUUID()
@@ -15,4 +15,11 @@ export class AddServiceMemberDto {
   @IsOptional()
   @IsUUID()
   teamId?: string;
+
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(20)
+  @IsString({ each: true })
+  @Length(2, 100, { each: true })
+  funcoes?: string[];
 }

@@ -278,6 +278,8 @@ export type PersonWhereInput = {
   familyMemberships?: Prisma.FamilyMembershipListRelationFilter
   serviceMemberships?: Prisma.ServiceMembershipListRelationFilter
   serviceSchedules?: Prisma.ServiceScheduleListRelationFilter
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestListRelationFilter
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestListRelationFilter
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentListRelationFilter
   eventsResponsible?: Prisma.EventListRelationFilter
   notificationRecipients?: Prisma.NotificationRecipientListRelationFilter
@@ -329,6 +331,8 @@ export type PersonOrderByWithRelationInput = {
   familyMemberships?: Prisma.FamilyMembershipOrderByRelationAggregateInput
   serviceMemberships?: Prisma.ServiceMembershipOrderByRelationAggregateInput
   serviceSchedules?: Prisma.ServiceScheduleOrderByRelationAggregateInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestOrderByRelationAggregateInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestOrderByRelationAggregateInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentOrderByRelationAggregateInput
   eventsResponsible?: Prisma.EventOrderByRelationAggregateInput
   notificationRecipients?: Prisma.NotificationRecipientOrderByRelationAggregateInput
@@ -383,6 +387,8 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   familyMemberships?: Prisma.FamilyMembershipListRelationFilter
   serviceMemberships?: Prisma.ServiceMembershipListRelationFilter
   serviceSchedules?: Prisma.ServiceScheduleListRelationFilter
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestListRelationFilter
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestListRelationFilter
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentListRelationFilter
   eventsResponsible?: Prisma.EventListRelationFilter
   notificationRecipients?: Prisma.NotificationRecipientListRelationFilter
@@ -474,6 +480,8 @@ export type PersonCreateInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -523,6 +531,8 @@ export type PersonUncheckedCreateInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -572,6 +582,8 @@ export type PersonUpdateInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -621,6 +633,8 @@ export type PersonUncheckedUpdateInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -950,6 +964,34 @@ export type PersonUpdateOneRequiredWithoutServiceSchedulesNestedInput = {
   upsert?: Prisma.PersonUpsertWithoutServiceSchedulesInput
   connect?: Prisma.PersonWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutServiceSchedulesInput, Prisma.PersonUpdateWithoutServiceSchedulesInput>, Prisma.PersonUncheckedUpdateWithoutServiceSchedulesInput>
+}
+
+export type PersonCreateNestedOneWithoutServiceScheduleSwapRequestsMadeInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleSwapRequestsMadeInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceScheduleSwapRequestsMadeInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonCreateNestedOneWithoutServiceScheduleSwapRequestsReceivedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleSwapRequestsReceivedInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceScheduleSwapRequestsReceivedInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutServiceScheduleSwapRequestsMadeNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleSwapRequestsMadeInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceScheduleSwapRequestsMadeInput
+  upsert?: Prisma.PersonUpsertWithoutServiceScheduleSwapRequestsMadeInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutServiceScheduleSwapRequestsMadeInput, Prisma.PersonUpdateWithoutServiceScheduleSwapRequestsMadeInput>, Prisma.PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsMadeInput>
+}
+
+export type PersonUpdateOneRequiredWithoutServiceScheduleSwapRequestsReceivedNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleSwapRequestsReceivedInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceScheduleSwapRequestsReceivedInput
+  upsert?: Prisma.PersonUpsertWithoutServiceScheduleSwapRequestsReceivedInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutServiceScheduleSwapRequestsReceivedInput, Prisma.PersonUpdateWithoutServiceScheduleSwapRequestsReceivedInput>, Prisma.PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsReceivedInput>
 }
 
 export type PersonCreateNestedOneWithoutServiceAreaApplicationsInput = {
@@ -1327,6 +1369,8 @@ export type PersonCreateWithoutCampusInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -1375,6 +1419,8 @@ export type PersonUncheckedCreateWithoutCampusInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -1470,6 +1516,8 @@ export type PersonCreateWithoutUserInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -1518,6 +1566,8 @@ export type PersonUncheckedCreateWithoutUserInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -1582,6 +1632,8 @@ export type PersonUpdateWithoutUserInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -1630,6 +1682,8 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -1678,6 +1732,8 @@ export type PersonCreateWithoutOrganizationInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -1726,6 +1782,8 @@ export type PersonUncheckedCreateWithoutOrganizationInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -1800,6 +1858,8 @@ export type PersonCreateWithoutCellSupportRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -1848,6 +1908,8 @@ export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -1912,6 +1974,8 @@ export type PersonUpdateWithoutCellSupportRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -1960,6 +2024,8 @@ export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -2008,6 +2074,8 @@ export type PersonCreateWithoutJourneyEventsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -2056,6 +2124,8 @@ export type PersonUncheckedCreateWithoutJourneyEventsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -2120,6 +2190,8 @@ export type PersonUpdateWithoutJourneyEventsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -2168,6 +2240,8 @@ export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -2216,6 +2290,8 @@ export type PersonCreateWithoutFamilyMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -2264,6 +2340,8 @@ export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -2328,6 +2406,8 @@ export type PersonUpdateWithoutFamilyMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -2376,6 +2456,8 @@ export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -2424,6 +2506,8 @@ export type PersonCreateWithoutServiceMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -2472,6 +2556,8 @@ export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -2536,6 +2622,8 @@ export type PersonUpdateWithoutServiceMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -2584,6 +2672,8 @@ export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -2633,6 +2723,8 @@ export type PersonCreateWithoutServiceOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
   kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
@@ -2681,6 +2773,8 @@ export type PersonUncheckedCreateWithoutServiceOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
@@ -2745,6 +2839,8 @@ export type PersonUpdateWithoutServiceOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
   kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
@@ -2793,6 +2889,8 @@ export type PersonUncheckedUpdateWithoutServiceOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
@@ -2840,6 +2938,8 @@ export type PersonCreateWithoutServiceSchedulesInput = {
   journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -2888,6 +2988,8 @@ export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -2952,6 +3054,8 @@ export type PersonUpdateWithoutServiceSchedulesInput = {
   journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -3000,6 +3104,440 @@ export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutServiceScheduleSwapRequestsMadeInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutServiceScheduleSwapRequestsMadeInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleSwapRequestsMadeInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput>
+}
+
+export type PersonCreateWithoutServiceScheduleSwapRequestsReceivedInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutServiceScheduleSwapRequestsReceivedInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleSwapRequestsReceivedInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput>
+}
+
+export type PersonUpsertWithoutServiceScheduleSwapRequestsMadeInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutServiceScheduleSwapRequestsMadeInput, Prisma.PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsMadeInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleSwapRequestsMadeInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutServiceScheduleSwapRequestsMadeInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutServiceScheduleSwapRequestsMadeInput, Prisma.PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsMadeInput>
+}
+
+export type PersonUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUpsertWithoutServiceScheduleSwapRequestsReceivedInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutServiceScheduleSwapRequestsReceivedInput, Prisma.PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsReceivedInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleSwapRequestsReceivedInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutServiceScheduleSwapRequestsReceivedInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutServiceScheduleSwapRequestsReceivedInput, Prisma.PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsReceivedInput>
+}
+
+export type PersonUpdateWithoutServiceScheduleSwapRequestsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -3049,6 +3587,8 @@ export type PersonCreateWithoutServiceAreaApplicationsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -3097,6 +3637,8 @@ export type PersonUncheckedCreateWithoutServiceAreaApplicationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -3161,6 +3703,8 @@ export type PersonUpdateWithoutServiceAreaApplicationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -3209,6 +3753,8 @@ export type PersonUncheckedUpdateWithoutServiceAreaApplicationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -3257,6 +3803,8 @@ export type PersonCreateWithoutEventsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
   kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
@@ -3305,6 +3853,8 @@ export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
@@ -3369,6 +3919,8 @@ export type PersonUpdateWithoutEventsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
   kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
@@ -3417,6 +3969,8 @@ export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
@@ -3465,6 +4019,8 @@ export type PersonCreateWithoutWorshipOrderItemsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -3513,6 +4069,8 @@ export type PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -3577,6 +4135,8 @@ export type PersonUpdateWithoutWorshipOrderItemsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -3625,6 +4185,8 @@ export type PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -3673,6 +4235,8 @@ export type PersonCreateWithoutWorshipDemandsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -3721,6 +4285,8 @@ export type PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -3785,6 +4351,8 @@ export type PersonUpdateWithoutWorshipDemandsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -3833,6 +4401,8 @@ export type PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -3881,6 +4451,8 @@ export type PersonCreateWithoutWorshipRepertoiresSubmittedInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -3929,6 +4501,8 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresSubmittedInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -3982,6 +4556,8 @@ export type PersonCreateWithoutWorshipRepertoiresApprovedInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -4030,6 +4606,8 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresApprovedInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -4094,6 +4672,8 @@ export type PersonUpdateWithoutWorshipRepertoiresSubmittedInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -4142,6 +4722,8 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresSubmittedInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -4201,6 +4783,8 @@ export type PersonUpdateWithoutWorshipRepertoiresApprovedInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -4249,6 +4833,8 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresApprovedInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -4297,6 +4883,8 @@ export type PersonCreateWithoutNotificationRecipientsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
@@ -4345,6 +4933,8 @@ export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
@@ -4409,6 +4999,8 @@ export type PersonUpdateWithoutNotificationRecipientsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
@@ -4457,6 +5049,8 @@ export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
@@ -4505,6 +5099,8 @@ export type PersonCreateWithoutKidsEnrollmentsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -4553,6 +5149,8 @@ export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -4617,6 +5215,8 @@ export type PersonUpdateWithoutKidsEnrollmentsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -4665,6 +5265,8 @@ export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -4713,6 +5315,8 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -4761,6 +5365,8 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -4814,6 +5420,8 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -4862,6 +5470,8 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInp
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -4926,6 +5536,8 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -4974,6 +5586,8 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -5033,6 +5647,8 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -5081,6 +5697,8 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInp
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -5129,6 +5747,8 @@ export type PersonCreateWithoutKidsCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -5177,6 +5797,8 @@ export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -5241,6 +5863,8 @@ export type PersonUpdateWithoutKidsCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -5289,6 +5913,8 @@ export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -5337,6 +5963,8 @@ export type PersonCreateWithoutKidsPreCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -5385,6 +6013,8 @@ export type PersonUncheckedCreateWithoutKidsPreCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -5449,6 +6079,8 @@ export type PersonUpdateWithoutKidsPreCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -5497,6 +6129,8 @@ export type PersonUncheckedUpdateWithoutKidsPreCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -5545,6 +6179,8 @@ export type PersonCreateWithoutKidsIdentityInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -5593,6 +6229,8 @@ export type PersonUncheckedCreateWithoutKidsIdentityInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -5657,6 +6295,8 @@ export type PersonUpdateWithoutKidsIdentityInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -5705,6 +6345,8 @@ export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -5753,6 +6395,8 @@ export type PersonCreateWithoutKidsOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -5801,6 +6445,8 @@ export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -5865,6 +6511,8 @@ export type PersonUpdateWithoutKidsOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -5913,6 +6561,8 @@ export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -5961,6 +6611,8 @@ export type PersonCreateWithoutKidsResourceRequestsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -6009,6 +6661,8 @@ export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -6073,6 +6727,8 @@ export type PersonUpdateWithoutKidsResourceRequestsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -6121,6 +6777,8 @@ export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -6169,6 +6827,8 @@ export type PersonCreateWithoutKidsCareProfileInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -6217,6 +6877,8 @@ export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -6281,6 +6943,8 @@ export type PersonUpdateWithoutKidsCareProfileInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -6329,6 +6993,8 @@ export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -6376,6 +7042,8 @@ export type PersonCreateWithoutMeetingVisitorInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -6424,6 +7092,8 @@ export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -6488,6 +7158,8 @@ export type PersonUpdateWithoutMeetingVisitorInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -6536,6 +7208,8 @@ export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -6584,6 +7258,8 @@ export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -6632,6 +7308,8 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -6685,6 +7363,8 @@ export type PersonCreateWithoutPastoralCaresAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -6733,6 +7413,8 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -6797,6 +7479,8 @@ export type PersonUpdateWithoutPastoralCaresAsSubjectInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -6845,6 +7529,8 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -6904,6 +7590,8 @@ export type PersonUpdateWithoutPastoralCaresAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -6952,6 +7640,8 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -7000,6 +7690,8 @@ export type PersonCreateWithoutMeetingAttendancesInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -7048,6 +7740,8 @@ export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -7112,6 +7806,8 @@ export type PersonUpdateWithoutMeetingAttendancesInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -7160,6 +7856,8 @@ export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -7208,6 +7906,8 @@ export type PersonCreateWithoutCellNetworkSupervisionsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -7256,6 +7956,8 @@ export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -7320,6 +8022,8 @@ export type PersonUpdateWithoutCellNetworkSupervisionsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -7368,6 +8072,8 @@ export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -7416,6 +8122,8 @@ export type PersonCreateWithoutCellCampusCoordinationsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -7464,6 +8172,8 @@ export type PersonUncheckedCreateWithoutCellCampusCoordinationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -7528,6 +8238,8 @@ export type PersonUpdateWithoutCellCampusCoordinationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -7576,6 +8288,8 @@ export type PersonUncheckedUpdateWithoutCellCampusCoordinationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -7624,6 +8338,8 @@ export type PersonCreateWithoutCellMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -7672,6 +8388,8 @@ export type PersonUncheckedCreateWithoutCellMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -7736,6 +8454,8 @@ export type PersonUpdateWithoutCellMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -7784,6 +8504,8 @@ export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -7832,6 +8554,8 @@ export type PersonCreateWithoutCellLeadershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
@@ -7880,6 +8604,8 @@ export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
@@ -7944,6 +8670,8 @@ export type PersonUpdateWithoutCellLeadershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -7992,6 +8720,8 @@ export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -8057,6 +8787,8 @@ export type PersonUpdateWithoutCampusInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -8105,6 +8837,8 @@ export type PersonUncheckedUpdateWithoutCampusInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -8187,6 +8921,8 @@ export type PersonUpdateWithoutOrganizationInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
@@ -8235,6 +8971,8 @@ export type PersonUncheckedUpdateWithoutOrganizationInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
   notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
@@ -8289,6 +9027,8 @@ export type PersonCountOutputType = {
   familyMemberships: number
   serviceMemberships: number
   serviceSchedules: number
+  serviceScheduleSwapRequestsMade: number
+  serviceScheduleSwapRequestsReceived: number
   serviceOperationalRoles: number
   eventsResponsible: number
   notificationRecipients: number
@@ -8319,6 +9059,8 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   familyMemberships?: boolean | PersonCountOutputTypeCountFamilyMembershipsArgs
   serviceMemberships?: boolean | PersonCountOutputTypeCountServiceMembershipsArgs
   serviceSchedules?: boolean | PersonCountOutputTypeCountServiceSchedulesArgs
+  serviceScheduleSwapRequestsMade?: boolean | PersonCountOutputTypeCountServiceScheduleSwapRequestsMadeArgs
+  serviceScheduleSwapRequestsReceived?: boolean | PersonCountOutputTypeCountServiceScheduleSwapRequestsReceivedArgs
   serviceOperationalRoles?: boolean | PersonCountOutputTypeCountServiceOperationalRolesArgs
   eventsResponsible?: boolean | PersonCountOutputTypeCountEventsResponsibleArgs
   notificationRecipients?: boolean | PersonCountOutputTypeCountNotificationRecipientsArgs
@@ -8428,6 +9170,20 @@ export type PersonCountOutputTypeCountServiceMembershipsArgs<ExtArgs extends run
  */
 export type PersonCountOutputTypeCountServiceSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ServiceScheduleWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountServiceScheduleSwapRequestsMadeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceScheduleSwapRequestWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountServiceScheduleSwapRequestsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceScheduleSwapRequestWhereInput
 }
 
 /**
@@ -8568,6 +9324,8 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   familyMemberships?: boolean | Prisma.Person$familyMembershipsArgs<ExtArgs>
   serviceMemberships?: boolean | Prisma.Person$serviceMembershipsArgs<ExtArgs>
   serviceSchedules?: boolean | Prisma.Person$serviceSchedulesArgs<ExtArgs>
+  serviceScheduleSwapRequestsMade?: boolean | Prisma.Person$serviceScheduleSwapRequestsMadeArgs<ExtArgs>
+  serviceScheduleSwapRequestsReceived?: boolean | Prisma.Person$serviceScheduleSwapRequestsReceivedArgs<ExtArgs>
   serviceOperationalRoles?: boolean | Prisma.Person$serviceOperationalRolesArgs<ExtArgs>
   eventsResponsible?: boolean | Prisma.Person$eventsResponsibleArgs<ExtArgs>
   notificationRecipients?: boolean | Prisma.Person$notificationRecipientsArgs<ExtArgs>
@@ -8664,6 +9422,8 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   familyMemberships?: boolean | Prisma.Person$familyMembershipsArgs<ExtArgs>
   serviceMemberships?: boolean | Prisma.Person$serviceMembershipsArgs<ExtArgs>
   serviceSchedules?: boolean | Prisma.Person$serviceSchedulesArgs<ExtArgs>
+  serviceScheduleSwapRequestsMade?: boolean | Prisma.Person$serviceScheduleSwapRequestsMadeArgs<ExtArgs>
+  serviceScheduleSwapRequestsReceived?: boolean | Prisma.Person$serviceScheduleSwapRequestsReceivedArgs<ExtArgs>
   serviceOperationalRoles?: boolean | Prisma.Person$serviceOperationalRolesArgs<ExtArgs>
   eventsResponsible?: boolean | Prisma.Person$eventsResponsibleArgs<ExtArgs>
   notificationRecipients?: boolean | Prisma.Person$notificationRecipientsArgs<ExtArgs>
@@ -8711,6 +9471,8 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     familyMemberships: Prisma.$FamilyMembershipPayload<ExtArgs>[]
     serviceMemberships: Prisma.$ServiceMembershipPayload<ExtArgs>[]
     serviceSchedules: Prisma.$ServiceSchedulePayload<ExtArgs>[]
+    serviceScheduleSwapRequestsMade: Prisma.$ServiceScheduleSwapRequestPayload<ExtArgs>[]
+    serviceScheduleSwapRequestsReceived: Prisma.$ServiceScheduleSwapRequestPayload<ExtArgs>[]
     serviceOperationalRoles: Prisma.$ServiceOperationalRoleAssignmentPayload<ExtArgs>[]
     eventsResponsible: Prisma.$EventPayload<ExtArgs>[]
     notificationRecipients: Prisma.$NotificationRecipientPayload<ExtArgs>[]
@@ -9155,6 +9917,8 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   familyMemberships<T extends Prisma.Person$familyMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$familyMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FamilyMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceMemberships<T extends Prisma.Person$serviceMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceSchedules<T extends Prisma.Person$serviceSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceScheduleSwapRequestsMade<T extends Prisma.Person$serviceScheduleSwapRequestsMadeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceScheduleSwapRequestsMadeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceScheduleSwapRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceScheduleSwapRequestsReceived<T extends Prisma.Person$serviceScheduleSwapRequestsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceScheduleSwapRequestsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceScheduleSwapRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceOperationalRoles<T extends Prisma.Person$serviceOperationalRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceOperationalRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceOperationalRoleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   eventsResponsible<T extends Prisma.Person$eventsResponsibleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$eventsResponsibleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notificationRecipients<T extends Prisma.Person$notificationRecipientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$notificationRecipientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -9959,6 +10723,54 @@ export type Person$serviceSchedulesArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.ServiceScheduleScalarFieldEnum | Prisma.ServiceScheduleScalarFieldEnum[]
+}
+
+/**
+ * Person.serviceScheduleSwapRequestsMade
+ */
+export type Person$serviceScheduleSwapRequestsMadeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceScheduleSwapRequest
+   */
+  select?: Prisma.ServiceScheduleSwapRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceScheduleSwapRequest
+   */
+  omit?: Prisma.ServiceScheduleSwapRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceScheduleSwapRequestInclude<ExtArgs> | null
+  where?: Prisma.ServiceScheduleSwapRequestWhereInput
+  orderBy?: Prisma.ServiceScheduleSwapRequestOrderByWithRelationInput | Prisma.ServiceScheduleSwapRequestOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceScheduleSwapRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceScheduleSwapRequestScalarFieldEnum | Prisma.ServiceScheduleSwapRequestScalarFieldEnum[]
+}
+
+/**
+ * Person.serviceScheduleSwapRequestsReceived
+ */
+export type Person$serviceScheduleSwapRequestsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceScheduleSwapRequest
+   */
+  select?: Prisma.ServiceScheduleSwapRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceScheduleSwapRequest
+   */
+  omit?: Prisma.ServiceScheduleSwapRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceScheduleSwapRequestInclude<ExtArgs> | null
+  where?: Prisma.ServiceScheduleSwapRequestWhereInput
+  orderBy?: Prisma.ServiceScheduleSwapRequestOrderByWithRelationInput | Prisma.ServiceScheduleSwapRequestOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceScheduleSwapRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceScheduleSwapRequestScalarFieldEnum | Prisma.ServiceScheduleSwapRequestScalarFieldEnum[]
 }
 
 /**

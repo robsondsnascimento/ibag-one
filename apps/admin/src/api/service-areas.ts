@@ -38,6 +38,7 @@ export type ServiceAreaDetail = {
     id: string
     role: 'GENERAL_LEADER' | 'CAMPUS_LEADER' | 'TEAM_LEADER' | 'MEMBER'
     inicio: string
+    funcoes: string[]
     person: {
       id: string
       nome: string
@@ -110,12 +111,21 @@ export function createServiceTeam(accessToken: string, areaId: string, input: { 
   })
 }
 
-export function addServiceAreaMember(accessToken: string, areaId: string, input: { personId: string; role: ServiceMembershipRole; campusId?: string; teamId?: string }) {
+export function addServiceAreaMember(accessToken: string, areaId: string, input: { personId: string; role: ServiceMembershipRole; campusId?: string; teamId?: string; funcoes?: string[] }) {
   return apiRequest<unknown>(`/service-areas/${areaId}/members`, {
     method: 'POST',
     accessToken,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(input),
+  })
+}
+
+export function updateServiceMembershipFunctions(accessToken: string, membershipId: string, funcoes: string[]) {
+  return apiRequest<ServiceAreaDetail['memberships'][number]>(`/service-areas/memberships/${membershipId}/functions`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ funcoes }),
   })
 }
 
@@ -255,6 +265,24 @@ export type ServiceScheduleHistory = {
   }
 }
 
+export type ServiceScheduleSwapCandidate = {
+  id: string
+  nome: string
+  telefone: string | null
+  email: string | null
+}
+
+export type ServiceScheduleSwapRequest = {
+  id: string
+  status: 'PENDING' | 'APPROVED' | 'REJECTED'
+  reason: string | null
+  decisionReason: string | null
+  createdAt: string
+  requesterPerson: ServiceScheduleSwapCandidate
+  replacementPerson: ServiceScheduleSwapCandidate
+  schedule: ServiceAreaSchedule
+}
+
 export type ServiceScheduleEventCandidate = {
   id: string
   titulo: string
@@ -314,6 +342,41 @@ export function substituteServiceSchedule(accessToken: string, scheduleId: strin
     accessToken,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(input),
+  })
+}
+
+export function listServiceScheduleSwapCandidates(accessToken: string, scheduleId: string) {
+  return apiRequest<ServiceScheduleSwapCandidate[]>(`/service-areas/schedules/${scheduleId}/swap-candidates`, { accessToken })
+}
+
+export function createServiceScheduleSwapRequest(accessToken: string, scheduleId: string, input: { replacementPersonId: string; reason?: string }) {
+  return apiRequest<ServiceScheduleSwapRequest>(`/service-areas/schedules/${scheduleId}/swap-requests`, {
+    method: 'POST',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export function listTeamServiceScheduleSwapRequests(accessToken: string, teamId: string) {
+  return apiRequest<ServiceScheduleSwapRequest[]>(`/service-areas/teams/${teamId}/swap-requests`, { accessToken })
+}
+
+export function approveServiceScheduleSwapRequest(accessToken: string, requestId: string) {
+  return apiRequest<ServiceScheduleSwapRequest>(`/service-areas/swap-requests/${requestId}/approve`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({}),
+  })
+}
+
+export function rejectServiceScheduleSwapRequest(accessToken: string, requestId: string, reason?: string) {
+  return apiRequest<ServiceScheduleSwapRequest>(`/service-areas/swap-requests/${requestId}/reject`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(reason ? { reason } : {}),
   })
 }
 

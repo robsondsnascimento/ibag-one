@@ -45,7 +45,8 @@ Cada Área de Serviço exibe sua visão consolidada de escalas, sempre filtrada 
 - confirmar ou recusar a própria escala, com motivo opcional na recusa;
 - concluir ou reabrir uma escala pela liderança autorizada;
 - substituir a pessoa escalada por outra integrante da mesma equipe, preservando a solicitação de nova confirmação;
-- consultar o histórico auditável de criação, respostas e substituições.
+- consultar o histórico auditável de criação, respostas e substituições;
+- cadastrar as funções de cada integrante da equipe, como Guitarra, Baixo ou Vocal.
 
 O painel não replica regras de agenda: conflitos, permissões, escopo da equipe e notificações são validados exclusivamente pela API. Ao escolher um evento aprovado, o formulário filtra pela equipe selecionada e preenche seu horário; a escala continua sendo administrada exclusivamente pela Área de Serviço, enquanto o evento apenas a consulta. Na criação em lote, o sistema envia todas as escalas em uma única operação: se uma delas for inválida, nenhuma é criada.
 
@@ -53,7 +54,9 @@ O painel não replica regras de agenda: conflitos, permissões, escopo da equipe
 
 O item **Minhas escalas** exibe os compromissos da própria pessoa em todas as áreas de serviço. Uma escala pendente pode ser confirmada ou recusada; a recusa aceita motivo opcional e gera o alerta interno para as lideranças responsáveis.
 
-Na visão da Área de Serviço, lideranças autorizadas recebem um resumo das pendências do período filtrado: escalas aguardando confirmação e recusas que exigem substituição. Os cartões aplicam o filtro correspondente sem alterar o escopo validado pela API.
+Para uma escala futura de Louvor, a pessoa também encontra **Solicitar troca**. O formulário consulta somente integrantes ativos da mesma equipe que possuam a mesma função cadastrada e não tenham conflito de agenda. A solicitação não muda a escala imediatamente: ela aparece no painel da liderança da equipe, que pode aprovar ou recusar. Na aprovação, a nova pessoa é escalada e recebe uma nova solicitação de confirmação.
+
+Na visão da Área de Serviço, lideranças autorizadas recebem um resumo das pendências do período filtrado: escalas aguardando confirmação e recusas que exigem substituição. Logo abaixo, há uma lista de solicitações de troca pendentes com as ações **Aprovar** e **Recusar**. Os cartões e decisões aplicam o escopo validado pela API.
 
 ## Agenda institucional
 
@@ -76,8 +79,18 @@ A área de **Cultos** lista os eventos de culto já aprovados na Agenda e permit
 
 - criar uma ordem em branco ou aplicar um modelo ativo da organização;
 - acompanhar o status de rascunho ou publicação;
-- incluir, editar, reorganizar ou remover itens excepcionais na sequência, como um Teatro Minuto, indicando horário, área envolvida e observações;
+- incluir, editar, reorganizar ou remover itens excepcionais na sequência, como um Teatro Minuto, indicando horário, área envolvida e observações; ao escolher uma área na inclusão, o painel cria a solicitação para ela e avisa sua liderança; ao remover, avisa a mesma área;
 - associar materiais e criar demandas para as áreas já envolvidas no culto;
 - publicar a ordem quando houver ao menos um item e, depois disso, enviar alerta aos participantes ou baixar seu PDF consolidado.
 
-O painel usa apenas cultos aprovados e não replica as regras de escopo: a autorização para criar, editar, publicar, alertar e gerar PDF é sempre confirmada pela API. A próxima etapa deste módulo é o repertório de louvor e a administração completa dos modelos de ordem de culto.
+O painel usa apenas cultos aprovados e não replica as regras de escopo: a autorização para criar, editar, publicar, alertar e gerar PDF é sempre confirmada pela API.
+
+## Cultos — Repertório de Louvor
+
+Dentro do culto selecionado, o painel apresenta o repertório de cada área envolvida. O Ministro de Louvor pode criar o rascunho com a primeira música, acrescentar outras e enviar para aprovação. A liderança responsável aprova ou devolve com orientação; após a aprovação, pode encaminhar as músicas ao item de Louvor da Ordem de Culto e indicar a área que preparará os materiais.
+
+Para o Culto de Cachoeirinha, o formulário apresenta o roteiro padrão: Celebração de início, Celebração ou POP, Oração, Dízimos e ofertas e Celebração final. Cada música pode indicar seu momento e o **link da versão no YouTube**, registrado como referência do repertório e preservado quando ele é enviado à Ordem de Culto.
+
+Em **Modelos**, a liderança central pode criar o roteiro Cachoeirinha com essas cinco posições, escolhendo a Área de Música global. Ao encaminhar um repertório aprovado, o painel usa essas posições automaticamente conforme o momento escolhido em cada música; para uma ordem diferente, a liderança ainda pode selecionar manualmente o item de Louvor de destino.
+
+O painel também apresenta o prazo calculado e o aviso visual de envio em atraso. As permissões de Ministro, liderança musical, escala confirmada, área de Música e item de Louvor continuam confirmadas exclusivamente pela API.

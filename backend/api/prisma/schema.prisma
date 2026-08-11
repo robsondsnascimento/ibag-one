@@ -92,6 +92,12 @@ enum ServiceScheduleHistoryAction {
   SUBSTITUTED
 }
 
+enum ServiceScheduleSwapRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 enum ServiceAreaApplicationStatus {
   INTERESTED
   IN_PROGRESS
@@ -250,6 +256,8 @@ model Person {
   familyMemberships                     FamilyMembership[]
   serviceMemberships                    ServiceMembership[]
   serviceSchedules                      ServiceSchedule[]
+  serviceScheduleSwapRequestsMade       ServiceScheduleSwapRequest[] @relation("ServiceScheduleSwapRequester")
+  serviceScheduleSwapRequestsReceived   ServiceScheduleSwapRequest[] @relation("ServiceScheduleSwapReplacement")
   serviceOperationalRoles               ServiceOperationalRoleAssignment[]
   eventsResponsible                     Event[]                         @relation("EventResponsible")
   notificationRecipients                NotificationRecipient[]
@@ -290,6 +298,7 @@ model User {
   eventsCreated                Event[]                @relation("EventCreatedBy")
   eventHistory                 EventHistory[]
   serviceScheduleHistory       ServiceScheduleHistory[]
+  serviceScheduleSwapRequestsDecided ServiceScheduleSwapRequest[] @relation("ServiceScheduleSwapDecidedBy")
   serviceAreaApplicationsCreated ServiceAreaApplication[] @relation("ServiceAreaApplicationCreatedBy")
   serviceAreaApplicationsDecided ServiceAreaApplication[] @relation("ServiceAreaApplicationDecidedBy")
   serviceAreaApplicationStagesCompleted ServiceAreaApplicationStage[]
@@ -334,6 +343,7 @@ model Organization {
   families              Family[]
   serviceAreas          ServiceArea[]
   serviceTeams          ServiceTeam[]
+  serviceScheduleSwapRequests ServiceScheduleSwapRequest[]
   serviceSchedules      ServiceSchedule[]
   serviceOperationalRoles ServiceOperationalRoleAssignment[]
   serviceAreaEntryStages ServiceAreaEntryStage[]
@@ -553,6 +563,7 @@ model ServiceTeam {
   memberships    ServiceMembership[]
   operationalRoles ServiceOperationalRoleAssignment[]
   schedules      ServiceSchedule[]
+  swapRequests   ServiceScheduleSwapRequest[]
   eventTeams     EventServiceTeam[]
   notifications  Notification[]
   kidsClasses    KidsClass[]
@@ -567,6 +578,7 @@ model ServiceTeam {
 model ServiceMembership {
   id            String                @id @default(uuid())
   role          ServiceMembershipRole @default(MEMBER)
+  funcoes       String[]              @default([])
   inicio        DateTime              @default(now())
   fim           DateTime?
   ativo         Boolean               @default(true)
@@ -630,12 +642,41 @@ model ServiceSchedule {
   eventId        String?
   event          Event?                @relation(fields: [eventId], references: [id])
   history        ServiceScheduleHistory[]
+  swapRequests   ServiceScheduleSwapRequest[]
 
   @@index([organizationId])
   @@index([teamId])
   @@index([personId])
   @@index([data])
   @@index([eventId])
+}
+
+model ServiceScheduleSwapRequest {
+  id                  String                           @id @default(uuid())
+  status              ServiceScheduleSwapRequestStatus @default(PENDING)
+  reason              String?
+  decisionReason      String?
+  createdAt           DateTime                         @default(now())
+  decidedAt           DateTime?
+  organizationId      String
+  organization        Organization                     @relation(fields: [organizationId], references: [id])
+  teamId              String
+  team                ServiceTeam                      @relation(fields: [teamId], references: [id])
+  scheduleId          String
+  schedule            ServiceSchedule                  @relation(fields: [scheduleId], references: [id])
+  requesterPersonId   String
+  requesterPerson     Person                           @relation("ServiceScheduleSwapRequester", fields: [requesterPersonId], references: [id])
+  replacementPersonId String
+  replacementPerson   Person                           @relation("ServiceScheduleSwapReplacement", fields: [replacementPersonId], references: [id])
+  decidedByUserId     String?
+  decidedByUser       User?                            @relation("ServiceScheduleSwapDecidedBy", fields: [decidedByUserId], references: [id])
+
+  @@index([organizationId])
+  @@index([teamId])
+  @@index([scheduleId])
+  @@index([requesterPersonId])
+  @@index([replacementPersonId])
+  @@index([status])
 }
 
 model ServiceScheduleHistory {

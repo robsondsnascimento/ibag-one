@@ -304,6 +304,7 @@ function App() {
   const canBlockCampusAgenda = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY'].some((role) => assignedRoles.includes(role))
   const canApproveAgendaEvents = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY', 'PASTOR', 'PASTOR_SENIOR'].some((role) => assignedRoles.includes(role))
   const canManageAnyWorshipOrder = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY', 'WORSHIP_ORDER_MANAGER', 'PASTOR', 'PASTOR_SENIOR'].some((role) => assignedRoles.includes(role))
+  const canManageWorshipTemplates = ['SUPER_ADMIN', 'ADMIN', 'SECRETARY', 'WORSHIP_ORDER_MANAGER', 'PASTOR_SENIOR'].some((role) => assignedRoles.includes(role))
   const isCellSection = ['cells', 'cell-structure', 'studies'].includes(activePage)
   const isServiceSection = ['teams', 'kids'].includes(activePage)
   const selectedServiceArea = serviceAreas.find((area) => area.id === selectedServiceAreaId) ?? null
@@ -1170,6 +1171,7 @@ function App() {
     const formData = new FormData(event.currentTarget)
     const personId = String(formData.get('personId') ?? '')
     const teamId = String(formData.get('teamId') ?? '')
+    const funcoes = String(formData.get('funcoes') ?? '').split(',').map((value) => value.trim()).filter(Boolean)
     const campusId = serviceMemberArea.scope === 'CAMPUS'
       ? serviceMemberArea.campus?.id ?? ''
       : String(formData.get('campusId') ?? '')
@@ -1197,6 +1199,7 @@ function App() {
         role: serviceMembershipRole,
         ...(serviceMembershipRole === 'CAMPUS_LEADER' ? { campusId } : {}),
         ...((serviceMembershipRole === 'TEAM_LEADER' || serviceMembershipRole === 'MEMBER') ? { teamId } : {}),
+        ...(funcoes.length ? { funcoes } : {}),
       })
       closeServiceMemberForm()
       setServiceAreaDetailVersion((version) => version + 1)
@@ -1822,7 +1825,7 @@ function App() {
         {activePage === 'studies' && <StudiesPage canManage={canManageStudies} study={study} error={studyError} isLoading={isLoadingStudy} weekStart={studyWeekStart} isSubmitting={isSubmittingStudy} onWeekStartChange={setStudyWeekStart} onPublish={saveStudy} onDownload={downloadStudy} />}
         {activePage === 'people' && <PeoplePage data={people} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'person', id })} />}
         {activePage === 'my-schedules' && <MySchedulesPage accessToken={session.access_token} onNotice={setNotice} onNotificationsChanged={() => setNotificationsVersion((version) => version + 1)} />}
-        {activePage === 'worship' && <WorshipPage accessToken={session.access_token} currentUserId={session.user.id} canManageAnyOrder={canManageAnyWorshipOrder} onNotice={setNotice} />}
+        {activePage === 'worship' && <WorshipPage accessToken={session.access_token} currentUserId={session.user.id} canManageAnyOrder={canManageAnyWorshipOrder} canManageTemplates={canManageWorshipTemplates} onNotice={setNotice} />}
         {activePage === 'teams' && selectedServiceArea && <ServiceAreaWorkspace area={serviceAreaDetail} error={serviceAreaDetailError} isLoading={isLoadingServiceAreaDetail} onRetry={() => setServiceAreaDetailVersion((version) => version + 1)} canCreateTeam={canCreateServiceTeam} canManageMembers={canManageServiceMembers} canManageOnboarding={canManageServiceMembers} canManageSchedules={canManageServiceMembers} accessToken={session.access_token} currentPersonId={session.user.personId} onNotice={setNotice} onCreateTeam={openServiceTeamForm} onAddMember={openServiceMemberForm} onOpenOnboarding={openServiceOnboarding} />}
         {activePage !== 'dashboard' && activePage !== 'agenda' && activePage !== 'cells' && activePage !== 'cell-structure' && activePage !== 'studies' && activePage !== 'people' && activePage !== 'my-schedules' && activePage !== 'worship' && (activePage !== 'teams' || !selectedServiceArea) && <ModulePreview copy={pageCopy[activePage]} />}
       </main>
@@ -1880,6 +1883,7 @@ function App() {
               <label>Função na área<select value={serviceMembershipRole} onChange={(event) => setServiceMembershipRole(event.target.value as ServiceMembershipRole)}><option value="MEMBER">Integrante</option><option value="TEAM_LEADER">Liderança de equipe</option><option value="CAMPUS_LEADER">Liderança de campus</option><option value="GENERAL_LEADER">Liderança geral</option></select></label>
               {serviceMembershipRole === 'CAMPUS_LEADER' && (serviceMemberArea.scope === 'CAMPUS' && serviceMemberArea.campus ? <p className="record-detail-note">A liderança será vinculada ao <strong>{serviceMemberArea.campus.nome}</strong>.</p> : <label>Campus<select name="campusId" required defaultValue="" disabled={isLoadingServiceForm || serviceFormCampuses.length === 0}><option value="" disabled>{isLoadingServiceForm ? 'Carregando campi...' : 'Selecione o campus'}</option>{serviceFormCampuses.map((campus) => <option value={campus.id} key={campus.id}>{campus.nome}</option>)}</select></label>)}
               {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <label>Equipe<select name="teamId" required defaultValue="" disabled={serviceMemberArea.teams.length === 0}><option value="" disabled>{serviceMemberArea.teams.length ? 'Selecione a equipe' : 'Crie uma equipe antes'}</option>{serviceMemberArea.teams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label>}
+              {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <label>Funções de serviço <span className="field-optional">(opcional)</span><input name="funcoes" maxLength={500} placeholder="Ex.: Guitarra, Vocal" /><small className="field-help">Separe por vírgulas. Essas funções definem quem pode receber solicitações de troca.</small></label>}
               {serviceFormError && <p className="form-error" role="alert">{serviceFormError}</p>}
               <div className="dialog-actions"><button className="secondary-button" type="button" onClick={closeServiceMemberForm}>Cancelar</button><button className="primary-button" type="submit" disabled={isLoadingServiceForm || serviceFormPeople.length === 0 || isSavingServiceForm}>{isSavingServiceForm ? 'Vinculando...' : 'Vincular pessoa'}</button></div>
             </form>

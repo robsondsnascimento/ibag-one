@@ -33,7 +33,7 @@ Papéis de vínculo disponíveis:
 - `TEAM_LEADER`
 - `MEMBER`
 
-Funções operacionais complementam o vínculo de equipe. O primeiro papel implementado é `WORSHIP_MINISTER`, destinado ao integrante que pode enviar repertórios de cultos.
+Funções operacionais complementam o vínculo de equipe. O primeiro papel implementado é `WORSHIP_MINISTER`, destinado ao integrante que pode enviar repertórios de cultos. O vínculo também pode registrar funções de escala, como Guitarra, Baixo ou Vocal, sem substituir seu papel de liderança ou integrante.
 
 ## Entrada e formação
 
@@ -56,6 +56,8 @@ Cada área possui sua visão consolidada de escalas, e cada equipe administra as
 - Integrantes consultam as próprias escalas e respondem com confirmação ou recusa.
 
 As escalas podem estar vinculadas a eventos, mas não pertencem à Ordem de Culto. A API impede conflitos ativos de agenda, permite criação em lote e registra histórico de criação, mudança de status e substituição.
+
+O integrante escalado pode solicitar uma troca antes do horário previsto. A busca oferece somente integrantes ativos da mesma equipe, que tenham a mesma função registrada e não possuam conflito. A troca só é efetivada quando a liderança da equipe aprova; uma recusa mantém a escala original.
 
 ## Histórico
 

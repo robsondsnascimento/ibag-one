@@ -4,7 +4,7 @@ Plataforma de cuidado pastoral, células, áreas de serviço, eventos e operaç�
 
 ## Estado atual
 
-O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. O painel administrativo React já possui login institucional integrado à API, sessão persistente opcional e identificação dinâmica de organização, campus e função. A suíte atual possui **31 suítes e 100 testes unitários**, além de testes HTTP e de integração com PostgreSQL isolado.
+O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. O painel administrativo React já possui login institucional integrado à API, sessão persistente opcional e identificação dinâmica de organização, campus e função. A suíte atual possui **34 suítes e 129 testes unitários**, além de testes HTTP e de integração com PostgreSQL isolado.
 
 A agenda institucional possui sincronização unidirecional opcional com um único Google Calendar compartilhado. O IBAG One permanece como fonte de verdade para solicitações, aprovações, alterações e cancelamentos.
 
@@ -13,11 +13,11 @@ A agenda institucional possui sincronização unidirecional opcional com um úni
 | Pessoas e acesso | Pessoas, contas, papéis adicionais, super administração, campus, famílias e jornada da pessoa. |
 | Células | Coordenação por campus, redes, supervisão, liderança, apoio, presença/falta, visitantes, conclusão de reunião, estudos semanais, localização e multiplicação. |
 | Cuidado pastoral | Registros de acompanhamento e visão pastoral consolidada com escopo de campus. |
-| Áreas de serviço | Áreas globais ou por campus, equipes, membros, lideranças, funções operacionais e escalas. |
+| Áreas de serviço | Áreas globais ou por campus, equipes, membros, lideranças, funções operacionais, escalas e solicitações de troca por função. |
 | Entrada em áreas | Interesse, etapas configuráveis, comprovação, aprovação, recusa, desistência e criação do vínculo de integrante. |
 | Eventos | Solicitação, aprovação, agenda, espaços, áreas e equipes envolvidas. |
-| Ordem de culto | Modelo editável, itens, materiais, demandas, alertas internos e geração de PDF. |
-| Louvor | Repertório, músicas, aprovação da liderança, prazo de envio e encaminhamento à Ordem de Culto. |
+| Ordem de culto | Modelo editável, itens, materiais, demandas automáticas por área, alertas internos e geração de PDF. |
+| Louvor | Repertório, músicas, aprovação da liderança, prazo de envio, links do YouTube e encaminhamento ao modelo de músicas da Ordem de Culto. |
 | IBAG Kids | Estrutura de liderança, faixas etárias, check-in/out, QR de retirada, pré-check-in, recursos visuais e escalas operacionais. |
 | Comunicação | Notificações internas, adaptadores opcionais de webhook para WhatsApp e ProPresenter e alertas de Ordem de Culto. |
 | Operação | Swagger/OpenAPI, health checks, auditoria de alterações, CORS, limite de requisições e paginação inicial. |
@@ -26,10 +26,13 @@ A agenda institucional possui sincronização unidirecional opcional com um úni
 
 - Todo dado de negócio é isolado pela organização atual.
 - Uma pessoa pode servir em várias áreas, mas conflitos de escala ativos são impedidos.
+- A pessoa escalada pode solicitar troca somente para alguém da mesma equipe, com a mesma função de serviço e sem conflito; a liderança da equipe aprova ou recusa antes de efetivar a substituição.
 - Escalas pertencem à área/equipe; eventos e Ordem de Culto apenas as consultam.
 - Uma pessoa só se torna integrante após aprovação no processo da área.
 - A Ordem de Culto é independente da escala e pode ser montada a partir de modelos editáveis.
+- A inclusão de um item da Ordem de Culto com Área de Serviço cria uma demanda e encaminha o aviso à liderança responsável; alterações de área e remoções também são comunicadas.
 - O repertório é enviado pelo Ministro de Louvor, aprovado pela liderança e entregue à equipe de Ordem de Culto.
+- O modelo Cachoeirinha organiza músicas em cinco momentos e permite distribuir o repertório aprovado automaticamente para cada posição correspondente.
 - A presença em células permite registrar ausência; visitantes são identificados pelo telefone e, após três encontros na mesma célula, podem ser incluídos como participantes ativos sem se tornarem membros formais automaticamente.
 - Estudos semanais são globais à organização e dependem do registro da célula anterior, com exceção prevista para células novas.
 - A coordenação de células é um vínculo por campus; no cuidado pastoral, atua abaixo do pastor e acima da supervisão de rede.

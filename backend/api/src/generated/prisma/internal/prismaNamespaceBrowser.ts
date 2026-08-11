@@ -69,6 +69,7 @@ export const ModelName = {
   ServiceMembership: 'ServiceMembership',
   ServiceOperationalRoleAssignment: 'ServiceOperationalRoleAssignment',
   ServiceSchedule: 'ServiceSchedule',
+  ServiceScheduleSwapRequest: 'ServiceScheduleSwapRequest',
   ServiceScheduleHistory: 'ServiceScheduleHistory',
   ServiceAreaEntryStage: 'ServiceAreaEntryStage',
   ServiceAreaApplication: 'ServiceAreaApplication',
@@ -349,6 +350,7 @@ export type ServiceTeamScalarFieldEnum = (typeof ServiceTeamScalarFieldEnum)[key
 export const ServiceMembershipScalarFieldEnum = {
   id: 'id',
   role: 'role',
+  funcoes: 'funcoes',
   inicio: 'inicio',
   fim: 'fim',
   ativo: 'ativo',
@@ -395,6 +397,24 @@ export const ServiceScheduleScalarFieldEnum = {
 } as const
 
 export type ServiceScheduleScalarFieldEnum = (typeof ServiceScheduleScalarFieldEnum)[keyof typeof ServiceScheduleScalarFieldEnum]
+
+
+export const ServiceScheduleSwapRequestScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  reason: 'reason',
+  decisionReason: 'decisionReason',
+  createdAt: 'createdAt',
+  decidedAt: 'decidedAt',
+  organizationId: 'organizationId',
+  teamId: 'teamId',
+  scheduleId: 'scheduleId',
+  requesterPersonId: 'requesterPersonId',
+  replacementPersonId: 'replacementPersonId',
+  decidedByUserId: 'decidedByUserId'
+} as const
+
+export type ServiceScheduleSwapRequestScalarFieldEnum = (typeof ServiceScheduleSwapRequestScalarFieldEnum)[keyof typeof ServiceScheduleSwapRequestScalarFieldEnum]
 
 
 export const ServiceScheduleHistoryScalarFieldEnum = {

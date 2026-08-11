@@ -179,25 +179,19 @@ export class WorshipRepertoireService {
     await this.assertLeader(repertoire.serviceAreaId, repertoire.event, context);
     if (repertoire.status !== WorshipRepertoireStatus.APPROVED) throw new BadRequestException('Somente repertórios aprovados podem ser enviados para a Ordem de Culto');
 
-    const orderItem = await this.prisma.worshipOrderItem.findFirst({
-      where: {
-        id: dto.orderItemId,
-        serviceAreaId: repertoire.serviceAreaId,
-        order: { eventId: repertoire.eventId, event: { organizationId: context.organizationId } },
-      },
-      include: { order: true },
-    });
-    if (!orderItem) throw new BadRequestException('Informe o item de louvor desta ordem de culto vinculado à área de Música');
-    if (orderItem.order.status !== WorshipOrderStatus.DRAFT) throw new BadRequestException('O repertório só pode ser encaminhado enquanto a ordem de culto estiver em rascunho');
+    const destinations = dto.orderItemId
+      ? await this.manualOrderItemDestinations(dto.orderItemId, repertoire, context)
+      : await this.momentOrderItemDestinations(repertoire, context);
+    const orderItem = destinations[0].orderItem;
     await this.eventArea(dto.receivingServiceAreaId, repertoire.event, context);
 
     const demand = await this.prisma.$transaction(async tx => {
       await tx.worshipOrderMaterial.createMany({
-        data: repertoire.songs.map(song => ({
+        data: destinations.map(({ song, orderItem: destination }) => ({
           type: WorshipMaterialType.MUSIC,
           titulo: this.songTitle(song),
           referencia: song.referencia,
-          itemId: orderItem.id,
+          itemId: destination.id,
         })),
       });
       const createdDemand = await tx.worshipServiceDemand.create({
@@ -219,8 +213,49 @@ export class WorshipRepertoireService {
       });
       return createdDemand;
     });
-    await this.notifyArea(dto.receivingServiceAreaId, repertoire, `Repertório aprovado: ${repertoire.event.titulo}`, `Prepare o repertório aprovado para o item "${orderItem.titulo}".`, context);
+    const destinationDescription = dto.orderItemId ? `o item "${orderItem.titulo}"` : 'as posições do modelo de músicas';
+    await this.notifyArea(dto.receivingServiceAreaId, repertoire, `Repertório aprovado: ${repertoire.event.titulo}`, `Prepare o repertório aprovado para ${destinationDescription}.`, context);
     return this.repertoire(id, context);
+  }
+
+  private async manualOrderItemDestinations(orderItemId: string, repertoire: any, context: OrganizationContext) {
+    const orderItem = await this.prisma.worshipOrderItem.findFirst({
+      where: {
+        id: orderItemId,
+        serviceAreaId: repertoire.serviceAreaId,
+        order: { eventId: repertoire.eventId, event: { organizationId: context.organizationId } },
+      },
+      include: { order: true },
+    });
+    if (!orderItem) throw new BadRequestException('Informe o item de louvor desta ordem de culto vinculado à área de Música');
+    if (orderItem.order.status !== WorshipOrderStatus.DRAFT) throw new BadRequestException('O repertório só pode ser encaminhado enquanto a ordem de culto estiver em rascunho');
+    return repertoire.songs.map(song => ({ song, orderItem }));
+  }
+
+  private async momentOrderItemDestinations(repertoire: any, context: OrganizationContext) {
+    const order = await this.prisma.worshipOrder.findFirst({
+      where: { eventId: repertoire.eventId, event: { organizationId: context.organizationId } },
+      include: { items: { select: { id: true, titulo: true, serviceAreaId: true } } },
+    });
+    if (!order) throw new BadRequestException('Crie a Ordem de Culto antes de encaminhar o repertório');
+    if (order.status !== WorshipOrderStatus.DRAFT) throw new BadRequestException('O repertório só pode ser encaminhado enquanto a ordem de culto estiver em rascunho');
+    const musicItems = order.items.filter(item => item.serviceAreaId === repertoire.serviceAreaId);
+    const destinations = repertoire.songs.map(song => {
+      const moment = song.observacoes?.trim();
+      const orderItem = moment ? musicItems.find(item => this.sameMoment(item.titulo, moment)) : undefined;
+      if (!orderItem) throw new BadRequestException(`A música "${song.titulo}" precisa informar um momento do modelo que exista na Ordem de Culto, ou ser encaminhada manualmente para um item.`);
+      return { song, orderItem };
+    });
+    if (!destinations.length) throw new BadRequestException('O repertório precisa conter ao menos uma música');
+    return destinations;
+  }
+
+  private sameMoment(first: string, second: string) {
+    return this.normalizeMoment(first) === this.normalizeMoment(second);
+  }
+
+  private normalizeMoment(value: string) {
+    return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().replace(/\s+/g, ' ').toLocaleLowerCase('pt-BR');
   }
 
   private async repertoire(id: string, context: OrganizationContext): Promise<any> {

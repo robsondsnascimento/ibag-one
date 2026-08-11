@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import type { FormEvent } from 'react'
+import { updateServiceMembershipFunctions } from './api/service-areas'
 import type { ServiceAreaDetail } from './api/service-areas'
 import { ServiceOperationalRolesPanel } from './ServiceOperationalRolesPanel'
 import { ServiceAreaSchedulePanel } from './ServiceAreaSchedulePanel'
@@ -59,6 +62,10 @@ export function ServiceAreaWorkspace({
   onAddMember: (area: ServiceAreaDetail) => void
   onOpenOnboarding: (area: ServiceAreaDetail) => void
 }) {
+  const [editingFunctions, setEditingFunctions] = useState<ServiceAreaDetail['memberships'][number] | null>(null)
+  const [isSavingFunctions, setIsSavingFunctions] = useState(false)
+  const [functionsError, setFunctionsError] = useState('')
+
   if (isLoading) {
     return <section className="service-area-page"><p className="service-area-feedback">Carregando a área de serviço...</p></section>
   }
@@ -75,6 +82,24 @@ export function ServiceAreaWorkspace({
   const campusLeaders = area.memberships.filter((membership) => membership.role === 'CAMPUS_LEADER')
   const teamLeaders = area.memberships.filter((membership) => membership.role === 'TEAM_LEADER')
   const teamMembers = area.memberships.filter((membership) => membership.role === 'MEMBER')
+
+  const saveFunctions = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!editingFunctions) return
+    const funcoes = String(new FormData(event.currentTarget).get('funcoes') ?? '').split(',').map((value) => value.trim()).filter(Boolean)
+    setFunctionsError('')
+    setIsSavingFunctions(true)
+    try {
+      await updateServiceMembershipFunctions(accessToken, editingFunctions.id, funcoes)
+      setEditingFunctions(null)
+      onRetry()
+      onNotice('Funções de serviço atualizadas.')
+    } catch (error) {
+      setFunctionsError(error instanceof Error ? error.message : 'Não foi possível atualizar as funções de serviço.')
+    } finally {
+      setIsSavingFunctions(false)
+    }
+  }
 
   return (
     <section className="service-area-page">
@@ -111,8 +136,10 @@ export function ServiceAreaWorkspace({
 
       <section className="service-area-panel service-area-panel--members">
         <header><div><p className="eyebrow">Integrantes</p><h2>Pessoas em serviço</h2></div><span>{teamMembers.length}</span></header>
-        {teamMembers.length ? <div className="service-membership-list">{teamMembers.map((membership) => <article className="service-membership-row" key={membership.id}><span className="service-person-symbol">{initials(membership.person.nome)}</span><div><strong>{membership.person.nome}</strong><small>{membership.team?.nome ?? 'Equipe não definida'} · desde {formatShortDate(membership.inicio)}</small></div><span>{membership.person.telefone || membership.person.email || 'Contato não informado'}</span></article>)}</div> : <p className="service-area-empty">Ainda não há integrantes ativos nas equipes desta área.</p>}
+        {teamMembers.length ? <div className="service-membership-list">{teamMembers.map((membership) => <article className="service-membership-row" key={membership.id}><span className="service-person-symbol">{initials(membership.person.nome)}</span><div><strong>{membership.person.nome}</strong><small>{membership.team?.nome ?? 'Equipe não definida'} · desde {formatShortDate(membership.inicio)}{membership.funcoes.length ? ` · ${membership.funcoes.join(', ')}` : ''}</small></div><span>{membership.person.telefone || membership.person.email || 'Contato não informado'}</span>{canManageMembers && membership.team && <button className="schedule-action" type="button" onClick={() => { setFunctionsError(''); setEditingFunctions(membership) }}>Funções</button>}</article>)}</div> : <p className="service-area-empty">Ainda não há integrantes ativos nas equipes desta área.</p>}
       </section>
+
+      {editingFunctions && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setEditingFunctions(null)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="service-member-functions-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setEditingFunctions(null)}>×</button><p className="eyebrow">{editingFunctions.team?.nome}</p><h2 id="service-member-functions-title">Funções de serviço</h2><p className="dialog-description">Cadastre as funções que {editingFunctions.person.nome} pode exercer. Elas serão usadas nas solicitações de troca.</p><form className="event-form" onSubmit={saveFunctions}><label>Funções<input name="funcoes" defaultValue={editingFunctions.funcoes.join(', ')} maxLength={500} placeholder="Ex.: Guitarra, Vocal" autoFocus /><small className="field-help">Separe as funções por vírgulas.</small></label>{functionsError && <p className="form-error" role="alert">{functionsError}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setEditingFunctions(null)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSavingFunctions}>{isSavingFunctions ? 'Salvando...' : 'Salvar funções'}</button></div></form></section></div>}
 
       <ServiceOperationalRolesPanel area={area} accessToken={accessToken} canManage={canManageMembers} onNotice={onNotice} />
       <ServiceAreaSchedulePanel key={area.id} area={area} accessToken={accessToken} currentPersonId={currentPersonId} canManage={canManageSchedules} onNotice={onNotice} />

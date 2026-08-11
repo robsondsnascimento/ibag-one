@@ -20,6 +20,8 @@ Cada ordem de culto pertence a um único evento do tipo `WORSHIP`. Ela estrutura
 - Itens, materiais, demandas, edições, exclusões e reordenações só são permitidos em `DRAFT`.
 - A reordenação deve receber todos os itens da ordem, com sequências únicas.
 - Ao excluir um item, seus materiais e demandas também são removidos.
+- Ao incluir um item com uma Área de Serviço, o sistema cria uma demanda pendente para ela e avisa sua liderança. Sem liderança cadastrada para aquele escopo, o aviso é enviado aos integrantes ativos da área.
+- Ao direcionar um item para outra Área de Serviço, a liderança da nova área é avisada; ao remover um item ligado a uma área, a liderança recebe o aviso para desconsiderar os preparativos e as demandas relacionadas são removidas.
 - Depois de publicada, a ordem não recebe alterações; demandas pendentes ainda podem ser concluídas ou canceladas.
 - A área indicada em item ou demanda deve estar ativa, disponível no campus e vinculada ao evento de culto.
 - O responsável de uma demanda deve ser uma pessoa ativa com vínculo ativo na área indicada.
@@ -116,6 +118,8 @@ POST /worship-orders/items/:id/demands
 ## Notificações
 
 - Ao criar uma demanda, todos os integrantes ativos da área de serviço indicada recebem uma notificação interna.
+- A solicitação automática criada ao incluir um item com área é encaminhada primeiro à liderança compatível com o campus do culto: líder geral, líder de campus ou líder de equipe. Se não houver liderança no escopo, o sistema usa os integrantes ativos da área como contingência.
+- A alteração de área e a remoção de um item também comunicam a liderança responsável.
 - Ao publicar a ordem, os integrantes das áreas vinculadas ao culto recebem uma notificação interna.
 - Demandas concluídas ou canceladas preservam o status para acompanhamento da liderança.
 

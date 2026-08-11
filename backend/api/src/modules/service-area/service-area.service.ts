@@ -1,5 +1,5 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { NotificationAudience, ServiceMembershipRole, ServiceScheduleHistoryAction, ServiceScheduleStatus } from '../../generated/prisma/client';
+import { NotificationAudience, ServiceMembershipRole, ServiceScheduleHistoryAction, ServiceScheduleStatus, ServiceScheduleSwapRequestStatus } from '../../generated/prisma/client';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 import { AddServiceMemberDto } from './dto/add-service-member.dto';
@@ -8,7 +8,10 @@ import { CreateServiceAreaDto } from './dto/create-service-area.dto';
 import { CreateServiceScheduleBatchDto } from './dto/create-service-schedule-batch.dto';
 import { CreateServiceScheduleDto } from './dto/create-service-schedule.dto';
 import { CreateServiceTeamDto } from './dto/create-service-team.dto';
+import { CreateServiceScheduleSwapRequestDto } from './dto/create-service-schedule-swap-request.dto';
+import { RejectServiceScheduleSwapRequestDto } from './dto/reject-service-schedule-swap-request.dto';
 import { SubstituteServiceScheduleDto } from './dto/substitute-service-schedule.dto';
+import { UpdateServiceMemberFunctionsDto } from './dto/update-service-member-functions.dto';
 import { UpdateServiceScheduleStatusDto } from './dto/update-service-schedule-status.dto';
 import { userRoleWhere } from '../../common/access/user-role.util';
 
@@ -60,7 +63,7 @@ export class ServiceAreaService {
     if (!person) throw new NotFoundException('Pessoa ativa não encontrada na organização atual');
     const exists = await this.prisma.serviceMembership.findFirst({ where: { personId: dto.personId, serviceAreaId: area.id, role: dto.role, teamId: placement.teamId, campusId: placement.campusId, ativo: true } });
     if (exists) throw new BadRequestException('A pessoa já possui este vínculo ativo na área de serviço');
-    return this.prisma.serviceMembership.create({ data: { personId: dto.personId, serviceAreaId: area.id, role: dto.role, ...placement, inicio: new Date(), ativo: true }, include: { person: true, serviceArea: true, team: true, campus: true } });
+    return this.prisma.serviceMembership.create({ data: { personId: dto.personId, serviceAreaId: area.id, role: dto.role, funcoes: this.normalizeFunctions(dto.funcoes), ...placement, inicio: new Date(), ativo: true }, include: { person: true, serviceArea: true, team: true, campus: true } });
   }
 
   async endMembership(id: string, context: OrganizationContext) {
@@ -68,6 +71,18 @@ export class ServiceAreaService {
     if (!membership) throw new NotFoundException('Vínculo ativo não encontrado na organização atual');
     await this.assertAreaManagement(membership.serviceAreaId, context, membership.teamId ?? undefined, membership.campusId ?? undefined, membership.role);
     return this.prisma.serviceMembership.update({ where: { id }, data: { ativo: false, fim: new Date() } });
+  }
+
+  async updateMembershipFunctions(id: string, dto: UpdateServiceMemberFunctionsDto, context: OrganizationContext) {
+    const membership = await this.prisma.serviceMembership.findFirst({ where: { id, ativo: true, serviceArea: { organizationId: context.organizationId } } });
+    if (!membership) throw new NotFoundException('Vínculo ativo não encontrado na organização atual');
+    if (!membership.teamId) throw new BadRequestException('Funções de serviço só podem ser definidas para integrantes de uma equipe');
+    await this.assertAreaManagement(membership.serviceAreaId, context, membership.teamId, membership.campusId ?? undefined, membership.role);
+    return this.prisma.serviceMembership.update({
+      where: { id },
+      data: { funcoes: this.normalizeFunctions(dto.funcoes) },
+      include: { person: true, serviceArea: true, team: true, campus: true },
+    });
   }
 
   async assignOperationalRole(teamId: string, dto: AssignServiceOperationalRoleDto, context: OrganizationContext) {
@@ -186,6 +201,124 @@ export class ServiceAreaService {
     });
   }
 
+  async findScheduleSwapCandidates(id: string, context: OrganizationContext) {
+    const schedule = await this.prisma.serviceSchedule.findFirst({ where: { id, organizationId: context.organizationId }, include: this.scheduleDetails });
+    if (!schedule) throw new NotFoundException('Escala não encontrada na organização atual');
+    if (schedule.personId !== context.personId) throw new ForbiddenException('Somente a pessoa escalada pode consultar candidatos para a troca');
+    this.assertSwapRequestable(schedule);
+    const memberships = await this.prisma.serviceMembership.findMany({
+      where: { teamId: schedule.teamId, ativo: true, personId: { not: schedule.personId }, person: { ativo: true } },
+      include: { person: { select: { id: true, nome: true, telefone: true, email: true } } },
+      orderBy: { person: { nome: 'asc' } },
+    });
+    const candidates = new Map<string, { id: string; nome: string; telefone: string | null; email: string | null }>();
+    for (const membership of memberships) {
+      if (!this.memberSupportsFunction(membership.funcoes, schedule.funcao)) continue;
+      try {
+        await this.assertNoTeamScheduleDuplicate(schedule.teamId, membership.personId, schedule.data, context, schedule.id);
+        await this.assertNoScheduleConflict(membership.personId, schedule.data, schedule.event, context, schedule.id);
+        candidates.set(membership.personId, membership.person);
+      } catch (error) {
+        if (!(error instanceof BadRequestException)) throw error;
+      }
+    }
+    return [...candidates.values()];
+  }
+
+  async createScheduleSwapRequest(id: string, dto: CreateServiceScheduleSwapRequestDto, context: OrganizationContext) {
+    const schedule = await this.prisma.serviceSchedule.findFirst({ where: { id, organizationId: context.organizationId }, include: this.scheduleDetails });
+    if (!schedule) throw new NotFoundException('Escala não encontrada na organização atual');
+    if (schedule.personId !== context.personId) throw new ForbiddenException('Somente a pessoa escalada pode solicitar uma troca');
+    this.assertSwapRequestable(schedule);
+    if (dto.replacementPersonId === schedule.personId) throw new BadRequestException('A pessoa indicada para a troca deve ser diferente da pessoa escalada');
+    const replacementMembership = await this.assertActiveTeamMember(dto.replacementPersonId, schedule.teamId);
+    this.assertMemberCanServeFunction(replacementMembership.funcoes, schedule.funcao);
+    await this.assertNoTeamScheduleDuplicate(schedule.teamId, dto.replacementPersonId, schedule.data, context, schedule.id);
+    await this.assertNoScheduleConflict(dto.replacementPersonId, schedule.data, schedule.event, context, schedule.id);
+    const pending = await this.prisma.serviceScheduleSwapRequest.findFirst({ where: { scheduleId: schedule.id, status: ServiceScheduleSwapRequestStatus.PENDING } });
+    if (pending) throw new BadRequestException('Já existe uma solicitação de troca pendente para esta escala');
+    const request = await this.prisma.serviceScheduleSwapRequest.create({
+      data: {
+        organizationId: context.organizationId,
+        teamId: schedule.teamId,
+        scheduleId: schedule.id,
+        requesterPersonId: schedule.personId,
+        replacementPersonId: dto.replacementPersonId,
+        reason: dto.reason,
+      },
+      include: this.swapRequestDetails,
+    });
+    await this.notifySwapRequest(request, context);
+    return request;
+  }
+
+  async findTeamScheduleSwapRequests(teamId: string, context: OrganizationContext) {
+    const team = await this.team(teamId, context);
+    await this.assertAreaManagement(team.serviceAreaId, context, team.id, team.campusId);
+    return this.prisma.serviceScheduleSwapRequest.findMany({
+      where: { organizationId: context.organizationId, teamId: team.id, status: ServiceScheduleSwapRequestStatus.PENDING },
+      include: this.swapRequestDetails,
+      orderBy: { createdAt: 'asc' },
+    });
+  }
+
+  async approveScheduleSwapRequest(id: string, context: OrganizationContext) {
+    const request = await this.prisma.serviceScheduleSwapRequest.findFirst({ where: { id, organizationId: context.organizationId }, include: this.swapRequestDetails });
+    if (!request) throw new NotFoundException('Solicitação de troca não encontrada na organização atual');
+    if (request.status !== ServiceScheduleSwapRequestStatus.PENDING) throw new BadRequestException('Esta solicitação de troca já foi decidida');
+    await this.assertAreaManagement(request.schedule.team.serviceAreaId, context, request.teamId, request.schedule.team.campusId);
+    if (request.schedule.personId !== request.requesterPersonId) throw new BadRequestException('A escala já foi alterada e esta solicitação não pode mais ser aprovada');
+    this.assertSwapRequestable(request.schedule);
+    const replacementMembership = await this.assertActiveTeamMember(request.replacementPersonId, request.teamId);
+    this.assertMemberCanServeFunction(replacementMembership.funcoes, request.schedule.funcao);
+    await this.assertNoTeamScheduleDuplicate(request.teamId, request.replacementPersonId, request.schedule.data, context, request.schedule.id);
+    await this.assertNoScheduleConflict(request.replacementPersonId, request.schedule.data, request.schedule.event, context, request.schedule.id);
+    const [updatedSchedule, resolvedRequest] = await this.prisma.$transaction([
+      this.prisma.serviceSchedule.update({
+        where: { id: request.scheduleId },
+        data: {
+          personId: request.replacementPersonId,
+          status: ServiceScheduleStatus.SCHEDULED,
+          history: {
+            create: {
+              action: ServiceScheduleHistoryAction.SUBSTITUTED,
+              previousStatus: request.schedule.status,
+              newStatus: ServiceScheduleStatus.SCHEDULED,
+              previousPersonId: request.requesterPersonId,
+              replacementPersonId: request.replacementPersonId,
+              previousPersonName: request.schedule.person.nome,
+              replacementPersonName: replacementMembership.person.nome,
+              reason: request.reason,
+              changedByUserId: context.userId,
+            },
+          },
+        },
+        include: this.scheduleDetails,
+      }),
+      this.prisma.serviceScheduleSwapRequest.update({
+        where: { id: request.id },
+        data: { status: ServiceScheduleSwapRequestStatus.APPROVED, decidedAt: new Date(), decidedByUserId: context.userId },
+        include: this.swapRequestDetails,
+      }),
+    ]);
+    await this.notifyScheduleSubstitution(updatedSchedule, request.schedule.person, context);
+    return resolvedRequest;
+  }
+
+  async rejectScheduleSwapRequest(id: string, dto: RejectServiceScheduleSwapRequestDto, context: OrganizationContext) {
+    const request = await this.prisma.serviceScheduleSwapRequest.findFirst({ where: { id, organizationId: context.organizationId }, include: this.swapRequestDetails });
+    if (!request) throw new NotFoundException('Solicitação de troca não encontrada na organização atual');
+    if (request.status !== ServiceScheduleSwapRequestStatus.PENDING) throw new BadRequestException('Esta solicitação de troca já foi decidida');
+    await this.assertAreaManagement(request.schedule.team.serviceAreaId, context, request.teamId, request.schedule.team.campusId);
+    const resolved = await this.prisma.serviceScheduleSwapRequest.update({
+      where: { id: request.id },
+      data: { status: ServiceScheduleSwapRequestStatus.REJECTED, decisionReason: dto.reason, decidedAt: new Date(), decidedByUserId: context.userId },
+      include: this.swapRequestDetails,
+    });
+    await this.notifyPeople(request.schedule, [request.requesterPersonId], 'Solicitação de troca recusada', `A liderança não aprovou sua solicitação de troca para a escala de ${request.schedule.funcao} ${this.scheduleReference(request.schedule)}.${dto.reason ? ` Motivo: ${dto.reason}` : ''}`, context);
+    return resolved;
+  }
+
   async findScheduleHistory(id: string, context: OrganizationContext) {
     const schedule = await this.prisma.serviceSchedule.findFirst({ where: { id, organizationId: context.organizationId }, include: { team: true } });
     if (!schedule) throw new NotFoundException('Escala não encontrada na organização atual');
@@ -290,6 +423,28 @@ export class ServiceAreaService {
     return member;
   }
 
+  private assertSwapRequestable(schedule: { status: ServiceScheduleStatus; data: Date }) {
+    if (schedule.status === ServiceScheduleStatus.COMPLETED || schedule.status === ServiceScheduleStatus.DECLINED) throw new BadRequestException('Esta escala não pode receber uma solicitação de troca');
+    if (schedule.data <= new Date()) throw new BadRequestException('A solicitação de troca deve ser feita antes do horário da escala');
+  }
+
+  private assertMemberCanServeFunction(functions: string[], scheduleFunction: string) {
+    if (!this.memberSupportsFunction(functions, scheduleFunction)) throw new BadRequestException(`A pessoa indicada não possui a função ${scheduleFunction} cadastrada nesta equipe`);
+  }
+
+  private memberSupportsFunction(functions: string[], scheduleFunction: string) {
+    const normalizedScheduleFunction = this.normalizeFunction(scheduleFunction);
+    return functions.some(value => this.normalizeFunction(value) === normalizedScheduleFunction);
+  }
+
+  private normalizeFunctions(functions: string[] | undefined) {
+    return [...new Map((functions ?? []).map(value => value.trim()).filter(Boolean).map(value => [this.normalizeFunction(value), value])).values()];
+  }
+
+  private normalizeFunction(value: string) {
+    return value.trim().replace(/\s+/g, ' ').toLocaleLowerCase('pt-BR');
+  }
+
   private async eventForTeam(eventId: string, teamId: string, context: OrganizationContext) {
     const event = await this.prisma.event.findFirst({ where: { id: eventId, organizationId: context.organizationId, status: 'APPROVED', teams: { some: { teamId } } }, select: { id: true, inicio: true, fim: true } });
     if (!event) throw new BadRequestException('O evento precisa estar aprovado e envolver esta equipe');
@@ -357,7 +512,17 @@ export class ServiceAreaService {
   }
 
   private async notifyScheduleDecline(schedule: any, context: OrganizationContext) {
-    const leaders = await this.prisma.serviceMembership.findMany({
+    const leaders = await this.scheduleLeaders(schedule);
+    await this.notifyPeople(schedule, leaders.map(leader => leader.personId).filter(personId => personId !== schedule.personId), 'Escala recusada', `${schedule.person.nome} recusou a escala de ${schedule.funcao} ${this.scheduleReference(schedule)}.`, context);
+  }
+
+  private async notifySwapRequest(request: any, context: OrganizationContext) {
+    const leaders = await this.scheduleLeaders(request.schedule);
+    await this.notifyPeople(request.schedule, leaders.map(leader => leader.personId).filter(personId => personId !== request.requesterPersonId), 'Solicitação de troca de escala', `${request.requesterPerson.nome} indicou ${request.replacementPerson.nome} para a escala de ${request.schedule.funcao} ${this.scheduleReference(request.schedule)}.`, context);
+  }
+
+  private scheduleLeaders(schedule: any) {
+    return this.prisma.serviceMembership.findMany({
       where: {
         serviceAreaId: schedule.team.serviceAreaId,
         ativo: true,
@@ -369,7 +534,6 @@ export class ServiceAreaService {
       },
       select: { personId: true },
     });
-    await this.notifyPeople(schedule, leaders.map(leader => leader.personId).filter(personId => personId !== schedule.personId), 'Escala recusada', `${schedule.person.nome} recusou a escala de ${schedule.funcao} ${this.scheduleReference(schedule)}.`, context);
   }
 
   private async notifyScheduleSubstitution(schedule: any, previousPerson: { id: string; nome: string }, context: OrganizationContext) {
@@ -474,5 +638,18 @@ export class ServiceAreaService {
     person: true,
     team: { include: { serviceArea: true, campus: true } },
     event: true,
+  } as const;
+
+  private readonly swapRequestDetails = {
+    requesterPerson: true,
+    replacementPerson: true,
+    decidedByUser: { select: { id: true, loginEmail: true } },
+    schedule: {
+      include: {
+        person: true,
+        team: { include: { serviceArea: true, campus: true } },
+        event: true,
+      },
+    },
   } as const;
 }

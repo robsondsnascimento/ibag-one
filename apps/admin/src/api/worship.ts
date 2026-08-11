@@ -161,3 +161,15 @@ export function sendWorshipOrderAlert(accessToken: string, orderId: string, inpu
 export function downloadWorshipOrderPdf(accessToken: string, orderId: string) {
   return apiDownload(`/worship-orders/${orderId}/pdf`, accessToken)
 }
+
+export function createWorshipOrderTemplate(accessToken: string, input: { nome: string; padrao?: boolean; items: Array<{ sequencia: number; titulo: string; horario?: string; serviceAreaId?: string }> }) {
+  return apiRequest<WorshipOrderTemplate>('/worship-order-templates', { method: 'POST', accessToken, headers: { 'content-type': 'application/json' }, body: JSON.stringify(input) })
+}
+
+export function updateWorshipOrderTemplate(accessToken: string, templateId: string, input: { nome?: string; ativo?: boolean; padrao?: boolean }) {
+  return apiRequest<WorshipOrderTemplate>(`/worship-order-templates/${templateId}`, { method: 'PATCH', accessToken, headers: { 'content-type': 'application/json' }, body: JSON.stringify(input) })
+}
+
+export function addWorshipOrderTemplateItem(accessToken: string, templateId: string, input: { sequencia: number; titulo: string; horario?: string }) {
+  return apiRequest<WorshipOrderTemplate['items'][number]>(`/worship-order-templates/${templateId}/items`, { method: 'POST', accessToken, headers: { 'content-type': 'application/json' }, body: JSON.stringify(input) })
+}

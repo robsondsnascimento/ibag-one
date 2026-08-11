@@ -129,6 +129,15 @@ export const ServiceScheduleHistoryAction = {
 export type ServiceScheduleHistoryAction = (typeof ServiceScheduleHistoryAction)[keyof typeof ServiceScheduleHistoryAction]
 
 
+export const ServiceScheduleSwapRequestStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type ServiceScheduleSwapRequestStatus = (typeof ServiceScheduleSwapRequestStatus)[keyof typeof ServiceScheduleSwapRequestStatus]
+
+
 export const ServiceAreaApplicationStatus = {
   INTERESTED: 'INTERESTED',
   IN_PROGRESS: 'IN_PROGRESS',

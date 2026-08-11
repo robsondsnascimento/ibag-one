@@ -1,8 +1,9 @@
 import { IsDateString, IsOptional, IsUUID } from 'class-validator';
 
 export class SendRepertoireToWorshipOrderDto {
+  @IsOptional()
   @IsUUID()
-  orderItemId: string;
+  orderItemId?: string;
 
   @IsUUID()
   receivingServiceAreaId: string;
