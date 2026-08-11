@@ -205,3 +205,89 @@ export function withdrawServiceAreaApplication(accessToken: string, applicationI
     body: JSON.stringify(motivo ? { motivo } : {}),
   })
 }
+
+export type ServiceScheduleStatus = 'SCHEDULED' | 'CONFIRMED' | 'DECLINED' | 'COMPLETED'
+
+export type ServiceAreaSchedule = {
+  id: string
+  data: string
+  funcao: string
+  observacao: string | null
+  status: ServiceScheduleStatus
+  person: {
+    id: string
+    nome: string
+    telefone: string | null
+    email: string | null
+  }
+  team: {
+    id: string
+    nome: string
+    campus: {
+      id: string
+      nome: string
+    }
+  }
+  event: {
+    id: string
+    titulo: string
+    inicio: string
+    fim: string
+  } | null
+}
+
+export type ServiceScheduleHistory = {
+  id: string
+  action: 'CREATED' | 'STATUS_CHANGED' | 'SUBSTITUTED'
+  previousStatus: ServiceScheduleStatus | null
+  newStatus: ServiceScheduleStatus | null
+  previousPersonName: string | null
+  replacementPersonName: string | null
+  reason: string | null
+  createdAt: string
+  changedByUser: {
+    id: string
+    loginEmail: string
+  }
+}
+
+export function listServiceAreaSchedules(accessToken: string, areaId: string, filters: { start?: string; end?: string; teamId?: string; status?: ServiceScheduleStatus }) {
+  const search = new URLSearchParams()
+  if (filters.start) search.set('start', filters.start)
+  if (filters.end) search.set('end', filters.end)
+  if (filters.teamId) search.set('teamId', filters.teamId)
+  if (filters.status) search.set('status', filters.status)
+  const suffix = search.size ? `?${search.toString()}` : ''
+  return apiRequest<ServiceAreaSchedule[]>(`/service-areas/${areaId}/schedules${suffix}`, { accessToken })
+}
+
+export function createServiceSchedule(accessToken: string, teamId: string, input: { personId: string; data: string; funcao: string; observacao?: string }) {
+  return apiRequest<ServiceAreaSchedule>(`/service-areas/teams/${teamId}/schedules`, {
+    method: 'POST',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export function updateServiceScheduleStatus(accessToken: string, scheduleId: string, input: { status: ServiceScheduleStatus; reason?: string }) {
+  return apiRequest<ServiceAreaSchedule>(`/service-areas/schedules/${scheduleId}/status`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export function substituteServiceSchedule(accessToken: string, scheduleId: string, input: { personId: string; reason?: string }) {
+  return apiRequest<ServiceAreaSchedule>(`/service-areas/schedules/${scheduleId}/substitute`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export function listServiceScheduleHistory(accessToken: string, scheduleId: string) {
+  return apiRequest<ServiceScheduleHistory[]>(`/service-areas/schedules/${scheduleId}/history`, { accessToken })
+}

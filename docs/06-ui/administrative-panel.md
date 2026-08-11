@@ -30,3 +30,17 @@ Na visão de uma área, lideranças autorizadas acessam **Entrada e formação**
 - aprovar a pessoa para uma equipe após cumprir as etapas obrigatórias.
 
 A aprovação cria a membresia de integrante na equipe em uma única operação. Processos aprovados, recusados ou encerrados por desistência continuam visíveis como histórico. A liderança geral também pode editar, ativar/desativar e reorganizar as etapas ativas; uma etapa desativada deixa de ser exigida nos novos acompanhamentos. As escalas continuam em seu fluxo próprio.
+
+## Escalas por área e equipe
+
+Cada Área de Serviço exibe sua visão consolidada de escalas, sempre filtrada pelo escopo que a API autoriza à pessoa conectada. O painel permite:
+
+- consultar escalas por período, equipe e status;
+- criar uma escala individual para uma pessoa com vínculo ativo na equipe;
+- visualizar a função, a pessoa, a equipe, o evento relacionado quando existir e observações;
+- confirmar ou recusar a própria escala, com motivo opcional na recusa;
+- concluir ou reabrir uma escala pela liderança autorizada;
+- substituir a pessoa escalada por outra integrante da mesma equipe, preservando a solicitação de nova confirmação;
+- consultar o histórico auditável de criação, respostas e substituições.
+
+O painel não replica regras de agenda: conflitos, permissões, escopo da equipe e notificações são validados exclusivamente pela API. O vínculo com evento é exibido quando a escala já o possui; a criação inicial no painel atende escalas independentes da agenda.

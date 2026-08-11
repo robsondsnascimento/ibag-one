@@ -1,4 +1,5 @@
 import type { ServiceAreaDetail } from './api/service-areas'
+import { ServiceAreaSchedulePanel } from './ServiceAreaSchedulePanel'
 
 const membershipRoleLabels: Record<ServiceAreaDetail['memberships'][number]['role'], string> = {
   GENERAL_LEADER: 'Liderança geral',
@@ -34,6 +35,10 @@ export function ServiceAreaWorkspace({
   canCreateTeam,
   canManageMembers,
   canManageOnboarding,
+  canManageSchedules,
+  accessToken,
+  currentPersonId,
+  onNotice,
   onCreateTeam,
   onAddMember,
   onOpenOnboarding,
@@ -45,6 +50,10 @@ export function ServiceAreaWorkspace({
   canCreateTeam: boolean
   canManageMembers: boolean
   canManageOnboarding: boolean
+  canManageSchedules: boolean
+  accessToken: string
+  currentPersonId: string
+  onNotice: (message: string) => void
   onCreateTeam: (area: ServiceAreaDetail) => void
   onAddMember: (area: ServiceAreaDetail) => void
   onOpenOnboarding: (area: ServiceAreaDetail) => void
@@ -103,6 +112,8 @@ export function ServiceAreaWorkspace({
         <header><div><p className="eyebrow">Integrantes</p><h2>Pessoas em serviço</h2></div><span>{teamMembers.length}</span></header>
         {teamMembers.length ? <div className="service-membership-list">{teamMembers.map((membership) => <article className="service-membership-row" key={membership.id}><span className="service-person-symbol">{initials(membership.person.nome)}</span><div><strong>{membership.person.nome}</strong><small>{membership.team?.nome ?? 'Equipe não definida'} · desde {formatShortDate(membership.inicio)}</small></div><span>{membership.person.telefone || membership.person.email || 'Contato não informado'}</span></article>)}</div> : <p className="service-area-empty">Ainda não há integrantes ativos nas equipes desta área.</p>}
       </section>
+
+      <ServiceAreaSchedulePanel key={area.id} area={area} accessToken={accessToken} currentPersonId={currentPersonId} canManage={canManageSchedules} onNotice={onNotice} />
     </section>
   )
 }
