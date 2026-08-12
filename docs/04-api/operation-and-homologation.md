@@ -25,6 +25,21 @@ O limite de requisições é local ao processo. Antes de executar múltiplas ins
 
 Use `backend/api/.env.example` como referência. `JWT_SECRET` é obrigatório e precisa ter ao menos 32 caracteres. Nunca versionar o arquivo `.env` nem tokens de integração.
 
+## Publicação da API
+
+O repositório possui `render.yaml` para publicar a API no Render com PostgreSQL gerenciado, HTTPS, migrações automáticas e disco persistente para anexos de estudos.
+
+1. Criar uma conta institucional no Render e conectá-la ao repositório `robsondsnascimento/ibag-one`.
+2. Criar um novo **Blueprint** a partir do repositório. O arquivo cria `ibag-one-api` e `ibag-one-postgres` na região Virgínia.
+3. Quando solicitado, informar `CORS_ORIGINS` com os endereços HTTPS do painel administrativo. Para o aplicativo Android/iPhone, CORS não é necessário.
+4. Aguardar a aplicação das migrations e validar `GET /health/ready` na URL HTTPS gerada.
+5. Restaurar o backup do banco local no PostgreSQL externo antes de liberar a operação real. O banco criado pelo Blueprint inicia vazio.
+6. Configurar essa URL HTTPS em `EXPO_PUBLIC_API_URL` do aplicativo e gerar um novo APK.
+
+O `JWT_SECRET` é gerado pelo Render e a conexão interna ao banco é configurada sem gravar credenciais no repositório. O banco bloqueia conexões públicas; restaurações e manutenção devem usar acesso controlado pelo painel do provedor.
+
+Os anexos de estudos ficam em `/var/data/studies`, fornecido por um disco persistente. Sem esse disco, arquivos enviados seriam perdidos em reinícios ou publicações.
+
 ## Paginação
 
 As listagens de pessoas e células aceitam `page` e `limit` (máximo 100), por exemplo: `GET /persons?page=2&limit=20`.

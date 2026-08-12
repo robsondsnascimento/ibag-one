@@ -12,6 +12,7 @@ generated/
 .env
 .env.*
 !apps/admin/.env.example
+!backend/api/.env.example
 
 # IDE
 .vscode/
@@ -21,3 +22,6 @@ tools/
 
 # Logs
 *.log
+
+# Anexos locais enviados para estudos de células
+backend/api/uploads/
