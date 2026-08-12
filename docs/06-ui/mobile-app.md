@@ -2,13 +2,14 @@
 
 ## Objetivo
 
-O aplicativo IBAG One é a experiência pessoal para Android e iPhone. Ele complementa o painel administrativo web, sem replicar operações sensíveis de cadastro e gestão.
+O aplicativo IBAG One é a experiência pessoal para Android e iPhone. Ele utiliza Expo SDK 57 e complementa o painel administrativo web, sem replicar operações sensíveis de cadastro e gestão.
 
 ## Primeira versão
 
 - Login institucional por usuário e senha.
 - Sessão opcionalmente persistida no armazenamento seguro do aparelho.
 - Início com resumo de escalas, eventos e estudo da célula.
+- Anexo do estudo aberto de forma autenticada no Android e iPhone, sem tornar o arquivo público.
 - Minha célula, com dia, horário e campus.
 - Minhas escalas, incluindo confirmação ou recusa da própria participação.
 - Agenda institucional com eventos aprovados dos campi vinculados à pessoa.
@@ -29,6 +30,8 @@ Rotas administrativas como `GET /cells` e `GET /events` mantêm as permissões d
 O app está em `apps/mobile` e utiliza Expo. A URL da API é configurada por `EXPO_PUBLIC_API_URL` em um arquivo `.env` local, usando como base `.env.example`.
 
 Em aparelho físico, `localhost` e `127.0.0.1` representam o próprio celular. Por isso, em desenvolvimento deve-se informar o IP da máquina na mesma rede ou uma URL HTTPS de homologação. A API precisa manter CORS habilitado para esse endereço.
+
+O aplicativo possui perfis EAS em `apps/mobile/eas.json`: `development` para desenvolvimento, `preview` para distribuição interna e `production` para as lojas. A URL da API de homologação ou produção deve ser configurada no ambiente de build, nunca gravada em código-fonte.
 
 ## Próximas evoluções sugeridas
 

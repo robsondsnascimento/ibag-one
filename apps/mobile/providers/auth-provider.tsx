@@ -1,8 +1,32 @@
 import * as SecureStore from 'expo-secure-store';
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { Platform } from 'react-native';
 import { login, AuthSession, validateSession } from '@/lib/api';
 
 const sessionKey = 'ibag-one.session';
+
+async function getStoredSession() {
+  if (Platform.OS === 'web') {
+    return typeof window === 'undefined' ? null : window.localStorage.getItem(sessionKey);
+  }
+  return SecureStore.getItemAsync(sessionKey);
+}
+
+async function storeSession(value: string) {
+  if (Platform.OS === 'web') {
+    if (typeof window !== 'undefined') window.localStorage.setItem(sessionKey, value);
+    return;
+  }
+  await SecureStore.setItemAsync(sessionKey, value);
+}
+
+async function removeStoredSession() {
+  if (Platform.OS === 'web') {
+    if (typeof window !== 'undefined') window.localStorage.removeItem(sessionKey);
+    return;
+  }
+  await SecureStore.deleteItemAsync(sessionKey);
+}
 
 type AuthContextValue = {
   session: AuthSession | null;
@@ -19,14 +43,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let active = true;
-    void SecureStore.getItemAsync(sessionKey)
+    void getStoredSession()
       .then(async (stored) => {
         if (!stored) return;
         const saved = JSON.parse(stored) as AuthSession;
         await validateSession(saved.access_token);
         if (active) setSession(saved);
       })
-      .catch(() => SecureStore.deleteItemAsync(sessionKey))
+      .catch(() => removeStoredSession())
       .finally(() => { if (active) setIsRestoring(false); });
     return () => { active = false; };
   }, []);
@@ -37,12 +61,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async signIn(username, password, remember) {
       const nextSession = await login(username, password);
       setSession(nextSession);
-      if (remember) await SecureStore.setItemAsync(sessionKey, JSON.stringify(nextSession));
-      else await SecureStore.deleteItemAsync(sessionKey);
+      if (remember) await storeSession(JSON.stringify(nextSession));
+      else await removeStoredSession();
     },
     async signOut() {
       setSession(null);
-      await SecureStore.deleteItemAsync(sessionKey);
+      await removeStoredSession();
     },
   }), [isRestoring, session]);
 

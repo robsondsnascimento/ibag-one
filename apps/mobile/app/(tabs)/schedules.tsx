@@ -18,17 +18,27 @@ export default function SchedulesScreen() {
   const [savingId, setSavingId] = useState('');
   const refresh = useCallback(async () => {
     if (!session) return;
-    setIsLoading(true);
     try { setSchedules(await listMySchedules(session.access_token)); setError(''); } catch (reason) { setError(reason instanceof Error ? reason.message : 'Não foi possível carregar suas escalas.'); } finally { setIsLoading(false); }
   }, [session]);
-  useEffect(() => { void refresh(); }, [refresh]);
+  useEffect(() => { const timer = setTimeout(() => { void refresh(); }, 0); return () => clearTimeout(timer); }, [refresh]);
   const updateStatus = async (schedule: ServiceSchedule, status: 'CONFIRMED' | 'DECLINED') => {
     if (!session) return;
     setSavingId(schedule.id);
     try { const updated = await updateMyScheduleStatus(session.access_token, schedule.id, status); setSchedules((current) => current.map((item) => item.id === updated.id ? updated : item)); } catch (reason) { Alert.alert('Não foi possível atualizar', reason instanceof Error ? reason.message : 'Tente novamente.'); } finally { setSavingId(''); }
   };
+  const requestStatusUpdate = (schedule: ServiceSchedule, status: 'CONFIRMED' | 'DECLINED') => {
+    const confirming = status === 'CONFIRMED';
+    Alert.alert(
+      confirming ? 'Confirmar presença?' : 'Recusar esta escala?',
+      confirming ? 'Sua equipe será avisada de que você confirmou a participação.' : 'Sua liderança será avisada de que você não poderá servir nesta escala.',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: confirming ? 'Confirmar' : 'Recusar', style: confirming ? 'default' : 'destructive', onPress: () => void updateStatus(schedule, status) },
+      ],
+    );
+  };
   const upcoming = schedules.filter((schedule) => new Date(schedule.data) >= new Date());
-  return <Page refreshControl={<RefreshControl refreshing={isLoading} onRefresh={() => void refresh()} tintColor={palette.navy} />}><PageHeader eyebrow="MINHA AGENDA DE SERVIÇO" title="Minhas escalas" subtitle="Confirme sua disponibilidade ou avise sua liderança." />{isLoading ? <ActivityIndicator color={palette.navy} style={styles.loading} /> : error ? <Notice tone="warning" icon="alert-circle-outline" text={error} /> : upcoming.length ? upcoming.map((schedule) => <Card key={schedule.id} style={styles.card}><View style={styles.header}><View style={styles.icon}><Ionicons name="musical-notes-outline" color={palette.blue} size={19} /></View><StatusPill value={schedule.status} /></View><Text style={styles.title}>{schedule.funcao}</Text><Text style={styles.area}>{schedule.team.serviceArea.nome} · {schedule.team.nome}</Text><Text style={styles.date}>{formatDate(schedule.data)}</Text>{schedule.event ? <Text style={styles.event}>{schedule.event.titulo}</Text> : null}{schedule.observacao ? <Text style={styles.note}>{schedule.observacao}</Text> : null}{schedule.status === 'SCHEDULED' ? <View style={styles.actions}><Pressable disabled={savingId === schedule.id} style={styles.secondary} onPress={() => void updateStatus(schedule, 'DECLINED')}><Text style={styles.secondaryText}>Não posso servir</Text></Pressable><Pressable disabled={savingId === schedule.id} style={styles.primary} onPress={() => void updateStatus(schedule, 'CONFIRMED')}>{savingId === schedule.id ? <ActivityIndicator color="#fff" /> : <Text style={styles.primaryText}>Confirmar</Text>}</Pressable></View> : null}</Card>) : <Notice tone="info" icon="calendar-outline" text="Você não possui escalas futuras." />}</Page>;
+  return <Page refreshControl={<RefreshControl refreshing={isLoading} onRefresh={() => { setIsLoading(true); void refresh(); }} tintColor={palette.navy} />}><PageHeader eyebrow="MINHA AGENDA DE SERVIÇO" title="Minhas escalas" subtitle="Confirme sua disponibilidade ou avise sua liderança." />{isLoading ? <ActivityIndicator color={palette.navy} style={styles.loading} /> : error ? <Notice tone="warning" icon="alert-circle-outline" text={error} /> : upcoming.length ? upcoming.map((schedule) => <Card key={schedule.id} style={styles.card}><View style={styles.header}><View style={styles.icon}><Ionicons name="musical-notes-outline" color={palette.blue} size={19} /></View><StatusPill value={schedule.status} /></View><Text style={styles.title}>{schedule.funcao}</Text><Text style={styles.area}>{schedule.team.serviceArea.nome} · {schedule.team.nome}</Text><Text style={styles.date}>{formatDate(schedule.data)}</Text>{schedule.event ? <Text style={styles.event}>{schedule.event.titulo}</Text> : null}{schedule.observacao ? <Text style={styles.note}>{schedule.observacao}</Text> : null}{schedule.status === 'SCHEDULED' ? <View style={styles.actions}><Pressable disabled={savingId === schedule.id} style={styles.secondary} onPress={() => requestStatusUpdate(schedule, 'DECLINED')}><Text style={styles.secondaryText}>Não posso servir</Text></Pressable><Pressable disabled={savingId === schedule.id} style={styles.primary} onPress={() => requestStatusUpdate(schedule, 'CONFIRMED')}>{savingId === schedule.id ? <ActivityIndicator color="#fff" /> : <Text style={styles.primaryText}>Confirmar</Text>}</Pressable></View> : null}</Card>) : <Notice tone="info" icon="calendar-outline" text="Você não possui escalas futuras." />}</Page>;
 }
 
 const styles = StyleSheet.create({

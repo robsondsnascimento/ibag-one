@@ -76,13 +76,19 @@ const apiUrl = (process.env.EXPO_PUBLIC_API_URL ?? 'http://127.0.0.1:3000').repl
 type RequestOptions = RequestInit & { accessToken?: string };
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const response = await fetch(`${apiUrl}${path}`, {
-    ...options,
-    headers: {
-      ...(options.accessToken ? { authorization: `Bearer ${options.accessToken}` } : {}),
-      ...options.headers,
-    },
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${apiUrl}${path}`, {
+      ...options,
+      headers: {
+        accept: 'application/json',
+        ...(options.accessToken ? { authorization: `Bearer ${options.accessToken}` } : {}),
+        ...options.headers,
+      },
+    });
+  } catch {
+    throw new ApiError('Não foi possível conectar ao IBAG One. Verifique sua internet e tente novamente.', 0);
+  }
   if (!response.ok) throw new ApiError(await errorMessage(response), response.status);
   return response.json() as Promise<T>;
 }
@@ -130,6 +136,10 @@ export function listMyCells(accessToken: string) {
 
 export function getCurrentStudy(accessToken: string) {
   return apiRequest<CellStudy>('/cell-studies/current', { accessToken });
+}
+
+export function currentStudyDownloadUrl() {
+  return `${apiUrl}/cell-studies/current/download`;
 }
 
 async function errorMessage(response: Response) {
