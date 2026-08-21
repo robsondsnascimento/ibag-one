@@ -1,0 +1,2 @@
+ALTER TABLE "Person"
+ADD COLUMN "titulosMinisteriais" TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[];

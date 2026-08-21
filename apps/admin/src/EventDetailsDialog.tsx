@@ -56,11 +56,12 @@ export function EventDetailsDialog({ event, accessToken, canApprove, onClose, on
 
   const addChecklist = (formEvent: FormEvent<HTMLFormElement>) => {
     formEvent.preventDefault()
-    const description = String(new FormData(formEvent.currentTarget).get('description') ?? '').trim()
+    const form = formEvent.currentTarget
+    const description = String(new FormData(form).get('description') ?? '').trim()
     if (!description) return
     void run(async () => {
       await onAddChecklist(description)
-      formEvent.currentTarget.reset()
+      form.reset()
     })
   }
 
@@ -72,7 +73,6 @@ export function EventDetailsDialog({ event, accessToken, canApprove, onClose, on
         <div className="event-details-heading"><div><p className="eyebrow">Agenda institucional</p><h2 id="event-details-title">{event.titulo}</h2><p className="dialog-description">{typeLabels[event.type] ?? event.type} · {event.campus.nome}</p></div><span className={`event-status event-status--${event.status.toLowerCase()}`}>{statusLabels[event.status] ?? event.status}</span></div>
         <dl className="event-details-summary"><div><dt>Início</dt><dd>{eventDate(event.inicio)}</dd></div><div><dt>Término</dt><dd>{eventDate(event.fim)}</dd></div>{event.cell && <div><dt>Célula</dt><dd>{event.cell.nome}</dd></div>}{event.descricao && <div className="event-details-summary--full"><dt>Observação</dt><dd>{event.descricao}</dd></div>}</dl>
         <EventReferences title="Áreas de Serviço" names={event.serviceAreas.map((item) => item.serviceArea.nome)} emptyMessage="Nenhuma área vinculada." />
-        <EventReferences title="Equipes envolvidas" names={event.teams.map((item) => item.team.nome)} emptyMessage="Nenhuma equipe vinculada." />
         <EventReferences title="Espaços reservados" names={event.spaces.map((item) => item.space.nome)} emptyMessage="Nenhum espaço reservado." />
         <section className="event-details-section"><header><div><p className="eyebrow">Preparação</p><h3>Checklist do evento</h3></div><span>{checklist.filter((item) => item.concluido).length}/{checklist.length}</span></header>{checklist.length ? <div className="event-checklist">{checklist.map((item) => <label key={item.id}><input type="checkbox" checked={item.concluido} disabled={isSaving} onChange={() => void run(() => onToggleChecklist(item.id))} /><span>{item.descricao}</span></label>)}</div> : <p className="event-details-empty">Ainda não há itens de preparação.</p>}<form className="event-checklist-form" onSubmit={addChecklist}><input name="description" minLength={2} required placeholder="Ex.: Confirmar montagem do som" disabled={isSaving} /><button className="secondary-button" type="submit" disabled={isSaving}>+ Adicionar</button></form></section>
         {error && <p className="form-error" role="alert">{error}</p>}

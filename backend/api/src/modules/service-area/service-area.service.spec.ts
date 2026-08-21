@@ -3,6 +3,33 @@ import { ServiceAreaService } from './service-area.service';
 describe('ServiceAreaService', () => {
   const context = { userId: 'user-1', personId: 'person-1', organizationId: 'org-1' };
 
+  it('inclui Pastores Sênior e Pastores ativos na visão hierárquica da área', async () => {
+    const detail = { id: 'area-1', ativo: true, teams: [], memberships: [] };
+    const prisma: any = {
+      serviceArea: {
+        findFirst: jest.fn().mockResolvedValue({ id: 'area-1', ativo: true }),
+        findUnique: jest.fn().mockResolvedValue(detail),
+      },
+      user: {
+        findMany: jest.fn().mockResolvedValue([
+          { role: 'PASTOR_SENIOR', additionalRoles: [], person: { id: 'person-senior', nome: 'Pastor Sênior', campus: { id: 'campus-1', nome: 'Cachoeirinha' } } },
+          { role: 'MEMBER', additionalRoles: [{ role: 'PASTOR' }], person: { id: 'person-pastor', nome: 'Pastor do Campus', campus: { id: 'campus-2', nome: 'Esteio' } } },
+        ]),
+      },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.findOne('area-1', context)).resolves.toEqual(expect.objectContaining({
+      pastoralLeadership: [
+        { role: 'PASTOR_SENIOR', person: { id: 'person-senior', nome: 'Pastor Sênior', campus: { id: 'campus-1', nome: 'Cachoeirinha' } } },
+        { role: 'PASTOR', person: { id: 'person-pastor', nome: 'Pastor do Campus', campus: { id: 'campus-2', nome: 'Esteio' } } },
+      ],
+    }));
+    expect(prisma.user.findMany).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({ organizationId: 'org-1', ativo: true }),
+    }));
+  });
+
   it('inativa a área e todas as equipes ativas, sem apagar histórico', async () => {
     const updatedArea = { id: 'area-1', ativo: false };
     const prisma: any = {
@@ -88,6 +115,7 @@ describe('ServiceAreaService', () => {
       serviceTeam: { findFirst: jest.fn().mockResolvedValue({ id: 'team-1', serviceAreaId: 'area-1', campusId: 'campus-1' }) },
       user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
       serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-1' }) },
+      event: { findFirst: jest.fn().mockResolvedValue(null) },
       serviceSchedule: {
         findFirst: jest.fn()
           .mockResolvedValueOnce(null)
@@ -120,6 +148,7 @@ describe('ServiceAreaService', () => {
       serviceTeam: { findFirst: jest.fn().mockResolvedValue({ id: 'team-1', serviceAreaId: 'area-1', campusId: 'campus-1' }) },
       user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
       serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-1' }) },
+      event: { findFirst: jest.fn().mockResolvedValue(null) },
       serviceSchedule: { findFirst: jest.fn().mockResolvedValue(null) },
       $transaction: jest.fn(callback => callback(transaction)),
       notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
@@ -133,6 +162,35 @@ describe('ServiceAreaService', () => {
       ],
     }, context)).resolves.toHaveLength(2);
     expect(prisma.notification.create).toHaveBeenCalledTimes(2);
+  });
+
+  it('vincula automaticamente a escala independente ao Culto aprovado do mesmo campus e horário', async () => {
+    const culto = { id: 'culto-1', inicio: new Date('2026-08-16T22:30:00.000Z'), fim: new Date('2026-08-17T00:00:00.000Z') };
+    const prisma: any = {
+      serviceTeam: { findFirst: jest.fn().mockResolvedValue({ id: 'team-1', serviceAreaId: 'area-1', campusId: 'campus-1' }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+      serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-1', funcoes: ['Guitarra'] }) },
+      event: { findFirst: jest.fn().mockResolvedValue(culto) },
+      serviceSchedule: {
+        findFirst: jest.fn().mockResolvedValue(null),
+        create: jest.fn().mockResolvedValue({ id: 'schedule-1', personId: 'person-2', funcao: 'Guitarra', data: culto.inicio, eventId: culto.id, teamId: 'team-1', team: { serviceAreaId: 'area-1' } }),
+      },
+      notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await service.createSchedule('team-1', {
+      personId: 'person-2',
+      data: '2026-08-16T22:30:00.000Z',
+      funcao: 'Guitarra',
+    }, context);
+
+    expect(prisma.event.findFirst).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({ campusId: 'campus-1', type: 'WORSHIP', status: 'APPROVED' }),
+    }));
+    expect(prisma.serviceSchedule.create).toHaveBeenCalledWith(expect.objectContaining({
+      data: expect.objectContaining({ eventId: 'culto-1' }),
+    }));
   });
 
   it('entrega à liderança geral a visão consolidada das escalas da própria área', async () => {

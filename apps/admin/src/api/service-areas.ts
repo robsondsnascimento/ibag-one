@@ -4,6 +4,7 @@ export type ServiceAreaListItem = {
   id: string
   nome: string
   descricao: string | null
+  funcoes: string[]
   scope: 'GLOBAL' | 'CAMPUS'
   ativo: boolean
   campus: {
@@ -20,6 +21,7 @@ export type ServiceAreaDetail = {
   id: string
   nome: string
   descricao: string | null
+  funcoes: string[]
   scope: 'GLOBAL' | 'CAMPUS'
   ativo: boolean
   campus: {
@@ -34,6 +36,17 @@ export type ServiceAreaDetail = {
     campus: {
       id: string
       nome: string
+    }
+  }>
+  pastoralLeadership: Array<{
+    role: 'PASTOR_SENIOR' | 'PASTOR'
+    person: {
+      id: string
+      nome: string
+      campus: {
+        id: string
+        nome: string
+      }
     }
   }>
   memberships: Array<{
@@ -117,6 +130,15 @@ export function updateServiceArea(accessToken: string, areaId: string, input: { 
   })
 }
 
+export function updateServiceAreaFunctions(accessToken: string, areaId: string, funcoes: string[]) {
+  return apiRequest<ServiceAreaDetail>(`/service-areas/${areaId}/functions`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ funcoes }),
+  })
+}
+
 export function updateServiceTeam(accessToken: string, teamId: string, input: { nome?: string; descricao?: string | null; ativo?: boolean }) {
   return apiRequest<ServiceAreaDetail['teams'][number]>(`/service-areas/teams/${teamId}`, {
     method: 'PATCH',
@@ -150,6 +172,22 @@ export function updateServiceMembershipFunctions(accessToken: string, membership
     accessToken,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ funcoes }),
+  })
+}
+
+export function endServiceAreaMembership(accessToken: string, membershipId: string) {
+  return apiRequest<void>(`/service-areas/memberships/${membershipId}/end`, {
+    method: 'PATCH',
+    accessToken,
+  })
+}
+
+export function transferServiceAreaMembership(accessToken: string, membershipId: string, input: { serviceAreaId: string; teamId: string; funcoes?: string[] }) {
+  return apiRequest<ServiceAreaDetail['memberships'][number]>(`/service-areas/memberships/${membershipId}/transfer`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
   })
 }
 
@@ -327,9 +365,11 @@ export type ServiceScheduleEventCandidate = {
   inicio: string
   fim: string
   status: 'APPROVED' | string
-  teams: Array<{
-    teamId: string
-  }>
+  type: string
+  campus: {
+    id: string
+    nome: string
+  }
 }
 
 export function listServiceAreaSchedules(accessToken: string, areaId: string, filters: { start?: string; end?: string; teamId?: string; status?: ServiceScheduleStatus }) {
@@ -362,7 +402,7 @@ export function createServiceScheduleBatch(accessToken: string, teamId: string, 
 
 export async function listApprovedScheduleEvents(accessToken: string, start: string, end: string) {
   const events = await apiRequest<ServiceScheduleEventCandidate[]>(`/events?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`, { accessToken })
-  return events.filter((event) => event.status === 'APPROVED')
+  return events.filter((event) => event.status === 'APPROVED' && event.type === 'WORSHIP')
 }
 
 export function updateServiceScheduleStatus(accessToken: string, scheduleId: string, input: { status: ServiceScheduleStatus; reason?: string }) {

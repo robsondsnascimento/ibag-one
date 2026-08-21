@@ -33,9 +33,11 @@ Papéis de vínculo disponíveis:
 - `TEAM_LEADER`
 - `MEMBER`
 
-As funções de serviço complementam o vínculo de equipe, sem substituir seu papel de liderança ou integrante. Na Área de Serviço **Música**, a função **Ministro** identifica quem pode preparar e enviar repertórios de cultos.
+A cadeia de cuidado exibida na Área de Serviço começa pelos Pastores Sênior da organização, segue pelos Pastores ativos, liderança geral da Área, lideranças de campus e de equipe, até os voluntários de cada equipe. O papel pastoral vem do usuário da pessoa; os demais níveis vêm dos vínculos ativos da Área de Serviço. A ausência de pessoa em um nível não remove o nível da árvore: ele é apresentado como `Não definido`.
 
-Na Área de Serviço **Música**, as funções de escala são escolhidas em seleção múltipla para manter nomes consistentes nas escalas e nas solicitações de troca: Ministro, Backing Vocal, Guitarra, Violão, Baixo, Tecladista, Bateria e Percussão. Uma pessoa pode receber mais de uma delas. Por exemplo, a mesma pessoa pode ser Tecladista na escala e Ministro de Louvor na equipe; a função Ministro libera o repertório quando ela estiver escalada e confirmada no culto.
+As funções de serviço complementam o vínculo de equipe, sem substituir seu papel de liderança ou integrante. Cada Área de Serviço possui seu próprio catálogo de funções, gerido por secretaria, administração ou super administração. As funções cadastradas são as opções padronizadas para os vínculos das pessoas e para as escalas daquela área.
+
+A Área de Serviço **Música** inicia com o catálogo `Ministro`, `Backing Vocal`, `Guitarra`, `Violão`, `Baixo`, `Tecladista`, `Bateria` e `Percussão`. Uma pessoa pode receber mais de uma função na mesma equipe. Por exemplo, ela pode ser Tecladista na escala e Ministro de Louvor na equipe; a função Ministro libera o repertório quando houver escala confirmada no culto.
 
 ## Entrada e formação
 
@@ -57,13 +59,13 @@ Cada área possui sua visão consolidada de escalas, e cada equipe administra as
 - Liderança de equipe visualiza e administra a própria equipe.
 - Integrantes consultam as próprias escalas e respondem com confirmação ou recusa.
 
-As escalas podem estar vinculadas a eventos, mas não pertencem à Ordem de Culto. A API impede conflitos ativos de agenda, permite criação em lote e registra histórico de criação, mudança de status e substituição.
+As escalas podem estar vinculadas a eventos, mas não pertencem à Ordem de Culto. Para uma equipe, o painel apresenta em calendário apenas os **Cultos aprovados** do seu campus. Ao criar uma escala sem escolher Culto, a API procura automaticamente um Culto aprovado no mesmo campus, data e horário e faz o vínculo quando o encontrar. Ao aprovar ou atualizar um Culto, a API também vincula as escalas independentes já existentes naquele mesmo campus e horário. A API impede conflitos ativos de agenda, permite criação em lote e registra histórico de criação, mudança de status e substituição.
 
 O integrante escalado pode solicitar uma troca antes do horário previsto. A busca oferece somente integrantes ativos da mesma equipe, que tenham a mesma função registrada e não possuam conflito. A troca só é efetivada quando a liderança da equipe aprova; uma recusa mantém a escala original.
 
 ## Histórico
 
-Vínculos são encerrados, não apagados. Escalas mantêm histórico auditável com usuário responsável, status anterior/novo, pessoas envolvidas em substituição e motivo opcional.
+Vínculos são encerrados, não apagados. A alteração da área ou equipe de uma pessoa encerra o vínculo anterior e cria outro vínculo ativo, preservando o histórico. Escalas mantêm histórico auditável com usuário responsável, status anterior/novo, pessoas envolvidas em substituição e motivo opcional.
 
 ## Administração e disponibilidade
 

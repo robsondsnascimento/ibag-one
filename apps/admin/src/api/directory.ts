@@ -38,6 +38,7 @@ export type PersonListItem = {
   telefone: string | null
   email: string | null
   ativo: boolean
+  titulosMinisteriais: string[]
   campus: {
     id: string
     nome: string
@@ -327,6 +328,15 @@ export function updatePerson(accessToken: string, id: string, input: UpdatePerso
     accessToken,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(input),
+  })
+}
+
+export function updatePersonMinisterialTitles(accessToken: string, id: string, titulosMinisteriais: string[]) {
+  return apiRequest<PersonListItem>(`/persons/${id}/ministerial-titles`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ titulosMinisteriais }),
   })
 }
 

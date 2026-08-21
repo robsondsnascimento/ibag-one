@@ -14,6 +14,7 @@ import { PersonService } from './person.service';
 
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { UpdatePersonMinisterialTitlesDto } from './dto/update-person-ministerial-titles.dto';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
@@ -91,6 +92,15 @@ export class PersonController {
       context,
     );
 
+  }
+
+  @Patch(':id/ministerial-titles')
+  updateMinisterialTitles(
+    @Param('id') id: string,
+    @Body() dto: UpdatePersonMinisterialTitlesDto,
+    @CurrentOrganization() context: OrganizationContext,
+  ) {
+    return this.personService.updateMinisterialTitles(id, dto, context);
   }
 
 

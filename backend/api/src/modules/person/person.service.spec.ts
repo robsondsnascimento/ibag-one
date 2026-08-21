@@ -117,6 +117,35 @@ describe('PersonService', () => {
     });
   });
 
+  it('stores ministerial titles only for a person in the current organization', async () => {
+    const context = {
+      userId: 'user-id',
+      personId: 'person-id',
+      organizationId: 'organization-id',
+    };
+    const prisma = {
+      user: { findFirst: jest.fn().mockResolvedValue({ id: 'user-id' }) },
+      person: {
+        findFirst: jest.fn().mockResolvedValue({ id: 'person-id' }),
+        update: jest.fn().mockResolvedValue({ id: 'person-id', titulosMinisteriais: ['Pastor de Adoração'] }),
+      },
+    };
+    const personService = new PersonService(prisma as unknown as PrismaService);
+
+    await expect(personService.updateMinisterialTitles('person-id', {
+      titulosMinisteriais: [' Pastor de Adoração ', 'Pastor de Adoração'],
+    }, context)).resolves.toEqual({ id: 'person-id', titulosMinisteriais: ['Pastor de Adoração'] });
+
+    expect(prisma.person.findFirst).toHaveBeenCalledWith({
+      where: { id: 'person-id', organizationId: context.organizationId },
+      select: { id: true },
+    });
+    expect(prisma.person.update).toHaveBeenCalledWith(expect.objectContaining({
+      where: { id: 'person-id' },
+      data: { titulosMinisteriais: ['Pastor de Adoração'] },
+    }));
+  });
+
   it('creates active links for the primary and additional campuses', async () => {
     const context = {
       userId: 'user-id',

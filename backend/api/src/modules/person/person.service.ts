@@ -4,6 +4,7 @@ import { PrismaService } from '../../database/prisma.service';
 
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { UpdatePersonMinisterialTitlesDto } from './dto/update-person-ministerial-titles.dto';
 
 import {
   OrganizationContext,
@@ -317,6 +318,29 @@ export class PersonService {
 
   }
 
+  async updateMinisterialTitles(
+    id: string,
+    dto: UpdatePersonMinisterialTitlesDto,
+    context: OrganizationContext,
+  ) {
+    await this.assertDirectoryManager(context);
+
+    const person = await this.prisma.person.findFirst({
+      where: { id, organizationId: context.organizationId },
+      select: { id: true },
+    });
+
+    if (!person) {
+      throw new Error('Pessoa não encontrada na organização atual');
+    }
+
+    return this.prisma.person.update({
+      where: { id },
+      data: { titulosMinisteriais: this.normalizeMinisterialTitles(dto.titulosMinisteriais) },
+      include: this.personDetails,
+    });
+  }
+
   private async assertDirectoryManager(context: OrganizationContext) {
     const user = await this.prisma.user.findFirst({
       where: {
@@ -331,6 +355,19 @@ export class PersonService {
         'Somente administradores e secretários podem gerenciar cadastros de pessoas',
       );
     }
+  }
+
+  private normalizeMinisterialTitles(titles: string[]) {
+    const knownTitles = new Set<string>();
+    return titles.reduce<string[]>((normalized, value) => {
+      const title = value.trim().replace(/\s+/g, ' ');
+      const key = title.toLocaleLowerCase('pt-BR');
+      if (title && !knownTitles.has(key)) {
+        knownTitles.add(key);
+        normalized.push(title);
+      }
+      return normalized;
+    }, []);
   }
 
   private uniqueCampusIds(primaryCampusId: string, campusIds?: string[]) {

@@ -35,6 +35,7 @@ import './ServiceAreaWorkspace.css'
 import './ServiceAreaOnboardingDialog.css'
 import './ServiceSchedulePages.css'
 import './WorshipPage.css'
+import './Sidebar.css'
 
 type Page =
   | 'dashboard'
@@ -68,6 +69,8 @@ type NavigationItem = {
 const mainNavigation: NavigationItem[] = [
   { page: 'dashboard', label: 'Visão geral', icon: '◈' },
   { page: 'agenda', label: 'Agenda', icon: '▦' },
+  { page: 'worship', label: 'Ordem de Culto', icon: '♬' },
+  { page: 'kids', label: 'IBAG Kids', icon: '☆' },
 ]
 
 const cellNavigation: NavigationItem[] = [
@@ -79,7 +82,6 @@ const cellNavigation: NavigationItem[] = [
 const moduleNavigation: NavigationItem[] = [
   { page: 'people', label: 'Pessoas', icon: '◉' },
   { page: 'my-schedules', label: 'Minhas escalas', icon: '◷' },
-  { page: 'worship', label: 'Cultos', icon: '♬' },
   { page: 'reports', label: 'Relatórios', icon: '▤' },
 ]
 
@@ -206,7 +208,7 @@ function App() {
   const [eventFormDraft, setEventFormDraft] = useState<AgendaEvent | null>(null)
   const [eventFormCampusId, setEventFormCampusId] = useState('')
   const [eventFormCells, setEventFormCells] = useState<CellListItem[]>([])
-  const [eventFormAreas, setEventFormAreas] = useState<ServiceAreaDetail[]>([])
+  const [eventFormAreas, setEventFormAreas] = useState<ServiceAreaListItem[]>([])
   const [eventFormSpaces, setEventFormSpaces] = useState<EventSpace[]>([])
   const [isLoadingEventReferences, setIsLoadingEventReferences] = useState(false)
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
@@ -283,6 +285,8 @@ function App() {
   const [serviceFormError, setServiceFormError] = useState('')
   const [isLoadingServiceForm, setIsLoadingServiceForm] = useState(false)
   const [isSavingServiceForm, setIsSavingServiceForm] = useState(false)
+  const [serviceMemberPersonId, setServiceMemberPersonId] = useState('')
+  const [serviceMemberPersonSearch, setServiceMemberPersonSearch] = useState('')
   const [serviceMembershipRole, setServiceMembershipRole] = useState<ServiceMembershipRole>('MEMBER')
   const [serviceMemberFunctions, setServiceMemberFunctions] = useState<string[]>([])
   const [serviceOnboardingArea, setServiceOnboardingArea] = useState<ServiceAreaDetail | null>(null)
@@ -497,11 +501,10 @@ function App() {
     let active = true
     setIsLoadingEventReferences(true)
     void Promise.all([listCells(session.access_token), listServiceAreas(session.access_token)])
-      .then(async ([cellResult, areaList]) => {
-        const areas = await Promise.all(areaList.map((area) => getServiceArea(session.access_token, area.id)))
+      .then(([cellResult, areaList]) => {
         if (!active) return
         setEventFormCells(cellResult.data)
-        setEventFormAreas(areas)
+        setEventFormAreas(areaList)
       })
       .catch((error) => {
         if (active) setEventFormError(error instanceof Error ? error.message : 'Não foi possível carregar os vínculos disponíveis para este evento.')
@@ -1151,6 +1154,8 @@ function App() {
     setServiceMemberArea(area)
     setServiceFormPeople([])
     setServiceFormCampuses([])
+    setServiceMemberPersonId('')
+    setServiceMemberPersonSearch('')
     setServiceMembershipRole('MEMBER')
     setServiceMemberFunctions([])
     setServiceFormError('')
@@ -1173,6 +1178,8 @@ function App() {
     setServiceMemberArea(null)
     setServiceFormPeople([])
     setServiceFormCampuses([])
+    setServiceMemberPersonId('')
+    setServiceMemberPersonSearch('')
     setServiceMembershipRole('MEMBER')
     setServiceMemberFunctions([])
     setServiceFormError('')
@@ -1183,7 +1190,7 @@ function App() {
     if (!session || !serviceMemberArea) return
 
     const formData = new FormData(event.currentTarget)
-    const personId = String(formData.get('personId') ?? '')
+    const personId = serviceMemberPersonId
     const teamId = String(formData.get('teamId') ?? '')
     const funcoes = (serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') ? serviceMemberFunctions : []
     const campusId = serviceMemberArea.scope === 'CAMPUS'
@@ -1759,7 +1766,7 @@ function App() {
           ))}
           <div className="navigation-group">
             <div className="navigation-group-header">
-              <button className={`navigation-item navigation-group-parent ${isCellSection ? 'navigation-item--active' : ''}`} type="button" onClick={() => setActivePage('cells')} aria-current={isCellSection ? 'page' : undefined}><span className="navigation-icon" aria-hidden="true">◎</span>Células</button>
+              <button className={`navigation-item navigation-group-parent ${isCellSection ? 'navigation-item--active' : ''}`} type="button" onClick={() => { setActivePage('cells'); setIsCellsMenuExpanded((expanded) => !expanded) }} aria-current={isCellSection ? 'page' : undefined}><span className="navigation-icon" aria-hidden="true">◎</span>Células</button>
               <button className="navigation-group-toggle" type="button" onClick={() => setIsCellsMenuExpanded((expanded) => !expanded)} aria-label={isCellsMenuExpanded ? 'Recolher menu de células' : 'Expandir menu de células'} aria-expanded={isCellsMenuExpanded} aria-controls="cell-submenu">{isCellsMenuExpanded ? '⌃' : '⌄'}</button>
             </div>
             {isCellsMenuExpanded && <div className="navigation-submenu" id="cell-submenu">
@@ -1770,13 +1777,12 @@ function App() {
           </div>
           <div className="navigation-group">
             <div className="navigation-group-header">
-              <button className={`navigation-item navigation-group-parent ${isServiceSection ? 'navigation-item--active' : ''}`} type="button" onClick={() => { setSelectedServiceAreaId(null); setActivePage('teams') }} aria-current={isServiceSection ? 'page' : undefined}><span className="navigation-icon" aria-hidden="true">◇</span>Áreas de Serviço</button>
+              <button className={`navigation-item navigation-group-parent ${isServiceSection ? 'navigation-item--active' : ''}`} type="button" onClick={() => { setSelectedServiceAreaId(null); setActivePage('teams'); setIsServiceMenuExpanded((expanded) => !expanded) }} aria-current={isServiceSection ? 'page' : undefined}><span className="navigation-icon" aria-hidden="true">◇</span>Áreas de Serviço</button>
               <button className="navigation-group-toggle" type="button" onClick={() => setIsServiceMenuExpanded((expanded) => !expanded)} aria-label={isServiceMenuExpanded ? 'Recolher menu de áreas de serviço' : 'Expandir menu de áreas de serviço'} aria-expanded={isServiceMenuExpanded} aria-controls="service-submenu">{isServiceMenuExpanded ? '⌃' : '⌄'}</button>
             </div>
             {isServiceMenuExpanded && <div className="navigation-submenu" id="service-submenu">
               {isLoadingServiceAreas && <p className="navigation-submenu-loading">Carregando áreas...</p>}
-              {serviceAreas.filter((area) => area.nome.trim().toLocaleLowerCase('pt-BR') !== 'ibag kids').map((area) => <button className={`navigation-subitem ${!area.ativo ? 'navigation-subitem--inactive' : ''} ${activePage === 'teams' && selectedServiceAreaId === area.id ? 'navigation-subitem--active' : ''}`} type="button" key={area.id} onClick={() => { setSelectedServiceAreaId(area.id); setActivePage('teams') }} aria-current={activePage === 'teams' && selectedServiceAreaId === area.id ? 'page' : undefined}><span aria-hidden="true">◇</span>{area.nome}{!area.ativo ? ' · Inativa' : ''}</button>)}
-              <button className={`navigation-subitem ${activePage === 'kids' ? 'navigation-subitem--active' : ''}`} type="button" onClick={() => { setSelectedServiceAreaId(null); setActivePage('kids') }} aria-current={activePage === 'kids' ? 'page' : undefined}><span aria-hidden="true">☆</span>IBAG Kids</button>
+              {serviceAreas.filter((area) => !['ibag kids', 'ordem de culto'].includes(area.nome.trim().toLocaleLowerCase('pt-BR'))).map((area) => <button className={`navigation-subitem ${!area.ativo ? 'navigation-subitem--inactive' : ''} ${activePage === 'teams' && selectedServiceAreaId === area.id ? 'navigation-subitem--active' : ''}`} type="button" key={area.id} onClick={() => { setSelectedServiceAreaId(area.id); setActivePage('teams') }} aria-current={activePage === 'teams' && selectedServiceAreaId === area.id ? 'page' : undefined}><span aria-hidden="true">◇</span>{area.nome}{!area.ativo ? ' · Inativa' : ''}</button>)}
             </div>}
           </div>
           {moduleNavigation.map((item) => (
@@ -1897,13 +1903,13 @@ function App() {
             <h2 id="service-member-dialog-title">Vincular pessoa</h2>
             <p className="dialog-description">Defina onde a pessoa servirá ou qual responsabilidade assumirá dentro desta área.</p>
             <form className="event-form" onSubmit={saveServiceMember}>
-              <label>Pessoa<select name="personId" required defaultValue="" disabled={isLoadingServiceForm || serviceFormPeople.length === 0}><option value="" disabled>{isLoadingServiceForm ? 'Carregando pessoas...' : 'Selecione uma pessoa'}</option>{serviceFormPeople.map((person) => <option key={person.id} value={person.id}>{person.nome}{person.campus.nome ? ` · ${person.campus.nome}` : ''}</option>)}</select></label>
+              <label>Pessoa<ServiceMemberAutocomplete people={serviceFormPeople} selectedPersonId={serviceMemberPersonId} search={serviceMemberPersonSearch} disabled={isLoadingServiceForm} onSearchChange={(value) => { setServiceMemberPersonSearch(value); setServiceMemberPersonId('') }} onSelect={(person) => { setServiceMemberPersonId(person.id); setServiceMemberPersonSearch(person.nome) }} /></label>
               <label>Função na área<select value={serviceMembershipRole} onChange={(event) => setServiceMembershipRole(event.target.value as ServiceMembershipRole)}><option value="MEMBER">Integrante</option><option value="TEAM_LEADER">Liderança de equipe</option><option value="CAMPUS_LEADER">Liderança de campus</option><option value="GENERAL_LEADER">Liderança geral</option></select></label>
               {serviceMembershipRole === 'CAMPUS_LEADER' && (serviceMemberArea.scope === 'CAMPUS' && serviceMemberArea.campus ? <p className="record-detail-note">A liderança será vinculada ao <strong>{serviceMemberArea.campus.nome}</strong>.</p> : <label>Campus<select name="campusId" required defaultValue="" disabled={isLoadingServiceForm || serviceFormCampuses.length === 0}><option value="" disabled>{isLoadingServiceForm ? 'Carregando campi...' : 'Selecione o campus'}</option>{serviceFormCampuses.map((campus) => <option value={campus.id} key={campus.id}>{campus.nome}</option>)}</select></label>)}
               {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <label>Equipe<select name="teamId" required defaultValue="" disabled={activeServiceMemberTeams.length === 0}><option value="" disabled>{activeServiceMemberTeams.length ? 'Selecione a equipe' : 'Crie uma equipe ativa antes'}</option>{activeServiceMemberTeams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label>}
-              {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <ServiceFunctionsField areaName={serviceMemberArea.nome} value={serviceMemberFunctions} onChange={setServiceMemberFunctions} disabled={isSavingServiceForm} />}
+              {(serviceMembershipRole === 'MEMBER' || serviceMembershipRole === 'TEAM_LEADER') && <ServiceFunctionsField areaName={serviceMemberArea.nome} availableFunctions={serviceMemberArea.funcoes} value={serviceMemberFunctions} onChange={setServiceMemberFunctions} disabled={isSavingServiceForm} />}
               {serviceFormError && <p className="form-error" role="alert">{serviceFormError}</p>}
-              <div className="dialog-actions"><button className="secondary-button" type="button" onClick={closeServiceMemberForm}>Cancelar</button><button className="primary-button" type="submit" disabled={isLoadingServiceForm || serviceFormPeople.length === 0 || isSavingServiceForm}>{isSavingServiceForm ? 'Vinculando...' : 'Vincular pessoa'}</button></div>
+              <div className="dialog-actions"><button className="secondary-button" type="button" onClick={closeServiceMemberForm}>Cancelar</button><button className="primary-button" type="submit" disabled={isLoadingServiceForm || !serviceMemberPersonId || isSavingServiceForm}>{isSavingServiceForm ? 'Vinculando...' : 'Vincular pessoa'}</button></div>
             </form>
           </section>
         </div>
@@ -1913,7 +1919,7 @@ function App() {
 
       {selectedRecord && (
         <div className="dialog-backdrop" role="presentation" onMouseDown={closeRecordDetail}>
-          <section className={`event-dialog event-dialog--record-details ${selectedRecord.kind === 'cell' ? 'event-dialog--cell-details' : ''}`} role="dialog" aria-modal="true" aria-labelledby="record-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
+          <section className={`event-dialog event-dialog--record-details ${selectedRecord.kind === 'cell' ? 'event-dialog--cell-details' : selectedRecord.kind === 'person' ? 'event-dialog--person-details' : ''}`} role="dialog" aria-modal="true" aria-labelledby="record-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
             <button className="dialog-close" type="button" onClick={closeRecordDetail} aria-label="Fechar">×</button>
             {isLoadingRecordDetail && <p className="dialog-description">Carregando cadastro...</p>}
             {!isLoadingRecordDetail && recordDetailError && !recordDetail && <p className="form-error" role="alert">{recordDetailError}</p>}
@@ -2006,6 +2012,31 @@ function LeadershipPersonAutocomplete({
       {isOpen && members.length > 0 && <div className="leadership-autocomplete-list" id="leadership-person-options" role="listbox">{matches.length ? matches.map((person) => <button className={`leadership-autocomplete-option ${selectedPersonId === person.id ? 'leadership-autocomplete-option--selected' : ''}`} key={person.id} type="button" role="option" aria-selected={selectedPersonId === person.id} onMouseDown={(event) => event.preventDefault()} onClick={() => { onSelect(person); setIsOpen(false) }}><span className="cell-person-symbol">{initials(person.nome)}</span><span><strong>{person.nome}</strong>{(person.telefone || person.email) && <small>{person.telefone || person.email}</small>}</span></button>) : <p className="leadership-autocomplete-empty">Nenhuma pessoa vinculada encontrada.</p>}</div>}
     </div>
   )
+}
+
+function ServiceMemberAutocomplete({
+  people,
+  selectedPersonId,
+  search,
+  disabled,
+  onSearchChange,
+  onSelect,
+}: {
+  people: PersonListItem[]
+  selectedPersonId: string
+  search: string
+  disabled: boolean
+  onSearchChange: (value: string) => void
+  onSelect: (person: PersonListItem) => void
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const normalizedSearch = search.trim().toLocaleLowerCase('pt-BR')
+  const matches = people.filter((person) => person.nome.toLocaleLowerCase('pt-BR').includes(normalizedSearch)).slice(0, 8)
+
+  return <div className="leadership-autocomplete">
+    <input value={search} type="search" placeholder={disabled ? 'Carregando pessoas...' : people.length ? 'Pesquise pelo nome da pessoa' : 'Não há pessoas ativas'} disabled={disabled || people.length === 0} autoComplete="off" role="combobox" aria-expanded={isOpen} aria-controls="service-member-person-options" onFocus={() => setIsOpen(true)} onChange={(event) => { onSearchChange(event.target.value); setIsOpen(true) }} onBlur={() => setIsOpen(false)} />
+    {isOpen && people.length > 0 && <div className="leadership-autocomplete-list" id="service-member-person-options" role="listbox">{matches.length ? matches.map((person) => <button className={`leadership-autocomplete-option ${selectedPersonId === person.id ? 'leadership-autocomplete-option--selected' : ''}`} key={person.id} type="button" role="option" aria-selected={selectedPersonId === person.id} onMouseDown={(event) => event.preventDefault()} onClick={() => { onSelect(person); setIsOpen(false) }}><span className="cell-person-symbol">{initials(person.nome)}</span><span><strong>{person.nome}</strong><small>{person.campus.nome}{person.telefone || person.email ? ` · ${person.telefone || person.email}` : ''}</small></span></button>) : <p className="leadership-autocomplete-empty">Nenhuma pessoa ativa encontrada.</p>}</div>}
+  </div>
 }
 
 function StudiesPage({

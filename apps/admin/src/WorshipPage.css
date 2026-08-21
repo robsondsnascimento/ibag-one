@@ -436,12 +436,12 @@
 }
 .repertoire-card small {
   color: var(--ink-soft);
-  font-size: 9px;
+  font-size: 11px;
   margin-top: 3px;
 }
 .repertoire-status {
   border-radius: 99px;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   padding: 5px 7px;
 }
@@ -584,7 +584,7 @@
 }
 .worship-templates article small {
   color: var(--ink-soft);
-  font-size: 9px;
+  font-size: 11px;
   margin-top: 3px;
 }
 .worship-templates article > header > div:last-child {
@@ -661,7 +661,7 @@
 .worship-routing-note {
   color: var(--ink-soft);
   flex-basis: 100%;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.4;
 }
 .repertoire-song-form select {
@@ -697,7 +697,7 @@
   border-radius: 50%;
   color: var(--orange);
   display: inline-flex;
-  font-size: 9px;
+  font-size: 11px;
   height: 19px;
   justify-content: center;
   width: 19px;
@@ -705,6 +705,6 @@
 .worship-repertoire > header small {
   color: var(--ink-soft);
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   margin-top: 3px;
 }

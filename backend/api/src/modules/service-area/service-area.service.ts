@@ -1,5 +1,5 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { NotificationAudience, ServiceMembershipRole, ServiceOperationalRole, ServiceScheduleHistoryAction, ServiceScheduleStatus, ServiceScheduleSwapRequestStatus } from '../../generated/prisma/client';
+import { EventStatus, EventType, NotificationAudience, ServiceMembershipRole, ServiceOperationalRole, ServiceScheduleHistoryAction, ServiceScheduleStatus, ServiceScheduleSwapRequestStatus, UserRole } from '../../generated/prisma/client';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
 import { AddServiceMemberDto } from './dto/add-service-member.dto';
@@ -12,9 +12,11 @@ import { CreateServiceScheduleSwapRequestDto } from './dto/create-service-schedu
 import { RejectServiceScheduleSwapRequestDto } from './dto/reject-service-schedule-swap-request.dto';
 import { SubstituteServiceScheduleDto } from './dto/substitute-service-schedule.dto';
 import { UpdateServiceMemberFunctionsDto } from './dto/update-service-member-functions.dto';
+import { UpdateServiceAreaFunctionsDto } from './dto/update-service-area-functions.dto';
 import { UpdateServiceScheduleStatusDto } from './dto/update-service-schedule-status.dto';
 import { UpdateServiceAreaDto } from './dto/update-service-area.dto';
 import { UpdateServiceTeamDto } from './dto/update-service-team.dto';
+import { TransferServiceMembershipDto } from './dto/transfer-service-membership.dto';
 import { userRoleWhere } from '../../common/access/user-role.util';
 
 @Injectable()
@@ -41,14 +43,44 @@ export class ServiceAreaService {
   async findOne(id: string, context: OrganizationContext) {
     const area = await this.areaForManagement(id, context);
     if (!area.ativo) await this.assertCentralManagement(context);
-    return this.prisma.serviceArea.findUnique({
-      where: { id: area.id },
-      include: {
-        campus: true,
-        teams: { include: { campus: true }, orderBy: { nome: 'asc' } },
-        memberships: { where: { ativo: true }, include: { person: true, team: true, campus: true }, orderBy: { inicio: 'desc' } },
-      },
-    });
+    const pastoralRoles = [UserRole.PASTOR_SENIOR, UserRole.PASTOR];
+    const [detail, pastoralUsers] = await Promise.all([
+      this.prisma.serviceArea.findUnique({
+        where: { id: area.id },
+        include: {
+          campus: true,
+          teams: { include: { campus: true }, orderBy: { nome: 'asc' } },
+          memberships: { where: { ativo: true }, include: { person: true, team: true, campus: true }, orderBy: { inicio: 'desc' } },
+        },
+      }),
+      this.prisma.user.findMany({
+        where: {
+          organizationId: context.organizationId,
+          ativo: true,
+          person: { is: { ativo: true } },
+          OR: [
+            { role: { in: pastoralRoles } },
+            { additionalRoles: { some: { role: { in: pastoralRoles } } } },
+          ],
+        },
+        select: {
+          role: true,
+          additionalRoles: { select: { role: true } },
+          person: { select: { id: true, nome: true, campus: { select: { id: true, nome: true } } } },
+        },
+      }),
+    ]);
+    if (!detail) throw new NotFoundException('Área de serviço não encontrada na organização atual');
+
+    return {
+      ...detail,
+      pastoralLeadership: pastoralUsers.map((user) => ({
+        role: [user.role, ...user.additionalRoles.map((assignment) => assignment.role)].includes(UserRole.PASTOR_SENIOR)
+          ? UserRole.PASTOR_SENIOR
+          : UserRole.PASTOR,
+        person: user.person,
+      })),
+    };
   }
 
   async update(id: string, dto: UpdateServiceAreaDto, context: OrganizationContext) {
@@ -80,6 +112,15 @@ export class ServiceAreaService {
       where: { id: team.id },
       data: dto,
       include: { campus: true, serviceArea: true },
+    });
+  }
+
+  async updateFunctions(id: string, dto: UpdateServiceAreaFunctionsDto, context: OrganizationContext) {
+    const area = await this.area(id, context);
+    await this.assertAreaManagement(area.id, context);
+    return this.prisma.serviceArea.update({
+      where: { id: area.id },
+      data: { funcoes: this.normalizeFunctions(dto.funcoes) },
     });
   }
 
@@ -120,6 +161,53 @@ export class ServiceAreaService {
       data: { funcoes: this.normalizeFunctions(dto.funcoes) },
       include: { person: true, serviceArea: true, team: true, campus: true },
     });
+  }
+
+  async transferMembership(id: string, dto: TransferServiceMembershipDto, context: OrganizationContext) {
+    const membership = await this.prisma.serviceMembership.findFirst({
+      where: { id, ativo: true, serviceArea: { organizationId: context.organizationId } },
+    });
+    if (!membership) throw new NotFoundException('Vínculo ativo não encontrado na organização atual');
+    if (
+      !membership.teamId ||
+      (membership.role !== ServiceMembershipRole.MEMBER && membership.role !== ServiceMembershipRole.TEAM_LEADER)
+    ) {
+      throw new BadRequestException('Somente vínculos de integrante ou liderança de equipe podem ser transferidos pelo cadastro da pessoa');
+    }
+
+    await this.assertAreaManagement(membership.serviceAreaId, context, membership.teamId, membership.campusId ?? undefined, membership.role);
+    const targetArea = await this.area(dto.serviceAreaId, context);
+    const placement = await this.resolvePlacement(targetArea, { personId: membership.personId, role: membership.role, teamId: dto.teamId }, context);
+    await this.assertAreaManagement(targetArea.id, context, placement.teamId, placement.campusId, membership.role);
+    const exists = await this.prisma.serviceMembership.findFirst({
+      where: {
+        personId: membership.personId,
+        serviceAreaId: targetArea.id,
+        role: membership.role,
+        teamId: placement.teamId,
+        campusId: placement.campusId,
+        ativo: true,
+      },
+    });
+    if (exists) throw new BadRequestException('A pessoa já possui este vínculo ativo na área e equipe selecionadas');
+
+    const [, transferred] = await this.prisma.$transaction([
+      this.prisma.serviceMembership.update({ where: { id: membership.id }, data: { ativo: false, fim: new Date() } }),
+      this.prisma.serviceMembership.create({
+        data: {
+          personId: membership.personId,
+          serviceAreaId: targetArea.id,
+          role: membership.role,
+          teamId: placement.teamId,
+          campusId: placement.campusId,
+          funcoes: this.normalizeFunctions(dto.funcoes),
+          inicio: new Date(),
+          ativo: true,
+        },
+        include: { person: true, serviceArea: true, team: true, campus: true },
+      }),
+    ]);
+    return transferred;
   }
 
   async assignOperationalRole(teamId: string, dto: AssignServiceOperationalRoleDto, context: OrganizationContext) {
@@ -169,6 +257,7 @@ export class ServiceAreaService {
       data: {
         ...dto,
         data: candidate.data,
+        eventId: candidate.event?.id ?? dto.eventId,
         teamId: team.id,
         organizationId: context.organizationId,
         history: { create: { action: ServiceScheduleHistoryAction.CREATED, newStatus: ServiceScheduleStatus.SCHEDULED, replacementPersonId: dto.personId, changedByUserId: context.userId } },
@@ -192,6 +281,7 @@ export class ServiceAreaService {
       data: {
         ...candidate.dto,
         data: candidate.data,
+        eventId: candidate.event?.id ?? candidate.dto.eventId,
         teamId: team.id,
         organizationId: context.organizationId,
         history: { create: { action: ServiceScheduleHistoryAction.CREATED, newStatus: ServiceScheduleStatus.SCHEDULED, replacementPersonId: candidate.dto.personId, changedByUserId: context.userId } },
@@ -445,10 +535,11 @@ export class ServiceAreaService {
   }
 
   private async validateScheduleInput(team: { id: string; serviceAreaId: string; campusId: string }, dto: CreateServiceScheduleDto, context: OrganizationContext) {
-    await this.assertActiveTeamMember(dto.personId, team.id);
+    const member = await this.assertActiveTeamMember(dto.personId, team.id);
     const data = new Date(dto.data);
     if (Number.isNaN(data.getTime())) throw new BadRequestException('A data da escala é inválida');
-    const event = dto.eventId ? await this.eventForTeam(dto.eventId, team.id, context) : null;
+    if (member.funcoes?.length) this.assertMemberCanServeFunction(member.funcoes, dto.funcao);
+    const event = dto.eventId ? await this.eventForTeam(dto.eventId, team, context) : await this.findMatchingWorshipEvent(team, data, context);
     await this.assertNoTeamScheduleDuplicate(team.id, dto.personId, data, context);
     await this.assertNoScheduleConflict(dto.personId, data, event, context);
     return { data, event };
@@ -482,10 +573,23 @@ export class ServiceAreaService {
     return value.trim().replace(/\s+/g, ' ').toLocaleLowerCase('pt-BR');
   }
 
-  private async eventForTeam(eventId: string, teamId: string, context: OrganizationContext) {
-    const event = await this.prisma.event.findFirst({ where: { id: eventId, organizationId: context.organizationId, status: 'APPROVED', teams: { some: { teamId } } }, select: { id: true, inicio: true, fim: true } });
-    if (!event) throw new BadRequestException('O evento precisa estar aprovado e envolver esta equipe');
+  private async eventForTeam(eventId: string, team: { campusId: string }, context: OrganizationContext) {
+    const event = await this.prisma.event.findFirst({ where: { id: eventId, organizationId: context.organizationId, campusId: team.campusId, status: EventStatus.APPROVED, type: EventType.WORSHIP }, select: { id: true, inicio: true, fim: true } });
+    if (!event) throw new BadRequestException('O culto precisa estar aprovado e pertencer ao campus da equipe');
     return event;
+  }
+
+  private async findMatchingWorshipEvent(team: { campusId: string }, data: Date, context: OrganizationContext) {
+    return this.prisma.event.findFirst({
+      where: {
+        organizationId: context.organizationId,
+        campusId: team.campusId,
+        status: EventStatus.APPROVED,
+        type: EventType.WORSHIP,
+        inicio: data,
+      },
+      select: { id: true, inicio: true, fim: true },
+    });
   }
 
   private async assertNoTeamScheduleDuplicate(teamId: string, personId: string, data: Date, context: OrganizationContext, exceptId?: string) {

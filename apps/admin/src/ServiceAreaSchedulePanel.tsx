@@ -50,6 +50,14 @@ function formatScheduleDate(value: string) {
   }).format(new Date(value))
 }
 
+function monthStart(value: Date) {
+  return new Date(value.getFullYear(), value.getMonth(), 1)
+}
+
+function monthTitle(value: Date) {
+  return new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(value)
+}
+
 function historyLabel(item: ServiceScheduleHistory) {
   if (item.action === 'CREATED') return 'Escala criada'
   if (item.action === 'SUBSTITUTED') return `Substituição: ${item.previousPersonName ?? 'Pessoa anterior'} → ${item.replacementPersonName ?? 'Nova pessoa'}`
@@ -87,6 +95,7 @@ export function ServiceAreaSchedulePanel({
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [isBatchOpen, setIsBatchOpen] = useState(false)
   const [createDate, setCreateDate] = useState('')
+  const [createEventId, setCreateEventId] = useState('')
   const [eventCandidates, setEventCandidates] = useState<ServiceScheduleEventCandidate[]>([])
   const [isLoadingEvents, setIsLoadingEvents] = useState(false)
   const [eventError, setEventError] = useState('')
@@ -321,7 +330,7 @@ export function ServiceAreaSchedulePanel({
     <section className="service-area-panel service-area-panel--schedules">
       <header>
         <div><p className="eyebrow">Escalas</p><h2>Serviços da área</h2></div>
-        {canManage && <div className="service-schedule-header-actions"><button className="secondary-button" type="button" disabled={activeTeams.length === 0} onClick={() => { setEventCandidates([]); setIsBatchOpen(true) }}>Escala em lote</button><button className="primary-button" type="button" disabled={activeTeams.length === 0} onClick={() => { setCreateDate(''); setEventCandidates([]); setIsCreateOpen(true) }}>+ Nova escala</button></div>}
+        {canManage && <div className="service-schedule-header-actions"><button className="secondary-button" type="button" disabled={activeTeams.length === 0} onClick={() => { setEventCandidates([]); setIsBatchOpen(true) }}>Escala em lote</button><button className="primary-button" type="button" disabled={activeTeams.length === 0} onClick={() => { setCreateDate(''); setCreateEventId(''); setEventCandidates([]); setIsCreateOpen(true) }}>+ Nova escala</button></div>}
       </header>
 
       <form className="service-schedule-filters" onSubmit={(event) => { event.preventDefault(); refresh() }}>
@@ -356,7 +365,7 @@ export function ServiceAreaSchedulePanel({
         </article>
       })}</div> : <p className="service-area-empty">Não há escalas neste período para os filtros escolhidos.</p>}
 
-      {isCreateOpen && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setIsCreateOpen(false)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="schedule-create-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setIsCreateOpen(false)}>×</button><p className="eyebrow">{area.nome}</p><h2 id="schedule-create-title">Nova escala</h2><p className="dialog-description">A escala pertence à equipe. Quando houver evento, ele apenas exibirá a escala — a gestão continua sendo da área.</p><form className="event-form" onSubmit={saveSchedule}><SchedulePersonSelect area={area} events={eventCandidates} isLoadingEvents={isLoadingEvents} eventError={eventError} onEventSelect={(selectedEvent) => setCreateDate(selectedEvent ? toDateTimeLocalValue(selectedEvent.inicio) : '')} /><label>Data e horário<input name="data" type="datetime-local" required value={createDate} onChange={(event) => setCreateDate(event.target.value)} /></label><label>Função<input name="funcao" required minLength={2} maxLength={100} placeholder="Ex.: Recepção" /></label><label>Observação <span className="field-optional">(opcional)</span><input name="observacao" maxLength={1000} placeholder="Informação útil para a pessoa escalada" /></label><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setIsCreateOpen(false)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving}>{isSaving ? 'Criando...' : 'Criar escala'}</button></div></form></section></div>}
+      {isCreateOpen && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setIsCreateOpen(false)}><section className="event-dialog event-dialog--schedule-create" role="dialog" aria-modal="true" aria-labelledby="schedule-create-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setIsCreateOpen(false)}>×</button><p className="eyebrow">{area.nome}</p><h2 id="schedule-create-title">Nova escala</h2><p className="dialog-description">Escolha um Culto do calendário do campus ou registre uma escala independente por data e horário.</p><form className="event-form" onSubmit={saveSchedule}><SchedulePersonSelect area={area} events={eventCandidates} eventId={createEventId} isLoadingEvents={isLoadingEvents} eventError={eventError} onEventSelect={(selectedEvent) => { setCreateEventId(selectedEvent?.id ?? ''); setCreateDate(selectedEvent ? toDateTimeLocalValue(selectedEvent.inicio) : '') }} /><label>Data e horário<input name="data" type="datetime-local" required value={createDate} onChange={(event) => { setCreateDate(event.target.value); setCreateEventId('') }} /></label><label>Observação <span className="field-optional">(opcional)</span><input name="observacao" maxLength={1000} placeholder="Informação útil para a pessoa escalada" /></label><div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setIsCreateOpen(false)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving}>{isSaving ? 'Criando...' : 'Criar escala'}</button></div></form></section></div>}
 
       {isBatchOpen && <ServiceScheduleBatchDialog area={area} events={eventCandidates} isLoadingEvents={isLoadingEvents} eventError={eventError} isSaving={isSaving} onClose={() => setIsBatchOpen(false)} onSave={saveScheduleBatch} />}
 
@@ -391,9 +400,10 @@ function ServiceScheduleBatchDialog({
   const [selectedPeople, setSelectedPeople] = useState<string[]>([])
   const [formError, setFormError] = useState('')
   const activeTeams = area.teams.filter((team) => team.ativo)
-  const people = area.memberships.filter((membership) => membership.team?.id === teamId).map((membership) => membership.person)
-  const teamPeople = [...new Map(people.map((person) => [person.id, person])).values()]
-  const teamEvents = events.filter((event) => event.teams.some((item) => item.teamId === teamId))
+  const teamMemberships = area.memberships.filter((membership) => membership.team?.id === teamId)
+  const teamPeople = [...new Map(teamMemberships.map((membership) => [membership.person.id, membership])).values()]
+  const selectedTeam = activeTeams.find((team) => team.id === teamId)
+  const teamEvents = events.filter((event) => event.campus.id === selectedTeam?.campus.id)
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -414,29 +424,55 @@ function ServiceScheduleBatchDialog({
     })
   }
 
-  return <div className="dialog-backdrop" role="presentation" onMouseDown={onClose}><section className="event-dialog event-dialog--schedule-batch" role="dialog" aria-modal="true" aria-labelledby="schedule-batch-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={onClose}>×</button><p className="eyebrow">{area.nome}</p><h2 id="schedule-batch-title">Escala em lote</h2><p className="dialog-description">Escolha uma equipe e selecione as pessoas. O lote é criado por inteiro ou não é criado, caso exista algum conflito.</p><form className="event-form" onSubmit={submit}><label>Equipe<select value={teamId} required onChange={(event) => { setTeamId(event.target.value); setEventId(''); setData(''); setSelectedPeople([]); setFormError('') }}><option value="" disabled>Selecione a equipe</option>{activeTeams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Evento <span className="field-optional">(opcional)</span><select value={eventId} disabled={!teamId || isLoadingEvents} onChange={(event) => { const selected = teamEvents.find((item) => item.id === event.target.value); setEventId(event.target.value); setData(selected ? toDateTimeLocalValue(selected.inicio) : '') }}><option value="">{isLoadingEvents ? 'Carregando eventos aprovados...' : teamId ? 'Escala independente de evento' : 'Escolha uma equipe antes'}</option>{teamEvents.map((event) => <option value={event.id} key={event.id}>{event.titulo} · {formatScheduleDate(event.inicio)}</option>)}</select>{eventError && <small className="form-error">{eventError}</small>}</label><label>Data e horário<input type="datetime-local" required value={data} onChange={(event) => setData(event.target.value)} /></label><label>Observação para o grupo <span className="field-optional">(opcional)</span><input name="observacao" maxLength={1000} placeholder="Orientação comum para as pessoas escaladas" /></label><section className="schedule-batch-people"><header><strong>Pessoas da equipe</strong><span>{selectedPeople.length} selecionada{selectedPeople.length === 1 ? '' : 's'}</span></header>{teamId && teamPeople.length ? teamPeople.map((person) => { const selected = selectedPeople.includes(person.id); return <label className={`schedule-batch-person ${selected ? 'schedule-batch-person--selected' : ''}`} key={person.id}><input type="checkbox" value={person.id} checked={selected} onChange={(event) => setSelectedPeople((current) => event.target.checked ? [...current, person.id] : current.filter((id) => id !== person.id))} /><span>{person.nome}</span><input name={`funcao-${person.id}`} disabled={!selected} required={selected} minLength={2} maxLength={100} defaultValue="Integrante" aria-label={`Função de ${person.nome}`} /></label> }) : <p>{teamId ? 'Não há pessoas vinculadas a esta equipe.' : 'Escolha uma equipe para selecionar as pessoas.'}</p>}</section>{formError && <p className="form-error" role="alert">{formError}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={onClose}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving || selectedPeople.length === 0}>{isSaving ? 'Criando lote...' : 'Criar escalas'}</button></div></form></section></div>
+  return <div className="dialog-backdrop" role="presentation" onMouseDown={onClose}><section className="event-dialog event-dialog--schedule-batch" role="dialog" aria-modal="true" aria-labelledby="schedule-batch-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={onClose}>×</button><p className="eyebrow">{area.nome}</p><h2 id="schedule-batch-title">Escala em lote</h2><p className="dialog-description">Escolha uma equipe e selecione as pessoas. O lote é criado por inteiro ou não é criado, caso exista algum conflito.</p><form className="event-form" onSubmit={submit}><label>Equipe<select value={teamId} required onChange={(event) => { setTeamId(event.target.value); setEventId(''); setData(''); setSelectedPeople([]); setFormError('') }}><option value="" disabled>Selecione a equipe</option>{activeTeams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Culto <span className="field-optional">(opcional)</span><select value={eventId} disabled={!teamId || isLoadingEvents} onChange={(event) => { const selected = teamEvents.find((item) => item.id === event.target.value); setEventId(event.target.value); setData(selected ? toDateTimeLocalValue(selected.inicio) : '') }}><option value="">{isLoadingEvents ? 'Carregando cultos aprovados...' : teamId ? 'Escala independente de Culto' : 'Escolha uma equipe antes'}</option>{teamEvents.map((event) => <option value={event.id} key={event.id}>{event.titulo} · {formatScheduleDate(event.inicio)}</option>)}</select>{eventError && <small className="form-error">{eventError}</small>}</label><label>Data e horário<input type="datetime-local" required value={data} onChange={(event) => { setData(event.target.value); setEventId('') }} /></label><label>Observação para o grupo <span className="field-optional">(opcional)</span><input name="observacao" maxLength={1000} placeholder="Orientação comum para as pessoas escaladas" /></label><section className="schedule-batch-people"><header><strong>Pessoas da equipe</strong><span>{selectedPeople.length} selecionada{selectedPeople.length === 1 ? '' : 's'}</span></header>{teamId && teamPeople.length ? teamPeople.map((membership) => { const selected = selectedPeople.includes(membership.person.id); const canSchedule = membership.funcoes.length > 0; return <label className={`schedule-batch-person ${selected ? 'schedule-batch-person--selected' : ''}`} key={membership.person.id}><input type="checkbox" value={membership.person.id} checked={selected} disabled={!canSchedule} onChange={(event) => setSelectedPeople((current) => event.target.checked ? [...current, membership.person.id] : current.filter((id) => id !== membership.person.id))} /><span>{membership.person.nome}{!canSchedule && <small>Cadastre funções antes de escalar.</small>}</span><select name={`funcao-${membership.person.id}`} disabled={!selected} required={selected} defaultValue="" aria-label={`Função de ${membership.person.nome}`}><option value="" disabled>Selecione a função</option>{membership.funcoes.map((functionName) => <option value={functionName} key={functionName}>{functionName}</option>)}</select></label> }) : <p>{teamId ? 'Não há pessoas vinculadas a esta equipe.' : 'Escolha uma equipe para selecionar as pessoas.'}</p>}</section>{formError && <p className="form-error" role="alert">{formError}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={onClose}>Cancelar</button><button className="primary-button" type="submit" disabled={isSaving || selectedPeople.length === 0}>{isSaving ? 'Criando lote...' : 'Criar escalas'}</button></div></form></section></div>
 }
 
 function SchedulePersonSelect({
   area,
   events,
+  eventId,
   isLoadingEvents,
   eventError,
   onEventSelect,
 }: {
   area: ServiceAreaDetail
   events: ServiceScheduleEventCandidate[]
+  eventId: string
   isLoadingEvents: boolean
   eventError: string
   onEventSelect: (event: ServiceScheduleEventCandidate | null) => void
 }) {
   const [teamId, setTeamId] = useState('')
   const [personId, setPersonId] = useState('')
-  const [eventId, setEventId] = useState('')
   const activeTeams = area.teams.filter((team) => team.ativo)
-  const people = area.memberships.filter((membership) => membership.team?.id === teamId).map((membership) => membership.person)
-  const uniquePeople = [...new Map(people.map((person) => [person.id, person])).values()]
-  const teamEvents = events.filter((event) => event.teams.some((item) => item.teamId === teamId))
+  const teamMemberships = area.memberships.filter((membership) => membership.team?.id === teamId)
+  const uniquePeople = [...new Map(teamMemberships.map((membership) => [membership.person.id, membership])).values()]
+  const selectedTeam = activeTeams.find((team) => team.id === teamId)
+  const teamEvents = events.filter((event) => event.campus.id === selectedTeam?.campus.id)
+  const selectedMembership = uniquePeople.find((membership) => membership.person.id === personId)
 
-  return <><label>Equipe<select name="teamId" value={teamId} onChange={(event) => { setTeamId(event.target.value); setPersonId(''); setEventId(''); onEventSelect(null) }} required><option value="" disabled>Selecione a equipe</option>{activeTeams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Pessoa<select name="personId" required value={personId} disabled={!teamId || uniquePeople.length === 0} onChange={(event) => setPersonId(event.target.value)}><option value="" disabled>{teamId ? uniquePeople.length ? 'Selecione a pessoa' : 'Não há pessoas vinculadas a esta equipe' : 'Escolha uma equipe antes'}</option>{uniquePeople.map((person) => <option key={person.id} value={person.id}>{person.nome}</option>)}</select></label><label>Evento <span className="field-optional">(opcional)</span><select name="eventId" value={eventId} disabled={!teamId || isLoadingEvents} onChange={(event) => { setEventId(event.target.value); onEventSelect(teamEvents.find((item) => item.id === event.target.value) ?? null) }}><option value="">{isLoadingEvents ? 'Carregando eventos aprovados...' : teamId ? 'Escala independente de evento' : 'Escolha uma equipe antes'}</option>{teamEvents.map((event) => <option value={event.id} key={event.id}>{event.titulo} · {formatScheduleDate(event.inicio)}</option>)}</select>{eventError && <small className="form-error">{eventError}</small>}</label><small className="schedule-event-note">Ao selecionar um evento, a data e o horário são preenchidos automaticamente.</small></>
+  return <><label>Equipe<select name="teamId" value={teamId} onChange={(event) => { setTeamId(event.target.value); setPersonId(''); onEventSelect(null) }} required><option value="" disabled>Selecione a equipe</option>{activeTeams.map((team) => <option key={team.id} value={team.id}>{team.nome} · {team.campus.nome}</option>)}</select></label><label>Pessoa<select name="personId" required value={personId} disabled={!teamId || uniquePeople.length === 0} onChange={(event) => setPersonId(event.target.value)}><option value="" disabled>{teamId ? uniquePeople.length ? 'Selecione a pessoa' : 'Não há pessoas vinculadas a esta equipe' : 'Escolha uma equipe antes'}</option>{uniquePeople.map((membership) => <option key={membership.person.id} value={membership.person.id}>{membership.person.nome}</option>)}</select></label>{teamId && <WorshipCalendar events={teamEvents} selectedEventId={eventId} disabled={isLoadingEvents} onSelect={onEventSelect} />}{eventError && <p className="form-error">{eventError}</p>}<input name="eventId" type="hidden" value={eventId} /><label>Função<select key={personId} name="funcao" required disabled={!personId || !selectedMembership?.funcoes.length} defaultValue=""><option value="" disabled>{personId ? selectedMembership?.funcoes.length ? 'Selecione a função' : 'Cadastre funções para esta pessoa' : 'Escolha a pessoa antes'}</option>{selectedMembership?.funcoes.map((functionName) => <option value={functionName} key={functionName}>{functionName}</option>)}</select></label><small className="schedule-event-note">Ao escolher um Culto, a data e o horário são preenchidos automaticamente. Sem Culto, a escala poderá ser vinculada automaticamente quando houver um no mesmo campus e horário.</small></>
+}
+
+function WorshipCalendar({ events, selectedEventId, disabled, onSelect }: {
+  events: ServiceScheduleEventCandidate[]
+  selectedEventId: string
+  disabled: boolean
+  onSelect: (event: ServiceScheduleEventCandidate | null) => void
+}) {
+  const [visibleMonth, setVisibleMonth] = useState(() => monthStart(new Date()))
+  const firstWeekDay = (visibleMonth.getDay() + 6) % 7
+  const totalDays = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 0).getDate()
+  const days = Array.from({ length: totalDays }, (_, index) => new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), index + 1))
+  const eventsForDay = (day: Date) => events.filter((event) => {
+    const date = new Date(event.inicio)
+    return date.getFullYear() === day.getFullYear() && date.getMonth() === day.getMonth() && date.getDate() === day.getDate()
+  })
+
+  return <section className="schedule-worship-calendar" aria-label="Agenda mensal de cultos">
+    <header><div><strong>Cultos disponíveis</strong><small>Selecione um Culto para preencher a escala automaticamente.</small></div><div><button type="button" aria-label="Mês anterior" onClick={() => setVisibleMonth((current) => new Date(current.getFullYear(), current.getMonth() - 1, 1))}>‹</button><span>{monthTitle(visibleMonth)}</span><button type="button" aria-label="Próximo mês" onClick={() => setVisibleMonth((current) => new Date(current.getFullYear(), current.getMonth() + 1, 1))}>›</button></div></header>
+    <div className="schedule-worship-weekdays">{['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'].map((day) => <span key={day}>{day}</span>)}</div>
+    <div className="schedule-worship-days">{Array.from({ length: firstWeekDay }, (_, index) => <span className="schedule-worship-day schedule-worship-day--empty" key={`empty-${index}`} />)}{days.map((day) => { const dayEvents = eventsForDay(day); return <div className="schedule-worship-day" key={day.toISOString()}><strong>{day.getDate()}</strong>{dayEvents.map((event) => <button className={event.id === selectedEventId ? 'schedule-worship-event schedule-worship-event--selected' : 'schedule-worship-event'} key={event.id} type="button" disabled={disabled} onClick={() => onSelect(event)}><span>{new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(new Date(event.inicio))}</span>{event.titulo}</button>)}</div> })}</div>
+    {!events.length && <p>Nenhum Culto aprovado no campus desta equipe neste período. Informe a data e o horário manualmente.</p>}
+  </section>
 }

@@ -72,6 +72,7 @@ export type PersonCountAggregateOutputType = {
   dataDecisao: number
   dataBatismo: number
   dataMembresia: number
+  titulosMinisteriais: number
   createdAt: number
   updatedAt: number
   campusId: number
@@ -128,6 +129,7 @@ export type PersonCountAggregateInputType = {
   dataDecisao?: true
   dataBatismo?: true
   dataMembresia?: true
+  titulosMinisteriais?: true
   createdAt?: true
   updatedAt?: true
   campusId?: true
@@ -219,6 +221,7 @@ export type PersonGroupByOutputType = {
   dataDecisao: Date | null
   dataBatismo: Date | null
   dataMembresia: Date | null
+  titulosMinisteriais: string[]
   createdAt: Date
   updatedAt: Date
   campusId: string
@@ -258,6 +261,7 @@ export type PersonWhereInput = {
   dataDecisao?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataBatismo?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataMembresia?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
+  titulosMinisteriais?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   campusId?: Prisma.StringFilter<"Person"> | string
@@ -312,6 +316,7 @@ export type PersonOrderByWithRelationInput = {
   dataDecisao?: Prisma.SortOrderInput | Prisma.SortOrder
   dataBatismo?: Prisma.SortOrderInput | Prisma.SortOrder
   dataMembresia?: Prisma.SortOrderInput | Prisma.SortOrder
+  titulosMinisteriais?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campusId?: Prisma.SortOrder
@@ -369,6 +374,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   dataDecisao?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataBatismo?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataMembresia?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
+  titulosMinisteriais?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   campusId?: Prisma.StringFilter<"Person"> | string
@@ -423,6 +429,7 @@ export type PersonOrderByWithAggregationInput = {
   dataDecisao?: Prisma.SortOrderInput | Prisma.SortOrder
   dataBatismo?: Prisma.SortOrderInput | Prisma.SortOrder
   dataMembresia?: Prisma.SortOrderInput | Prisma.SortOrder
+  titulosMinisteriais?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campusId?: Prisma.SortOrder
@@ -447,6 +454,7 @@ export type PersonScalarWhereWithAggregatesInput = {
   dataDecisao?: Prisma.DateTimeNullableWithAggregatesFilter<"Person"> | Date | string | null
   dataBatismo?: Prisma.DateTimeNullableWithAggregatesFilter<"Person"> | Date | string | null
   dataMembresia?: Prisma.DateTimeNullableWithAggregatesFilter<"Person"> | Date | string | null
+  titulosMinisteriais?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
   campusId?: Prisma.StringWithAggregatesFilter<"Person"> | string
@@ -465,6 +473,7 @@ export type PersonCreateInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -517,6 +526,7 @@ export type PersonUncheckedCreateInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -569,6 +579,7 @@ export type PersonUpdateInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -621,6 +632,7 @@ export type PersonUncheckedUpdateInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -673,6 +685,7 @@ export type PersonCreateManyInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -691,6 +704,7 @@ export type PersonUpdateManyMutationInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -707,6 +721,7 @@ export type PersonUncheckedUpdateManyInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -723,6 +738,14 @@ export type PersonOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type PersonCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nome?: Prisma.SortOrder
@@ -735,6 +758,7 @@ export type PersonCountOrderByAggregateInput = {
   dataDecisao?: Prisma.SortOrder
   dataBatismo?: Prisma.SortOrder
   dataMembresia?: Prisma.SortOrder
+  titulosMinisteriais?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campusId?: Prisma.SortOrder
@@ -829,8 +853,17 @@ export type PersonUncheckedUpdateManyWithoutCampusNestedInput = {
   deleteMany?: Prisma.PersonScalarWhereInput | Prisma.PersonScalarWhereInput[]
 }
 
+export type PersonCreatetitulosMinisteriaisInput = {
+  set: string[]
+}
+
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type PersonUpdatetitulosMinisteriaisInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type PersonCreateNestedOneWithoutCampusMembershipsInput = {
@@ -1373,6 +1406,7 @@ export type PersonCreateWithoutCampusInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
@@ -1424,6 +1458,7 @@ export type PersonUncheckedCreateWithoutCampusInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   organizationId?: string | null
@@ -1504,6 +1539,7 @@ export type PersonScalarWhereInput = {
   dataDecisao?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataBatismo?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataMembresia?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
+  titulosMinisteriais?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   campusId?: Prisma.StringFilter<"Person"> | string
@@ -1522,6 +1558,7 @@ export type PersonCreateWithoutCampusMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -1573,6 +1610,7 @@ export type PersonUncheckedCreateWithoutCampusMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -1640,6 +1678,7 @@ export type PersonUpdateWithoutCampusMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -1691,6 +1730,7 @@ export type PersonUncheckedUpdateWithoutCampusMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1742,6 +1782,7 @@ export type PersonCreateWithoutUserInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -1793,6 +1834,7 @@ export type PersonUncheckedCreateWithoutUserInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -1860,6 +1902,7 @@ export type PersonUpdateWithoutUserInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -1911,6 +1954,7 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1962,6 +2006,7 @@ export type PersonCreateWithoutOrganizationInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2013,6 +2058,7 @@ export type PersonUncheckedCreateWithoutOrganizationInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2090,6 +2136,7 @@ export type PersonCreateWithoutCellSupportRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2141,6 +2188,7 @@ export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2208,6 +2256,7 @@ export type PersonUpdateWithoutCellSupportRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -2259,6 +2308,7 @@ export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2310,6 +2360,7 @@ export type PersonCreateWithoutJourneyEventsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2361,6 +2412,7 @@ export type PersonUncheckedCreateWithoutJourneyEventsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2428,6 +2480,7 @@ export type PersonUpdateWithoutJourneyEventsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -2479,6 +2532,7 @@ export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2530,6 +2584,7 @@ export type PersonCreateWithoutFamilyMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2581,6 +2636,7 @@ export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2648,6 +2704,7 @@ export type PersonUpdateWithoutFamilyMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -2699,6 +2756,7 @@ export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2750,6 +2808,7 @@ export type PersonCreateWithoutServiceMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2801,6 +2860,7 @@ export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2868,6 +2928,7 @@ export type PersonUpdateWithoutServiceMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -2919,6 +2980,7 @@ export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2970,6 +3032,7 @@ export type PersonCreateWithoutServiceOperationalRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3021,6 +3084,7 @@ export type PersonUncheckedCreateWithoutServiceOperationalRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3088,6 +3152,7 @@ export type PersonUpdateWithoutServiceOperationalRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -3139,6 +3204,7 @@ export type PersonUncheckedUpdateWithoutServiceOperationalRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3190,6 +3256,7 @@ export type PersonCreateWithoutServiceSchedulesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3241,6 +3308,7 @@ export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3308,6 +3376,7 @@ export type PersonUpdateWithoutServiceSchedulesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -3359,6 +3428,7 @@ export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3410,6 +3480,7 @@ export type PersonCreateWithoutServiceScheduleSwapRequestsMadeInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3461,6 +3532,7 @@ export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3517,6 +3589,7 @@ export type PersonCreateWithoutServiceScheduleSwapRequestsReceivedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3568,6 +3641,7 @@ export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3635,6 +3709,7 @@ export type PersonUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -3686,6 +3761,7 @@ export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3748,6 +3824,7 @@ export type PersonUpdateWithoutServiceScheduleSwapRequestsReceivedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -3799,6 +3876,7 @@ export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsReceivedInput
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3850,6 +3928,7 @@ export type PersonCreateWithoutServiceAreaApplicationsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3901,6 +3980,7 @@ export type PersonUncheckedCreateWithoutServiceAreaApplicationsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3968,6 +4048,7 @@ export type PersonUpdateWithoutServiceAreaApplicationsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -4019,6 +4100,7 @@ export type PersonUncheckedUpdateWithoutServiceAreaApplicationsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4070,6 +4152,7 @@ export type PersonCreateWithoutEventsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4121,6 +4204,7 @@ export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -4188,6 +4272,7 @@ export type PersonUpdateWithoutEventsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -4239,6 +4324,7 @@ export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4290,6 +4376,7 @@ export type PersonCreateWithoutWorshipOrderItemsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4341,6 +4428,7 @@ export type PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -4408,6 +4496,7 @@ export type PersonUpdateWithoutWorshipOrderItemsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -4459,6 +4548,7 @@ export type PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4510,6 +4600,7 @@ export type PersonCreateWithoutWorshipDemandsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4561,6 +4652,7 @@ export type PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -4628,6 +4720,7 @@ export type PersonUpdateWithoutWorshipDemandsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -4679,6 +4772,7 @@ export type PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4730,6 +4824,7 @@ export type PersonCreateWithoutWorshipRepertoiresSubmittedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4781,6 +4876,7 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresSubmittedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -4837,6 +4933,7 @@ export type PersonCreateWithoutWorshipRepertoiresApprovedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4888,6 +4985,7 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresApprovedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -4955,6 +5053,7 @@ export type PersonUpdateWithoutWorshipRepertoiresSubmittedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5006,6 +5105,7 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresSubmittedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5068,6 +5168,7 @@ export type PersonUpdateWithoutWorshipRepertoiresApprovedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5119,6 +5220,7 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresApprovedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5170,6 +5272,7 @@ export type PersonCreateWithoutNotificationRecipientsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -5221,6 +5324,7 @@ export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -5288,6 +5392,7 @@ export type PersonUpdateWithoutNotificationRecipientsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5339,6 +5444,7 @@ export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5390,6 +5496,7 @@ export type PersonCreateWithoutKidsEnrollmentsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -5441,6 +5548,7 @@ export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -5508,6 +5616,7 @@ export type PersonUpdateWithoutKidsEnrollmentsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5559,6 +5668,7 @@ export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5610,6 +5720,7 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -5661,6 +5772,7 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -5717,6 +5829,7 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -5768,6 +5881,7 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInp
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -5835,6 +5949,7 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5886,6 +6001,7 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5948,6 +6064,7 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5999,6 +6116,7 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInp
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6050,6 +6168,7 @@ export type PersonCreateWithoutKidsCheckInsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -6101,6 +6220,7 @@ export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -6168,6 +6288,7 @@ export type PersonUpdateWithoutKidsCheckInsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -6219,6 +6340,7 @@ export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6270,6 +6392,7 @@ export type PersonCreateWithoutKidsPreCheckInsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -6321,6 +6444,7 @@ export type PersonUncheckedCreateWithoutKidsPreCheckInsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -6388,6 +6512,7 @@ export type PersonUpdateWithoutKidsPreCheckInsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -6439,6 +6564,7 @@ export type PersonUncheckedUpdateWithoutKidsPreCheckInsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6490,6 +6616,7 @@ export type PersonCreateWithoutKidsIdentityInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -6541,6 +6668,7 @@ export type PersonUncheckedCreateWithoutKidsIdentityInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -6608,6 +6736,7 @@ export type PersonUpdateWithoutKidsIdentityInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -6659,6 +6788,7 @@ export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6710,6 +6840,7 @@ export type PersonCreateWithoutKidsOperationalRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -6761,6 +6892,7 @@ export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -6828,6 +6960,7 @@ export type PersonUpdateWithoutKidsOperationalRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -6879,6 +7012,7 @@ export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6930,6 +7064,7 @@ export type PersonCreateWithoutKidsResourceRequestsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -6981,6 +7116,7 @@ export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7048,6 +7184,7 @@ export type PersonUpdateWithoutKidsResourceRequestsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -7099,6 +7236,7 @@ export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7150,6 +7288,7 @@ export type PersonCreateWithoutKidsCareProfileInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -7201,6 +7340,7 @@ export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7268,6 +7408,7 @@ export type PersonUpdateWithoutKidsCareProfileInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -7319,6 +7460,7 @@ export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7370,6 +7512,7 @@ export type PersonCreateWithoutMeetingVisitorInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -7421,6 +7564,7 @@ export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7488,6 +7632,7 @@ export type PersonUpdateWithoutMeetingVisitorInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -7539,6 +7684,7 @@ export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7590,6 +7736,7 @@ export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -7641,6 +7788,7 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7697,6 +7845,7 @@ export type PersonCreateWithoutPastoralCaresAsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -7748,6 +7897,7 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7815,6 +7965,7 @@ export type PersonUpdateWithoutPastoralCaresAsSubjectInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -7866,6 +8017,7 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7928,6 +8080,7 @@ export type PersonUpdateWithoutPastoralCaresAsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -7979,6 +8132,7 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8030,6 +8184,7 @@ export type PersonCreateWithoutMeetingAttendancesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -8081,6 +8236,7 @@ export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -8148,6 +8304,7 @@ export type PersonUpdateWithoutMeetingAttendancesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -8199,6 +8356,7 @@ export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8250,6 +8408,7 @@ export type PersonCreateWithoutCellNetworkSupervisionsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -8301,6 +8460,7 @@ export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -8368,6 +8528,7 @@ export type PersonUpdateWithoutCellNetworkSupervisionsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -8419,6 +8580,7 @@ export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8470,6 +8632,7 @@ export type PersonCreateWithoutCellCampusCoordinationsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -8521,6 +8684,7 @@ export type PersonUncheckedCreateWithoutCellCampusCoordinationsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -8588,6 +8752,7 @@ export type PersonUpdateWithoutCellCampusCoordinationsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -8639,6 +8804,7 @@ export type PersonUncheckedUpdateWithoutCellCampusCoordinationsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8690,6 +8856,7 @@ export type PersonCreateWithoutCellMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -8741,6 +8908,7 @@ export type PersonUncheckedCreateWithoutCellMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -8808,6 +8976,7 @@ export type PersonUpdateWithoutCellMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -8859,6 +9028,7 @@ export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8910,6 +9080,7 @@ export type PersonCreateWithoutCellLeadershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -8961,6 +9132,7 @@ export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -9028,6 +9200,7 @@ export type PersonUpdateWithoutCellLeadershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -9079,6 +9252,7 @@ export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -9130,6 +9304,7 @@ export type PersonCreateManyCampusInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   organizationId?: string | null
@@ -9147,6 +9322,7 @@ export type PersonUpdateWithoutCampusInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
@@ -9198,6 +9374,7 @@ export type PersonUncheckedUpdateWithoutCampusInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9249,6 +9426,7 @@ export type PersonUncheckedUpdateManyWithoutCampusInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9266,6 +9444,7 @@ export type PersonCreateManyOrganizationInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -9283,6 +9462,7 @@ export type PersonUpdateWithoutOrganizationInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -9334,6 +9514,7 @@ export type PersonUncheckedUpdateWithoutOrganizationInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -9385,6 +9566,7 @@ export type PersonUncheckedUpdateManyWithoutOrganizationInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -9694,6 +9876,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   dataDecisao?: boolean
   dataBatismo?: boolean
   dataMembresia?: boolean
+  titulosMinisteriais?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campusId?: boolean
@@ -9749,6 +9932,7 @@ export type PersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   dataDecisao?: boolean
   dataBatismo?: boolean
   dataMembresia?: boolean
+  titulosMinisteriais?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campusId?: boolean
@@ -9769,6 +9953,7 @@ export type PersonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   dataDecisao?: boolean
   dataBatismo?: boolean
   dataMembresia?: boolean
+  titulosMinisteriais?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campusId?: boolean
@@ -9789,13 +9974,14 @@ export type PersonSelectScalar = {
   dataDecisao?: boolean
   dataBatismo?: boolean
   dataMembresia?: boolean
+  titulosMinisteriais?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campusId?: boolean
   organizationId?: boolean
 }
 
-export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "sexo" | "dataNascimento" | "cpf" | "telefone" | "email" | "ativo" | "dataDecisao" | "dataBatismo" | "dataMembresia" | "createdAt" | "updatedAt" | "campusId" | "organizationId", ExtArgs["result"]["person"]>
+export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "sexo" | "dataNascimento" | "cpf" | "telefone" | "email" | "ativo" | "dataDecisao" | "dataBatismo" | "dataMembresia" | "titulosMinisteriais" | "createdAt" | "updatedAt" | "campusId" | "organizationId", ExtArgs["result"]["person"]>
 export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   campus?: boolean | Prisma.CampusDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Person$userArgs<ExtArgs>
@@ -9896,6 +10082,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     dataDecisao: Date | null
     dataBatismo: Date | null
     dataMembresia: Date | null
+    titulosMinisteriais: string[]
     createdAt: Date
     updatedAt: Date
     campusId: string
@@ -10370,6 +10557,7 @@ export interface PersonFieldRefs {
   readonly dataDecisao: Prisma.FieldRef<"Person", 'DateTime'>
   readonly dataBatismo: Prisma.FieldRef<"Person", 'DateTime'>
   readonly dataMembresia: Prisma.FieldRef<"Person", 'DateTime'>
+  readonly titulosMinisteriais: Prisma.FieldRef<"Person", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Person", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Person", 'DateTime'>
   readonly campusId: Prisma.FieldRef<"Person", 'String'>

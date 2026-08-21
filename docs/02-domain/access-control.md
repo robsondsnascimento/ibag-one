@@ -170,6 +170,8 @@ PASTOR_SENIOR
 
 Responsabilidades ministeriais e operacionais não são papéis globais quando dependem de um escopo. Elas são vínculos de domínio com histórico, como liderança de célula, supervisão de rede, coordenação de células e liderança em áreas de serviço.
 
+Títulos ministeriais pertencem ao cadastro da pessoa e são apenas identificações de atuação, como `Pastor de Adoração`. Eles não concedem login, papel global, acesso a campus ou gestão de Área de Serviço. Essas permissões continuam sendo atribuídas explicitamente.
+
 O **Coordenador de Células** é uma atribuição por campus, não um `UserRole`. No cuidado pastoral, a hierarquia é:
 
 ```text

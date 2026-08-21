@@ -24,12 +24,14 @@ export function ServiceFunctionsField({
   areaName,
   value,
   onChange,
+  availableFunctions = [],
   disabled = false,
   inputName = 'funcoes',
 }: {
   areaName: string
   value: string[]
   onChange: (functions: string[]) => void
+  availableFunctions?: string[]
   disabled?: boolean
   inputName?: string
 }) {
@@ -39,7 +41,12 @@ export function ServiceFunctionsField({
     setCustomFunctions(value.join(', '))
   }, [areaName])
 
-  if (!isMusicServiceArea(areaName)) {
+  const options = [...new Map([
+    ...(availableFunctions.length ? availableFunctions : isMusicServiceArea(areaName) ? musicServiceFunctions : []),
+    ...value,
+  ].map((functionName) => [normalized(functionName), functionName])).values()]
+
+  if (!options.length) {
     return <label>Funções de serviço <span className="field-optional">(opcional)</span><input name={inputName} value={customFunctions} onChange={(event) => { setCustomFunctions(event.target.value); onChange(event.target.value.split(',').map((item) => item.trim()).filter(Boolean)) }} disabled={disabled} maxLength={500} placeholder="Ex.: Organização, Apoio" /><small className="field-help">Separe por vírgulas.</small></label>
   }
 
@@ -48,11 +55,11 @@ export function ServiceFunctionsField({
   }
 
   return <fieldset className="service-functions-field" disabled={disabled}>
-    <legend>Funções na Música <span className="field-optional">(opcional)</span></legend>
+    <legend>Funções de serviço <span className="field-optional">(opcional)</span></legend>
     <p>Selecione uma ou mais funções que a pessoa pode exercer na escala.</p>
     <div className="service-functions-options">
-      {musicServiceFunctions.map((functionName) => <label key={functionName}><input type="checkbox" checked={value.includes(functionName)} onChange={() => toggle(functionName)} /><span>{functionName}</span></label>)}
+      {options.map((functionName) => <label key={functionName}><input type="checkbox" checked={value.includes(functionName)} onChange={() => toggle(functionName)} /><span>{functionName}</span></label>)}
     </div>
-    <small className="field-help">Ao marcar Ministro, a pessoa poderá preparar e enviar o repertório dos cultos em que estiver escalada e confirmada. Essa função pode coexistir com qualquer outra.</small>
+    {isMusicServiceArea(areaName) && <small className="field-help">Ao marcar Ministro, a pessoa poderá preparar e enviar o repertório dos cultos em que estiver escalada e confirmada. Essa função pode coexistir com qualquer outra.</small>}
   </fieldset>
 }

@@ -17,6 +17,8 @@ Uma pessoa pode ser:
 
 O sistema não cria entidades separadas para cada função.
 
+Uma pessoa também pode receber títulos ministeriais livres e cumulativos, como `Pastor de Adoração`. Esses títulos são descritivos, não dependem de login e não alteram permissões, campi ou vínculos de serviço.
+
 ---
 
 # Princípio

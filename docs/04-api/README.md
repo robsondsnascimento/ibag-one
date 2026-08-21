@@ -9,6 +9,10 @@ Esta pasta descreve os fluxos de negócio expostos pela API do IBAG One. Todas a
 - [Escalas de serviço](service-schedules.md): criação em lote, confirmação, recusa, substituição, solicitação de troca por função, conflitos e histórico.
 - [Entrada e formação](service-area-onboarding.md): interesse, etapas por área, aprovação e criação de integrante.
 
+## Pessoas
+
+- [Pessoas e títulos ministeriais](persons.md): cadastro, campi vinculados e títulos descritivos sem concessão automática de acesso.
+
 ## Cultos e eventos
 
 - [Ordem de Culto](worship-order.md): criação, itens, demandas automáticas por área, materiais e publicação.

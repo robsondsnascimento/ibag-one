@@ -6,13 +6,8 @@ import { ServiceAreaManagementDialog } from './ServiceAreaManagementDialog'
 import { ServiceFunctionsField } from './ServiceFunctionsField'
 import { ServiceOperationalRolesPanel } from './ServiceOperationalRolesPanel'
 import { ServiceAreaSchedulePanel } from './ServiceAreaSchedulePanel'
-
-const membershipRoleLabels: Record<ServiceAreaDetail['memberships'][number]['role'], string> = {
-  GENERAL_LEADER: 'Liderança geral',
-  CAMPUS_LEADER: 'Liderança de campus',
-  TEAM_LEADER: 'Liderança de equipe',
-  MEMBER: 'Integrante',
-}
+import { ServiceAreaFunctionsPanel } from './ServiceAreaFunctionsPanel'
+import { ServiceAreaCareTree } from './ServiceAreaCareTree'
 
 function initials(name: string) {
   return name
@@ -96,6 +91,7 @@ export function ServiceAreaWorkspace({
   const teamLeaders = area.memberships.filter((membership) => membership.role === 'TEAM_LEADER')
   const teamMembers = area.memberships.filter((membership) => membership.role === 'MEMBER')
   const activeTeams = area.teams.filter((team) => team.ativo)
+  const carePeopleCount = new Set([...area.pastoralLeadership.map((leader) => leader.person.id), ...area.memberships.map((membership) => membership.person.id)]).size
 
   const saveFunctions = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -142,22 +138,23 @@ export function ServiceAreaWorkspace({
           })}</div> : <p className="service-area-empty">Ainda não há equipes ativas nesta área.</p>}
         </section>
 
-        <section className="service-area-panel">
-          <header><div><p className="eyebrow">Lideranças</p><h2>Cuidado e organização</h2></div><span>{generalLeaders.length + campusLeaders.length + teamLeaders.length}</span></header>
-          {generalLeaders.length || campusLeaders.length || teamLeaders.length ? <div className="service-leadership-list">{[...generalLeaders, ...campusLeaders, ...teamLeaders].map((membership) => <article className="service-person-row" key={membership.id}><span className="service-person-symbol">{initials(membership.person.nome)}</span><div><strong>{membership.person.nome}</strong><small>{membershipRoleLabels[membership.role]}{membership.team ? ` · ${membership.team.nome}` : membership.campus ? ` · ${membership.campus.nome}` : ''}</small></div></article>)}</div> : <p className="service-area-empty">Ainda não há lideranças vinculadas a esta área.</p>}
+        <section className="service-area-panel service-area-panel--care-tree">
+          <header><div><p className="eyebrow">Cadeia de cuidado</p><h2>Cuidado e organização</h2></div><span>{carePeopleCount}</span></header>
+          <ServiceAreaCareTree area={area} />
         </section>
       </div>
 
       <section className="service-area-panel service-area-panel--members">
         <header><div><p className="eyebrow">Integrantes</p><h2>Pessoas em serviço</h2></div><span>{teamMembers.length}</span></header>
-        {teamMembers.length ? <div className="service-membership-list">{teamMembers.map((membership) => <article className="service-membership-row" key={membership.id}><span className="service-person-symbol">{initials(membership.person.nome)}</span><div><strong>{membership.person.nome}</strong><small>{membership.team?.nome ?? 'Equipe não definida'} · desde {formatShortDate(membership.inicio)}{membership.funcoes.length ? ` · ${membership.funcoes.join(', ')}` : ''}</small></div><span>{membership.person.telefone || membership.person.email || 'Contato não informado'}</span>{canManageMembers && membership.team && activeTeams.some((team) => team.id === membership.team?.id) && <button className="schedule-action" type="button" onClick={() => { setFunctionsError(''); setEditingFunctions(membership) }}>Funções</button>}</article>)}</div> : <p className="service-area-empty">Ainda não há integrantes ativos nas equipes desta área.</p>}
+        {teamMembers.length ? <div className="service-membership-list">{teamMembers.map((membership) => <article className="service-membership-row" key={membership.id}><span className="service-person-symbol">{initials(membership.person.nome)}</span><div><strong>{membership.person.nome}</strong><small>{membership.team?.nome ?? 'Equipe não definida'} · desde {formatShortDate(membership.inicio)}{membership.funcoes.length ? ` · ${membership.funcoes.join(', ')}` : ''}</small></div>{canManageMembers && membership.team && activeTeams.some((team) => team.id === membership.team?.id) && <button className="schedule-action" type="button" onClick={() => { setFunctionsError(''); setEditingFunctions(membership) }}>Funções</button>}</article>)}</div> : <p className="service-area-empty">Ainda não há integrantes ativos nas equipes desta área.</p>}
       </section>
 
-      {editingFunctions && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setEditingFunctions(null)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="service-member-functions-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setEditingFunctions(null)}>×</button><p className="eyebrow">{editingFunctions.team?.nome}</p><h2 id="service-member-functions-title">Funções de serviço</h2><p className="dialog-description">Cadastre as funções que {editingFunctions.person.nome} pode exercer. Elas serão usadas nas solicitações de troca.</p><form className="event-form" onSubmit={saveFunctions}><ServiceFunctionsField areaName={area.nome} value={editingFunctions.funcoes} onChange={(funcoes) => setEditingFunctions((membership) => membership ? { ...membership, funcoes } : null)} disabled={isSavingFunctions} />{functionsError && <p className="form-error" role="alert">{functionsError}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setEditingFunctions(null)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSavingFunctions}>{isSavingFunctions ? 'Salvando...' : 'Salvar funções'}</button></div></form></section></div>}
+      {editingFunctions && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setEditingFunctions(null)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="service-member-functions-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setEditingFunctions(null)}>×</button><p className="eyebrow">{editingFunctions.team?.nome}</p><h2 id="service-member-functions-title">Funções de serviço</h2><p className="dialog-description">Cadastre as funções que {editingFunctions.person.nome} pode exercer. Elas serão usadas nas solicitações de troca.</p><form className="event-form" onSubmit={saveFunctions}><ServiceFunctionsField areaName={area.nome} availableFunctions={area.funcoes} value={editingFunctions.funcoes} onChange={(funcoes) => setEditingFunctions((membership) => membership ? { ...membership, funcoes } : null)} disabled={isSavingFunctions} />{functionsError && <p className="form-error" role="alert">{functionsError}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setEditingFunctions(null)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSavingFunctions}>{isSavingFunctions ? 'Salvando...' : 'Salvar funções'}</button></div></form></section></div>}
 
       {managementTarget && <ServiceAreaManagementDialog target={managementTarget} accessToken={accessToken} onClose={() => setManagementTarget(null)} onSaved={onStructureChange} onNotice={onNotice} />}
 
-      {area.ativo ? <><ServiceOperationalRolesPanel area={area} canManage={canManageMembers} />
+      {area.ativo ? <><ServiceAreaFunctionsPanel area={area} accessToken={accessToken} canManage={canManageMembers} onUpdated={onRetry} onNotice={onNotice} />
+      <ServiceOperationalRolesPanel area={area} canManage={canManageMembers} />
       <ServiceAreaSchedulePanel key={area.id} area={area} accessToken={accessToken} currentPersonId={currentPersonId} canManage={canManageSchedules} onNotice={onNotice} /></> : <section className="service-area-panel"><header><div><p className="eyebrow">Operação pausada</p><h2>Área inativa</h2></div></header><p className="service-area-empty">Reative a Área de Serviço para consultar funções operacionais e criar novas escalas. O histórico foi preservado.</p></section>}
     </section>
   )

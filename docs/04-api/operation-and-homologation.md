@@ -68,7 +68,7 @@ Antes de liberar o frontend ou produção, validar com dados controlados:
 3. Coordenação, supervisão, liderança e multiplicação de células.
 4. Registro de reunião, presença, falta, visitante e liberação semanal do estudo.
 5. Cuidado e painel pastoral nos escopos corretos.
-6. Cadastro, escala e entrada de voluntários nas áreas de serviço.
+6. Cadastro, transferência entre áreas/equipes, catálogo de funções, escala e entrada de voluntários nas áreas de serviço.
 7. Eventos, Ordem de Culto, repertório, PDF e alerta aos participantes.
 8. IBAG Kids: turmas, autorização de retirada, QR, check-in/out, recursos e visão de Líder de Culto.
 9. Notificação interna e, quando configurados, webhooks de WhatsApp e ProPresenter em ambiente de homologção.
@@ -85,8 +85,9 @@ Com esses dados cadastrados, validar também:
 3. uma escala vinculada a evento aparece na consulta da Agenda, sem ações de edição;
 4. uma recusa, substituição ou nova escala aparece na central de notificações do destinatário;
 5. a criação em lote falha integralmente quando uma das pessoas possui conflito de agenda.
-6. um evento pode vincular célula, áreas, equipes e espaços compatíveis com seu campus; a solicitação é aprovada ou cancelada apenas por quem a API autoriza;
-7. o checklist do evento mantém os itens concluídos e a Agenda apresenta as escalas apenas para consulta.
+6. um evento que não seja Culto pode vincular célula e qualquer evento pode vincular áreas e espaços compatíveis com seu campus; a solicitação é aprovada ou cancelada apenas por quem a API autoriza;
+7. o checklist do evento mantém os itens concluídos, limpa o campo após a inclusão e a Agenda apresenta as escalas apenas para consulta.
+8. a escala criada sem Culto é vinculada automaticamente quando houver Culto aprovado no mesmo campus e horário; a agenda mensal mostra somente esses cultos para a equipe selecionada.
 
 ## Verificação automática
 

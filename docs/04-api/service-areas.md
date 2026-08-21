@@ -19,9 +19,11 @@
 | --- | --- | --- |
 | `GET` | `/service-areas` | Lista as áreas ativas da organização. |
 | `GET` | `/service-areas?includeInactive=true` | Lista áreas ativas e inativas para secretaria, administração ou super administração. |
-| `GET` | `/service-areas/:id` | Consulta uma área e suas equipes; uma área inativa é acessível somente pela gestão central. |
+| `GET` | `/service-areas/:id` | Consulta uma área, suas equipes e a cadeia de cuidado; uma área inativa é acessível somente pela gestão central. |
 | `PATCH` | `/service-areas/:id` | Atualiza nome, descrição ou status da área; restrito à gestão central. |
+| `PATCH` | `/service-areas/:id/functions` | Substitui o catálogo de funções da área; restrito à gestão central. |
 | `PATCH` | `/service-areas/teams/:id` | Atualiza nome, descrição ou status de uma equipe, respeitando o escopo da liderança. |
+| `PATCH` | `/service-areas/memberships/:id/transfer` | Encerra o vínculo ativo e cria outro em nova área/equipe, preservando o histórico. |
 
 ## Exemplo
 
@@ -33,3 +35,18 @@ PATCH /service-areas/uuid-da-area
   "ativo": false
 }
 ```
+
+## Funções e vínculos de pessoas
+
+O catálogo de `funcoes` é próprio da Área de Serviço. Ao atribuir uma pessoa a uma equipe, a API aceita uma ou mais funções deste catálogo. Vínculos antigos permanecem apenas como histórico quando a pessoa é transferida de área ou equipe; não há duplicação de vínculo ativo.
+
+```json
+PATCH /service-areas/uuid-da-area/functions
+{
+  "funcoes": ["Recepção", "Informações", "Apoio"]
+}
+```
+
+## Cadeia de cuidado
+
+A consulta detalhada da Área de Serviço inclui `pastoralLeadership`, formado por usuários ativos com função `PASTOR_SENIOR` ou `PASTOR` — inclusive quando essa função foi concedida como adicional. O painel combina esses dados com os vínculos ativos da área para apresentar a árvore: Pastor Sênior, Pastores, liderança geral, liderança de campus, liderança de equipe e voluntários por equipe. Níveis sem atribuição permanecem visíveis como `Não definido`.

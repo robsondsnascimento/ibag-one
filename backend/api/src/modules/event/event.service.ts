@@ -48,6 +48,7 @@ export class EventService {
       },
       include: this.details,
     });
+    await this.synchronizeWorshipSchedules(event);
     await this.syncGoogleCalendar(event.id);
     return event;
   }
@@ -139,6 +140,7 @@ export class EventService {
       },
       include: this.details,
     });
+    await this.synchronizeWorshipSchedules(event);
     await this.syncGoogleCalendar(event.id);
     return event;
   }
@@ -152,6 +154,7 @@ export class EventService {
       await transaction.eventHistory.create({ data: { eventId: event.id, status: EventStatus.APPROVED, changedByUserId: context.userId } });
       return transaction.event.update({ where: { id: event.id }, data: { status: EventStatus.APPROVED }, include: this.details });
     });
+    await this.synchronizeWorshipSchedules(approved);
     await this.syncGoogleCalendar(approved.id);
     return approved;
   }
@@ -163,6 +166,7 @@ export class EventService {
       await transaction.eventHistory.create({ data: { eventId: event.id, status: EventStatus.CANCELLED, changedByUserId: context.userId } });
       return transaction.event.update({ where: { id: event.id }, data: { status: EventStatus.CANCELLED }, include: this.details });
     });
+    await this.synchronizeWorshipSchedules(cancelled, true);
     await this.syncGoogleCalendar(cancelled.id);
     return cancelled;
   }
@@ -282,6 +286,22 @@ export class EventService {
       const conflict = await this.prisma.eventSpace.findFirst({ where: { spaceId: { in: dto.spaceIds }, event: { organizationId: context.organizationId, ...overlap, status: active, ...(exceptId ? { id: { not: exceptId } } : {}) } } });
       if (conflict) throw new BadRequestException('Um dos espaços informados já está reservado neste período');
     }
+  }
+
+  private async synchronizeWorshipSchedules(event: { id: string; organizationId: string; campusId: string; inicio: Date; type: EventType; status: EventStatus }, resetExisting = false) {
+    if (resetExisting) {
+      await this.prisma.serviceSchedule.updateMany({ where: { eventId: event.id }, data: { eventId: null } });
+    }
+    if (event.type !== EventType.WORSHIP || event.status !== EventStatus.APPROVED) return;
+    await this.prisma.serviceSchedule.updateMany({
+      where: {
+        organizationId: event.organizationId,
+        eventId: null,
+        data: event.inicio,
+        team: { campusId: event.campusId },
+      },
+      data: { eventId: event.id },
+    });
   }
 
   private async event(id: string, context: OrganizationContext, full = false): Promise<any> {

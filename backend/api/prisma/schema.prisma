@@ -233,6 +233,7 @@ model Person {
   dataDecisao    DateTime?
   dataBatismo    DateTime?
   dataMembresia  DateTime?
+  titulosMinisteriais String[] @default([])
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
@@ -544,6 +545,7 @@ model ServiceArea {
   id                        String                     @id @default(uuid())
   nome                      String
   descricao                 String?
+  funcoes                   String[]                   @default([])
   scope                     ServiceAreaScope           @default(GLOBAL)
   ativo                     Boolean                    @default(true)
   createdAt                 DateTime                   @default(now())
