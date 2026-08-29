@@ -505,6 +505,13 @@ export type EnumEventStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumEventStatusFilter<$PrismaModel> | $Enums.EventStatus
 }
 
+export type EnumEventRecurrenceFilter<$PrismaModel = never> = {
+  equals?: $Enums.EventRecurrence | Prisma.EnumEventRecurrenceFieldRefInput<$PrismaModel>
+  in?: $Enums.EventRecurrence[] | Prisma.ListEnumEventRecurrenceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EventRecurrence[] | Prisma.ListEnumEventRecurrenceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEventRecurrenceFilter<$PrismaModel> | $Enums.EventRecurrence
+}
+
 export type EnumEventTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.EventType | Prisma.EnumEventTypeFieldRefInput<$PrismaModel>
   in?: $Enums.EventType[] | Prisma.ListEnumEventTypeFieldRefInput<$PrismaModel>
@@ -523,6 +530,16 @@ export type EnumEventStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEventStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEventStatusFilter<$PrismaModel>
+}
+
+export type EnumEventRecurrenceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EventRecurrence | Prisma.EnumEventRecurrenceFieldRefInput<$PrismaModel>
+  in?: $Enums.EventRecurrence[] | Prisma.ListEnumEventRecurrenceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EventRecurrence[] | Prisma.ListEnumEventRecurrenceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEventRecurrenceWithAggregatesFilter<$PrismaModel> | $Enums.EventRecurrence
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEventRecurrenceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEventRecurrenceFilter<$PrismaModel>
 }
 
 export type EnumGoogleCalendarSyncStatusFilter<$PrismaModel = never> = {
@@ -1216,6 +1233,13 @@ export type NestedEnumEventStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumEventStatusFilter<$PrismaModel> | $Enums.EventStatus
 }
 
+export type NestedEnumEventRecurrenceFilter<$PrismaModel = never> = {
+  equals?: $Enums.EventRecurrence | Prisma.EnumEventRecurrenceFieldRefInput<$PrismaModel>
+  in?: $Enums.EventRecurrence[] | Prisma.ListEnumEventRecurrenceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EventRecurrence[] | Prisma.ListEnumEventRecurrenceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEventRecurrenceFilter<$PrismaModel> | $Enums.EventRecurrence
+}
+
 export type NestedEnumEventTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.EventType | Prisma.EnumEventTypeFieldRefInput<$PrismaModel>
   in?: $Enums.EventType[] | Prisma.ListEnumEventTypeFieldRefInput<$PrismaModel>
@@ -1234,6 +1258,16 @@ export type NestedEnumEventStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEventStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEventStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumEventRecurrenceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EventRecurrence | Prisma.EnumEventRecurrenceFieldRefInput<$PrismaModel>
+  in?: $Enums.EventRecurrence[] | Prisma.ListEnumEventRecurrenceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EventRecurrence[] | Prisma.ListEnumEventRecurrenceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEventRecurrenceWithAggregatesFilter<$PrismaModel> | $Enums.EventRecurrence
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEventRecurrenceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEventRecurrenceFilter<$PrismaModel>
 }
 
 export type NestedEnumGoogleCalendarSyncStatusFilter<$PrismaModel = never> = {

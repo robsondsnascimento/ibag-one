@@ -7,6 +7,10 @@ export type WorshipOrderItem = {
   titulo: string
   horario: string | null
   observacoes: string | null
+  responsiblePerson: {
+    id: string
+    nome: string
+  } | null
   serviceArea: {
     id: string
     nome: string
@@ -36,7 +40,26 @@ export type WorshipOrderItem = {
 export type WorshipOrder = {
   id: string
   status: 'DRAFT' | 'PUBLISHED'
-  event: AgendaEvent
+  event: AgendaEvent & {
+    schedules: Array<{
+      id: string
+      data: string
+      funcao: string
+      status: 'SCHEDULED' | 'CONFIRMED' | 'DECLINED' | 'COMPLETED'
+      person: {
+        id: string
+        nome: string
+      }
+      team: {
+        id: string
+        nome: string
+        serviceArea: {
+          id: string
+          nome: string
+        }
+      }
+    }>
+  }
   template: {
     id: string
     nome: string
@@ -55,6 +78,10 @@ export type WorshipOrderTemplate = {
     sequencia: number
     titulo: string
     horario: string | null
+    serviceArea: {
+      id: string
+      nome: string
+    } | null
   }>
 }
 
@@ -93,7 +120,7 @@ export function createWorshipOrderFromTemplate(accessToken: string, eventId: str
   })
 }
 
-export function addWorshipOrderItem(accessToken: string, orderId: string, input: { sequencia: number; titulo: string; horario?: string; serviceAreaId?: string; observacoes?: string }) {
+export function addWorshipOrderItem(accessToken: string, orderId: string, input: { sequencia: number; titulo: string; horario?: string; responsiblePersonId?: string; serviceAreaId?: string; observacoes?: string }) {
   return apiRequest<WorshipOrderItem>(`/worship-orders/${orderId}/items`, {
     method: 'POST',
     accessToken,
@@ -109,7 +136,7 @@ export function publishWorshipOrder(accessToken: string, orderId: string) {
   })
 }
 
-export function updateWorshipOrderItem(accessToken: string, itemId: string, input: { titulo?: string; horario?: string; serviceAreaId?: string; observacoes?: string }) {
+export function updateWorshipOrderItem(accessToken: string, itemId: string, input: { titulo?: string; horario?: string; responsiblePersonId?: string; serviceAreaId?: string; observacoes?: string }) {
   return apiRequest<WorshipOrderItem>(`/worship-orders/items/${itemId}`, {
     method: 'PATCH',
     accessToken,
@@ -140,12 +167,26 @@ export function addWorshipOrderMaterial(accessToken: string, itemId: string, inp
   })
 }
 
-export function addWorshipOrderDemand(accessToken: string, itemId: string, input: { descricao: string; serviceAreaId: string; dueAt?: string }) {
+export function addWorshipOrderDemand(accessToken: string, itemId: string, input: { descricao: string; serviceAreaId: string; responsiblePersonId?: string; dueAt?: string }) {
   return apiRequest<WorshipOrderItem['demands'][number]>(`/worship-orders/items/${itemId}/demands`, {
     method: 'POST',
     accessToken,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(input),
+  })
+}
+
+export function completeWorshipOrderDemand(accessToken: string, demandId: string) {
+  return apiRequest<WorshipOrderItem['demands'][number]>(`/worship-orders/demands/${demandId}/complete`, {
+    method: 'PATCH',
+    accessToken,
+  })
+}
+
+export function cancelWorshipOrderDemand(accessToken: string, demandId: string) {
+  return apiRequest<WorshipOrderItem['demands'][number]>(`/worship-orders/demands/${demandId}/cancel`, {
+    method: 'PATCH',
+    accessToken,
   })
 }
 
@@ -170,6 +211,18 @@ export function updateWorshipOrderTemplate(accessToken: string, templateId: stri
   return apiRequest<WorshipOrderTemplate>(`/worship-order-templates/${templateId}`, { method: 'PATCH', accessToken, headers: { 'content-type': 'application/json' }, body: JSON.stringify(input) })
 }
 
-export function addWorshipOrderTemplateItem(accessToken: string, templateId: string, input: { sequencia: number; titulo: string; horario?: string }) {
+export function addWorshipOrderTemplateItem(accessToken: string, templateId: string, input: { sequencia: number; titulo: string; horario?: string; serviceAreaId?: string }) {
   return apiRequest<WorshipOrderTemplate['items'][number]>(`/worship-order-templates/${templateId}/items`, { method: 'POST', accessToken, headers: { 'content-type': 'application/json' }, body: JSON.stringify(input) })
+}
+
+export function updateWorshipOrderTemplateItem(accessToken: string, itemId: string, input: { titulo?: string; horario?: string; serviceAreaId?: string | null }) {
+  return apiRequest<WorshipOrderTemplate['items'][number]>(`/worship-order-templates/items/${itemId}`, { method: 'PATCH', accessToken, headers: { 'content-type': 'application/json' }, body: JSON.stringify(input) })
+}
+
+export function deleteWorshipOrderTemplateItem(accessToken: string, itemId: string) {
+  return apiRequest<unknown>(`/worship-order-templates/items/${itemId}`, { method: 'DELETE', accessToken })
+}
+
+export function reorderWorshipOrderTemplateItems(accessToken: string, templateId: string, items: Array<{ id: string; sequencia: number }>) {
+  return apiRequest<WorshipOrderTemplate>(`/worship-order-templates/${templateId}/items/order`, { method: 'PATCH', accessToken, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ items }) })
 }

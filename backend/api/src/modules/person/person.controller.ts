@@ -7,8 +7,12 @@ import {
   Post,
   Delete,
   Query,
+  Res,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 import { PersonService } from './person.service';
 
@@ -26,6 +30,7 @@ import {
   OrganizationContext,
 } from '../../common/context/organization-context';
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
+import { profilePhotoMaxBytes, profilePhotosDirectory } from './profile-photo.storage';
 
 
 @Controller('persons')
@@ -94,6 +99,17 @@ export class PersonController {
 
   }
 
+  @Get(':id/profile-photo')
+  async profilePhoto(
+    @Param('id') id: string,
+    @CurrentOrganization() context: OrganizationContext,
+    @Res() response: any,
+  ) {
+    const photo = await this.personService.getProfilePhoto(id, context);
+    response.setHeader('Cache-Control', 'private, max-age=3600');
+    return response.type(photo.mimeType).sendFile(photo.path, { root: profilePhotosDirectory });
+  }
+
   @Patch(':id/ministerial-titles')
   updateMinisterialTitles(
     @Param('id') id: string,
@@ -101,6 +117,19 @@ export class PersonController {
     @CurrentOrganization() context: OrganizationContext,
   ) {
     return this.personService.updateMinisterialTitles(id, dto, context);
+  }
+
+  @Post(':id/profile-photo')
+  @UseInterceptors(FileInterceptor('file', {
+    dest: profilePhotosDirectory,
+    limits: { fileSize: profilePhotoMaxBytes },
+  }))
+  updateProfilePhoto(
+    @Param('id') id: string,
+    @UploadedFile() file: any,
+    @CurrentOrganization() context: OrganizationContext,
+  ) {
+    return this.personService.updateProfilePhoto(id, file, context);
   }
 
 

@@ -219,6 +219,7 @@ export type CampusWhereInput = {
   notifications?: Prisma.NotificationListRelationFilter
   kidsClasses?: Prisma.KidsClassListRelationFilter
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentListRelationFilter
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
 }
 
@@ -244,6 +245,7 @@ export type CampusOrderByWithRelationInput = {
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   kidsClasses?: Prisma.KidsClassOrderByRelationAggregateInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentOrderByRelationAggregateInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteOrderByRelationAggregateInput
   organization?: Prisma.OrganizationOrderByWithRelationInput
 }
 
@@ -272,6 +274,7 @@ export type CampusWhereUniqueInput = Prisma.AtLeast<{
   notifications?: Prisma.NotificationListRelationFilter
   kidsClasses?: Prisma.KidsClassListRelationFilter
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentListRelationFilter
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
 }, "id">
 
@@ -324,6 +327,7 @@ export type CampusCreateInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -349,6 +353,7 @@ export type CampusUncheckedCreateInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusUpdateInput = {
@@ -372,6 +377,7 @@ export type CampusUpdateInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -397,6 +403,7 @@ export type CampusUncheckedUpdateInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateManyInput = {
@@ -644,6 +651,20 @@ export type CampusUpdateOneWithoutServiceMembershipsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CampusUpdateToOneWithWhereWithoutServiceMembershipsInput, Prisma.CampusUpdateWithoutServiceMembershipsInput>, Prisma.CampusUncheckedUpdateWithoutServiceMembershipsInput>
 }
 
+export type CampusCreateNestedOneWithoutServiceScheduleNotesInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutServiceScheduleNotesInput, Prisma.CampusUncheckedCreateWithoutServiceScheduleNotesInput>
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutServiceScheduleNotesInput
+  connect?: Prisma.CampusWhereUniqueInput
+}
+
+export type CampusUpdateOneRequiredWithoutServiceScheduleNotesNestedInput = {
+  create?: Prisma.XOR<Prisma.CampusCreateWithoutServiceScheduleNotesInput, Prisma.CampusUncheckedCreateWithoutServiceScheduleNotesInput>
+  connectOrCreate?: Prisma.CampusCreateOrConnectWithoutServiceScheduleNotesInput
+  upsert?: Prisma.CampusUpsertWithoutServiceScheduleNotesInput
+  connect?: Prisma.CampusWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CampusUpdateToOneWithWhereWithoutServiceScheduleNotesInput, Prisma.CampusUpdateWithoutServiceScheduleNotesInput>, Prisma.CampusUncheckedUpdateWithoutServiceScheduleNotesInput>
+}
+
 export type CampusCreateNestedOneWithoutSpacesInput = {
   create?: Prisma.XOR<Prisma.CampusCreateWithoutSpacesInput, Prisma.CampusUncheckedCreateWithoutSpacesInput>
   connectOrCreate?: Prisma.CampusCreateOrConnectWithoutSpacesInput
@@ -750,6 +771,7 @@ export type CampusCreateWithoutPersonsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -774,6 +796,7 @@ export type CampusUncheckedCreateWithoutPersonsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutPersonsInput = {
@@ -812,6 +835,7 @@ export type CampusUpdateWithoutPersonsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -836,6 +860,7 @@ export type CampusUncheckedUpdateWithoutPersonsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutPersonCampusMembershipsInput = {
@@ -858,6 +883,7 @@ export type CampusCreateWithoutPersonCampusMembershipsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -882,6 +908,7 @@ export type CampusUncheckedCreateWithoutPersonCampusMembershipsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutPersonCampusMembershipsInput = {
@@ -920,6 +947,7 @@ export type CampusUpdateWithoutPersonCampusMembershipsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -944,6 +972,7 @@ export type CampusUncheckedUpdateWithoutPersonCampusMembershipsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutOrganizationInput = {
@@ -967,6 +996,7 @@ export type CampusCreateWithoutOrganizationInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
 }
 
 export type CampusUncheckedCreateWithoutOrganizationInput = {
@@ -990,6 +1020,7 @@ export type CampusUncheckedCreateWithoutOrganizationInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutOrganizationInput = {
@@ -1052,6 +1083,7 @@ export type CampusCreateWithoutCellsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -1076,6 +1108,7 @@ export type CampusUncheckedCreateWithoutCellsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutCellsInput = {
@@ -1114,6 +1147,7 @@ export type CampusUpdateWithoutCellsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -1138,6 +1172,7 @@ export type CampusUncheckedUpdateWithoutCellsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutCellNetworksInput = {
@@ -1160,6 +1195,7 @@ export type CampusCreateWithoutCellNetworksInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -1184,6 +1220,7 @@ export type CampusUncheckedCreateWithoutCellNetworksInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutCellNetworksInput = {
@@ -1222,6 +1259,7 @@ export type CampusUpdateWithoutCellNetworksInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -1246,6 +1284,7 @@ export type CampusUncheckedUpdateWithoutCellNetworksInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutServiceAreasInput = {
@@ -1268,6 +1307,7 @@ export type CampusCreateWithoutServiceAreasInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -1292,6 +1332,7 @@ export type CampusUncheckedCreateWithoutServiceAreasInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutServiceAreasInput = {
@@ -1330,6 +1371,7 @@ export type CampusUpdateWithoutServiceAreasInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -1354,6 +1396,7 @@ export type CampusUncheckedUpdateWithoutServiceAreasInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutServiceTeamsInput = {
@@ -1376,6 +1419,7 @@ export type CampusCreateWithoutServiceTeamsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -1400,6 +1444,7 @@ export type CampusUncheckedCreateWithoutServiceTeamsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutServiceTeamsInput = {
@@ -1438,6 +1483,7 @@ export type CampusUpdateWithoutServiceTeamsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -1462,6 +1508,7 @@ export type CampusUncheckedUpdateWithoutServiceTeamsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutServiceMembershipsInput = {
@@ -1484,6 +1531,7 @@ export type CampusCreateWithoutServiceMembershipsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -1508,6 +1556,7 @@ export type CampusUncheckedCreateWithoutServiceMembershipsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutServiceMembershipsInput = {
@@ -1546,6 +1595,7 @@ export type CampusUpdateWithoutServiceMembershipsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -1565,6 +1615,119 @@ export type CampusUncheckedUpdateWithoutServiceMembershipsInput = {
   cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
   serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
   serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
+  spaces?: Prisma.SpaceUncheckedUpdateManyWithoutCampusNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
+  kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
+}
+
+export type CampusCreateWithoutServiceScheduleNotesInput = {
+  id?: string
+  nome: string
+  cidade: string
+  estado: string
+  ativo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  persons?: Prisma.PersonCreateNestedManyWithoutCampusInput
+  personCampusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutCampusInput
+  cells?: Prisma.CellCreateNestedManyWithoutCampusInput
+  cellNetworks?: Prisma.CellNetworkCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutCampusInput
+  serviceAreas?: Prisma.ServiceAreaCreateNestedManyWithoutCampusInput
+  serviceTeams?: Prisma.ServiceTeamCreateNestedManyWithoutCampusInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutCampusInput
+  spaces?: Prisma.SpaceCreateNestedManyWithoutCampusInput
+  events?: Prisma.EventCreateNestedManyWithoutCampusInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
+  kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
+}
+
+export type CampusUncheckedCreateWithoutServiceScheduleNotesInput = {
+  id?: string
+  nome: string
+  cidade: string
+  estado: string
+  ativo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organizationId?: string | null
+  persons?: Prisma.PersonUncheckedCreateNestedManyWithoutCampusInput
+  personCampusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutCampusInput
+  cells?: Prisma.CellUncheckedCreateNestedManyWithoutCampusInput
+  cellNetworks?: Prisma.CellNetworkUncheckedCreateNestedManyWithoutCampusInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutCampusInput
+  serviceAreas?: Prisma.ServiceAreaUncheckedCreateNestedManyWithoutCampusInput
+  serviceTeams?: Prisma.ServiceTeamUncheckedCreateNestedManyWithoutCampusInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutCampusInput
+  spaces?: Prisma.SpaceUncheckedCreateNestedManyWithoutCampusInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
+  kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+}
+
+export type CampusCreateOrConnectWithoutServiceScheduleNotesInput = {
+  where: Prisma.CampusWhereUniqueInput
+  create: Prisma.XOR<Prisma.CampusCreateWithoutServiceScheduleNotesInput, Prisma.CampusUncheckedCreateWithoutServiceScheduleNotesInput>
+}
+
+export type CampusUpsertWithoutServiceScheduleNotesInput = {
+  update: Prisma.XOR<Prisma.CampusUpdateWithoutServiceScheduleNotesInput, Prisma.CampusUncheckedUpdateWithoutServiceScheduleNotesInput>
+  create: Prisma.XOR<Prisma.CampusCreateWithoutServiceScheduleNotesInput, Prisma.CampusUncheckedCreateWithoutServiceScheduleNotesInput>
+  where?: Prisma.CampusWhereInput
+}
+
+export type CampusUpdateToOneWithWhereWithoutServiceScheduleNotesInput = {
+  where?: Prisma.CampusWhereInput
+  data: Prisma.XOR<Prisma.CampusUpdateWithoutServiceScheduleNotesInput, Prisma.CampusUncheckedUpdateWithoutServiceScheduleNotesInput>
+}
+
+export type CampusUpdateWithoutServiceScheduleNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  cidade?: Prisma.StringFieldUpdateOperationsInput | string
+  estado?: Prisma.StringFieldUpdateOperationsInput | string
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  persons?: Prisma.PersonUpdateManyWithoutCampusNestedInput
+  personCampusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutCampusNestedInput
+  cells?: Prisma.CellUpdateManyWithoutCampusNestedInput
+  cellNetworks?: Prisma.CellNetworkUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutCampusNestedInput
+  serviceAreas?: Prisma.ServiceAreaUpdateManyWithoutCampusNestedInput
+  serviceTeams?: Prisma.ServiceTeamUpdateManyWithoutCampusNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutCampusNestedInput
+  spaces?: Prisma.SpaceUpdateManyWithoutCampusNestedInput
+  events?: Prisma.EventUpdateManyWithoutCampusNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
+  kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
+}
+
+export type CampusUncheckedUpdateWithoutServiceScheduleNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  cidade?: Prisma.StringFieldUpdateOperationsInput | string
+  estado?: Prisma.StringFieldUpdateOperationsInput | string
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  persons?: Prisma.PersonUncheckedUpdateManyWithoutCampusNestedInput
+  personCampusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutCampusNestedInput
+  cells?: Prisma.CellUncheckedUpdateManyWithoutCampusNestedInput
+  cellNetworks?: Prisma.CellNetworkUncheckedUpdateManyWithoutCampusNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutCampusNestedInput
+  serviceAreas?: Prisma.ServiceAreaUncheckedUpdateManyWithoutCampusNestedInput
+  serviceTeams?: Prisma.ServiceTeamUncheckedUpdateManyWithoutCampusNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutCampusNestedInput
   spaces?: Prisma.SpaceUncheckedUpdateManyWithoutCampusNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
@@ -1592,6 +1755,7 @@ export type CampusCreateWithoutSpacesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -1616,6 +1780,7 @@ export type CampusUncheckedCreateWithoutSpacesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutSpacesInput = {
@@ -1654,6 +1819,7 @@ export type CampusUpdateWithoutSpacesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -1678,6 +1844,7 @@ export type CampusUncheckedUpdateWithoutSpacesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutEventsInput = {
@@ -1700,6 +1867,7 @@ export type CampusCreateWithoutEventsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -1724,6 +1892,7 @@ export type CampusUncheckedCreateWithoutEventsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutEventsInput = {
@@ -1762,6 +1931,7 @@ export type CampusUpdateWithoutEventsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -1786,6 +1956,7 @@ export type CampusUncheckedUpdateWithoutEventsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutNotificationsInput = {
@@ -1808,6 +1979,7 @@ export type CampusCreateWithoutNotificationsInput = {
   events?: Prisma.EventCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -1832,6 +2004,7 @@ export type CampusUncheckedCreateWithoutNotificationsInput = {
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutNotificationsInput = {
@@ -1870,6 +2043,7 @@ export type CampusUpdateWithoutNotificationsInput = {
   events?: Prisma.EventUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -1894,6 +2068,7 @@ export type CampusUncheckedUpdateWithoutNotificationsInput = {
   events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutKidsClassesInput = {
@@ -1916,6 +2091,7 @@ export type CampusCreateWithoutKidsClassesInput = {
   events?: Prisma.EventCreateNestedManyWithoutCampusInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -1940,6 +2116,7 @@ export type CampusUncheckedCreateWithoutKidsClassesInput = {
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutKidsClassesInput = {
@@ -1978,6 +2155,7 @@ export type CampusUpdateWithoutKidsClassesInput = {
   events?: Prisma.EventUpdateManyWithoutCampusNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -2002,6 +2180,7 @@ export type CampusUncheckedUpdateWithoutKidsClassesInput = {
   events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutKidsOperationalRolesInput = {
@@ -2024,6 +2203,7 @@ export type CampusCreateWithoutKidsOperationalRolesInput = {
   events?: Prisma.EventCreateNestedManyWithoutCampusInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -2048,6 +2228,7 @@ export type CampusUncheckedCreateWithoutKidsOperationalRolesInput = {
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCampusInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutKidsOperationalRolesInput = {
@@ -2086,6 +2267,7 @@ export type CampusUpdateWithoutKidsOperationalRolesInput = {
   events?: Prisma.EventUpdateManyWithoutCampusNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -2110,6 +2292,7 @@ export type CampusUncheckedUpdateWithoutKidsOperationalRolesInput = {
   events?: Prisma.EventUncheckedUpdateManyWithoutCampusNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateWithoutCellCampusCoordinationsInput = {
@@ -2132,6 +2315,7 @@ export type CampusCreateWithoutCellCampusCoordinationsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteCreateNestedManyWithoutCampusInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutCampusesInput
 }
 
@@ -2156,6 +2340,7 @@ export type CampusUncheckedCreateWithoutCellCampusCoordinationsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCampusInput
   kidsClasses?: Prisma.KidsClassUncheckedCreateNestedManyWithoutCampusInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutCampusInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedCreateNestedManyWithoutCampusInput
 }
 
 export type CampusCreateOrConnectWithoutCellCampusCoordinationsInput = {
@@ -2194,6 +2379,7 @@ export type CampusUpdateWithoutCellCampusCoordinationsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutCampusesNestedInput
 }
 
@@ -2218,6 +2404,7 @@ export type CampusUncheckedUpdateWithoutCellCampusCoordinationsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusCreateManyOrganizationInput = {
@@ -2251,6 +2438,7 @@ export type CampusUpdateWithoutOrganizationInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusUncheckedUpdateWithoutOrganizationInput = {
@@ -2274,6 +2462,7 @@ export type CampusUncheckedUpdateWithoutOrganizationInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCampusNestedInput
   kidsClasses?: Prisma.KidsClassUncheckedUpdateManyWithoutCampusNestedInput
   kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutCampusNestedInput
+  serviceScheduleNotes?: Prisma.ServiceScheduleNoteUncheckedUpdateManyWithoutCampusNestedInput
 }
 
 export type CampusUncheckedUpdateManyWithoutOrganizationInput = {
@@ -2305,6 +2494,7 @@ export type CampusCountOutputType = {
   notifications: number
   kidsClasses: number
   kidsOperationalRoles: number
+  serviceScheduleNotes: number
 }
 
 export type CampusCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2321,6 +2511,7 @@ export type CampusCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   notifications?: boolean | CampusCountOutputTypeCountNotificationsArgs
   kidsClasses?: boolean | CampusCountOutputTypeCountKidsClassesArgs
   kidsOperationalRoles?: boolean | CampusCountOutputTypeCountKidsOperationalRolesArgs
+  serviceScheduleNotes?: boolean | CampusCountOutputTypeCountServiceScheduleNotesArgs
 }
 
 /**
@@ -2424,6 +2615,13 @@ export type CampusCountOutputTypeCountKidsOperationalRolesArgs<ExtArgs extends r
   where?: Prisma.KidsOperationalRoleAssignmentWhereInput
 }
 
+/**
+ * CampusCountOutputType without action
+ */
+export type CampusCountOutputTypeCountServiceScheduleNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceScheduleNoteWhereInput
+}
+
 
 export type CampusSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2447,6 +2645,7 @@ export type CampusSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   notifications?: boolean | Prisma.Campus$notificationsArgs<ExtArgs>
   kidsClasses?: boolean | Prisma.Campus$kidsClassesArgs<ExtArgs>
   kidsOperationalRoles?: boolean | Prisma.Campus$kidsOperationalRolesArgs<ExtArgs>
+  serviceScheduleNotes?: boolean | Prisma.Campus$serviceScheduleNotesArgs<ExtArgs>
   organization?: boolean | Prisma.Campus$organizationArgs<ExtArgs>
   _count?: boolean | Prisma.CampusCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["campus"]>
@@ -2501,6 +2700,7 @@ export type CampusInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   notifications?: boolean | Prisma.Campus$notificationsArgs<ExtArgs>
   kidsClasses?: boolean | Prisma.Campus$kidsClassesArgs<ExtArgs>
   kidsOperationalRoles?: boolean | Prisma.Campus$kidsOperationalRolesArgs<ExtArgs>
+  serviceScheduleNotes?: boolean | Prisma.Campus$serviceScheduleNotesArgs<ExtArgs>
   organization?: boolean | Prisma.Campus$organizationArgs<ExtArgs>
   _count?: boolean | Prisma.CampusCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -2527,6 +2727,7 @@ export type $CampusPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     kidsClasses: Prisma.$KidsClassPayload<ExtArgs>[]
     kidsOperationalRoles: Prisma.$KidsOperationalRoleAssignmentPayload<ExtArgs>[]
+    serviceScheduleNotes: Prisma.$ServiceScheduleNotePayload<ExtArgs>[]
     organization: Prisma.$OrganizationPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2945,6 +3146,7 @@ export interface Prisma__CampusClient<T, Null = never, ExtArgs extends runtime.T
   notifications<T extends Prisma.Campus$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   kidsClasses<T extends Prisma.Campus$kidsClassesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$kidsClassesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KidsClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   kidsOperationalRoles<T extends Prisma.Campus$kidsOperationalRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$kidsOperationalRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KidsOperationalRoleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceScheduleNotes<T extends Prisma.Campus$serviceScheduleNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$serviceScheduleNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceScheduleNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   organization<T extends Prisma.Campus$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Campus$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3693,6 +3895,30 @@ export type Campus$kidsOperationalRolesArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.KidsOperationalRoleAssignmentScalarFieldEnum | Prisma.KidsOperationalRoleAssignmentScalarFieldEnum[]
+}
+
+/**
+ * Campus.serviceScheduleNotes
+ */
+export type Campus$serviceScheduleNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceScheduleNote
+   */
+  select?: Prisma.ServiceScheduleNoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceScheduleNote
+   */
+  omit?: Prisma.ServiceScheduleNoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceScheduleNoteInclude<ExtArgs> | null
+  where?: Prisma.ServiceScheduleNoteWhereInput
+  orderBy?: Prisma.ServiceScheduleNoteOrderByWithRelationInput | Prisma.ServiceScheduleNoteOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceScheduleNoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceScheduleNoteScalarFieldEnum | Prisma.ServiceScheduleNoteScalarFieldEnum[]
 }
 
 /**

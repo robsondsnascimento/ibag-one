@@ -12,19 +12,26 @@ export class ApiError extends Error {
 type RequestOptions = Omit<RequestInit, 'headers'> & {
   accessToken?: string
   headers?: Record<string, string>
+  acceptEmptyResponse?: boolean
 }
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const { acceptEmptyResponse = false, ...requestOptions } = options
   const response = await fetch(`${apiUrl}${path}`, {
-    ...options,
+    ...requestOptions,
     headers: {
-      ...(options.accessToken ? { authorization: `Bearer ${options.accessToken}` } : {}),
-      ...options.headers,
+      ...(requestOptions.accessToken ? { authorization: `Bearer ${requestOptions.accessToken}` } : {}),
+      ...requestOptions.headers,
     },
   })
 
   if (!response.ok) throw new ApiError(await errorMessage(response), response.status)
-  return response.json() as Promise<T>
+  const body = await response.text()
+  if (!body.trim()) {
+    if (acceptEmptyResponse) return null as T
+    throw new ApiError('A API não retornou os dados esperados para esta operação.', response.status)
+  }
+  return JSON.parse(body) as T
 }
 
 export async function apiFormRequest<T>(path: string, accessToken: string, form: FormData): Promise<T> {
@@ -35,7 +42,18 @@ export async function apiFormRequest<T>(path: string, accessToken: string, form:
   })
 
   if (!response.ok) throw new ApiError(await errorMessage(response), response.status)
-  return response.json() as Promise<T>
+  const body = await response.text()
+  if (!body.trim()) throw new ApiError('A API não retornou os dados esperados para esta operação.', response.status)
+  return JSON.parse(body) as T
+}
+
+export async function apiBlobRequest(path: string, accessToken: string): Promise<Blob> {
+  const response = await fetch(`${apiUrl}${path}`, {
+    headers: { authorization: `Bearer ${accessToken}` },
+  })
+
+  if (!response.ok) throw new ApiError(await errorMessage(response), response.status)
+  return response.blob()
 }
 
 export async function apiDownload(path: string, accessToken: string): Promise<{ blob: Blob; filename: string }> {

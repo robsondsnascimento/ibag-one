@@ -208,6 +208,10 @@ Conferência
 
 Eventos devem manter histórico.
 
+## Recorrência
+
+Um evento pode ser pontual, semanal ou mensal. Uma recorrência sempre possui data final e é materializada como ocorrências individuais para que cada data preserve seu próprio status, checklist, cancelamento, conflitos, escalas e sincronização externa. A edição de uma ocorrência não altera as demais; uma mudança de frequência exige uma nova série. Em uma série de Cultos aprovados, cada ocorrência recebe sua própria Ordem de Culto a partir do modelo padrão quando o modelo estiver ativo e for compatível com as Áreas de Serviço selecionadas.
+
 Nada importante deve ser perdido.
 
 ---

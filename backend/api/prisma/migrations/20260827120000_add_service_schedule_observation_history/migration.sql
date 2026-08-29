@@ -1,0 +1,1 @@
+ALTER TYPE "ServiceScheduleHistoryAction" ADD VALUE 'OBSERVATION_UPDATED';

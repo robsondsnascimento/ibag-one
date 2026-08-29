@@ -8,13 +8,13 @@ Depois da cópia, a ordem do evento é independente. Por isso, um item excepcion
 
 ## Modelo de músicas do Culto Cachoeirinha
 
-O painel disponibiliza a criação assistida do modelo **Culto Cachoeirinha · roteiro de músicas**. Ao escolher a Área de Música global, são criadas cinco posições editáveis vinculadas a essa área:
+O painel disponibiliza a criação assistida do modelo **Culto Cachoeirinha · roteiro de músicas**. Ao escolher a Área de Música global, são criadas cinco posições editáveis, todas vinculadas automaticamente a essa área:
 
-1. `Celebração · início do culto`
-2. `Celebração ou POP`
-3. `Oração`
-4. `Dízimos e ofertas`
-5. `Celebração · final do culto`
+1. `Música celebração`;
+2. `Música celebração ou POP`;
+3. `Música oração`;
+4. `Música dízimos e ofertas`;
+5. `Música final`.
 
 Elas são um ponto de partida. A Ordem de Culto de cada evento continua livre para receber, mover ou remover itens especiais.
 
@@ -26,6 +26,7 @@ Elas são um ponto de partida. A Ordem de Culto de cada evento continua livre pa
 - Itens de um modelo podem apontar apenas para áreas de serviço globais, pois o mesmo modelo atende todos os campus.
 - Ao aplicar o modelo, o evento precisa já envolver cada área indicada nos seus itens. Áreas locais e particularidades de um campus podem ser adicionadas diretamente na ordem daquele evento.
 - Responsável, materiais e demandas não são copiados do modelo. Eles pertencem ao culto específico e continuam ajustáveis no rascunho.
+- Pelo painel, a liderança central pode adicionar, editar, mover ou remover itens do modelo, inclusive sua Área de Serviço global. A reordenação é feita segurando a alça do item e arrastando-o para a posição desejada: os demais itens trocam de posição visualmente antes da confirmação do movimento. Para navegação por teclado, a alça também aceita `Alt` + seta para cima ou para baixo. A remoção do último item continua bloqueada.
 - Desativar um modelo também remove sua condição de padrão. Ordens já criadas continuam preservadas e registram qual modelo as originou.
 - O isolamento por `organizationId` é aplicado em todas as consultas e alterações.
 

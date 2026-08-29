@@ -63,6 +63,8 @@ export type ServiceAreaDetail = {
       nome: string
       telefone: string | null
       email: string | null
+      dataMembresia: string | null
+      dataMembresiaSemDia: boolean
     }
     team: {
       id: string
@@ -372,6 +374,16 @@ export type ServiceScheduleEventCandidate = {
   }
 }
 
+export type ServiceScheduleUnavailability = {
+  id: string
+  data: string
+  serviceAreaId: string
+  person: {
+    id: string
+    nome: string
+  }
+}
+
 export function listServiceAreaSchedules(accessToken: string, areaId: string, filters: { start?: string; end?: string; teamId?: string; status?: ServiceScheduleStatus }) {
   const search = new URLSearchParams()
   if (filters.start) search.set('start', filters.start)
@@ -380,6 +392,30 @@ export function listServiceAreaSchedules(accessToken: string, areaId: string, fi
   if (filters.status) search.set('status', filters.status)
   const suffix = search.size ? `?${search.toString()}` : ''
   return apiRequest<ServiceAreaSchedule[]>(`/service-areas/${areaId}/schedules${suffix}`, { accessToken })
+}
+
+export function listServiceScheduleUnavailabilities(accessToken: string, areaId: string, filters: { start?: string; end?: string }) {
+  const search = new URLSearchParams()
+  if (filters.start) search.set('start', filters.start)
+  if (filters.end) search.set('end', filters.end)
+  const suffix = search.size ? `?${search.toString()}` : ''
+  return apiRequest<ServiceScheduleUnavailability[]>(`/service-areas/${areaId}/unavailabilities${suffix}`, { accessToken })
+}
+
+export function createServiceScheduleUnavailability(accessToken: string, areaId: string, data: string) {
+  return apiRequest<ServiceScheduleUnavailability>(`/service-areas/${areaId}/unavailabilities`, {
+    method: 'POST',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ data }),
+  })
+}
+
+export function deleteServiceScheduleUnavailability(accessToken: string, areaId: string, unavailabilityId: string) {
+  return apiRequest<{ id: string }>(`/service-areas/${areaId}/unavailabilities/${unavailabilityId}`, {
+    method: 'DELETE',
+    accessToken,
+  })
 }
 
 export function createServiceSchedule(accessToken: string, teamId: string, input: { personId: string; data: string; funcao: string; observacao?: string; eventId?: string }) {
@@ -420,6 +456,42 @@ export function substituteServiceSchedule(accessToken: string, scheduleId: strin
     accessToken,
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(input),
+  })
+}
+
+export type ServiceScheduleNote = {
+  id?: string
+  data: string
+  observacao: string
+  serviceAreaId: string
+  campusId: string
+  eventId: string | null
+  updatedByUserId?: string
+  createdAt?: string
+  updatedAt?: string
+}
+
+export function listServiceScheduleNotes(accessToken: string, areaId: string, filters: { start?: string; end?: string }) {
+  const search = new URLSearchParams()
+  if (filters.start) search.set('start', filters.start)
+  if (filters.end) search.set('end', filters.end)
+  const suffix = search.size ? `?${search.toString()}` : ''
+  return apiRequest<ServiceScheduleNote[]>(`/service-areas/${areaId}/schedule-notes${suffix}`, { accessToken })
+}
+
+export function updateServiceScheduleNote(accessToken: string, areaId: string, input: { campusId: string; data: string; eventId?: string; observacao: string }) {
+  return apiRequest<ServiceScheduleNote>(`/service-areas/${areaId}/schedule-notes`, {
+    method: 'PATCH',
+    accessToken,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export function deleteServiceSchedule(accessToken: string, scheduleId: string) {
+  return apiRequest<{ id: string }>(`/service-areas/schedules/${scheduleId}`, {
+    method: 'DELETE',
+    accessToken,
   })
 }
 

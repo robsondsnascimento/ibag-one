@@ -116,6 +116,7 @@ describe('ServiceAreaService', () => {
       user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
       serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-1' }) },
       event: { findFirst: jest.fn().mockResolvedValue(null) },
+      serviceScheduleUnavailability: { findFirst: jest.fn().mockResolvedValue(null) },
       serviceSchedule: {
         findFirst: jest.fn()
           .mockResolvedValueOnce(null)
@@ -149,6 +150,7 @@ describe('ServiceAreaService', () => {
       user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
       serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-1' }) },
       event: { findFirst: jest.fn().mockResolvedValue(null) },
+      serviceScheduleUnavailability: { findFirst: jest.fn().mockResolvedValue(null) },
       serviceSchedule: { findFirst: jest.fn().mockResolvedValue(null) },
       $transaction: jest.fn(callback => callback(transaction)),
       notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
@@ -171,6 +173,7 @@ describe('ServiceAreaService', () => {
       user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
       serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-1', funcoes: ['Guitarra'] }) },
       event: { findFirst: jest.fn().mockResolvedValue(culto) },
+      serviceScheduleUnavailability: { findFirst: jest.fn().mockResolvedValue(null) },
       serviceSchedule: {
         findFirst: jest.fn().mockResolvedValue(null),
         create: jest.fn().mockResolvedValue({ id: 'schedule-1', personId: 'person-2', funcao: 'Guitarra', data: culto.inicio, eventId: culto.id, teamId: 'team-1', team: { serviceAreaId: 'area-1' } }),
@@ -208,6 +211,111 @@ describe('ServiceAreaService', () => {
     expect(prisma.serviceSchedule.findMany).toHaveBeenCalledWith(expect.objectContaining({
       where: expect.objectContaining({ team: expect.objectContaining({ serviceAreaId: 'area-1' }) }),
     }));
+  });
+
+  it('permite que integrante comum consulte a grade da própria equipe', async () => {
+    const prisma: any = {
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-music' }) },
+      user: { findFirst: jest.fn().mockResolvedValue(null) },
+      serviceMembership: {
+        findMany: jest.fn().mockResolvedValue([{ role: 'MEMBER', campusId: 'campus-1', teamId: 'team-1' }]),
+      },
+      serviceSchedule: { findMany: jest.fn().mockResolvedValue([{ id: 'schedule-1' }]) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.findAreaSchedules('area-music', undefined, undefined, undefined, undefined, context)).resolves.toEqual([{ id: 'schedule-1' }]);
+    expect(prisma.serviceSchedule.findMany).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({
+        team: expect.objectContaining({ serviceAreaId: 'area-music', OR: [{ id: { in: ['team-1'] } }] }),
+      }),
+    }));
+  });
+
+  it('mostra ao integrante comum somente a própria indisponibilidade', async () => {
+    const prisma: any = {
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-music' }) },
+      user: { findFirst: jest.fn().mockResolvedValue(null) },
+      serviceMembership: {
+        findMany: jest.fn().mockResolvedValue([{ role: 'MEMBER', campusId: 'campus-1', teamId: 'team-1' }]),
+        findFirst: jest.fn().mockResolvedValue(null),
+      },
+      serviceScheduleUnavailability: { findMany: jest.fn().mockResolvedValue([]) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.findAreaUnavailabilities('area-music', undefined, undefined, context)).resolves.toEqual([]);
+    expect(prisma.serviceScheduleUnavailability.findMany).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({ person: expect.objectContaining({ id: 'person-1' }) }),
+    }));
+  });
+
+  it('mostra à liderança as indisponibilidades consolidadas dentro do seu escopo', async () => {
+    const prisma: any = {
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-music' }) },
+      user: { findFirst: jest.fn().mockResolvedValue(null) },
+      serviceMembership: {
+        findMany: jest.fn().mockResolvedValue([{ role: 'TEAM_LEADER', campusId: 'campus-1', teamId: 'team-1' }]),
+        findFirst: jest.fn().mockResolvedValue({ id: 'leader-membership' }),
+      },
+      serviceScheduleUnavailability: { findMany: jest.fn().mockResolvedValue([]) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.findAreaUnavailabilities('area-music', undefined, undefined, context)).resolves.toEqual([]);
+    const query = prisma.serviceScheduleUnavailability.findMany.mock.calls[0][0];
+    expect(query.where.person.id).toBeUndefined();
+    expect(query.where.person.serviceMemberships.some.team.OR).toEqual([{ id: { in: ['team-1'] } }]);
+  });
+
+  it('permite ao integrante consultar a observação geral somente nos seus Campus', async () => {
+    const prisma: any = {
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-music' }) },
+      user: { findFirst: jest.fn().mockResolvedValue(null) },
+      serviceMembership: { findMany: jest.fn().mockResolvedValue([{ role: 'MEMBER', campusId: 'campus-1' }]) },
+      serviceScheduleNote: { findMany: jest.fn().mockResolvedValue([{ id: 'note-1', campusId: 'campus-1' }]) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.findScheduleNotes('area-music', undefined, undefined, context)).resolves.toEqual([{ id: 'note-1', campusId: 'campus-1' }]);
+    expect(prisma.serviceScheduleNote.findMany).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({ organizationId: 'org-1', serviceAreaId: 'area-music', campusId: { in: ['campus-1'] } }),
+    }));
+  });
+
+  it('registra uma única indisponibilidade da própria pessoa por área e data', async () => {
+    const created = { id: 'unavailable-1', data: new Date('2026-08-30T12:00:00.000Z'), serviceAreaId: 'area-music', person: { id: 'person-1', nome: 'Integrante' } };
+    const prisma: any = {
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-music', ativo: true }) },
+      serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-1', teamId: 'team-1' }) },
+      serviceScheduleUnavailability: { upsert: jest.fn().mockResolvedValue(created) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.createUnavailability('area-music', { data: '2026-08-30' }, context)).resolves.toEqual(created);
+    expect(prisma.serviceScheduleUnavailability.upsert).toHaveBeenCalledWith(expect.objectContaining({
+      where: { serviceAreaId_personId_data: { serviceAreaId: 'area-music', personId: 'person-1', data: new Date('2026-08-30T12:00:00.000Z') } },
+      create: expect.objectContaining({ organizationId: 'org-1', serviceAreaId: 'area-music', personId: 'person-1' }),
+    }));
+  });
+
+  it('impede escalar pessoa que informou indisponibilidade para a data', async () => {
+    const prisma: any = {
+      serviceTeam: { findFirst: jest.fn().mockResolvedValue({ id: 'team-1', serviceAreaId: 'area-music', campusId: 'campus-1' }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+      serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-1', funcoes: ['Vocal'] }) },
+      event: { findFirst: jest.fn().mockResolvedValue(null) },
+      serviceScheduleUnavailability: { findFirst: jest.fn().mockResolvedValue({ id: 'unavailable-1' }) },
+      serviceSchedule: { findFirst: jest.fn(), create: jest.fn() },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.createSchedule('team-1', {
+      personId: 'person-2',
+      data: '2026-08-30T12:00:00.000Z',
+      funcao: 'Vocal',
+    }, context)).rejects.toThrow('indisponibilidade para servir nesta data');
+    expect(prisma.serviceSchedule.create).not.toHaveBeenCalled();
   });
 
   it('permite que a própria pessoa recuse a escala e alerta a liderança da equipe', async () => {
@@ -257,6 +365,7 @@ describe('ServiceAreaService', () => {
       },
       user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
       serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-2', person: { nome: 'Nova Pessoa' } }) },
+      serviceScheduleUnavailability: { findFirst: jest.fn().mockResolvedValue(null) },
       notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
     };
     const service = new ServiceAreaService(prisma);
@@ -270,6 +379,60 @@ describe('ServiceAreaService', () => {
       }),
     }));
     expect(prisma.notification.create).toHaveBeenCalledTimes(2);
+  });
+
+  it('remove uma pessoa da escala sem apagar o histórico e encerra trocas pendentes', async () => {
+    const schedule = {
+      id: 'schedule-1', personId: 'person-1', teamId: 'team-1', eventId: 'event-1', status: 'CONFIRMED', funcao: 'Vocal', data: new Date('2026-08-16T22:30:00.000Z'),
+      person: { id: 'person-1', nome: 'Pessoa Escalada' },
+      team: { serviceAreaId: 'area-music', campusId: 'campus-1' },
+      event: { id: 'event-1', titulo: 'Culto de Domingo' },
+    };
+    const prisma: any = {
+      serviceSchedule: {
+        findFirst: jest.fn().mockResolvedValue(schedule),
+        update: jest.fn().mockResolvedValue({ ...schedule, status: 'REMOVED' }),
+      },
+      serviceScheduleSwapRequest: { updateMany: jest.fn().mockResolvedValue({ count: 1 }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+      notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
+      $transaction: jest.fn().mockImplementation((operations) => Promise.all(operations)),
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.removeSchedule('schedule-1', context)).resolves.toEqual({ id: 'schedule-1' });
+    expect(prisma.serviceSchedule.update).toHaveBeenCalledWith(expect.objectContaining({
+      data: expect.objectContaining({
+        status: 'REMOVED',
+        history: { create: expect.objectContaining({ previousStatus: 'CONFIRMED', newStatus: 'REMOVED', previousPersonId: 'person-1' }) },
+      }),
+    }));
+    expect(prisma.serviceScheduleSwapRequest.updateMany).toHaveBeenCalledWith(expect.objectContaining({
+      where: { scheduleId: 'schedule-1', status: 'PENDING' },
+      data: expect.objectContaining({ status: 'REJECTED', decidedByUserId: 'user-1' }),
+    }));
+    expect(prisma.notification.create).toHaveBeenCalledWith(expect.objectContaining({
+      data: expect.objectContaining({ titulo: 'Removido da escala', recipients: { create: [{ personId: 'person-1' }] } }),
+    }));
+  });
+
+  it('permite à liderança escrever a observação geral da coluna da grade', async () => {
+    const data = new Date('2026-08-16T22:30:00.000Z');
+    const note = { id: 'note-1', serviceAreaId: 'area-music', campusId: 'campus-1', eventId: 'event-1', data, observacao: 'Chegar às 17h.' };
+    const prisma: any = {
+      serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-music' }) },
+      campus: { findFirst: jest.fn().mockResolvedValue({ id: 'campus-1' }) },
+      user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
+      event: { findFirst: jest.fn().mockResolvedValue({ id: 'event-1' }) },
+      serviceScheduleNote: { upsert: jest.fn().mockResolvedValue(note) },
+    };
+    const service = new ServiceAreaService(prisma);
+
+    await expect(service.updateScheduleNote('area-music', { campusId: 'campus-1', eventId: 'event-1', data: data.toISOString(), observacao: '  Chegar às 17h.  ' }, context)).resolves.toEqual(note);
+    expect(prisma.serviceScheduleNote.upsert).toHaveBeenCalledWith(expect.objectContaining({
+      where: { serviceAreaId_campusId_data: { serviceAreaId: 'area-music', campusId: 'campus-1', data } },
+      create: expect.objectContaining({ organizationId: 'org-1', eventId: 'event-1', observacao: 'Chegar às 17h.', updatedByUserId: 'user-1' }),
+    }));
   });
 
   it('cria uma solicitação de troca somente para integrante disponível com a mesma função', async () => {
@@ -286,6 +449,7 @@ describe('ServiceAreaService', () => {
         findFirst: jest.fn().mockResolvedValue({ id: 'membership-2', funcoes: ['Guitarra'], person: { nome: 'Outro Guitarrista' } }),
         findMany: jest.fn().mockResolvedValue([{ personId: 'leader-1' }]),
       },
+      serviceScheduleUnavailability: { findFirst: jest.fn().mockResolvedValue(null) },
       serviceScheduleSwapRequest: { findFirst: jest.fn().mockResolvedValue(null), create: jest.fn().mockResolvedValue(request) },
       notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },
     };
@@ -330,6 +494,7 @@ describe('ServiceAreaService', () => {
       serviceScheduleSwapRequest: { findFirst: jest.fn().mockResolvedValue(request), update: jest.fn().mockResolvedValue({ ...request, status: 'APPROVED' }) },
       user: { findFirst: jest.fn().mockResolvedValue({ role: 'SECRETARY' }) },
       serviceMembership: { findFirst: jest.fn().mockResolvedValue({ id: 'membership-2', funcoes: ['Guitarra'], person: { nome: 'Outro Guitarrista' } }) },
+      serviceScheduleUnavailability: { findFirst: jest.fn().mockResolvedValue(null) },
       serviceSchedule: { findFirst: jest.fn().mockResolvedValue(null), update: jest.fn().mockResolvedValue(updated) },
       $transaction: jest.fn((operations) => Promise.all(operations)),
       notification: { create: jest.fn().mockResolvedValue({ id: 'notification-1' }) },

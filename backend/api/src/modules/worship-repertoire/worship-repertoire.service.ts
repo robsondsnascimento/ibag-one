@@ -275,7 +275,22 @@ export class WorshipRepertoireService {
   }
 
   private normalizeMoment(value: string) {
-    return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().replace(/\s+/g, ' ').toLocaleLowerCase('pt-BR');
+    const normalized = value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim()
+      .replace(/^musica\s*[·:—-]?\s*/i, '')
+      .replace(/\s+/g, ' ')
+      .toLocaleLowerCase('pt-BR');
+    const aliases: Record<string, string> = {
+      celebracao: 'celebracao de inicio',
+      'celebracao inicio': 'celebracao de inicio',
+      'celebracao de inicio do culto': 'celebracao de inicio',
+      'celebracao · inicio do culto': 'celebracao de inicio',
+      final: 'celebracao final',
+      'celebracao · final do culto': 'celebracao final',
+    };
+    return aliases[normalized] ?? normalized;
   }
 
   private async repertoire(id: string, context: OrganizationContext): Promise<any> {

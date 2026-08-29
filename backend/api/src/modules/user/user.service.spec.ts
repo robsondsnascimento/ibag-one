@@ -1,6 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import * as bcrypt from 'bcrypt';
 import { UserService } from './user.service';
 import { PrismaService } from '../../database/prisma.service';
+
+jest.mock('bcrypt', () => ({
+  compare: jest.fn(),
+  hash: jest.fn(),
+}));
 
 describe('UserService', () => {
   let service: UserService;
@@ -61,5 +67,39 @@ describe('UserService', () => {
     expect(prisma.userRoleAssignment.upsert).toHaveBeenCalledWith(expect.objectContaining({
       create: expect.objectContaining({ userId: 'user-1', role: 'WORSHIP_ORDER_MANAGER' }),
     }));
+  });
+
+  it('altera apenas a própria senha dentro da organização autenticada', async () => {
+    const prisma: any = {
+      user: {
+        findFirst: jest.fn().mockResolvedValue({ id: 'user-1', passwordHash: 'hash-atual' }),
+        update: jest.fn().mockResolvedValue({ id: 'user-1' }),
+      },
+    };
+    (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+    (bcrypt.hash as jest.Mock).mockResolvedValue('novo-hash');
+    const instance = new UserService(prisma);
+    const context = { userId: 'user-1', personId: 'person-1', organizationId: 'org-1' };
+
+    await expect(instance.changeOwnPassword({ currentPassword: 'senha-atual', newPassword: 'senha-nova' }, context)).resolves.toEqual({ changed: true });
+    expect(prisma.user.findFirst).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({ id: 'user-1', organizationId: 'org-1', ativo: true }),
+    }));
+    expect(prisma.user.update).toHaveBeenCalledWith({ where: { id: 'user-1' }, data: { passwordHash: 'novo-hash' } });
+  });
+
+  it('não altera a senha quando a senha atual não confere', async () => {
+    const prisma: any = {
+      user: {
+        findFirst: jest.fn().mockResolvedValue({ id: 'user-1', passwordHash: 'hash-atual' }),
+        update: jest.fn(),
+      },
+    };
+    (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+    const instance = new UserService(prisma);
+    const context = { userId: 'user-1', personId: 'person-1', organizationId: 'org-1' };
+
+    await expect(instance.changeOwnPassword({ currentPassword: 'senha-incorreta', newPassword: 'senha-nova' }, context)).rejects.toThrow('A senha atual não confere');
+    expect(prisma.user.update).not.toHaveBeenCalled();
   });
 });

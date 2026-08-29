@@ -29,7 +29,7 @@
 .worship-event-select {
   color: var(--ink-soft);
   display: grid;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   gap: 6px;
 }
@@ -83,7 +83,7 @@
 .worship-create-actions label {
   color: var(--ink-soft);
   display: grid;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   gap: 5px;
 }
@@ -105,12 +105,12 @@
 .worship-order > header small {
   color: var(--ink-soft);
   display: block;
-  font-size: 10px;
+  font-size: 13px;
   margin-top: 4px;
 }
 .worship-status {
   border-radius: 99px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   padding: 6px 9px;
 }
@@ -135,12 +135,12 @@
 }
 .worship-order-sequence-header h4 {
   color: var(--ink);
-  font-size: 13px;
+  font-size: 17px;
   margin: 0;
 }
 .worship-order-sequence-header small {
   color: var(--ink-soft);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
   max-width: 275px;
   text-align: right;
@@ -156,10 +156,10 @@
   align-items: center;
   border-top: 1px solid var(--line);
   display: grid;
-  gap: 10px;
-  grid-template-columns: 29px 1fr;
-  min-height: 58px;
-  padding: 9px 15px;
+  gap: 14px;
+  grid-template-columns: 42px 1fr;
+  min-height: 76px;
+  padding: 13px 18px;
 }
 .worship-item-list li:first-child {
   border-top: 0;
@@ -170,11 +170,14 @@
   border-radius: 50%;
   color: var(--blue);
   display: inline-flex;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
-  height: 28px;
+  height: 38px;
   justify-content: center;
-  width: 28px;
+  width: 38px;
+}
+.worship-item-list__item--music {
+  background: linear-gradient(90deg, var(--blue-soft), transparent 72%);
 }
 .worship-item-list strong,
 .worship-item-list small {
@@ -182,11 +185,12 @@
 }
 .worship-item-list strong {
   color: var(--ink);
-  font-size: 11px;
+  font-size: 16px;
+  line-height: 1.25;
 }
 .worship-item-list small {
   color: var(--ink-soft);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
   margin-top: 3px;
 }
@@ -199,30 +203,246 @@
 }
 .worship-item-form h4 {
   color: var(--ink);
-  font-size: 12px;
+  font-size: 15px;
   margin: 0;
 }
 .worship-item-form > p {
   color: var(--ink-soft);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
   margin: -5px 0 0;
 }
 .worship-item-form label {
   color: var(--ink);
   display: grid;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   gap: 5px;
 }
-.worship-item-form input {
+.worship-item-form input,
+.worship-item-form select {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
   color: var(--ink);
-  font-size: 11px;
-  min-height: 36px;
+  font-size: 12px;
+  min-height: 40px;
   padding: 0 9px;
+}
+.worship-item-kind {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.worship-item-kind__button {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  min-height: 36px;
+  padding: 0 12px;
+}
+.worship-item-kind__button--active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.worship-item-kind__button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+.worship-person-autocomplete {
+  position: relative;
+}
+.worship-person-autocomplete__list {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(20, 39, 67, .14);
+  left: 0;
+  margin-top: 4px;
+  max-height: 208px;
+  overflow-y: auto;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 5;
+}
+.worship-person-autocomplete__option {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  font: inherit;
+  gap: 2px;
+  padding: 10px 11px;
+  text-align: left;
+  width: 100%;
+}
+.worship-person-autocomplete__option:first-child {
+  border-top: 0;
+}
+.worship-person-autocomplete__option:hover,
+.worship-person-autocomplete__option--selected {
+  background: var(--blue-soft);
+}
+.worship-person-autocomplete__option strong {
+  color: var(--ink);
+  font-size: 12px;
+}
+.worship-person-autocomplete__option small,
+.worship-person-autocomplete__list p {
+  color: var(--ink-soft);
+  font-size: 13px;
+  margin: 0;
+}
+.worship-person-autocomplete__list p {
+  padding: 11px;
+}
+.worship-template-items {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 14px 0;
+  padding: 0;
+}
+.worship-template-items li {
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 9px 10px;
+  transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, opacity .18s ease;
+  will-change: transform;
+}
+.worship-template-items strong,
+.worship-template-items small {
+  display: block;
+}
+.worship-template-items strong {
+  color: var(--ink);
+  font-size: 12px;
+}
+.worship-template-items small {
+  color: var(--ink-soft);
+  font-size: 13px;
+  margin-top: 3px;
+}
+.worship-template-item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: flex-end;
+}
+.worship-template-item-actions button {
+  min-height: 30px;
+  padding: 0 8px;
+}
+.worship-template-drag-handle {
+  cursor: grab;
+  font-size: 17px !important;
+  font-weight: 800;
+  letter-spacing: -3px;
+  min-width: 34px;
+  padding: 0 9px !important;
+}
+.worship-template-drag-handle:active { cursor: grabbing; }
+.worship-template-item--dragging { background: var(--blue-soft); border-color: var(--blue) !important; box-shadow: 0 8px 18px rgba(37, 103, 216, .16); opacity: .72; }
+.worship-template-item-edit {
+  display: grid;
+  gap: 8px;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(130px, 1fr) 100px minmax(150px, 1fr) auto;
+}
+.worship-work-summary {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+.worship-work-list {
+  display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.worship-work-list li {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  padding: 12px 17px;
+}
+.worship-work-list strong,
+.worship-work-list small {
+  display: block;
+}
+.worship-work-list strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+.worship-work-list small,
+.worship-work-empty {
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 3px 0 0;
+}
+.worship-work-empty {
+  padding: 14px 17px;
+}
+.worship-work-list > li > span,
+.worship-demand-status {
+  background: var(--blue-soft);
+  border-radius: 999px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 5px 8px;
+  white-space: nowrap;
+}
+.worship-demand-status--completed {
+  background: var(--green-soft);
+  color: #208264;
+}
+.worship-demand-status--cancelled {
+  background: var(--orange-soft);
+  color: #ad5b1d;
+}
+.worship-demand-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  justify-content: flex-end;
+}
+.worship-demand-actions button {
+  min-height: 31px;
+  padding: 0 9px;
+}
+@media (max-width: 760px) {
+  .worship-template-items li,
+  .worship-template-item-edit {
+    grid-template-columns: 1fr;
+  }
+  .worship-template-item-actions {
+    justify-content: flex-start;
+  }
+  .worship-work-list li {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .worship-demand-actions {
+    justify-content: flex-start;
+  }
 }
 @media (max-width: 620px) {
   .worship-intro {
@@ -281,7 +501,7 @@
 .worship-alert-form label {
   color: var(--ink-soft);
   display: grid;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   gap: 5px;
 }
@@ -293,7 +513,7 @@
   border-radius: 8px;
   color: var(--ink);
   font: inherit;
-  font-size: 11px;
+  font-size: 13px;
   min-height: 35px;
   padding: 0 9px;
 }
@@ -327,7 +547,7 @@
 }
 .worship-operation-forms strong {
   color: var(--ink);
-  font-size: 11px;
+  font-size: 13px;
 }
 .worship-operation-forms .secondary-button {
   justify-self: end;
@@ -336,7 +556,7 @@
 }
 .worship-operation-summary {
   color: var(--ink-soft);
-  font-size: 10px;
+  font-size: 13px;
   line-height: 1.5;
   margin: 0;
 }
@@ -362,7 +582,7 @@
 .worship-edit-form label {
   color: var(--ink);
   display: grid;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   gap: 5px;
 }
@@ -373,7 +593,7 @@
   border-radius: 8px;
   color: var(--ink);
   font: inherit;
-  font-size: 11px;
+  font-size: 13px;
   min-height: 35px;
   padding: 0 9px;
 }
@@ -404,7 +624,7 @@
   background: var(--blue-soft);
   border-radius: 99px;
   color: var(--blue);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   padding: 5px 8px;
 }
@@ -432,16 +652,16 @@
 }
 .repertoire-card strong {
   color: var(--ink);
-  font-size: 11px;
+  font-size: 13px;
 }
 .repertoire-card small {
   color: var(--ink-soft);
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 3px;
 }
 .repertoire-status {
   border-radius: 99px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   padding: 5px 7px;
 }
@@ -468,7 +688,7 @@
   border-top: 1px solid var(--line);
   color: var(--ink);
   display: grid;
-  font-size: 10px;
+  font-size: 13px;
   gap: 8px;
   grid-template-columns: 21px 1fr;
   padding: 7px 10px;
@@ -478,7 +698,7 @@
 }
 .repertoire-comment {
   color: var(--ink-soft);
-  font-size: 10px;
+  font-size: 13px;
   line-height: 1.5;
   margin: 9px 10px;
 }
@@ -501,7 +721,7 @@
   border: 1px solid var(--line);
   border-radius: 7px;
   color: var(--ink);
-  font-size: 10px;
+  font-size: 13px;
   min-height: 32px;
   padding: 0 8px;
 }
@@ -559,7 +779,7 @@
   background: var(--blue-soft);
   border-radius: 99px;
   color: var(--blue);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   padding: 5px 8px;
 }
@@ -580,11 +800,11 @@
 }
 .worship-templates article strong {
   color: var(--ink);
-  font-size: 11px;
+  font-size: 13px;
 }
 .worship-templates article small {
   color: var(--ink-soft);
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 3px;
 }
 .worship-templates article > header > div:last-child {
@@ -598,7 +818,7 @@
 .worship-templates ol {
   color: var(--ink-soft);
   display: grid;
-  font-size: 10px;
+  font-size: 13px;
   gap: 5px;
   margin: 0;
   padding: 10px 26px;
@@ -615,7 +835,7 @@
   border: 1px solid var(--line);
   border-radius: 7px;
   color: var(--ink);
-  font-size: 10px;
+  font-size: 13px;
   min-height: 32px;
   padding: 0 8px;
 }
@@ -637,14 +857,14 @@
 }
 .worship-template-create--cachoeirinha p {
   color: var(--ink-soft);
-  font-size: 10px;
+  font-size: 13px;
   line-height: 1.45;
   margin: 0;
 }
 .worship-template-create--cachoeirinha label:not(.checkbox-label) {
   color: var(--ink-soft);
   display: grid;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   gap: 5px;
 }
@@ -653,7 +873,7 @@
   border: 1px solid var(--line);
   border-radius: 7px;
   color: var(--ink);
-  font-size: 10px;
+  font-size: 13px;
   min-height: 32px;
   padding: 0 8px;
 }
@@ -661,7 +881,7 @@
 .worship-routing-note {
   color: var(--ink-soft);
   flex-basis: 100%;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.4;
 }
 .repertoire-song-form select {
@@ -669,7 +889,7 @@
   border: 1px solid var(--line);
   border-radius: 7px;
   color: var(--ink);
-  font-size: 10px;
+  font-size: 13px;
   min-height: 32px;
   padding: 0 8px;
 }
@@ -687,7 +907,7 @@
   align-items: center;
   color: var(--ink);
   display: grid;
-  font-size: 10px;
+  font-size: 13px;
   gap: 7px;
   grid-template-columns: 20px 1fr;
 }
@@ -697,7 +917,7 @@
   border-radius: 50%;
   color: var(--orange);
   display: inline-flex;
-  font-size: 11px;
+  font-size: 13px;
   height: 19px;
   justify-content: center;
   width: 19px;
@@ -705,6 +925,6 @@
 .worship-repertoire > header small {
   color: var(--ink-soft);
   display: block;
-  font-size: 11px;
+  font-size: 13px;
   margin-top: 3px;
 }

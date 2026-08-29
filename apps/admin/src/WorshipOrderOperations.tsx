@@ -3,6 +3,8 @@ import type { FormEvent } from "react";
 import {
   addWorshipOrderDemand,
   addWorshipOrderMaterial,
+  cancelWorshipOrderDemand,
+  completeWorshipOrderDemand,
   deleteWorshipOrderItem,
   downloadWorshipOrderPdf,
   reorderWorshipOrderItems,
@@ -10,11 +12,15 @@ import {
   updateWorshipOrderItem,
 } from "./api/worship";
 import type { WorshipOrder } from "./api/worship";
+import type { PersonListItem } from "./api/directory";
+import { WorshipPersonAutocomplete } from "./WorshipPersonAutocomplete";
 
 type Props = {
   order: WorshipOrder;
   accessToken: string;
   canManage: boolean;
+  people: PersonListItem[];
+  isLoadingPeople: boolean;
   onOrderChange: (order: WorshipOrder) => void;
   onNotice: (message: string) => void;
 };
@@ -23,6 +29,8 @@ export function WorshipOrderOperations({
   order,
   accessToken,
   canManage,
+  people,
+  isLoadingPeople,
   onOrderChange,
   onNotice,
 }: Props) {
@@ -30,6 +38,13 @@ export function WorshipOrderOperations({
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [editingResponsiblePersonId, setEditingResponsiblePersonId] =
+    useState("");
+  const [editingResponsiblePersonSearch, setEditingResponsiblePersonSearch] =
+    useState("");
+  const [demandResponsiblePersonId, setDemandResponsiblePersonId] = useState("");
+  const [demandResponsiblePersonSearch, setDemandResponsiblePersonSearch] =
+    useState("");
   const selectedItem = useMemo(
     () => order.items.find((item) => item.id === itemId) ?? null,
     [itemId, order.items],
@@ -39,6 +54,11 @@ export function WorshipOrderOperations({
     if (!order.items.some((item) => item.id === itemId))
       setItemId(order.items[0]?.id ?? "");
   }, [itemId, order.items]);
+
+  useEffect(() => {
+    setEditingResponsiblePersonId(selectedItem?.responsiblePerson?.id ?? "");
+    setEditingResponsiblePersonSearch(selectedItem?.responsiblePerson?.nome ?? "");
+  }, [itemId, selectedItem?.responsiblePerson?.id, selectedItem?.responsiblePerson?.nome]);
 
   const run = (action: () => Promise<void>) => {
     setError("");
@@ -141,6 +161,7 @@ export function WorshipOrderOperations({
       const demand = await addWorshipOrderDemand(accessToken, selectedItem.id, {
         descricao: String(data.get("description")).trim(),
         serviceAreaId: String(data.get("serviceAreaId")),
+        responsiblePersonId: demandResponsiblePersonId || undefined,
         dueAt: dueAt ? new Date(dueAt).toISOString() : undefined,
       });
       onOrderChange({
@@ -152,6 +173,8 @@ export function WorshipOrderOperations({
         ),
       });
       form.reset();
+      setDemandResponsiblePersonId("");
+      setDemandResponsiblePersonSearch("");
       onNotice("Demanda criada e enviada para a Área de Serviço.");
     });
   };
@@ -167,6 +190,7 @@ export function WorshipOrderOperations({
         {
           titulo: String(data.get("title")).trim(),
           horario: String(data.get("time") ?? "") || undefined,
+          responsiblePersonId: editingResponsiblePersonId || undefined,
           serviceAreaId: String(data.get("serviceAreaId") ?? "") || undefined,
           observacoes: String(data.get("notes") ?? "").trim() || undefined,
         },
@@ -184,6 +208,39 @@ export function WorshipOrderOperations({
           ? "Item atualizado e liderança da nova área avisada."
           : "Item da ordem de culto atualizado.",
       );
+    });
+  };
+
+  const replaceDemand = (demandId: string, nextDemand: WorshipOrder["items"][number]["demands"][number]) => {
+    onOrderChange({
+      ...order,
+      items: order.items.map((item) => ({
+        ...item,
+        demands: item.demands.map((demand) =>
+          demand.id === demandId ? nextDemand : demand,
+        ),
+      })),
+    });
+  };
+
+  const completeDemand = (demandId: string) => {
+    run(async () => {
+      replaceDemand(
+        demandId,
+        await completeWorshipOrderDemand(accessToken, demandId),
+      );
+      onNotice("Demanda marcada como concluída.");
+    });
+  };
+
+  const cancelDemand = (demandId: string) => {
+    if (!window.confirm("Cancelar esta demanda?")) return;
+    run(async () => {
+      replaceDemand(
+        demandId,
+        await cancelWorshipOrderDemand(accessToken, demandId),
+      );
+      onNotice("Demanda cancelada.");
     });
   };
 
@@ -217,57 +274,86 @@ export function WorshipOrderOperations({
 
   if (order.status === "PUBLISHED")
     return (
-      <section className="worship-operations">
-        <header>
-          <div>
-            <p className="eyebrow">Comunicação</p>
-            <h4>Ordem publicada</h4>
-          </div>
-          <button
-            className="secondary-button"
-            type="button"
-            disabled={!canManage || isSaving}
-            onClick={downloadPdf}
-          >
-            Baixar PDF
-          </button>
-        </header>
-        {canManage && (
-          <form className="worship-alert-form" onSubmit={sendAlert}>
-            <label>
-              Título
-              <input
-                name="title"
-                required
-                minLength={3}
-                defaultValue="Ordem de culto publicada"
-              />
-            </label>
-            <label>
-              Mensagem
-              <input
-                name="message"
-                required
-                minLength={3}
-                defaultValue="A ordem está disponível. Confira sua escala, materiais e pendências."
-              />
-            </label>
+      <>
+        <section className="worship-operations">
+          <header>
+            <div>
+              <p className="eyebrow">Comunicação</p>
+              <h4>Ordem publicada</h4>
+            </div>
             <button
-              className="primary-button"
-              type="submit"
-              disabled={isSaving}
+              className="secondary-button"
+              type="button"
+              disabled={!canManage || isSaving}
+              onClick={downloadPdf}
             >
-              {isSaving ? "Enviando..." : "Enviar alerta"}
+              Baixar PDF
             </button>
-          </form>
-        )}
-        {error && <p className="form-error">{error}</p>}
-      </section>
+          </header>
+          {canManage && (
+            <form className="worship-alert-form" onSubmit={sendAlert}>
+              <label>
+                Título
+                <input
+                  name="title"
+                  required
+                  minLength={3}
+                  defaultValue="Ordem de culto publicada"
+                />
+              </label>
+              <label>
+                Mensagem
+                <input
+                  name="message"
+                  required
+                  minLength={3}
+                  defaultValue="A ordem está disponível. Confira sua escala, materiais e pendências."
+                />
+              </label>
+              <button
+                className="primary-button"
+                type="submit"
+                disabled={isSaving}
+              >
+                {isSaving ? "Enviando..." : "Enviar alerta"}
+              </button>
+            </form>
+          )}
+          {error && <p className="form-error">{error}</p>}
+        </section>
+        <WorshipOrderWorkSummary
+          order={order}
+          canManage={canManage}
+          isSaving={isSaving}
+          onComplete={completeDemand}
+          onCancel={cancelDemand}
+        />
+      </>
     );
 
-  if (!canManage || !selectedItem) return null;
+  if (!selectedItem)
+    return (
+      <WorshipOrderWorkSummary
+        order={order}
+        canManage={canManage}
+        isSaving={isSaving}
+        onComplete={completeDemand}
+        onCancel={cancelDemand}
+      />
+    );
+  if (!canManage)
+    return (
+      <WorshipOrderWorkSummary
+        order={order}
+        canManage={canManage}
+        isSaving={isSaving}
+        onComplete={completeDemand}
+        onCancel={cancelDemand}
+      />
+    );
   return (
-    <section className="worship-operations">
+    <>
+      <section className="worship-operations">
       <header>
         <div>
           <p className="eyebrow">Produção</p>
@@ -369,6 +455,24 @@ export function WorshipOrderOperations({
               </small>
             </label>
             <label>
+              Pessoa responsável{" "}
+              <span className="field-optional">(opcional)</span>
+              <WorshipPersonAutocomplete
+                people={people}
+                selectedPersonId={editingResponsiblePersonId}
+                search={editingResponsiblePersonSearch}
+                disabled={isLoadingPeople || isSaving}
+                onSearchChange={(value) => {
+                  setEditingResponsiblePersonId("");
+                  setEditingResponsiblePersonSearch(value);
+                }}
+                onSelect={(person) => {
+                  setEditingResponsiblePersonId(person.id);
+                  setEditingResponsiblePersonSearch(person.nome);
+                }}
+              />
+            </label>
+            <label>
               Observações <span className="field-optional">(opcional)</span>
               <input
                 name="notes"
@@ -447,6 +551,28 @@ export function WorshipOrderOperations({
               </select>
             </label>
             <label>
+              Pessoa responsável{" "}
+              <span className="field-optional">(opcional)</span>
+              <WorshipPersonAutocomplete
+                people={people}
+                selectedPersonId={demandResponsiblePersonId}
+                search={demandResponsiblePersonSearch}
+                disabled={isLoadingPeople || isSaving}
+                emptyMessage="Nenhuma pessoa ativa encontrada."
+                onSearchChange={(value) => {
+                  setDemandResponsiblePersonId("");
+                  setDemandResponsiblePersonSearch(value);
+                }}
+                onSelect={(person) => {
+                  setDemandResponsiblePersonId(person.id);
+                  setDemandResponsiblePersonSearch(person.nome);
+                }}
+              />
+              <small className="worship-routing-note">
+                A pessoa escolhida precisa possuir vínculo ativo com a área responsável.
+              </small>
+            </label>
+            <label>
               Prazo <span className="field-optional">(opcional)</span>
               <input name="dueAt" type="datetime-local" />
             </label>
@@ -475,6 +601,141 @@ export function WorshipOrderOperations({
         )}
         {error && <p className="form-error">{error}</p>}
       </div>
-    </section>
+      </section>
+      <WorshipOrderWorkSummary
+        order={order}
+        canManage={canManage}
+        isSaving={isSaving}
+        onComplete={completeDemand}
+        onCancel={cancelDemand}
+      />
+    </>
+  );
+}
+
+function WorshipOrderWorkSummary({
+  order,
+  canManage,
+  isSaving,
+  onComplete,
+  onCancel,
+}: {
+  order: WorshipOrder;
+  canManage: boolean;
+  isSaving: boolean;
+  onComplete: (demandId: string) => void;
+  onCancel: (demandId: string) => void;
+}) {
+  const demands = order.items.flatMap((item) =>
+    item.demands.map((demand) => ({ ...demand, itemTitle: item.titulo })),
+  );
+  const scheduleStatus: Record<
+    WorshipOrder["event"]["schedules"][number]["status"],
+    string
+  > = {
+    SCHEDULED: "Pendente de confirmação",
+    CONFIRMED: "Confirmada",
+    DECLINED: "Recusada",
+    COMPLETED: "Concluída",
+  };
+
+  return (
+    <div className="worship-work-summary">
+      <section className="worship-operations">
+        <header>
+          <div>
+            <p className="eyebrow">Escalas</p>
+            <h4>Participantes do culto</h4>
+          </div>
+          <small>Somente consulta</small>
+        </header>
+        {order.event.schedules.length ? (
+          <ul className="worship-work-list">
+            {order.event.schedules.map((schedule) => (
+              <li key={schedule.id}>
+                <div>
+                  <strong>{schedule.person.nome}</strong>
+                  <small>
+                    {schedule.team.serviceArea.nome} · {schedule.team.nome} · {schedule.funcao}
+                  </small>
+                </div>
+                <span>{scheduleStatus[schedule.status]}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="worship-work-empty">
+            Ainda não há pessoas escaladas para este culto.
+          </p>
+        )}
+      </section>
+      <section className="worship-operations">
+        <header>
+          <div>
+            <p className="eyebrow">Pendências</p>
+            <h4>Demandas por área</h4>
+          </div>
+          <span>{demands.length}</span>
+        </header>
+        {demands.length ? (
+          <ul className="worship-work-list">
+            {demands.map((demand) => (
+              <li key={demand.id}>
+                <div>
+                  <strong>{demand.descricao}</strong>
+                  <small>
+                    {demand.itemTitle} · {demand.serviceArea.nome}
+                    {demand.responsiblePerson
+                      ? ` · Responsável: ${demand.responsiblePerson.nome}`
+                      : " · Sem responsável definido"}
+                    {demand.dueAt
+                      ? ` · Prazo: ${new Intl.DateTimeFormat("pt-BR", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }).format(new Date(demand.dueAt))}`
+                      : ""}
+                  </small>
+                </div>
+                <div className="worship-demand-actions">
+                  <span className={`worship-demand-status worship-demand-status--${demand.status.toLowerCase()}`}>
+                    {demand.status === "PENDING"
+                      ? "Pendente"
+                      : demand.status === "COMPLETED"
+                        ? "Concluída"
+                        : "Cancelada"}
+                  </span>
+                  {demand.status === "PENDING" && (
+                    <button
+                      className="secondary-button"
+                      type="button"
+                      disabled={isSaving}
+                      onClick={() => onComplete(demand.id)}
+                    >
+                      Concluir
+                    </button>
+                  )}
+                  {demand.status === "PENDING" && canManage && (
+                    <button
+                      className="member-end-button"
+                      type="button"
+                      disabled={isSaving}
+                      onClick={() => onCancel(demand.id)}
+                    >
+                      Cancelar
+                    </button>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="worship-work-empty">
+            Não há demandas registradas nesta Ordem de Culto.
+          </p>
+        )}
+      </section>
+    </div>
   );
 }

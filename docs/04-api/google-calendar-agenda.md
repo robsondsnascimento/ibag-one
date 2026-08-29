@@ -13,6 +13,12 @@ O IBAG One utiliza **um único calendário institucional compartilhado** para a 
 
 Lideranças não podem criar nem alterar um evento para uma área, equipe ou célula fora de sua responsabilidade. Eventos administrativos e pastorais podem ser aprovados automaticamente conforme as regras já existentes; solicitações de lideranças seguem como `REQUESTED` até a aprovação.
 
+## Eventos recorrentes
+
+Na criação, a pessoa responsável informa se o evento se repete **uma vez por semana** ou **uma vez por mês** e define a data final da série. A API cria uma ocorrência real para cada data, com o mesmo escopo, espaços, áreas, status e histórico inicial. Dessa forma, cada encontro pode ter aprovação, checklist, cancelamento, sincronização e escalas próprios. Para uma série de Cultos já aprovada, a API também cria uma Ordem de Culto independente para cada ocorrência quando houver modelo padrão ativo e todas as Áreas de Serviço exigidas pelo modelo já estiverem vinculadas ao evento; sem essa compatibilidade, a ocorrência continua disponível para receber uma ordem manualmente.
+
+Todos os conflitos de campus e espaços são validados antes da série ser gravada. Se uma ocorrência for inválida, a série inteira não é criada. Recorrências mensais iniciadas nos dias 29, 30 ou 31 usam o último dia disponível em meses menores e voltam ao dia original quando ele existir novamente. A edição altera apenas uma ocorrência; para mudar a periodicidade, cria-se uma nova série.
+
 ## Sincronização
 
 Quando a integração estiver configurada:
@@ -22,6 +28,8 @@ Quando a integração estiver configurada:
 3. O cancelamento remove o evento do Google e preserva o histórico no IBAG One.
 4. Eventos ainda solicitados não são publicados no Google.
 5. A rota de sincronização manual permite repetir uma tentativa autorizada.
+
+Cada ocorrência recorrente aprovada é sincronizada como um evento próprio, preservando sua operação individual no IBAG One.
 
 Cada evento guarda o identificador remoto e o status da sincronização (`SYNCED`, `FAILED` ou `CANCELLED`). Se o Google estiver indisponível, o evento do IBAG One continua válido e a falha fica registrada para nova tentativa.
 

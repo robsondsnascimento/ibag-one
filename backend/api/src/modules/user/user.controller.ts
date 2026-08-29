@@ -23,6 +23,7 @@ import {
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { AssignUserRoleDto } from './dto/assign-user-role.dto';
 import { CreatePersonLoginDto } from './dto/create-person-login.dto';
+import { ChangeOwnPasswordDto } from './dto/change-own-password.dto';
 import { UserRole } from '../../generated/prisma/client';
 
 
@@ -57,6 +58,12 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   createForPerson(@Param('personId') personId: string, @Body() dto: CreatePersonLoginDto, @CurrentOrganization() context: OrganizationContext) {
     return this.userService.createForPerson(personId, dto, context);
+  }
+
+  @Patch('me/password')
+  @UseGuards(JwtAuthGuard)
+  changeOwnPassword(@Body() dto: ChangeOwnPasswordDto, @CurrentOrganization() context: OrganizationContext) {
+    return this.userService.changeOwnPassword(dto, context);
   }
 
   @Patch(':id/role')

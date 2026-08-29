@@ -3,7 +3,7 @@ import { PrismaService } from '../../database/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreatePersonLoginDto } from './dto/create-person-login.dto';
 import * as bcrypt from 'bcrypt';
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { AssignUserRoleDto } from './dto/assign-user-role.dto';
@@ -49,6 +49,25 @@ export class UserService {
       where: { personId, organizationId: context.organizationId },
       select: { id: true, loginEmail: true, ativo: true, role: true },
     });
+  }
+
+  async changeOwnPassword(dto: { currentPassword: string; newPassword: string }, context: OrganizationContext) {
+    const user = await this.prisma.user.findFirst({
+      where: { id: context.userId, organizationId: context.organizationId, ativo: true },
+      select: { id: true, passwordHash: true },
+    });
+    if (!user) throw new NotFoundException('Usuário ativo não encontrado na organização atual');
+
+    const currentPasswordMatches = await bcrypt.compare(dto.currentPassword, user.passwordHash);
+    if (!currentPasswordMatches) throw new ForbiddenException('A senha atual não confere');
+    if (dto.currentPassword === dto.newPassword) throw new BadRequestException('A nova senha deve ser diferente da senha atual');
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { passwordHash: await bcrypt.hash(dto.newPassword, 10) },
+    });
+
+    return { changed: true };
   }
 
   async create(

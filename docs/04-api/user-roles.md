@@ -38,6 +38,14 @@ POST /users/persons/:personId
 
 O campo `personId` vem da URL, e o `organizationId` vem exclusivamente da sessão autenticada. Uma pessoa só pode possuir um usuário vinculado.
 
+## Alteração da própria senha
+
+| Método | Rota | Acesso |
+| --- | --- | --- |
+| `PATCH` | `/users/me/password` | Qualquer usuário autenticado e ativo da própria organização |
+
+O corpo recebe `currentPassword` e `newPassword`, ambos com ao menos seis caracteres. A API valida a senha atual antes de substituir o hash e não aceita reutilizar a mesma senha. Nenhuma senha é exposta na resposta ou registrada na auditoria.
+
 ### Conceder Responsável por Ordem de Culto
 
 ```json

@@ -4,7 +4,7 @@ Plataforma de cuidado pastoral, células, áreas de serviço, eventos e operaç�
 
 ## Estado atual
 
-O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. O painel administrativo React já possui login institucional integrado à API, sessão persistente opcional e identificação dinâmica de organização, campus e função. A suíte atual possui **34 suítes e 129 testes unitários**, além de testes HTTP e de integração com PostgreSQL isolado.
+O backend NestJS está funcional, multi-tenant por `organizationId`, protegido por autenticação JWT e persistido em PostgreSQL com Prisma. O painel administrativo React já possui login institucional integrado à API, sessão persistente opcional e identificação dinâmica de organização, campus e função. A suíte atual possui **34 suítes e 159 testes unitários**, além de testes HTTP e de integração com PostgreSQL isolado.
 
 A agenda institucional possui sincronização unidirecional opcional com um único Google Calendar compartilhado. O IBAG One permanece como fonte de verdade para solicitações, aprovações, alterações e cancelamentos.
 
@@ -13,7 +13,7 @@ A agenda institucional possui sincronização unidirecional opcional com um úni
 | Pessoas e acesso | Pessoas, campus principal e vínculos adicionais por campus, contas, papéis adicionais, super administração, famílias e jornada da pessoa. |
 | Células | Coordenação por campus, redes, supervisão, liderança, apoio, presença/falta, visitantes, conclusão de reunião, estudos semanais, localização e multiplicação. |
 | Cuidado pastoral | Registros de acompanhamento e visão pastoral consolidada com escopo de campus. |
-| Áreas de serviço | Áreas globais ou por campus, equipes, membros, lideranças, funções operacionais, escalas e solicitações de troca por função. |
+| Áreas de serviço | Áreas globais ou por campus, equipes, membros, lideranças, funções operacionais, escalas com remoção auditável, observações gerais por culto, indisponibilidade por data e solicitações de troca por função. |
 | Entrada em áreas | Interesse, etapas configuráveis, comprovação, aprovação, recusa, desistência e criação do vínculo de integrante. |
 | Eventos | Solicitação, aprovação, agenda, espaços, áreas e equipes envolvidas. |
 | Ordem de culto | Modelo editável, itens, materiais, demandas automáticas por área, alertas internos e geração de PDF. |
@@ -26,6 +26,7 @@ A agenda institucional possui sincronização unidirecional opcional com um úni
 
 - Todo dado de negócio é isolado pela organização atual.
 - Uma pessoa pode servir em várias áreas, mas conflitos de escala ativos são impedidos.
+- Integrantes do Louvor consultam a grade mensal das próprias equipes e podem marcar a própria indisponibilidade por data; somente a liderança vê a lista consolidada de nomes, e novas escalas e trocas respeitam essa marcação.
 - A pessoa escalada pode solicitar troca somente para alguém da mesma equipe, com a mesma função de serviço e sem conflito; a liderança da equipe aprova ou recusa antes de efetivar a substituição.
 - Escalas pertencem à área/equipe; eventos e Ordem de Culto apenas as consultam.
 - Uma pessoa só se torna integrante após aprovação no processo da área.

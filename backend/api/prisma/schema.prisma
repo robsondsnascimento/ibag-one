@@ -84,12 +84,14 @@ enum ServiceScheduleStatus {
   CONFIRMED
   DECLINED
   COMPLETED
+  REMOVED
 }
 
 enum ServiceScheduleHistoryAction {
   CREATED
   STATUS_CHANGED
   SUBSTITUTED
+  OBSERVATION_UPDATED
 }
 
 enum ServiceScheduleSwapRequestStatus {
@@ -122,6 +124,12 @@ enum EventStatus {
   APPROVED
   CANCELLED
   COMPLETED
+}
+
+enum EventRecurrence {
+  NONE
+  WEEKLY
+  MONTHLY
 }
 
 enum GoogleCalendarSyncStatus {
@@ -203,39 +211,44 @@ model Campus {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  persons              Person[]                 @relation("PersonPrimaryCampus")
+  persons                 Person[]                        @relation("PersonPrimaryCampus")
   personCampusMemberships PersonCampusMembership[]
-  cells                Cell[]
-  cellNetworks         CellNetwork[]
+  cells                   Cell[]
+  cellNetworks            CellNetwork[]
   cellCampusCoordinations CellCampusCoordination[]
-  serviceAreas         ServiceArea[]
-  serviceTeams         ServiceTeam[]
-  serviceMemberships   ServiceMembership[]
-  spaces               Space[]
-  events               Event[]
-  notifications        Notification[]
-  kidsClasses          KidsClass[]
-  kidsOperationalRoles KidsOperationalRoleAssignment[]
+  serviceAreas            ServiceArea[]
+  serviceTeams            ServiceTeam[]
+  serviceMemberships      ServiceMembership[]
+  spaces                  Space[]
+  events                  Event[]
+  notifications           Notification[]
+  kidsClasses             KidsClass[]
+  kidsOperationalRoles    KidsOperationalRoleAssignment[]
+  serviceScheduleNotes    ServiceScheduleNote[]
 
   organization   Organization? @relation(fields: [organizationId], references: [id])
   organizationId String?
 }
 
 model Person {
-  id             String    @id @default(uuid())
-  nome           String
-  sexo           String?
-  dataNascimento DateTime?
-  cpf            String?   @unique
-  telefone       String?
-  email          String?   @unique
-  ativo          Boolean   @default(true)
-  dataDecisao    DateTime?
-  dataBatismo    DateTime?
-  dataMembresia  DateTime?
-  titulosMinisteriais String[] @default([])
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id                     String    @id @default(uuid())
+  nome                   String
+  sexo                   String?
+  dataNascimento         DateTime?
+  cpf                    String?   @unique
+  telefone               String?
+  email                  String?   @unique
+  ativo                  Boolean   @default(true)
+  dataDecisao            DateTime?
+  dataBatismo            DateTime?
+  dataMembresia          DateTime?
+  dataMembresiaSemDia    Boolean   @default(false)
+  titulosMinisteriais    String[]  @default([])
+  fotoPerfilPath         String?
+  fotoPerfilMimeType     String?
+  fotoPerfilAtualizadaEm DateTime?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
 
   campusId String
   campus   Campus @relation("PersonPrimaryCampus", fields: [campusId], references: [id])
@@ -251,40 +264,41 @@ model Person {
   cellNetworkSupervisions               CellNetworkSupervision[]
   cellCampusCoordinations               CellCampusCoordination[]
   meetingAttendances                    CellMeetingAttendance[]
-  pastoralCaresAsSubject                PastoralCare[]                  @relation("PastoralCareSubject")
-  pastoralCaresAsResponsible            PastoralCare[]                  @relation("PastoralCareResponsible")
+  pastoralCaresAsSubject                PastoralCare[]                     @relation("PastoralCareSubject")
+  pastoralCaresAsResponsible            PastoralCare[]                     @relation("PastoralCareResponsible")
   meetingVisitor                        CellMeetingVisitor?
   journeyEvents                         PersonJourneyEvent[]
   familyMemberships                     FamilyMembership[]
   serviceMemberships                    ServiceMembership[]
   serviceSchedules                      ServiceSchedule[]
-  serviceScheduleSwapRequestsMade       ServiceScheduleSwapRequest[] @relation("ServiceScheduleSwapRequester")
-  serviceScheduleSwapRequestsReceived   ServiceScheduleSwapRequest[] @relation("ServiceScheduleSwapReplacement")
+  serviceScheduleUnavailabilities       ServiceScheduleUnavailability[]
+  serviceScheduleSwapRequestsMade       ServiceScheduleSwapRequest[]       @relation("ServiceScheduleSwapRequester")
+  serviceScheduleSwapRequestsReceived   ServiceScheduleSwapRequest[]       @relation("ServiceScheduleSwapReplacement")
   serviceOperationalRoles               ServiceOperationalRoleAssignment[]
-  eventsResponsible                     Event[]                         @relation("EventResponsible")
+  eventsResponsible                     Event[]                            @relation("EventResponsible")
   notificationRecipients                NotificationRecipient[]
-  kidsEnrollments                       KidsEnrollment[]                @relation("KidsChild")
-  kidsPickupAuthorizationsAsChild       KidsAuthorizedPickup[]          @relation("KidsPickupChild")
-  kidsPickupAuthorizationsAsResponsible KidsAuthorizedPickup[]          @relation("KidsPickupResponsible")
-  kidsCheckIns                          KidsCheckIn[]                   @relation("KidsCheckInChild")
+  kidsEnrollments                       KidsEnrollment[]                   @relation("KidsChild")
+  kidsPickupAuthorizationsAsChild       KidsAuthorizedPickup[]             @relation("KidsPickupChild")
+  kidsPickupAuthorizationsAsResponsible KidsAuthorizedPickup[]             @relation("KidsPickupResponsible")
+  kidsCheckIns                          KidsCheckIn[]                      @relation("KidsCheckInChild")
   kidsPreCheckIns                       KidsPreCheckIn[]
   kidsCareProfile                       KidsCareProfile?
   kidsIdentity                          KidsIdentity?
   kidsOperationalRoles                  KidsOperationalRoleAssignment[]
-  kidsResourceRequests                  KidsResourceRequest[]           @relation("KidsResourceRequestedBy")
-  worshipOrderItemsResponsible          WorshipOrderItem[]              @relation("WorshipOrderItemResponsible")
-  worshipDemandsResponsible             WorshipServiceDemand[]          @relation("WorshipDemandResponsible")
-  worshipRepertoiresSubmitted           WorshipRepertoire[]             @relation("WorshipRepertoireSubmittedBy")
-  worshipRepertoiresApproved            WorshipRepertoire[]             @relation("WorshipRepertoireApprovedBy")
+  kidsResourceRequests                  KidsResourceRequest[]              @relation("KidsResourceRequestedBy")
+  worshipOrderItemsResponsible          WorshipOrderItem[]                 @relation("WorshipOrderItemResponsible")
+  worshipDemandsResponsible             WorshipServiceDemand[]             @relation("WorshipDemandResponsible")
+  worshipRepertoiresSubmitted           WorshipRepertoire[]                @relation("WorshipRepertoireSubmittedBy")
+  worshipRepertoiresApproved            WorshipRepertoire[]                @relation("WorshipRepertoireApprovedBy")
   serviceAreaApplications               ServiceAreaApplication[]
   campusMemberships                     PersonCampusMembership[]
 }
 
 model PersonCampusMembership {
-  id             String   @id @default(uuid())
-  ativo          Boolean  @default(true)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id        String   @id @default(uuid())
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   personId String
   person   Person @relation(fields: [personId], references: [id])
@@ -312,22 +326,22 @@ model User {
   personId String @unique
   person   Person @relation(fields: [personId], references: [id])
 
-  organization                 Organization?          @relation(fields: [organizationId], references: [id])
-  organizationId               String?
-  role                         UserRole               @default(MEMBER)
-  additionalRoles              UserRoleAssignment[]   @relation("UserAdditionalRoles")
-  rolesGranted                 UserRoleAssignment[]   @relation("UserAdditionalRolesGranted")
-  journeyEventsCreated         PersonJourneyEvent[]
-  eventsCreated                Event[]                @relation("EventCreatedBy")
-  eventHistory                 EventHistory[]
-  serviceScheduleHistory       ServiceScheduleHistory[]
-  serviceScheduleSwapRequestsDecided ServiceScheduleSwapRequest[] @relation("ServiceScheduleSwapDecidedBy")
-  serviceAreaApplicationsCreated ServiceAreaApplication[] @relation("ServiceAreaApplicationCreatedBy")
-  serviceAreaApplicationsDecided ServiceAreaApplication[] @relation("ServiceAreaApplicationDecidedBy")
+  organization                          Organization?                 @relation(fields: [organizationId], references: [id])
+  organizationId                        String?
+  role                                  UserRole                      @default(MEMBER)
+  additionalRoles                       UserRoleAssignment[]          @relation("UserAdditionalRoles")
+  rolesGranted                          UserRoleAssignment[]          @relation("UserAdditionalRolesGranted")
+  journeyEventsCreated                  PersonJourneyEvent[]
+  eventsCreated                         Event[]                       @relation("EventCreatedBy")
+  eventHistory                          EventHistory[]
+  serviceScheduleHistory                ServiceScheduleHistory[]
+  serviceScheduleSwapRequestsDecided    ServiceScheduleSwapRequest[]  @relation("ServiceScheduleSwapDecidedBy")
+  serviceAreaApplicationsCreated        ServiceAreaApplication[]      @relation("ServiceAreaApplicationCreatedBy")
+  serviceAreaApplicationsDecided        ServiceAreaApplication[]      @relation("ServiceAreaApplicationDecidedBy")
   serviceAreaApplicationStagesCompleted ServiceAreaApplicationStage[]
-  worshipOrdersCreated         WorshipOrder[]
-  worshipOrderTemplatesCreated WorshipOrderTemplate[]
-  auditLogs                    AuditLog[]
+  worshipOrdersCreated                  WorshipOrder[]
+  worshipOrderTemplatesCreated          WorshipOrderTemplate[]
+  auditLogs                             AuditLog[]
 }
 
 model UserRoleAssignment {
@@ -355,42 +369,44 @@ model Organization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  campuses              Campus[]
-  persons               Person[]
-  personCampusMemberships PersonCampusMembership[]
-  users                 User[]
-  cells                 Cell[]
-  cellNetworks          CellNetwork[]
-  studies               CellStudy[]
-  pastoralCares         PastoralCare[]
-  journeyEvents         PersonJourneyEvent[]
-  families              Family[]
-  serviceAreas          ServiceArea[]
-  serviceTeams          ServiceTeam[]
-  serviceScheduleSwapRequests ServiceScheduleSwapRequest[]
-  serviceSchedules      ServiceSchedule[]
-  serviceOperationalRoles ServiceOperationalRoleAssignment[]
-  serviceAreaEntryStages ServiceAreaEntryStage[]
-  serviceAreaApplications ServiceAreaApplication[]
-  spaces                Space[]
-  events                Event[]
-  notifications         Notification[]
-  kidsClasses           KidsClass[]
-  kidsVisualResources   KidsVisualResource[]
-  kidsResourceRequests  KidsResourceRequest[]
-  kidsOperationalRoles  KidsOperationalRoleAssignment[]
-  worshipOrderTemplates WorshipOrderTemplate[]
-  worshipRepertoires    WorshipRepertoire[]
-  auditLogs             AuditLog[]
+  campuses                        Campus[]
+  persons                         Person[]
+  personCampusMemberships         PersonCampusMembership[]
+  users                           User[]
+  cells                           Cell[]
+  cellNetworks                    CellNetwork[]
+  studies                         CellStudy[]
+  pastoralCares                   PastoralCare[]
+  journeyEvents                   PersonJourneyEvent[]
+  families                        Family[]
+  serviceAreas                    ServiceArea[]
+  serviceTeams                    ServiceTeam[]
+  serviceScheduleSwapRequests     ServiceScheduleSwapRequest[]
+  serviceSchedules                ServiceSchedule[]
+  serviceScheduleUnavailabilities ServiceScheduleUnavailability[]
+  serviceScheduleNotes            ServiceScheduleNote[]
+  serviceOperationalRoles         ServiceOperationalRoleAssignment[]
+  serviceAreaEntryStages          ServiceAreaEntryStage[]
+  serviceAreaApplications         ServiceAreaApplication[]
+  spaces                          Space[]
+  events                          Event[]
+  notifications                   Notification[]
+  kidsClasses                     KidsClass[]
+  kidsVisualResources             KidsVisualResource[]
+  kidsResourceRequests            KidsResourceRequest[]
+  kidsOperationalRoles            KidsOperationalRoleAssignment[]
+  worshipOrderTemplates           WorshipOrderTemplate[]
+  worshipRepertoires              WorshipRepertoire[]
+  auditLogs                       AuditLog[]
 }
 
 model AuditLog {
-  id             String   @id @default(uuid())
-  action         String
-  resource       String
-  entityId       String?
-  metadata       Json?
-  createdAt      DateTime @default(now())
+  id        String   @id @default(uuid())
+  action    String
+  resource  String
+  entityId  String?
+  metadata  Json?
+  createdAt DateTime @default(now())
 
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id])
@@ -542,18 +558,18 @@ model FamilyMembership {
 }
 
 model ServiceArea {
-  id                        String                     @id @default(uuid())
+  id                        String                             @id @default(uuid())
   nome                      String
   descricao                 String?
-  funcoes                   String[]                   @default([])
-  scope                     ServiceAreaScope           @default(GLOBAL)
-  ativo                     Boolean                    @default(true)
-  createdAt                 DateTime                   @default(now())
-  updatedAt                 DateTime                   @updatedAt
+  funcoes                   String[]                           @default([])
+  scope                     ServiceAreaScope                   @default(GLOBAL)
+  ativo                     Boolean                            @default(true)
+  createdAt                 DateTime                           @default(now())
+  updatedAt                 DateTime                           @updatedAt
   organizationId            String
-  organization              Organization               @relation(fields: [organizationId], references: [id])
+  organization              Organization                       @relation(fields: [organizationId], references: [id])
   campusId                  String?
-  campus                    Campus?                    @relation(fields: [campusId], references: [id])
+  campus                    Campus?                            @relation(fields: [campusId], references: [id])
   teams                     ServiceTeam[]
   memberships               ServiceMembership[]
   operationalRoles          ServiceOperationalRoleAssignment[]
@@ -566,6 +582,8 @@ model ServiceArea {
   worshipRepertoires        WorshipRepertoire[]
   entryStages               ServiceAreaEntryStage[]
   applications              ServiceAreaApplication[]
+  scheduleUnavailabilities  ServiceScheduleUnavailability[]
+  scheduleNotes             ServiceScheduleNote[]
 
   @@index([organizationId])
   @@index([campusId])
@@ -573,26 +591,26 @@ model ServiceArea {
 }
 
 model ServiceTeam {
-  id             String              @id @default(uuid())
-  nome           String
-  descricao      String?
-  ativo          Boolean             @default(true)
-  createdAt      DateTime            @default(now())
-  updatedAt      DateTime            @updatedAt
-  organizationId String
-  organization   Organization        @relation(fields: [organizationId], references: [id])
-  serviceAreaId  String
-  serviceArea    ServiceArea         @relation(fields: [serviceAreaId], references: [id])
-  campusId       String
-  campus         Campus              @relation(fields: [campusId], references: [id])
-  memberships    ServiceMembership[]
-  operationalRoles ServiceOperationalRoleAssignment[]
-  schedules      ServiceSchedule[]
-  swapRequests   ServiceScheduleSwapRequest[]
-  eventTeams     EventServiceTeam[]
-  notifications  Notification[]
-  kidsClasses    KidsClass[]
-  desiredApplications ServiceAreaApplication[] @relation("ServiceAreaApplicationDesiredTeam")
+  id                  String                             @id @default(uuid())
+  nome                String
+  descricao           String?
+  ativo               Boolean                            @default(true)
+  createdAt           DateTime                           @default(now())
+  updatedAt           DateTime                           @updatedAt
+  organizationId      String
+  organization        Organization                       @relation(fields: [organizationId], references: [id])
+  serviceAreaId       String
+  serviceArea         ServiceArea                        @relation(fields: [serviceAreaId], references: [id])
+  campusId            String
+  campus              Campus                             @relation(fields: [campusId], references: [id])
+  memberships         ServiceMembership[]
+  operationalRoles    ServiceOperationalRoleAssignment[]
+  schedules           ServiceSchedule[]
+  swapRequests        ServiceScheduleSwapRequest[]
+  eventTeams          EventServiceTeam[]
+  notifications       Notification[]
+  kidsClasses         KidsClass[]
+  desiredApplications ServiceAreaApplication[]           @relation("ServiceAreaApplicationDesiredTeam")
 
   @@index([organizationId])
   @@index([serviceAreaId])
@@ -651,21 +669,21 @@ model ServiceOperationalRoleAssignment {
 }
 
 model ServiceSchedule {
-  id             String                @id @default(uuid())
+  id             String                       @id @default(uuid())
   data           DateTime
   funcao         String
   observacao     String?
-  status         ServiceScheduleStatus @default(SCHEDULED)
-  createdAt      DateTime              @default(now())
-  updatedAt      DateTime              @updatedAt
+  status         ServiceScheduleStatus        @default(SCHEDULED)
+  createdAt      DateTime                     @default(now())
+  updatedAt      DateTime                     @updatedAt
   organizationId String
-  organization   Organization          @relation(fields: [organizationId], references: [id])
+  organization   Organization                 @relation(fields: [organizationId], references: [id])
   teamId         String
-  team           ServiceTeam           @relation(fields: [teamId], references: [id])
+  team           ServiceTeam                  @relation(fields: [teamId], references: [id])
   personId       String
-  person         Person                @relation(fields: [personId], references: [id])
+  person         Person                       @relation(fields: [personId], references: [id])
   eventId        String?
-  event          Event?                @relation(fields: [eventId], references: [id])
+  event          Event?                       @relation(fields: [eventId], references: [id])
   history        ServiceScheduleHistory[]
   swapRequests   ServiceScheduleSwapRequest[]
 
@@ -673,6 +691,47 @@ model ServiceSchedule {
   @@index([teamId])
   @@index([personId])
   @@index([data])
+  @@index([eventId])
+}
+
+model ServiceScheduleUnavailability {
+  id             String       @id @default(uuid())
+  data           DateTime
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  serviceAreaId  String
+  serviceArea    ServiceArea  @relation(fields: [serviceAreaId], references: [id])
+  personId       String
+  person         Person       @relation(fields: [personId], references: [id])
+
+  @@unique([serviceAreaId, personId, data])
+  @@index([organizationId])
+  @@index([serviceAreaId, data])
+  @@index([personId, data])
+}
+
+model ServiceScheduleNote {
+  id              String       @id @default(uuid())
+  data            DateTime
+  observacao      String
+  updatedByUserId String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  serviceAreaId   String
+  serviceArea     ServiceArea  @relation(fields: [serviceAreaId], references: [id])
+  campusId        String
+  campus          Campus       @relation(fields: [campusId], references: [id])
+  eventId         String?
+  event           Event?       @relation(fields: [eventId], references: [id])
+
+  @@unique([serviceAreaId, campusId, data])
+  @@index([organizationId])
+  @@index([serviceAreaId, data])
+  @@index([campusId, data])
   @@index([eventId])
 }
 
@@ -725,18 +784,18 @@ model ServiceScheduleHistory {
 }
 
 model ServiceAreaEntryStage {
-  id             String    @id @default(uuid())
+  id             String                        @id @default(uuid())
   nome           String
   descricao      String?
   ordem          Int
-  obrigatoria    Boolean   @default(true)
-  ativo          Boolean   @default(true)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  obrigatoria    Boolean                       @default(true)
+  ativo          Boolean                       @default(true)
+  createdAt      DateTime                      @default(now())
+  updatedAt      DateTime                      @updatedAt
   organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id])
+  organization   Organization                  @relation(fields: [organizationId], references: [id])
   serviceAreaId  String
-  serviceArea    ServiceArea @relation(fields: [serviceAreaId], references: [id])
+  serviceArea    ServiceArea                   @relation(fields: [serviceAreaId], references: [id])
   completions    ServiceAreaApplicationStage[]
 
   @@unique([serviceAreaId, ordem])
@@ -746,27 +805,27 @@ model ServiceAreaEntryStage {
 }
 
 model ServiceAreaApplication {
-  id                String                       @id @default(uuid())
-  status            ServiceAreaApplicationStatus @default(INTERESTED)
-  observacao        String?
-  decisaoMotivo     String?
-  startedAt         DateTime?
-  decidedAt         DateTime?
-  createdAt         DateTime                     @default(now())
-  updatedAt         DateTime                     @updatedAt
-  organizationId    String
-  organization      Organization                 @relation(fields: [organizationId], references: [id])
-  serviceAreaId     String
-  serviceArea       ServiceArea                  @relation(fields: [serviceAreaId], references: [id])
-  personId          String
-  person            Person                       @relation(fields: [personId], references: [id])
-  desiredTeamId     String?
-  desiredTeam       ServiceTeam?                 @relation("ServiceAreaApplicationDesiredTeam", fields: [desiredTeamId], references: [id])
-  createdByUserId   String
-  createdByUser     User                         @relation("ServiceAreaApplicationCreatedBy", fields: [createdByUserId], references: [id])
-  decidedByUserId   String?
-  decidedByUser     User?                        @relation("ServiceAreaApplicationDecidedBy", fields: [decidedByUserId], references: [id])
-  stageCompletions  ServiceAreaApplicationStage[]
+  id               String                        @id @default(uuid())
+  status           ServiceAreaApplicationStatus  @default(INTERESTED)
+  observacao       String?
+  decisaoMotivo    String?
+  startedAt        DateTime?
+  decidedAt        DateTime?
+  createdAt        DateTime                      @default(now())
+  updatedAt        DateTime                      @updatedAt
+  organizationId   String
+  organization     Organization                  @relation(fields: [organizationId], references: [id])
+  serviceAreaId    String
+  serviceArea      ServiceArea                   @relation(fields: [serviceAreaId], references: [id])
+  personId         String
+  person           Person                        @relation(fields: [personId], references: [id])
+  desiredTeamId    String?
+  desiredTeam      ServiceTeam?                  @relation("ServiceAreaApplicationDesiredTeam", fields: [desiredTeamId], references: [id])
+  createdByUserId  String
+  createdByUser    User                          @relation("ServiceAreaApplicationCreatedBy", fields: [createdByUserId], references: [id])
+  decidedByUserId  String?
+  decidedByUser    User?                         @relation("ServiceAreaApplicationDecidedBy", fields: [decidedByUserId], references: [id])
+  stageCompletions ServiceAreaApplicationStage[]
 
   @@index([organizationId])
   @@index([serviceAreaId])
@@ -812,27 +871,30 @@ model Space {
 }
 
 model Event {
-  id                   String                @id @default(uuid())
+  id                   String                   @id @default(uuid())
   titulo               String
   descricao            String?
   type                 EventType
-  status               EventStatus           @default(REQUESTED)
+  status               EventStatus              @default(REQUESTED)
   inicio               DateTime
   fim                  DateTime
-  alertEnabled         Boolean               @default(false)
-  blocksCampusAgenda   Boolean               @default(false)
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
+  alertEnabled         Boolean                  @default(false)
+  blocksCampusAgenda   Boolean                  @default(false)
+  recurrence           EventRecurrence          @default(NONE)
+  recurrenceSeriesId   String?
+  recurrenceUntil      DateTime?
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
   organizationId       String
-  organization         Organization          @relation(fields: [organizationId], references: [id])
+  organization         Organization             @relation(fields: [organizationId], references: [id])
   campusId             String
-  campus               Campus                @relation(fields: [campusId], references: [id])
+  campus               Campus                   @relation(fields: [campusId], references: [id])
   cellId               String?
-  cell                 Cell?                 @relation(fields: [cellId], references: [id])
+  cell                 Cell?                    @relation(fields: [cellId], references: [id])
   createdByUserId      String
-  createdByUser        User                  @relation("EventCreatedBy", fields: [createdByUserId], references: [id])
+  createdByUser        User                     @relation("EventCreatedBy", fields: [createdByUserId], references: [id])
   responsiblePersonId  String?
-  responsiblePerson    Person?               @relation("EventResponsible", fields: [responsiblePersonId], references: [id])
+  responsiblePerson    Person?                  @relation("EventResponsible", fields: [responsiblePersonId], references: [id])
   spaces               EventSpace[]
   serviceAreas         EventServiceArea[]
   teams                EventServiceTeam[]
@@ -840,6 +902,7 @@ model Event {
   history              EventHistory[]
   notifications        Notification[]
   schedules            ServiceSchedule[]
+  serviceScheduleNotes ServiceScheduleNote[]
   kidsResourceRequests KidsResourceRequest[]
   kidsPreCheckIns      KidsPreCheckIn[]
   worshipOrder         WorshipOrder?
@@ -851,16 +914,17 @@ model Event {
   @@index([cellId])
   @@index([inicio])
   @@index([status])
+  @@index([organizationId, recurrenceSeriesId])
 }
 
 model GoogleCalendarEventSync {
-  id           String                   @id @default(uuid())
-  googleEventId String?                 @unique
-  status       GoogleCalendarSyncStatus @default(PENDING)
-  lastSyncedAt DateTime?
-  lastError    String?
-  createdAt    DateTime                 @default(now())
-  updatedAt    DateTime                 @updatedAt
+  id            String                   @id @default(uuid())
+  googleEventId String?                  @unique
+  status        GoogleCalendarSyncStatus @default(PENDING)
+  lastSyncedAt  DateTime?
+  lastError     String?
+  createdAt     DateTime                 @default(now())
+  updatedAt     DateTime                 @updatedAt
 
   eventId String @unique
   event   Event  @relation(fields: [eventId], references: [id])
@@ -961,7 +1025,7 @@ model WorshipServiceDemand {
   serviceArea         ServiceArea         @relation(fields: [serviceAreaId], references: [id])
   responsiblePersonId String?
   responsiblePerson   Person?             @relation("WorshipDemandResponsible", fields: [responsiblePersonId], references: [id])
-  repertoireDelivery  WorshipRepertoire? @relation("WorshipRepertoireDeliveryDemand")
+  repertoireDelivery  WorshipRepertoire?  @relation("WorshipRepertoireDeliveryDemand")
 
   @@index([itemId])
   @@index([serviceAreaId])
@@ -989,7 +1053,7 @@ model WorshipRepertoire {
   approvedByPersonId   String?
   approvedByPerson     Person?                 @relation("WorshipRepertoireApprovedBy", fields: [approvedByPersonId], references: [id])
   orderItemId          String?
-  orderItem            WorshipOrderItem?      @relation(fields: [orderItemId], references: [id])
+  orderItem            WorshipOrderItem?       @relation(fields: [orderItemId], references: [id])
   deliveryDemandId     String?                 @unique
   deliveryDemand       WorshipServiceDemand?   @relation("WorshipRepertoireDeliveryDemand", fields: [deliveryDemandId], references: [id])
   songs                WorshipRepertoireSong[]

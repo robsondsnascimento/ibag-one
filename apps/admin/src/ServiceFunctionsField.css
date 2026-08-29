@@ -1,6 +1,6 @@
 .service-functions-field { border: 1px solid var(--line); border-radius: 9px; margin: 0; padding: 11px; }
-.service-functions-field legend { color: var(--ink); font-size: 11px; font-weight: 700; padding: 0 4px; }
-.service-functions-field > p { color: var(--ink-soft); font-size: 10px; line-height: 1.45; margin: 0 0 9px; }
+.service-functions-field legend { color: var(--ink); font-size: 13px; font-weight: 700; padding: 0 4px; }
+.service-functions-field > p { color: var(--ink-soft); font-size: 13px; line-height: 1.45; margin: 0 0 9px; }
 .service-functions-options { display: flex; flex-wrap: wrap; gap: 7px; }
 .service-functions-options label { align-items: center; background: var(--blue-soft); border-radius: 7px; color: var(--blue) !important; cursor: pointer; display: inline-flex !important; font-size: 12px !important; font-weight: 700 !important; gap: 6px !important; min-height: 33px; padding: 7px 10px; }
 .service-functions-options input { accent-color: var(--blue); height: 15px !important; margin: 0; width: 15px; }

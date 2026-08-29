@@ -1,4 +1,5 @@
 import { ForbiddenException } from '@nestjs/common';
+import { EventRecurrence } from '../../generated/prisma/client';
 import { EventService } from './event.service';
 
 describe('EventService pastoral campus scope', () => {
@@ -64,5 +65,67 @@ describe('EventService pastoral campus scope', () => {
         }),
       }),
     );
+  });
+
+  it('creates weekly occurrences through the requested final date', () => {
+    const occurrences = (service as any).recurrenceOccurrences(
+      new Date('2026-08-02T20:00:00.000Z'),
+      new Date('2026-08-02T22:00:00.000Z'),
+      EventRecurrence.WEEKLY,
+      new Date('2026-08-16T23:59:59.000Z'),
+    );
+
+    expect(occurrences).toHaveLength(3);
+    expect(occurrences.map((occurrence: { inicio: Date }) => occurrence.inicio.toISOString().slice(0, 10))).toEqual([
+      '2026-08-02',
+      '2026-08-09',
+      '2026-08-16',
+    ]);
+  });
+
+  it('keeps the final valid day when repeating monthly', () => {
+    const occurrences = (service as any).recurrenceOccurrences(
+      new Date('2026-01-31T12:00:00.000Z'),
+      new Date('2026-01-31T14:00:00.000Z'),
+      EventRecurrence.MONTHLY,
+      new Date('2026-03-31T23:59:59.000Z'),
+    );
+
+    expect(occurrences.map((occurrence: { inicio: Date }) => occurrence.inicio.toISOString().slice(0, 10))).toEqual([
+      '2026-01-31',
+      '2026-02-28',
+      '2026-03-31',
+    ]);
+  });
+
+  it('applies the active default model to each compatible recurring worship event', async () => {
+    (prisma as any).worshipOrderTemplate = {
+      findFirst: jest.fn().mockResolvedValue({
+        id: 'template-1',
+        items: [
+          { sequencia: 1, titulo: 'Celebração de início', horario: null, observacoes: null, serviceAreaId: 'music-area' },
+          { sequencia: 2, titulo: 'Oração', horario: null, observacoes: null, serviceAreaId: null },
+        ],
+      }),
+    };
+    (prisma as any).worshipOrder = { create: jest.fn().mockResolvedValue({ id: 'order-1' }) };
+
+    await (service as any).createDefaultOrderForRecurringWorship({
+      id: 'event-1',
+      type: 'WORSHIP',
+      status: 'APPROVED',
+      recurrenceSeriesId: 'series-1',
+      organizationId: 'org-1',
+      createdByUserId: 'user-1',
+      serviceAreas: [{ serviceAreaId: 'music-area' }],
+    });
+
+    expect((prisma as any).worshipOrder.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        eventId: 'event-1',
+        templateId: 'template-1',
+        createdByUserId: 'user-1',
+      }),
+    });
   });
 });

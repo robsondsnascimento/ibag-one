@@ -8,6 +8,7 @@ export type AuthUser = {
   person: {
     id: string
     nome: string
+    fotoPerfilAtualizadaEm?: string | null
     campusId: string
     campus: {
       nome: string

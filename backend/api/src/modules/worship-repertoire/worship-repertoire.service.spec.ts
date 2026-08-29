@@ -85,8 +85,8 @@ describe('WorshipRepertoireService', () => {
     const repertoire = {
       id: 'repertoire-1', status: 'APPROVED', organizationId: 'org-1', eventId: 'event-1', serviceAreaId: 'area-music',
       songs: [
-        { sequencia: 1, titulo: 'Canção de abertura', tom: 'G', referencia: null, observacoes: 'Celebração · início do culto' },
-        { sequencia: 2, titulo: 'Canção final', tom: 'D', referencia: null, observacoes: 'Celebração · final do culto' },
+        { sequencia: 1, titulo: 'Canção de abertura', tom: 'G', referencia: null, observacoes: 'Celebração de início' },
+        { sequencia: 2, titulo: 'Canção final', tom: 'D', referencia: null, observacoes: 'Celebração final' },
       ],
       event: { id: 'event-1', titulo: 'Culto Domingo', inicio: new Date('2099-08-13T22:30:00.000Z'), campusId: 'campus-1', serviceAreas: [{ serviceAreaId: 'area-music' }, { serviceAreaId: 'area-order' }] },
     };
@@ -100,8 +100,8 @@ describe('WorshipRepertoireService', () => {
       worshipRepertoire: { findFirst: jest.fn().mockResolvedValue(repertoire) },
       user: { findFirst: jest.fn().mockResolvedValue({ role: 'WORSHIP_ORDER_MANAGER' }) },
       worshipOrder: { findFirst: jest.fn().mockResolvedValue({ status: 'DRAFT', items: [
-        { id: 'opening', titulo: 'Celebração · início do culto', serviceAreaId: 'area-music' },
-        { id: 'closing', titulo: 'Celebração · final do culto', serviceAreaId: 'area-music' },
+        { id: 'opening', titulo: 'Celebração de início', serviceAreaId: 'area-music' },
+        { id: 'closing', titulo: 'Celebração final', serviceAreaId: 'area-music' },
       ] }) },
       serviceArea: { findFirst: jest.fn().mockResolvedValue({ id: 'area-order' }) },
       $transaction: jest.fn(callback => callback(tx)),
@@ -127,6 +127,34 @@ describe('WorshipRepertoireService', () => {
       where: { id: 'closing' },
       data: expect.objectContaining({ titulo: 'Música 2 · Canção final' }),
     }));
+  });
+
+  it('usa a posição de oração como destino automático de música', async () => {
+    const prisma: any = {
+      worshipOrder: {
+        findFirst: jest.fn().mockResolvedValue({
+          status: 'DRAFT',
+          items: [
+            { id: 'prayer', titulo: 'Música oração', serviceAreaId: 'area-music' },
+            { id: 'offerings', titulo: 'Música dízimos e ofertas', serviceAreaId: 'area-music' },
+          ],
+        }),
+      },
+    };
+    const service: any = new WorshipRepertoireService(prisma);
+
+    await expect(
+      service.momentOrderItemDestinations(
+        {
+          eventId: 'event-1',
+          serviceAreaId: 'area-music',
+          songs: [{ titulo: 'Canção de oração', observacoes: 'Música oração' }],
+        },
+        context,
+      ),
+    ).resolves.toEqual([
+      expect.objectContaining({ orderItem: expect.objectContaining({ id: 'prayer' }) }),
+    ]);
   });
 
   it('bloqueia o envio quando o ministro não possui escala confirmada no culto', async () => {

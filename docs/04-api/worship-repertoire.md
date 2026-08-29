@@ -17,7 +17,7 @@ Antes de usar o fluxo, configure as áreas globais **Música** e **Ordem de Cult
 5. As músicas tornam-se materiais da Ordem de Culto e uma pendência é criada para a equipe responsável. Com o modelo Cachoeirinha, cada posição recebe o formato `Música 1 · Nome da música`, preservando momento, tom e link da versão.
 6. Quando essa equipe conclui a pendência, o repertório passa a `COMPLETED`.
 
-Quando a Ordem de Culto foi criada com o modelo de músicas do Culto Cachoeirinha, o encaminhamento pode ser feito sem selecionar um item manual. As três posições automáticas são **Celebração · início do culto**, **Celebração ou POP** e **Celebração · final do culto**; cada música é distribuída para a posição que possui o mesmo momento registrado no repertório. Oração e Dízimos e ofertas não são posições de Música. Se uma música não tiver momento ou a ordem não possuir a posição correspondente, a liderança deve escolher manualmente um item de Louvor.
+Quando a Ordem de Culto foi criada com o modelo de músicas do Culto Cachoeirinha, o encaminhamento pode ser feito sem selecionar um item manual. As cinco posições automáticas são **Música celebração**, **Música celebração ou POP**, **Música oração**, **Música dízimos e ofertas** e **Música final**; cada música é distribuída para a posição que possui o mesmo momento registrado no repertório. Cada posição automática aceita uma única música nesta etapa; se a ordem exigir outra distribuição, a liderança deve selecionar manualmente um item de Louvor.
 
 ```mermaid
 flowchart LR

@@ -1,5 +1,6 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { EventStatus, EventType } from '../../generated/prisma/client';
+import { randomUUID } from 'crypto';
+import { EventRecurrence, EventStatus, EventType } from '../../generated/prisma/client';
 import { hasAnyUserRole, hasPastoralCampusAccess } from '../../common/access/user-role.util';
 import { OrganizationContext } from '../../common/context/organization-context';
 import { PrismaService } from '../../database/prisma.service';
@@ -9,6 +10,7 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 
 type AgendaActor = { autoApprove: boolean; canBlockAgenda: boolean };
+type EventOccurrence = { inicio: Date; fim: Date };
 
 @Injectable()
 export class EventService {
@@ -24,20 +26,31 @@ export class EventService {
     if (inicio >= fim) throw new BadRequestException('O horário de término deve ser posterior ao início');
     if (dto.blocksCampusAgenda && !actor.canBlockAgenda) throw new ForbiddenException('Somente secretaria ou administração pode bloquear a agenda do campus');
     await this.validateReferences(dto, context);
-    await this.assertNoConflict(dto, inicio, fim, context);
     const status = actor.autoApprove ? EventStatus.APPROVED : EventStatus.REQUESTED;
-    const event = await this.prisma.event.create({
+    const recurrence = dto.recurrence ?? EventRecurrence.NONE;
+    const recurrenceUntil = dto.recurrenceUntil ? new Date(dto.recurrenceUntil) : null;
+    const occurrences = this.recurrenceOccurrences(inicio, fim, recurrence, recurrenceUntil);
+    const recurrenceSeriesId = recurrence === EventRecurrence.NONE ? null : randomUUID();
+
+    for (const occurrence of occurrences) {
+      await this.assertNoConflict(dto, occurrence.inicio, occurrence.fim, context);
+    }
+
+    const events = await this.prisma.$transaction(transaction => Promise.all(occurrences.map(occurrence => transaction.event.create({
       data: {
         titulo: dto.titulo,
         descricao: dto.descricao,
         type: dto.type,
         campusId: dto.campusId,
         cellId: dto.cellId,
-        inicio,
-        fim,
+        inicio: occurrence.inicio,
+        fim: occurrence.fim,
         responsiblePersonId: dto.responsiblePersonId,
         alertEnabled: dto.alertEnabled ?? false,
         blocksCampusAgenda: dto.blocksCampusAgenda ?? false,
+        recurrence,
+        recurrenceSeriesId,
+        recurrenceUntil: recurrence === EventRecurrence.NONE ? null : recurrenceUntil,
         status,
         organizationId: context.organizationId,
         createdByUserId: context.userId,
@@ -47,10 +60,14 @@ export class EventService {
         history: { create: { status, changedByUserId: context.userId } },
       },
       include: this.details,
-    });
-    await this.synchronizeWorshipSchedules(event);
-    await this.syncGoogleCalendar(event.id);
-    return event;
+    }))));
+
+    for (const event of events) {
+      await this.synchronizeWorshipSchedules(event);
+      await this.createDefaultOrderForRecurringWorship(event);
+      await this.syncGoogleCalendar(event.id);
+    }
+    return events[0];
   }
 
   async findAll(campusId: string | undefined, start: string | undefined, end: string | undefined, context: OrganizationContext) {
@@ -104,6 +121,9 @@ export class EventService {
   async update(id: string, dto: UpdateEventDto, context: OrganizationContext) {
     const current = await this.event(id, context);
     await this.assertOperationalAccess(current, context);
+    if (dto.recurrence !== undefined || dto.recurrenceUntil !== undefined) {
+      throw new BadRequestException('A recorrência é definida na criação do evento. Para alterá-la, crie uma nova série.');
+    }
     const user = await this.user(context);
     const next = {
       campusId: dto.campusId ?? current.campusId,
@@ -155,6 +175,7 @@ export class EventService {
       return transaction.event.update({ where: { id: event.id }, data: { status: EventStatus.APPROVED }, include: this.details });
     });
     await this.synchronizeWorshipSchedules(approved);
+    await this.createDefaultOrderForRecurringWorship(approved);
     await this.syncGoogleCalendar(approved.id);
     return approved;
   }
@@ -286,6 +307,103 @@ export class EventService {
       const conflict = await this.prisma.eventSpace.findFirst({ where: { spaceId: { in: dto.spaceIds }, event: { organizationId: context.organizationId, ...overlap, status: active, ...(exceptId ? { id: { not: exceptId } } : {}) } } });
       if (conflict) throw new BadRequestException('Um dos espaços informados já está reservado neste período');
     }
+  }
+
+  private recurrenceOccurrences(inicio: Date, fim: Date, recurrence: EventRecurrence, recurrenceUntil: Date | null): EventOccurrence[] {
+    if (recurrence === EventRecurrence.NONE) return [{ inicio, fim }];
+    if (!recurrenceUntil || Number.isNaN(recurrenceUntil.getTime())) {
+      throw new BadRequestException('Informe até quando este evento deverá se repetir');
+    }
+    if (recurrenceUntil < inicio) {
+      throw new BadRequestException('O fim da recorrência deve ser igual ou posterior ao primeiro evento');
+    }
+
+    const duration = fim.getTime() - inicio.getTime();
+    const occurrences: EventOccurrence[] = [];
+    let occurrenceStart = new Date(inicio);
+    const monthlyAnchorDay = inicio.getDate();
+    while (occurrenceStart <= recurrenceUntil) {
+      const occurrenceEnd = new Date(occurrenceStart.getTime() + duration);
+      if (occurrences.length && occurrenceStart < occurrences[occurrences.length - 1].fim) {
+        throw new BadRequestException('O intervalo entre recorrências é menor que a duração do evento');
+      }
+      occurrences.push({ inicio: new Date(occurrenceStart), fim: occurrenceEnd });
+      if (occurrences.length > 120) {
+        throw new BadRequestException('Uma série pode gerar no máximo 120 eventos');
+      }
+      occurrenceStart = this.nextOccurrenceStart(occurrenceStart, recurrence, monthlyAnchorDay);
+    }
+    return occurrences;
+  }
+
+  private nextOccurrenceStart(current: Date, recurrence: EventRecurrence, monthlyAnchorDay: number) {
+    const next = new Date(current);
+    if (recurrence === EventRecurrence.WEEKLY) {
+      next.setDate(next.getDate() + 7);
+      return next;
+    }
+
+    next.setDate(1);
+    next.setMonth(next.getMonth() + 1);
+    const lastDayOfMonth = new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate();
+    next.setDate(Math.min(monthlyAnchorDay, lastDayOfMonth));
+    return next;
+  }
+
+  private async createDefaultOrderForRecurringWorship(event: {
+    id: string;
+    type: EventType;
+    status: EventStatus;
+    recurrenceSeriesId: string | null;
+    organizationId: string;
+    createdByUserId: string;
+    serviceAreas: { serviceAreaId: string }[];
+  }) {
+    if (
+      event.type !== EventType.WORSHIP ||
+      event.status !== EventStatus.APPROVED ||
+      !event.recurrenceSeriesId
+    ) {
+      return;
+    }
+
+    const template = await this.prisma.worshipOrderTemplate.findFirst({
+      where: {
+        organizationId: event.organizationId,
+        ativo: true,
+        padrao: true,
+      },
+      include: { items: { orderBy: { sequencia: 'asc' } } },
+    });
+    if (!template?.items.length) return;
+
+    const eventAreaIds = new Set(
+      event.serviceAreas.map((area) => area.serviceAreaId),
+    );
+    if (
+      template.items.some(
+        (item) => item.serviceAreaId && !eventAreaIds.has(item.serviceAreaId),
+      )
+    ) {
+      return;
+    }
+
+    await this.prisma.worshipOrder.create({
+      data: {
+        eventId: event.id,
+        templateId: template.id,
+        createdByUserId: event.createdByUserId,
+        items: {
+          create: template.items.map((item) => ({
+            sequencia: item.sequencia,
+            titulo: item.titulo,
+            horario: item.horario,
+            observacoes: item.observacoes,
+            serviceAreaId: item.serviceAreaId,
+          })),
+        },
+      },
+    });
   }
 
   private async synchronizeWorshipSchedules(event: { id: string; organizationId: string; campusId: string; inicio: Date; type: EventType; status: EventStatus }, resetExisting = false) {

@@ -27,6 +27,7 @@ export class AuthService {
               id: true,
               nome: true,
               ativo: true,
+              fotoPerfilAtualizadaEm: true,
               campusId: true,
               campus: {
                 select: {
@@ -107,6 +108,7 @@ export class AuthService {
         person: {
           id: user.person.id,
           nome: user.person.nome,
+          fotoPerfilAtualizadaEm: user.person.fotoPerfilAtualizadaEm,
           campusId: user.person.campusId,
           campus: user.person.campus,
           campusMemberships: user.person.campusMemberships,

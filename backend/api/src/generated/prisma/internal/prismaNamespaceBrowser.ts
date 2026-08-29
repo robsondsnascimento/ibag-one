@@ -70,6 +70,8 @@ export const ModelName = {
   ServiceMembership: 'ServiceMembership',
   ServiceOperationalRoleAssignment: 'ServiceOperationalRoleAssignment',
   ServiceSchedule: 'ServiceSchedule',
+  ServiceScheduleUnavailability: 'ServiceScheduleUnavailability',
+  ServiceScheduleNote: 'ServiceScheduleNote',
   ServiceScheduleSwapRequest: 'ServiceScheduleSwapRequest',
   ServiceScheduleHistory: 'ServiceScheduleHistory',
   ServiceAreaEntryStage: 'ServiceAreaEntryStage',
@@ -158,7 +160,11 @@ export const PersonScalarFieldEnum = {
   dataDecisao: 'dataDecisao',
   dataBatismo: 'dataBatismo',
   dataMembresia: 'dataMembresia',
+  dataMembresiaSemDia: 'dataMembresiaSemDia',
   titulosMinisteriais: 'titulosMinisteriais',
+  fotoPerfilPath: 'fotoPerfilPath',
+  fotoPerfilMimeType: 'fotoPerfilMimeType',
+  fotoPerfilAtualizadaEm: 'fotoPerfilAtualizadaEm',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   campusId: 'campusId',
@@ -415,6 +421,35 @@ export const ServiceScheduleScalarFieldEnum = {
 export type ServiceScheduleScalarFieldEnum = (typeof ServiceScheduleScalarFieldEnum)[keyof typeof ServiceScheduleScalarFieldEnum]
 
 
+export const ServiceScheduleUnavailabilityScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId',
+  personId: 'personId'
+} as const
+
+export type ServiceScheduleUnavailabilityScalarFieldEnum = (typeof ServiceScheduleUnavailabilityScalarFieldEnum)[keyof typeof ServiceScheduleUnavailabilityScalarFieldEnum]
+
+
+export const ServiceScheduleNoteScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  observacao: 'observacao',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId',
+  campusId: 'campusId',
+  eventId: 'eventId'
+} as const
+
+export type ServiceScheduleNoteScalarFieldEnum = (typeof ServiceScheduleNoteScalarFieldEnum)[keyof typeof ServiceScheduleNoteScalarFieldEnum]
+
+
 export const ServiceScheduleSwapRequestScalarFieldEnum = {
   id: 'id',
   status: 'status',
@@ -524,6 +559,9 @@ export const EventScalarFieldEnum = {
   fim: 'fim',
   alertEnabled: 'alertEnabled',
   blocksCampusAgenda: 'blocksCampusAgenda',
+  recurrence: 'recurrence',
+  recurrenceSeriesId: 'recurrenceSeriesId',
+  recurrenceUntil: 'recurrenceUntil',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   organizationId: 'organizationId',

@@ -34,7 +34,7 @@
 
 .navigation-label {
   color: #aac1df;
-  font-size: 10px;
+  font-size: 13px;
   margin: 0 0 8px 4px;
 }
 
@@ -84,7 +84,13 @@
 .support-card { background: rgba(255, 255, 255, .1); color: #fff; }
 .support-card small, .profile-card small { color: #c7d8ee; }
 .support-icon { background: rgba(255, 255, 255, .18); color: #fff; }
-.profile-card { color: #fff; }
+.profile-card { align-items: center; color: #fff; display: flex; }
+.profile-card-main { align-items: center; background: transparent; border: 0; color: inherit; cursor: pointer; display: flex; flex: 1; gap: 9px; min-width: 0; padding: 0; text-align: left; }
+.profile-card-main > span:nth-child(2) { flex: 1; min-width: 0; }
+.profile-card-main strong, .profile-card-main small { display: block; }
+.profile-card-main strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile-signout { background: transparent; border: 0; color: #c6d7ee; cursor: pointer; font: inherit; font-weight: 700; padding: 5px 0 5px 8px; }
+.profile-signout:hover, .profile-card-main:hover { color: #fff; }
 .profile-avatar { background: #f5d9c7; color: #9a5f3b; }
 .profile-more { color: #c6d7ee; }
 

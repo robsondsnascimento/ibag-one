@@ -4,9 +4,16 @@
 
 Depois de criar uma pessoa, o painel abre seu cadastro automaticamente. Além dos dados básicos, a seção **Acesso e serviço** permite decidir, de forma independente e opcional, se ela receberá login ou se atua em uma Área de Serviço:
 
-- definir um campus principal e marcar os demais campi em que a mesma pessoa pode atuar, sem gerar cadastro ou login duplicado;
+- definir um campus principal e marcar os demais **Campus** em que a mesma pessoa pode atuar, sem gerar cadastro ou login duplicado;
+- ativar ou inativar o cadastro da pessoa; a inativação preserva seu histórico, retira a pessoa das listagens operacionais e bloqueia seu acesso ao sistema, caso tenha login;
+- informar a data de ingresso na IBAG no cadastro da pessoa; quando o dia for desconhecido, o cadastro aceita apenas mês e ano e essa precisão é preservada na exibição de **Pessoas em serviço**, sem reutilizar a data de criação do vínculo de equipe;
 - informar se a pessoa receberá login no IBAG One e definir a senha inicial; a ação fica restrita a administração e super administração;
+- adicionar ou alterar uma foto de perfil em JPG, PNG ou WEBP de até 3 MB; a própria pessoa acessa **Meu perfil** pela lateral para atualizar apenas sua foto, e a gestão central também pode fazê-lo no cadastro;
+- mostrar a foto de perfil na listagem de pessoas sempre que ela existir; enquanto não houver foto, o painel mantém as iniciais como identificação visual;
+- na visualização semanal ou diária da agenda, o cartão de cada evento cresce conforme necessário para exibir horário, título e campus sem cortar o texto;
 - mostrar ou ocultar a senha enquanto ela é digitada, tanto no login quanto na definição da senha inicial;
+- abrir, pelo cartão do usuário na lateral, um menu com configurações do perfil, alteração da própria senha, consulta do perfil de acesso, notificações, alternância de aparência, suporte e saída da conta;
+- preservar no navegador o último tema escolhido pela pessoa, inclusive após atualizar ou reabrir o painel;
 - visualizar o usuário institucional que foi gerado;
 - adicionar, consultar e remover títulos ministeriais, como `Pastor de Adoração`, sem alterar automaticamente o login ou as permissões;
 - escolher uma Área de Serviço, sua equipe e funções de serviço, criando o vínculo de integrante diretamente no cadastro;
@@ -27,7 +34,7 @@ A visão da área selecionada consulta `GET /service-areas/:id` e apresenta, res
 - escopo global ou de campus;
 - equipes ativas e seus campi;
 - árvore de cuidado da Área, iniciando em Pastor Sênior e Pastores ativos, seguindo por liderança geral, liderança de campus, liderança de equipe e voluntários de cada equipe;
-- integrantes ativos, equipe e data inicial do vínculo.
+- integrantes ativos, equipe, funções de serviço e data de ingresso na IBAG, quando informada.
 
 Na árvore de cuidado, cada nível da hierarquia possui um botão azul expansível. O clique revela ou recolhe as pessoas vinculadas àquela função; quando não há atribuição, a mensagem correspondente é exibida após a expansão.
 
@@ -71,10 +78,14 @@ Cada Área de Serviço exibe sua visão consolidada de escalas, sempre filtrada 
 - confirmar ou recusar a própria escala, com motivo opcional na recusa;
 - concluir ou reabrir uma escala pela liderança autorizada;
 - substituir a pessoa escalada por outra integrante da mesma equipe, preservando a solicitação de nova confirmação;
+- remover uma pessoa de uma escala ainda não concluída, após confirmação, preservando a alteração no histórico;
+- escrever, alterar ou limpar a observação geral de cada culto/data diretamente na linha **Observações**, abaixo das funções da grade;
 - consultar o histórico auditável de criação, respostas e substituições;
 - cadastrar as funções de cada integrante da equipe a partir do catálogo da Área de Serviço; uma mesma pessoa pode marcar quantas funções exercer. Marcar Ministro na Área de Música também habilita o fluxo de repertório.
 
 O painel não replica regras de agenda: conflitos, permissões, escopo da equipe e notificações são validados exclusivamente pela API. Ao escolher um Culto no calendário, o formulário preenche sua data e horário; se a escala for criada sem Culto, ela poderá ser vinculada automaticamente quando houver um Culto aprovado no mesmo campus e horário. A escala continua sendo administrada exclusivamente pela Área de Serviço, enquanto o evento apenas a consulta. Na criação em lote, o sistema envia todas as escalas em uma única operação: se uma delas for inválida, nenhuma é criada.
+
+Na Área de Música, a visualização padrão é a **Grade da Escala do Louvor**, inspirada na planilha operacional já utilizada pela igreja. A grade trabalha com o mês completo, escolhido em um seletor próprio, e permite mostrar todos os Campus ou apenas um Campus específico. Cada campus possui seu próprio quadro, com todos os cultos aprovados do mês nas colunas — inclusive os ainda sem escala —, funções nas linhas, pessoas escaladas nas células e a linha **Observações** sempre posicionada abaixo das funções. As cores indicam o estado de confirmação. Todo integrante ativo do Louvor pode consultar a grade das próprias equipes, mas a edição continua exclusiva da liderança autorizada. Lideranças autorizadas podem clicar diretamente em uma célula de função para adicionar outra pessoa, substituir ou remover alguém já escalado; o editor de pessoas não contém campo de observação. O texto livre é escrito diretamente na célula correspondente da linha **Observações**, sem borda ou botão de ação, e é salvo automaticamente ao sair da célula; apagar o conteúdo e sair da célula remove a observação. O texto pertence ao culto/data e ao Campus e permanece independente das pessoas escaladas. O sistema mantém a equipe original na substituição e vincula automaticamente à pessoa a função indicada pela linha antes de criar a escala. A linha consolidada de **Indisponibilidade**, com os nomes, aparece somente para a liderança dentro do seu escopo. O participante comum usa o quadro **Indisponibilidade para servir**, onde marca ou retira somente as datas em que não poderá servir, sem visualizar a situação de outras pessoas; o backend impede que ele seja incluído em nova escala ou troca naquela data. O botão **Lista** retorna à visualização operacional completa, onde permanecem as ações de confirmar, recusar, concluir, substituir, remover e consultar histórico.
 
 ## Minhas escalas e pendências
 
@@ -93,6 +104,8 @@ O cadastro de evento permite selecionar, dentro do campus escolhido:
 - espaços reservados, com a validação de conflito mantida na API;
 - alertas do evento e, para secretaria ou administração, o bloqueio da agenda do campus.
 
+Na criação, o formulário também pergunta se o evento é recorrente. É possível escolher **uma vez por semana** ou **uma vez por mês** e informar até quando a série deve existir. Em uma série aprovada de Cultos, cada ocorrência recebe automaticamente sua própria ordem baseada no modelo padrão, desde que o evento contenha todas as áreas exigidas pelo modelo. A agenda do painel inicia na **segunda-feira** e eventos de domingo são posicionados corretamente na última coluna da semana. No topo da Agenda, os atalhos **Hoje**, **Esta semana** e **Este mês** retornam ao período atual e alternam entre a visão diária, semanal e mensal; as setas navegam de acordo com a visualização ativa.
+
 Os vínculos diretos de equipe não são exibidos no cadastro nem nos detalhes do evento. As escalas continuam pertencendo exclusivamente à Área de Serviço e podem apontar para o evento correspondente. Ao selecionar um evento na Agenda, o painel apresenta áreas, espaços, horários, checklist de preparação e a consulta somente leitura das escalas relacionadas. A pessoa autorizada pode editar o evento, incluir ou concluir itens do checklist, aprovar uma solicitação pendente ou cancelar o evento após confirmação. As ações de alteração, aprovação, cancelamento e permissão continuam sendo validadas exclusivamente pela API; a gestão de pessoas nas escalas permanece exclusivamente na Área de Serviço.
 
 ## Notificações
@@ -105,18 +118,21 @@ A área de **Cultos** lista os eventos de culto já aprovados na Agenda e permit
 
 - criar uma ordem em branco ou aplicar um modelo ativo da organização;
 - acompanhar o status de rascunho ou publicação;
-- incluir, editar, reorganizar ou remover itens excepcionais na sequência, como um Teatro Minuto, indicando horário, área envolvida e observações; ao escolher uma área na inclusão, o painel cria a solicitação para ela e avisa sua liderança; ao remover, avisa a mesma área;
-- associar materiais e criar demandas para as áreas já envolvidas no culto;
+- acompanhar a sequência em um checklist visual ampliado; no rascunho, incluir um item excepcional, como Teatro Minuto, ou selecionar uma das cinco posições padrão de música;
+- incluir, editar, reorganizar ou remover itens excepcionais na sequência, indicando horário, área envolvida, pessoa responsável e observações; ao escolher uma área na inclusão, o painel cria a solicitação para ela e avisa sua liderança; os momentos de música são vinculados automaticamente à Área de Música; ao remover, avisa a mesma área;
+- associar materiais e criar demandas para as áreas já envolvidas no culto, escolhendo responsável por busca/autopreenchimento quando necessário;
+- acompanhar demandas com área, responsável, prazo e status, concluindo ou cancelando conforme a autorização da API; consultar a escala do culto sem editar seus vínculos;
+- editar os modelos, movendo, alterando ou removendo seus itens;
 - publicar a ordem quando houver ao menos um item e, depois disso, enviar alerta aos participantes ou baixar seu PDF consolidado.
 
 O painel usa apenas cultos aprovados e não replica as regras de escopo: a autorização para criar, editar, publicar, alertar e gerar PDF é sempre confirmada pela API.
 
 ## Cultos — Repertório de Louvor
 
-Dentro do culto selecionado, o painel apresenta o repertório de cada área envolvida. O Ministro de Louvor pode criar o rascunho com a primeira música, acrescentar outras e enviar para aprovação. A liderança responsável aprova ou devolve com orientação; após a aprovação, pode encaminhar as músicas ao item de Louvor da Ordem de Culto e indicar a área que preparará os materiais.
+Dentro do culto selecionado, o painel apresenta o repertório de cada área envolvida. O Ministro de Louvor pode criar o rascunho com a primeira música, acrescentar outras e enviar para aprovação. A liderança responsável aprova ou devolve com orientação; após a aprovação, pode encaminhar as músicas ao item de Louvor da Ordem de Culto e indicar a área que preparará os materiais. Selecionar uma posição musical no checklist apenas cria o lugar da música na sequência; a canção continua dependendo desse fluxo de repertório e aprovação.
 
-Para o Culto de Cachoeirinha, o formulário apresenta o roteiro padrão: Celebração de início, Celebração ou POP, Oração, Dízimos e ofertas e Celebração final. Cada música pode indicar seu momento e o **link da versão no YouTube**, registrado como referência do repertório e preservado quando ele é enviado à Ordem de Culto.
+Para o Culto de Cachoeirinha, o formulário apresenta cinco momentos de música: Música celebração, Música celebração ou POP, Música oração, Música dízimos e ofertas e Música final. Cada música pode indicar seu momento e o **link da versão no YouTube**, registrado como referência do repertório e preservado quando ele é enviado à Ordem de Culto.
 
-Em **Modelos**, a liderança central pode criar o roteiro Cachoeirinha com essas cinco posições, escolhendo a Área de Música global. Ao encaminhar um repertório aprovado, o painel usa essas posições automaticamente conforme o momento escolhido em cada música; para uma ordem diferente, a liderança ainda pode selecionar manualmente o item de Louvor de destino.
+Em **Modelos**, a liderança central pode criar o roteiro Cachoeirinha com as cinco posições, escolhendo a Área de Música global. Ao encaminhar um repertório aprovado, o painel usa essas posições automaticamente conforme o momento escolhido em cada música; para uma ordem diferente, a liderança ainda pode selecionar manualmente o item de Louvor de destino.
 
 O painel também apresenta o prazo calculado e o aviso visual de envio em atraso. As permissões de Ministro, liderança musical, escala confirmada, área de Música e item de Louvor continuam confirmadas exclusivamente pela API.

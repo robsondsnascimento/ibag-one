@@ -41,6 +41,7 @@ export function EventFormDialog({ event, campuses, cells, areas, spaces, isLoadi
   const [cellId, setCellId] = useState(event?.cell?.id ?? '')
   const [spaceIds, setSpaceIds] = useState(event?.spaces.map((item) => item.spaceId) ?? [])
   const [serviceAreaIds, setServiceAreaIds] = useState(event?.serviceAreas.map((item) => item.serviceAreaId) ?? [])
+  const [recurrence, setRecurrence] = useState<'NONE' | 'WEEKLY' | 'MONTHLY'>(event?.recurrence === 'WEEKLY' || event?.recurrence === 'MONTHLY' ? event.recurrence : 'NONE')
   const [localError, setLocalError] = useState('')
 
   useEffect(() => {
@@ -49,6 +50,7 @@ export function EventFormDialog({ event, campuses, cells, areas, spaces, isLoadi
     setCellId(event?.cell?.id ?? '')
     setSpaceIds(event?.spaces.map((item) => item.spaceId) ?? [])
     setServiceAreaIds(event?.serviceAreas.map((item) => item.serviceAreaId) ?? [])
+    setRecurrence(event?.recurrence === 'WEEKLY' || event?.recurrence === 'MONTHLY' ? event.recurrence : 'NONE')
     setLocalError('')
   }, [event])
 
@@ -71,9 +73,16 @@ export function EventFormDialog({ event, campuses, cells, areas, spaces, isLoadi
     const endTime = String(data.get('endTime') ?? '')
     const inicio = new Date(`${date}T${startTime}:00`)
     const fim = new Date(`${date}T${endTime}:00`)
+    const recurrenceUntilValue = String(data.get('recurrenceUntil') ?? '')
+    const recurrenceUntil = recurrenceUntilValue ? new Date(`${recurrenceUntilValue}T23:59:59`) : null
 
     if (inicio >= fim) {
       setLocalError('O horário de término deve ser posterior ao horário de início.')
+      return
+    }
+
+    if (recurrence !== 'NONE' && (!recurrenceUntil || recurrenceUntil < inicio)) {
+      setLocalError('Informe uma data de encerramento igual ou posterior ao primeiro evento recorrente.')
       return
     }
 
@@ -89,6 +98,7 @@ export function EventFormDialog({ event, campuses, cells, areas, spaces, isLoadi
       fim: fim.toISOString(),
       alertEnabled: data.get('alertEnabled') === 'on',
       blocksCampusAgenda: canBlockCampusAgenda && data.get('blocksCampusAgenda') === 'on',
+      ...(event ? {} : { recurrence, ...(recurrence !== 'NONE' && recurrenceUntil ? { recurrenceUntil: recurrenceUntil.toISOString() } : {}) }),
       spaceIds,
       serviceAreaIds,
     })
@@ -110,6 +120,7 @@ export function EventFormDialog({ event, campuses, cells, areas, spaces, isLoadi
           <label>Início<input name="startTime" type="time" required defaultValue={timeValue(event?.inicio)} /></label>
           <label>Término<input name="endTime" type="time" required defaultValue={timeValue(event?.fim)} /></label>
         </div>
+        {!event && <fieldset className="event-selection event-recurrence-field"><legend>Este evento é recorrente?</legend><p>Escolha se ele deve se repetir semanalmente ou mensalmente.</p><label>Frequência<select value={recurrence} onChange={(changeEvent) => setRecurrence(changeEvent.target.value as 'NONE' | 'WEEKLY' | 'MONTHLY')}><option value="NONE">Não se repete</option><option value="WEEKLY">Uma vez por semana</option><option value="MONTHLY">Uma vez por mês</option></select></label>{recurrence !== 'NONE' && <label>Repetir até<input name="recurrenceUntil" type="date" required /></label>}</fieldset>}
         <label>Campus<select name="campusId" value={campusId} required disabled={isLoading || campuses.length === 0} onChange={(changeEvent) => changeCampus(changeEvent.target.value)}><option value="" disabled>{isLoading ? 'Carregando campi...' : 'Selecione o campus'}</option>{campuses.map((campus) => <option key={campus.id} value={campus.id}>{campus.nome}</option>)}</select></label>
         {eventType !== 'WORSHIP' && <label>Célula relacionada <span className="field-optional">(opcional)</span><select name="cellId" value={cellId} disabled={!campusId} onChange={(changeEvent) => setCellId(changeEvent.target.value)}><option value="">Nenhuma célula específica</option>{availableCells.map((cell) => <option value={cell.id} key={cell.id}>{cell.nome}</option>)}</select></label>}
         <EventSelection title="Áreas de Serviço envolvidas" description="Opcional para administração; necessário quando a liderança solicita um evento da área." items={availableAreas.map((area) => ({ id: area.id, label: area.nome }))} selectedIds={serviceAreaIds} onToggle={(id) => setServiceAreaIds((current) => toggle(current, id))} emptyMessage={campusId ? 'Não há áreas disponíveis neste campus.' : 'Escolha o campus para selecionar áreas.'} />

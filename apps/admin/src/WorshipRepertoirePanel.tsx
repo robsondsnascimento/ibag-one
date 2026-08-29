@@ -24,11 +24,11 @@ const statusLabels: Record<WorshipRepertoire["status"], string> = {
 };
 
 const cachoeirinhaMoments = [
-  "Celebração · início do culto",
-  "Celebração ou POP",
-  "Oração",
-  "Dízimos e ofertas",
-  "Celebração · final do culto",
+  "Música celebração",
+  "Música celebração ou POP",
+  "Música oração",
+  "Música dízimos e ofertas",
+  "Música final",
 ];
 
 export function WorshipRepertoirePanel({

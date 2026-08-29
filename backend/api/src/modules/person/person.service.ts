@@ -1,4 +1,6 @@
-import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { unlink } from 'fs/promises';
+import { basename, join } from 'path';
 
 import { PrismaService } from '../../database/prisma.service';
 
@@ -12,6 +14,7 @@ import {
 import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { paginatedResult } from '../../common/pagination/paginated-result';
 import { userRoleWhere } from '../../common/access/user-role.util';
+import { profilePhotoMaxBytes, profilePhotoMimeTypes, profilePhotosDirectory } from './profile-photo.storage';
 
 
 @Injectable()
@@ -65,7 +68,10 @@ export class PersonService {
           createPersonDto.dataBatismo,
 
         dataMembresia:
-          createPersonDto.dataMembresia,
+          this.membershipDate(createPersonDto.dataMembresia),
+
+        dataMembresiaSemDia:
+          createPersonDto.dataMembresiaSemDia,
 
         ativo:
           createPersonDto.ativo,
@@ -134,7 +140,7 @@ export class PersonService {
     context: OrganizationContext,
   ) {
 
-    return this.prisma.person.findFirst({
+    const person = await this.prisma.person.findFirst({
 
       where: {
 
@@ -170,6 +176,12 @@ export class PersonService {
       },
 
     });
+
+    if (!person) {
+      throw new NotFoundException('Pessoa não encontrada na organização atual');
+    }
+
+    return person;
 
   }
 
@@ -223,6 +235,13 @@ export class PersonService {
       ...personData
     } = updatePersonDto;
 
+    const personDataWithDates = {
+      ...personData,
+      ...(personData.dataMembresia === undefined
+        ? {}
+        : { dataMembresia: this.membershipDate(personData.dataMembresia) }),
+    };
+
     return this.prisma.$transaction(async (transaction) => {
       if (campusIds) {
         await transaction.personCampusMembership.updateMany({
@@ -261,10 +280,13 @@ export class PersonService {
 
       return transaction.person.update({
         where: { id },
-        data: personData,
+        data: personDataWithDates,
         include: this.personDetails,
       });
     });
+
+    if (!person) throw new NotFoundException('Pessoa não encontrada na organização atual');
+    return person;
 
   }
 
@@ -318,6 +340,17 @@ export class PersonService {
 
   }
 
+  private membershipDate(value?: string | null): Date | null | undefined {
+    if (value === undefined || value === null || value === '') {
+      return value === null ? null : undefined;
+    }
+
+    // O formulário envia um dia de calendário. Armazená-lo ao meio-dia UTC
+    // evita tanto a rejeição do Prisma a uma data sem horário quanto o recuo
+    // de um dia na exibição em fusos horários do Brasil.
+    return new Date(`${value.slice(0, 10)}T12:00:00.000Z`);
+  }
+
   async updateMinisterialTitles(
     id: string,
     dto: UpdatePersonMinisterialTitlesDto,
@@ -339,6 +372,55 @@ export class PersonService {
       data: { titulosMinisteriais: this.normalizeMinisterialTitles(dto.titulosMinisteriais) },
       include: this.personDetails,
     });
+  }
+
+  async updateProfilePhoto(id: string, file: any, context: OrganizationContext) {
+    if (!file) throw new BadRequestException('Selecione uma imagem para a foto de perfil');
+    if (!profilePhotoMimeTypes.has(file.mimetype) || file.size > profilePhotoMaxBytes) {
+      await this.removeFile(file.path);
+      throw new BadRequestException('Envie uma imagem JPG, PNG ou WEBP de até 3 MB');
+    }
+
+    const person = await this.prisma.person.findFirst({
+      where: { id, organizationId: context.organizationId },
+      select: { id: true, fotoPerfilPath: true },
+    });
+    if (!person) {
+      await this.removeFile(file.path);
+      throw new NotFoundException('Pessoa não encontrada na organização atual');
+    }
+
+    if (id !== context.personId) await this.assertDirectoryManager(context);
+
+    try {
+      const updated = await this.prisma.person.update({
+        where: { id },
+        data: {
+          fotoPerfilPath: file.filename,
+          fotoPerfilMimeType: file.mimetype,
+          fotoPerfilAtualizadaEm: new Date(),
+        },
+        include: this.personDetails,
+      });
+      if (person.fotoPerfilPath && person.fotoPerfilPath !== file.filename) {
+        await this.removeFile(join(profilePhotosDirectory, basename(person.fotoPerfilPath)));
+      }
+      return updated;
+    } catch (error) {
+      await this.removeFile(file.path);
+      throw error;
+    }
+  }
+
+  async getProfilePhoto(id: string, context: OrganizationContext) {
+    const person = await this.prisma.person.findFirst({
+      where: { id, organizationId: context.organizationId },
+      select: { fotoPerfilPath: true, fotoPerfilMimeType: true },
+    });
+    if (!person?.fotoPerfilPath || !person.fotoPerfilMimeType) {
+      throw new NotFoundException('Esta pessoa ainda não possui foto de perfil');
+    }
+    return { path: basename(person.fotoPerfilPath), mimeType: person.fotoPerfilMimeType };
   }
 
   private async assertDirectoryManager(context: OrganizationContext) {
@@ -368,6 +450,11 @@ export class PersonService {
       }
       return normalized;
     }, []);
+  }
+
+  private async removeFile(path?: string) {
+    if (!path) return;
+    await unlink(path).catch(() => undefined);
   }
 
   private uniqueCampusIds(primaryCampusId: string, campusIds?: string[]) {

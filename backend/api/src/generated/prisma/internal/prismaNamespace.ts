@@ -416,6 +416,8 @@ export const ModelName = {
   ServiceMembership: 'ServiceMembership',
   ServiceOperationalRoleAssignment: 'ServiceOperationalRoleAssignment',
   ServiceSchedule: 'ServiceSchedule',
+  ServiceScheduleUnavailability: 'ServiceScheduleUnavailability',
+  ServiceScheduleNote: 'ServiceScheduleNote',
   ServiceScheduleSwapRequest: 'ServiceScheduleSwapRequest',
   ServiceScheduleHistory: 'ServiceScheduleHistory',
   ServiceAreaEntryStage: 'ServiceAreaEntryStage',
@@ -475,7 +477,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "campus" | "person" | "personCampusMembership" | "user" | "userRoleAssignment" | "organization" | "auditLog" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceOperationalRoleAssignment" | "serviceSchedule" | "serviceScheduleSwapRequest" | "serviceScheduleHistory" | "serviceAreaEntryStage" | "serviceAreaApplication" | "serviceAreaApplicationStage" | "space" | "event" | "googleCalendarEventSync" | "worshipOrder" | "worshipOrderTemplate" | "worshipOrderTemplateItem" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "worshipRepertoire" | "worshipRepertoireSong" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellCampusCoordination" | "cellMembership" | "cellLeadership"
+    modelProps: "campus" | "person" | "personCampusMembership" | "user" | "userRoleAssignment" | "organization" | "auditLog" | "cell" | "cellNetwork" | "cellSupportRole" | "cellMultiplication" | "personJourneyEvent" | "family" | "familyMembership" | "serviceArea" | "serviceTeam" | "serviceMembership" | "serviceOperationalRoleAssignment" | "serviceSchedule" | "serviceScheduleUnavailability" | "serviceScheduleNote" | "serviceScheduleSwapRequest" | "serviceScheduleHistory" | "serviceAreaEntryStage" | "serviceAreaApplication" | "serviceAreaApplicationStage" | "space" | "event" | "googleCalendarEventSync" | "worshipOrder" | "worshipOrderTemplate" | "worshipOrderTemplateItem" | "worshipOrderItem" | "worshipOrderMaterial" | "worshipServiceDemand" | "worshipRepertoire" | "worshipRepertoireSong" | "eventSpace" | "eventServiceArea" | "eventServiceTeam" | "eventChecklist" | "eventHistory" | "notification" | "notificationRecipient" | "kidsClass" | "kidsEnrollment" | "kidsAuthorizedPickup" | "kidsCheckIn" | "kidsPreCheckIn" | "kidsIdentity" | "kidsOperationalRoleAssignment" | "kidsVisualResource" | "kidsResourceRequest" | "kidsResourceRequestItem" | "kidsCareProfile" | "cellMeeting" | "cellMeetingVisitor" | "cellLocation" | "pastoralCare" | "cellStudy" | "cellMeetingAttendance" | "cellNetworkSupervision" | "cellCampusCoordination" | "cellMembership" | "cellLeadership"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1882,6 +1884,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ServiceScheduleCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ServiceScheduleCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceScheduleUnavailability: {
+      payload: Prisma.$ServiceScheduleUnavailabilityPayload<ExtArgs>
+      fields: Prisma.ServiceScheduleUnavailabilityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceScheduleUnavailabilityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceScheduleUnavailabilityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceScheduleUnavailabilityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceScheduleUnavailabilityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceScheduleUnavailabilityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceScheduleUnavailabilityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceScheduleUnavailabilityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceScheduleUnavailabilityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceScheduleUnavailabilityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload>
+        }
+        update: {
+          args: Prisma.ServiceScheduleUnavailabilityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceScheduleUnavailabilityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceScheduleUnavailabilityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceScheduleUnavailabilityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceScheduleUnavailabilityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleUnavailabilityPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceScheduleUnavailabilityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceScheduleUnavailability>
+        }
+        groupBy: {
+          args: Prisma.ServiceScheduleUnavailabilityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceScheduleUnavailabilityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceScheduleUnavailabilityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceScheduleUnavailabilityCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceScheduleNote: {
+      payload: Prisma.$ServiceScheduleNotePayload<ExtArgs>
+      fields: Prisma.ServiceScheduleNoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceScheduleNoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceScheduleNoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceScheduleNoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceScheduleNoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload>
+        }
+        findMany: {
+          args: Prisma.ServiceScheduleNoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload>[]
+        }
+        create: {
+          args: Prisma.ServiceScheduleNoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload>
+        }
+        createMany: {
+          args: Prisma.ServiceScheduleNoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceScheduleNoteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceScheduleNoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload>
+        }
+        update: {
+          args: Prisma.ServiceScheduleNoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceScheduleNoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceScheduleNoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceScheduleNoteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceScheduleNoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceScheduleNotePayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceScheduleNoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceScheduleNote>
+        }
+        groupBy: {
+          args: Prisma.ServiceScheduleNoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceScheduleNoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceScheduleNoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceScheduleNoteCountAggregateOutputType> | number
         }
       }
     }
@@ -5206,7 +5356,11 @@ export const PersonScalarFieldEnum = {
   dataDecisao: 'dataDecisao',
   dataBatismo: 'dataBatismo',
   dataMembresia: 'dataMembresia',
+  dataMembresiaSemDia: 'dataMembresiaSemDia',
   titulosMinisteriais: 'titulosMinisteriais',
+  fotoPerfilPath: 'fotoPerfilPath',
+  fotoPerfilMimeType: 'fotoPerfilMimeType',
+  fotoPerfilAtualizadaEm: 'fotoPerfilAtualizadaEm',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   campusId: 'campusId',
@@ -5463,6 +5617,35 @@ export const ServiceScheduleScalarFieldEnum = {
 export type ServiceScheduleScalarFieldEnum = (typeof ServiceScheduleScalarFieldEnum)[keyof typeof ServiceScheduleScalarFieldEnum]
 
 
+export const ServiceScheduleUnavailabilityScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId',
+  personId: 'personId'
+} as const
+
+export type ServiceScheduleUnavailabilityScalarFieldEnum = (typeof ServiceScheduleUnavailabilityScalarFieldEnum)[keyof typeof ServiceScheduleUnavailabilityScalarFieldEnum]
+
+
+export const ServiceScheduleNoteScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  observacao: 'observacao',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId',
+  serviceAreaId: 'serviceAreaId',
+  campusId: 'campusId',
+  eventId: 'eventId'
+} as const
+
+export type ServiceScheduleNoteScalarFieldEnum = (typeof ServiceScheduleNoteScalarFieldEnum)[keyof typeof ServiceScheduleNoteScalarFieldEnum]
+
+
 export const ServiceScheduleSwapRequestScalarFieldEnum = {
   id: 'id',
   status: 'status',
@@ -5572,6 +5755,9 @@ export const EventScalarFieldEnum = {
   fim: 'fim',
   alertEnabled: 'alertEnabled',
   blocksCampusAgenda: 'blocksCampusAgenda',
+  recurrence: 'recurrence',
+  recurrenceSeriesId: 'recurrenceSeriesId',
+  recurrenceUntil: 'recurrenceUntil',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   organizationId: 'organizationId',
@@ -6397,6 +6583,20 @@ export type ListEnumEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'EventRecurrence'
+ */
+export type EnumEventRecurrenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventRecurrence'>
+
+
+
+/**
+ * Reference to a field of type 'EventRecurrence[]'
+ */
+export type ListEnumEventRecurrenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventRecurrence[]'>
+
+
+
+/**
  * Reference to a field of type 'GoogleCalendarSyncStatus'
  */
 export type EnumGoogleCalendarSyncStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoogleCalendarSyncStatus'>
@@ -6733,6 +6933,8 @@ export type GlobalOmitConfig = {
   serviceMembership?: Prisma.ServiceMembershipOmit
   serviceOperationalRoleAssignment?: Prisma.ServiceOperationalRoleAssignmentOmit
   serviceSchedule?: Prisma.ServiceScheduleOmit
+  serviceScheduleUnavailability?: Prisma.ServiceScheduleUnavailabilityOmit
+  serviceScheduleNote?: Prisma.ServiceScheduleNoteOmit
   serviceScheduleSwapRequest?: Prisma.ServiceScheduleSwapRequestOmit
   serviceScheduleHistory?: Prisma.ServiceScheduleHistoryOmit
   serviceAreaEntryStage?: Prisma.ServiceAreaEntryStageOmit
@@ -6839,4 +7041,3 @@ export type PrismaAction =
  * `PrismaClient` proxy available in interactive transactions.
  */
 export type TransactionClient = Omit<DefaultPrismaClient, runtime.ITXClientDenyList>
-

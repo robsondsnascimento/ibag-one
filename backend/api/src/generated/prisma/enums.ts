@@ -114,7 +114,8 @@ export const ServiceScheduleStatus = {
   SCHEDULED: 'SCHEDULED',
   CONFIRMED: 'CONFIRMED',
   DECLINED: 'DECLINED',
-  COMPLETED: 'COMPLETED'
+  COMPLETED: 'COMPLETED',
+  REMOVED: 'REMOVED'
 } as const
 
 export type ServiceScheduleStatus = (typeof ServiceScheduleStatus)[keyof typeof ServiceScheduleStatus]
@@ -123,7 +124,8 @@ export type ServiceScheduleStatus = (typeof ServiceScheduleStatus)[keyof typeof 
 export const ServiceScheduleHistoryAction = {
   CREATED: 'CREATED',
   STATUS_CHANGED: 'STATUS_CHANGED',
-  SUBSTITUTED: 'SUBSTITUTED'
+  SUBSTITUTED: 'SUBSTITUTED',
+  OBSERVATION_UPDATED: 'OBSERVATION_UPDATED'
 } as const
 
 export type ServiceScheduleHistoryAction = (typeof ServiceScheduleHistoryAction)[keyof typeof ServiceScheduleHistoryAction]
@@ -171,6 +173,15 @@ export const EventStatus = {
 } as const
 
 export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
+
+
+export const EventRecurrence = {
+  NONE: 'NONE',
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY'
+} as const
+
+export type EventRecurrence = (typeof EventRecurrence)[keyof typeof EventRecurrence]
 
 
 export const GoogleCalendarSyncStatus = {

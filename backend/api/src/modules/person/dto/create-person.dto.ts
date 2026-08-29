@@ -56,6 +56,10 @@ export class CreatePersonDto {
   @IsDateString()
   dataMembresia?: string;
 
+  @IsOptional()
+  @IsBoolean()
+  dataMembresiaSemDia?: boolean;
+
 
   @IsUUID()
   organizationId: string;

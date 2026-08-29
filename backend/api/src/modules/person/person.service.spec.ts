@@ -17,6 +17,41 @@ describe('PersonService', () => {
     expect(service).toBeDefined();
   });
 
+  describe('findOne', () => {
+    const context = {
+      userId: 'user-id',
+      personId: 'person-id',
+      organizationId: 'organization-id',
+    };
+
+    it('returns the person from the current organization', async () => {
+      const person = { id: 'person-id', nome: 'Pessoa Teste' };
+      const prisma = {
+        person: {
+          findFirst: jest.fn().mockResolvedValue(person),
+        },
+      };
+      const personService = new PersonService(prisma as unknown as PrismaService);
+
+      await expect(personService.findOne(person.id, context)).resolves.toBe(person);
+      expect(prisma.person.findFirst).toHaveBeenCalledWith(expect.objectContaining({
+        where: { id: person.id, organizationId: context.organizationId },
+      }));
+    });
+
+    it('does not expose a person outside the current organization', async () => {
+      const prisma = {
+        person: {
+          findFirst: jest.fn().mockResolvedValue(null),
+        },
+      };
+      const personService = new PersonService(prisma as unknown as PrismaService);
+
+      await expect(personService.findOne('foreign-person-id', context))
+        .rejects.toThrow('Pessoa não encontrada na organização atual');
+    });
+  });
+
   describe('update', () => {
     const context = {
       userId: 'user-id',
@@ -94,6 +129,26 @@ describe('PersonService', () => {
       ).rejects.toThrow('Um ou mais campi não pertencem à organização atual');
 
       expect(prisma.person.update).not.toHaveBeenCalled();
+    });
+
+    it('stores an IBAG entry date as a complete date-time without changing its calendar day', async () => {
+      const prisma = {
+        $transaction: jest.fn(async (callback) => callback(prisma)),
+        user: { findFirst: jest.fn().mockResolvedValue({ id: 'user-id' }) },
+        person: {
+          findFirst: jest.fn().mockResolvedValue({ id: 'person-id', campusId: 'campus-id' }),
+          update: jest.fn().mockResolvedValue({ id: 'person-id' }),
+        },
+      };
+      const personService = new PersonService(prisma as unknown as PrismaService);
+
+      await personService.update('person-id', { dataMembresia: '2019-09-04' }, context);
+
+      expect(prisma.person.update).toHaveBeenCalledWith(expect.objectContaining({
+        data: expect.objectContaining({
+          dataMembresia: new Date('2019-09-04T12:00:00.000Z'),
+        }),
+      }));
     });
 
     it('rejects a user without directory-management permission', async () => {
@@ -175,6 +230,38 @@ describe('PersonService', () => {
             { campusId: 'campus-b', organizationId: context.organizationId },
           ],
         },
+      }),
+    }));
+  });
+
+  it('allows a person to update their own profile photo', async () => {
+    const context = {
+      userId: 'user-id',
+      personId: 'person-id',
+      organizationId: 'organization-id',
+    };
+    const prisma = {
+      user: { findFirst: jest.fn() },
+      person: {
+        findFirst: jest.fn().mockResolvedValue({ id: 'person-id', fotoPerfilPath: null }),
+        update: jest.fn().mockResolvedValue({ id: 'person-id', fotoPerfilAtualizadaEm: new Date() }),
+      },
+    };
+    const personService = new PersonService(prisma as unknown as PrismaService);
+
+    await expect(personService.updateProfilePhoto('person-id', {
+      filename: 'profile-image',
+      path: 'uploads/profile-image',
+      mimetype: 'image/png',
+      size: 1024,
+    }, context)).resolves.toEqual(expect.objectContaining({ id: 'person-id' }));
+
+    expect(prisma.user.findFirst).not.toHaveBeenCalled();
+    expect(prisma.person.update).toHaveBeenCalledWith(expect.objectContaining({
+      where: { id: 'person-id' },
+      data: expect.objectContaining({
+        fotoPerfilPath: 'profile-image',
+        fotoPerfilMimeType: 'image/png',
       }),
     }));
   });

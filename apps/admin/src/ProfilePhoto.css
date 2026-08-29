@@ -1,0 +1,11 @@
+.profile-photo-field { align-items: center; background: var(--blue-soft); border: 1px solid var(--line); border-radius: 11px; display: flex; gap: 14px; padding: 13px; }
+.person-profile-avatar, .profile-avatar { align-items: center; display: inline-flex; flex: 0 0 auto; justify-content: center; overflow: hidden; }
+.person-profile-avatar { background: var(--orange-soft); border-radius: 13px; color: var(--orange); font-size: 17px; font-weight: 700; height: 62px; width: 62px; }
+.person-profile-avatar img, .profile-avatar img { height: 100%; object-fit: cover; width: 100%; }
+.profile-photo-field h3 { color: var(--ink); font-size: 14px; margin: 0; }
+.profile-photo-field p, .profile-photo-field small { color: var(--ink-soft); display: block; font-size: 13px; line-height: 1.45; margin: 3px 0 0; }
+.profile-photo-upload { cursor: pointer; margin-top: 9px; }
+.profile-photo-upload input { display: none; }
+.profile-photo-field .form-error { margin-top: 9px; }
+
+@media (max-width: 560px) { .profile-photo-field { align-items: flex-start; } }

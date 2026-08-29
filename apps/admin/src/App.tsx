@@ -22,6 +22,8 @@ import { EventFormDialog } from './EventFormDialog'
 import { WorshipPage } from './WorshipPage'
 import { NotificationDialog } from './NotificationDialog'
 import { PersonRegistrationPanel } from './PersonRegistrationPanel'
+import { ProfileAvatar, ProfilePhotoField } from './ProfilePhoto'
+import { ChangePasswordDialog, PermissionsDialog, ProfileMenu, SupportDialog } from './ProfileMenu'
 import { listMyNotifications } from './api/notifications'
 import { ApiError } from './api/client'
 import { clearSession, readSession, saveSession } from './auth/session'
@@ -36,6 +38,8 @@ import './ServiceAreaOnboardingDialog.css'
 import './ServiceSchedulePages.css'
 import './WorshipPage.css'
 import './Sidebar.css'
+import './ProfilePhoto.css'
+import './ProfileMenu.css'
 
 type Page =
   | 'dashboard'
@@ -51,6 +55,17 @@ type Page =
   | 'reports'
 
 type Theme = 'light' | 'night'
+type AgendaView = 'day' | 'week' | 'month'
+
+const themeStorageKey = 'ibag-one.theme'
+
+function readThemePreference(): Theme {
+  try {
+    return window.localStorage.getItem(themeStorageKey) === 'night' ? 'night' : 'light'
+  } catch {
+    return 'light'
+  }
+}
 
 type SelectedRecord =
   | { kind: 'cell'; id: string }
@@ -187,19 +202,38 @@ function toDateInputValue(date: Date) {
   return new Date(date.getTime() - offset).toISOString().slice(0, 10)
 }
 
+function normalizeMembershipDate(value: string) {
+  return /^\d{4}-\d{2}$/.test(value) ? `${value}-01` : value
+}
+
 function App() {
   const [activePage, setActivePage] = useState<Page>('dashboard')
-  const [theme, setTheme] = useState<Theme>('light')
+  const [theme, setTheme] = useState<Theme>(readThemePreference)
   const [session, setSession] = useState<AuthSession | null>(() => readSession())
+  const [profilePhotoVersion, setProfilePhotoVersion] = useState(0)
+  const [currentUserPhotoUpdatedAt, setCurrentUserPhotoUpdatedAt] = useState<string | null>(() => session?.user.person.fotoPerfilAtualizadaEm ?? null)
   const [isCheckingSession, setIsCheckingSession] = useState(Boolean(session))
   const [authError, setAuthError] = useState('')
   const [isSubmittingLogin, setIsSubmittingLogin] = useState(false)
   const [showLoginPassword, setShowLoginPassword] = useState(false)
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(themeStorageKey, theme)
+    } catch {
+      // O painel permanece utilizável quando o navegador bloqueia o armazenamento local.
+    }
+  }, [theme])
+
+  useEffect(() => {
+    setCurrentUserPhotoUpdatedAt(session?.user.person.fotoPerfilAtualizadaEm ?? null)
+  }, [session?.user.person.fotoPerfilAtualizadaEm, session?.user.person.id])
   const [dashboard, setDashboard] = useState<DashboardSummary | null>(null)
   const [dashboardError, setDashboardError] = useState('')
   const [isLoadingDashboard, setIsLoadingDashboard] = useState(false)
   const [dashboardVersion, setDashboardVersion] = useState(0)
-  const [agendaWeekStart, setAgendaWeekStart] = useState(() => startOfWeek(new Date()))
+  const [agendaView, setAgendaView] = useState<AgendaView>('week')
+  const [agendaFocusDate, setAgendaFocusDate] = useState(() => new Date())
   const [agendaEvents, setAgendaEvents] = useState<AgendaEvent[]>([])
   const [agendaError, setAgendaError] = useState('')
   const [isLoadingAgenda, setIsLoadingAgenda] = useState(false)
@@ -212,6 +246,10 @@ function App() {
   const [eventFormSpaces, setEventFormSpaces] = useState<EventSpace[]>([])
   const [isLoadingEventReferences, setIsLoadingEventReferences] = useState(false)
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+  const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false)
+  const [isPermissionsDialogOpen, setIsPermissionsDialogOpen] = useState(false)
+  const [isSupportDialogOpen, setIsSupportDialogOpen] = useState(false)
   const [unreadNotificationCount, setUnreadNotificationCount] = useState(0)
   const [notificationsVersion, setNotificationsVersion] = useState(0)
   const [campuses, setCampuses] = useState<CampusListItem[]>([])
@@ -438,7 +476,8 @@ function App() {
     setIsLoadingAgenda(true)
     setAgendaError('')
 
-    void loadAgenda(session.access_token, agendaWeekStart)
+    const range = agendaRange(agendaView, agendaFocusDate)
+    void loadAgenda(session.access_token, range.start, range.end)
       .then((events) => {
         if (active) setAgendaEvents(events)
       })
@@ -452,7 +491,7 @@ function App() {
     return () => {
       active = false
     }
-  }, [activePage, agendaVersion, agendaWeekStart, session])
+  }, [activePage, agendaFocusDate, agendaVersion, agendaView, session])
 
   useEffect(() => {
     if (!session) {
@@ -723,30 +762,8 @@ function App() {
 
   const signOut = () => {
     clearSession()
-    setSession(null)
-    setActivePage('dashboard')
-    setDashboard(null)
-    setDashboardError('')
-    setAgendaEvents([])
-    setAgendaError('')
-    setCampuses([])
-    setEventFormError('')
-    setCreationMode(null)
-    setDirectoryFormError('')
-    setCells(null)
-    setPeople(null)
-    setDirectoryError('')
-    setHierarchy(null)
-    setHierarchyError('')
-    setServiceAreas([])
-    setSelectedServiceAreaId(null)
-    setSelectedRecord(null)
-    setRecordDetail(null)
-    setRecordDetailError('')
-    setStudy(null)
-    setStudyError('')
-    setNotice('')
-    setAuthError('')
+    // Reinicia a aplicação para não manter telas ou requisições da sessão encerrada.
+    window.location.replace(`${window.location.pathname}${window.location.search}`)
   }
 
   const openEventForm = (event: AgendaEvent | null = null) => {
@@ -1607,6 +1624,8 @@ function App() {
           nome,
           telefone: String(formData.get('phone') ?? '').trim() || undefined,
           email: String(formData.get('email') ?? '').trim() || undefined,
+          dataMembresia: normalizeMembershipDate(String(formData.get('dataMembresia') ?? '').trim()) || undefined,
+          dataMembresiaSemDia: Boolean(String(formData.get('dataMembresia') ?? '').trim()),
           campusId,
           campusIds: formData.getAll('campusIds').map(String),
           organizationId: session.user.organizationId,
@@ -1648,12 +1667,16 @@ function App() {
         })
         setNotice('Dados da célula atualizados com sucesso.')
       } else {
+        const membershipDate = normalizeMembershipDate(String(formData.get('dataMembresia') ?? '').trim())
         await updatePerson(session.access_token, recordDetail.data.id, {
           nome,
           campusId,
           campusIds: formData.getAll('campusIds').map(String),
           telefone: String(formData.get('phone') ?? '').trim() || null,
           email: String(formData.get('email') ?? '').trim() || null,
+          dataMembresia: membershipDate || null,
+          dataMembresiaSemDia: Boolean(membershipDate) && formData.get('dataMembresiaSemDia') === 'on',
+          ativo: String(formData.get('ativo') ?? 'true') === 'true',
         })
         setNotice('Dados da pessoa atualizados com sucesso.')
       }
@@ -1668,7 +1691,7 @@ function App() {
     }
   }
 
-  const primaryAction = activePage === 'cell-structure' || activePage === 'studies'
+  const primaryAction = activePage === 'agenda' || activePage === 'cell-structure' || activePage === 'studies'
     ? null
     : activePage === 'cells' && canManageDirectory
       ? { label: '+ Nova célula', action: () => openDirectoryForm('cell') }
@@ -1801,28 +1824,17 @@ function App() {
         </nav>
 
         <div className="sidebar-footer">
-          <div className="theme-selector">
-            <p className="navigation-label">Aparência</p>
-            <div className="theme-selector-actions">
-              <button className={`theme-button theme-button--light ${theme === 'light' ? 'theme-button--active' : ''}`} type="button" onClick={() => setTheme('light')} aria-pressed={theme === 'light'}>
-                <span className="theme-swatch" aria-hidden="true" />
-                Claro
-              </button>
-              <button className={`theme-button theme-button--night ${theme === 'night' ? 'theme-button--active' : ''}`} type="button" onClick={() => setTheme('night')} aria-pressed={theme === 'night'}>
-                <span className="theme-swatch" aria-hidden="true" />
-                Noturno
-              </button>
-            </div>
-          </div>
-          <button className="support-card" type="button">
+          <button className="support-card" type="button" onClick={() => setIsSupportDialogOpen(true)}>
             <span className="support-icon">?</span>
             <span><strong>Precisa de ajuda?</strong><small>Central de suporte</small></span>
           </button>
-          <button className="profile-card" type="button" onClick={signOut} aria-label={`Sair da conta de ${session.user.person.nome}`}>
-            <span className="profile-avatar">{initials(session.user.person.nome)}</span>
-            <span><strong>{session.user.person.nome}</strong><small>{roleLabels[session.user.role] ?? session.user.role}</small></span>
-            <span className="profile-more">Sair</span>
-          </button>
+          <div className="profile-card">
+            <button className="profile-card-main" type="button" onClick={() => setIsProfileMenuOpen((isOpen) => !isOpen)} aria-label={`Abrir opções do perfil de ${session.user.person.nome}`} aria-expanded={isProfileMenuOpen}>
+              <ProfileAvatar accessToken={session.access_token} personId={session.user.person.id} personName={session.user.person.nome} photoUpdatedAt={currentUserPhotoUpdatedAt} version={profilePhotoVersion} />
+              <span><strong>{session.user.person.nome}</strong><small>{roleLabels[session.user.role] ?? session.user.role}</small></span>
+            </button>
+            {isProfileMenuOpen && <ProfileMenu personName={session.user.person.nome} roleLabel={roleLabels[session.user.role] ?? session.user.role} theme={theme} onOpenProfile={() => { setIsProfileMenuOpen(false); setSelectedRecord({ kind: 'person', id: session.user.person.id }) }} onChangePassword={() => { setIsProfileMenuOpen(false); setIsPasswordDialogOpen(true) }} onOpenPermissions={() => { setIsProfileMenuOpen(false); setIsPermissionsDialogOpen(true) }} onOpenNotifications={() => { setIsProfileMenuOpen(false); setIsNotificationsOpen(true) }} onToggleTheme={() => { setTheme((currentTheme) => currentTheme === 'light' ? 'night' : 'light'); setIsProfileMenuOpen(false) }} onOpenSupport={() => { setIsProfileMenuOpen(false); setIsSupportDialogOpen(true) }} onSignOut={signOut} />}
+          </div>
         </div>
       </aside>
 
@@ -1842,11 +1854,11 @@ function App() {
         {notice && <div className="notice" role="status"><span>✓</span>{notice}<button type="button" onClick={() => setNotice('')} aria-label="Fechar aviso">×</button></div>}
 
         {activePage === 'dashboard' && <Dashboard summary={dashboard} error={dashboardError} isLoading={isLoadingDashboard} onRetry={() => setDashboardVersion((version) => version + 1)} onOpenAgenda={() => setActivePage('agenda')} onOpenCells={() => setActivePage('cells')} />}
-        {activePage === 'agenda' && <Agenda events={agendaEvents} error={agendaError} isLoading={isLoadingAgenda} weekStart={agendaWeekStart} onRetry={() => setAgendaVersion((version) => version + 1)} onPreviousWeek={() => setAgendaWeekStart((start) => addDays(start, -7))} onNextWeek={() => setAgendaWeekStart((start) => addDays(start, 7))} onToday={() => setAgendaWeekStart(startOfWeek(new Date()))} onCreateEvent={() => openEventForm()} onSelectEvent={setSelectedAgendaEvent} />}
+        {activePage === 'agenda' && <Agenda events={agendaEvents} error={agendaError} isLoading={isLoadingAgenda} view={agendaView} focusDate={agendaFocusDate} onRetry={() => setAgendaVersion((version) => version + 1)} onViewChange={(view) => { setAgendaView(view); setAgendaFocusDate(new Date()) }} onPrevious={() => setAgendaFocusDate((date) => shiftAgendaFocus(date, agendaView, -1))} onNext={() => setAgendaFocusDate((date) => shiftAgendaFocus(date, agendaView, 1))} onCreateEvent={() => openEventForm()} onSelectEvent={setSelectedAgendaEvent} />}
         {activePage === 'cells' && (canManageDirectory ? <CellsPage data={cells} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'cell', id })} /> : <CellDirectoryRestricted />)}
         {activePage === 'cell-structure' && <CellHierarchy campuses={hierarchy?.campuses ?? []} cells={hierarchy?.cells ?? []} coordinations={hierarchy?.coordinations ?? []} currentPersonId={session.user.personId} error={hierarchyError} isLoading={isLoadingHierarchy} isSaving={isSavingHierarchy} networks={hierarchy?.networks ?? []} people={hierarchy?.people ?? []} supervisions={hierarchy?.supervisions ?? []} canManageNetworks={canManageNetworks} onAssignCell={linkCellToNetwork} onCreateCoordination={saveCoordination} onCreateNetwork={saveNetwork} onCreateSupervision={saveSupervision} onEndCoordination={finishCoordination} onEndSupervision={finishSupervision} onUnassignCell={unlinkCellFromNetwork} />}
         {activePage === 'studies' && <StudiesPage canManage={canManageStudies} study={study} error={studyError} isLoading={isLoadingStudy} weekStart={studyWeekStart} isSubmitting={isSubmittingStudy} onWeekStartChange={setStudyWeekStart} onPublish={saveStudy} onDownload={downloadStudy} />}
-        {activePage === 'people' && <PeoplePage data={people} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'person', id })} />}
+        {activePage === 'people' && <PeoplePage accessToken={session.access_token} data={people} error={directoryError} isLoading={isLoadingDirectory} onRetry={() => setDirectoryVersion((version) => version + 1)} onSelect={(id) => setSelectedRecord({ kind: 'person', id })} />}
         {activePage === 'my-schedules' && <MySchedulesPage accessToken={session.access_token} onNotice={setNotice} onNotificationsChanged={() => setNotificationsVersion((version) => version + 1)} />}
         {activePage === 'worship' && <WorshipPage accessToken={session.access_token} currentUserId={session.user.id} canManageAnyOrder={canManageAnyWorshipOrder} canManageTemplates={canManageWorshipTemplates} onNotice={setNotice} />}
         {activePage === 'teams' && selectedServiceArea && <ServiceAreaWorkspace area={serviceAreaDetail} error={serviceAreaDetailError} isLoading={isLoadingServiceAreaDetail} onRetry={() => setServiceAreaDetailVersion((version) => version + 1)} canManageArea={canCentrallyManageServiceAreas} canCreateTeam={canCreateServiceTeam} canManageTeams={canManageServiceMembers} canManageMembers={canManageServiceMembers} canManageOnboarding={canManageServiceMembers} canManageSchedules={canManageServiceMembers} accessToken={session.access_token} currentPersonId={session.user.personId} onNotice={setNotice} onCreateTeam={openServiceTeamForm} onAddMember={openServiceMemberForm} onOpenOnboarding={openServiceOnboarding} onStructureChange={(areaIsActive) => { setServiceAreaDetailVersion((version) => version + 1); setServiceAreasVersion((version) => version + 1); if (!areaIsActive) setSelectedServiceAreaId(null) }} />}
@@ -1855,6 +1867,9 @@ function App() {
 
       {selectedAgendaEvent && <EventDetailsDialog event={selectedAgendaEvent} accessToken={session.access_token} canApprove={canApproveAgendaEvents} onClose={() => setSelectedAgendaEvent(null)} onEdit={() => { const event = selectedAgendaEvent; setSelectedAgendaEvent(null); openEventForm(event) }} onApprove={approveSelectedAgendaEvent} onCancel={cancelSelectedAgendaEvent} onAddChecklist={addSelectedAgendaChecklist} onToggleChecklist={toggleSelectedAgendaChecklist} />}
       {isNotificationsOpen && <NotificationDialog accessToken={session.access_token} onClose={() => setIsNotificationsOpen(false)} onUnreadCountChange={setUnreadNotificationCount} />}
+      {isPasswordDialogOpen && <ChangePasswordDialog accessToken={session.access_token} onClose={() => setIsPasswordDialogOpen(false)} onSuccess={() => { setIsPasswordDialogOpen(false); setNotice('Senha alterada com sucesso.') }} />}
+      {isPermissionsDialogOpen && <PermissionsDialog roleLabel={roleLabels[session.user.role] ?? session.user.role} onClose={() => setIsPermissionsDialogOpen(false)} />}
+      {isSupportDialogOpen && <SupportDialog onClose={() => setIsSupportDialogOpen(false)} />}
 
       {isCreateEventOpen && <EventFormDialog key={eventFormDraft?.id ?? 'new-event'} event={eventFormDraft} campuses={campuses} cells={eventFormCells} areas={eventFormAreas} spaces={eventFormSpaces} isLoading={isLoadingCampuses || isLoadingEventReferences} isSaving={isSubmittingEvent} error={eventFormError} canBlockCampusAgenda={canBlockCampusAgenda} onCampusChange={setEventFormCampusId} onClose={closeEventForm} onSubmit={(input) => void saveEvent(input)} />}
 
@@ -1867,7 +1882,7 @@ function App() {
             <p className="dialog-description">{creationMode === 'cell' ? 'Informe o campus e, se já definido, o dia e o horário do encontro.' : 'O cadastro essencial começa com nome e campus. Os demais dados podem ser complementados depois.'}</p>
             <form className="event-form" onSubmit={saveDirectoryEntry}>
               <label>{creationMode === 'cell' ? 'Nome da célula' : 'Nome completo'}<input name="name" required placeholder={creationMode === 'cell' ? 'Ex.: Célula Esperança' : 'Ex.: Nome da pessoa'} /></label>
-              {creationMode === 'cell' ? <><label>Descrição <span className="field-optional">(opcional)</span><input name="description" placeholder="Uma breve identificação da célula" /></label><div className="form-grid"><label>Dia do encontro<select name="meetingDay" defaultValue=""><option value="">Ainda não definido</option><option value="MONDAY">Segunda-feira</option><option value="TUESDAY">Terça-feira</option><option value="WEDNESDAY">Quarta-feira</option><option value="THURSDAY">Quinta-feira</option><option value="FRIDAY">Sexta-feira</option><option value="SATURDAY">Sábado</option><option value="SUNDAY">Domingo</option></select></label><label>Horário <span className="field-optional">(opcional)</span><input name="meetingTime" type="time" /></label></div></> : <><div className="form-grid"><label>Telefone <span className="field-optional">(opcional)</span><input name="phone" type="tel" placeholder="(51) 00000-0000" /></label><label>E-mail <span className="field-optional">(opcional)</span><input name="email" type="email" placeholder="pessoa@email.com" /></label></div></>}
+              {creationMode === 'cell' ? <><label>Descrição <span className="field-optional">(opcional)</span><input name="description" placeholder="Uma breve identificação da célula" /></label><div className="form-grid"><label>Dia do encontro<select name="meetingDay" defaultValue=""><option value="">Ainda não definido</option><option value="MONDAY">Segunda-feira</option><option value="TUESDAY">Terça-feira</option><option value="WEDNESDAY">Quarta-feira</option><option value="THURSDAY">Quinta-feira</option><option value="FRIDAY">Sexta-feira</option><option value="SATURDAY">Sábado</option><option value="SUNDAY">Domingo</option></select></label><label>Horário <span className="field-optional">(opcional)</span><input name="meetingTime" type="time" /></label></div></> : <><div className="form-grid"><label>Telefone <span className="field-optional">(opcional)</span><input name="phone" type="tel" placeholder="(51) 00000-0000" /></label><label>E-mail <span className="field-optional">(opcional)</span><input name="email" type="email" placeholder="pessoa@email.com" /></label></div><label>Data de ingresso na IBAG <span className="field-optional">(mês e ano, opcional)</span><input name="dataMembresia" type="month" /></label></>}
               <label>Campus principal<select name="campusId" defaultValue="" required disabled={isLoadingCampuses || campuses.length === 0}><option value="" disabled>{isLoadingCampuses ? 'Carregando campi...' : 'Selecione o campus'}</option>{campuses.map((campus) => <option key={campus.id} value={campus.id}>{campus.nome}</option>)}</select></label>
               {creationMode === 'person' && <CampusMembershipField campuses={campuses} selectedCampusIds={[]} disabled={isLoadingCampuses} />}
               {directoryFormError && <p className="form-error" role="alert">{directoryFormError}</p>}
@@ -1924,7 +1939,7 @@ function App() {
             {isLoadingRecordDetail && <p className="dialog-description">Carregando cadastro...</p>}
             {!isLoadingRecordDetail && recordDetailError && !recordDetail && <p className="form-error" role="alert">{recordDetailError}</p>}
             {!isLoadingRecordDetail && recordDetail?.kind === 'cell' && <CellDetailForm data={recordDetail.data} overview={cellOverview} campuses={campuses} isLoadingCampuses={isLoadingCampuses} canEdit={canManageDirectory} isSaving={isSavingRecord} error={recordDetailError} onCancel={closeRecordDetail} onSubmit={saveRecordDetail} onAddMember={() => openMembershipForm(recordDetail.data)} onEndMembership={endMembership} onAssignLeadership={() => openLeadershipForm(recordDetail.data, cellOverview?.memberships.map((membership) => membership.person) ?? [])} onEndLeadership={endLeadershipAssignment} onOpenRoster={openRosterForm} onOpenVisitors={openVisitorForm} onFinishMeeting={finishMeeting} />}
-            {!isLoadingRecordDetail && recordDetail?.kind === 'person' && <div className="person-detail-layout"><PersonDetailForm data={recordDetail.data} campuses={campuses} isLoadingCampuses={isLoadingCampuses} canEdit={canManageDirectory} isSaving={isSavingRecord} error={recordDetailError} onCancel={closeRecordDetail} onSubmit={saveRecordDetail} /><PersonRegistrationPanel accessToken={session.access_token} person={recordDetail.data} canManageAccess={canManagePersonAccess} canManageServiceAreas={canCentrallyManageServiceAreas} onPersonChange={(person) => setRecordDetail({ kind: 'person', data: person })} onNotice={setNotice} /></div>}
+            {!isLoadingRecordDetail && recordDetail?.kind === 'person' && <div className="person-detail-layout"><PersonDetailForm data={recordDetail.data} campuses={campuses} isLoadingCampuses={isLoadingCampuses} canEdit={canManageDirectory} canEditPhoto={canManageDirectory || recordDetail.data.id === session.user.person.id} accessToken={session.access_token} isSaving={isSavingRecord} error={recordDetailError} onCancel={closeRecordDetail} onSubmit={saveRecordDetail} onPersonChange={(person) => setRecordDetail({ kind: 'person', data: person })} onPhotoChanged={() => { if (recordDetail.data.id === session.user.person.id) { setCurrentUserPhotoUpdatedAt(new Date().toISOString()); setProfilePhotoVersion((version) => version + 1) } }} /><PersonRegistrationPanel accessToken={session.access_token} person={recordDetail.data} canManageAccess={canManagePersonAccess} canManageServiceAreas={canCentrallyManageServiceAreas} onPersonChange={(person) => setRecordDetail({ kind: 'person', data: person })} onNotice={setNotice} /></div>}
           </section>
         </div>
       )}
@@ -2225,13 +2240,13 @@ function CellsPage({ data, error, isLoading, onRetry, onSelect }: { data: Pagina
   )
 }
 
-function PeoplePage({ data, error, isLoading, onRetry, onSelect }: { data: Paginated<PersonListItem> | null; error: string; isLoading: boolean; onRetry: () => void; onSelect: (id: string) => void }) {
+function PeoplePage({ accessToken, data, error, isLoading, onRetry, onSelect }: { accessToken: string; data: Paginated<PersonListItem> | null; error: string; isLoading: boolean; onRetry: () => void; onSelect: (id: string) => void }) {
   return (
     <section className="records-page">
       <div className="records-heading"><div><p className="eyebrow">Pessoas</p><h2>Pessoas da organização</h2><p>Cadastros vinculados aos campi da organização atual.</p></div><span className="records-total">{data ? `${data.meta.total} cadastradas` : isLoading ? 'Carregando...' : 'Sem dados'}</span></div>
       {error && <PageFeedback message={error} onRetry={onRetry} />}
       <div className="records-panel">
-        {data?.data.length ? data.data.map((person) => <button className="record-row" type="button" key={person.id} onClick={() => onSelect(person.id)} aria-label={`Ver cadastro de ${person.nome}`}><div className="record-symbol record-symbol--person">{initials(person.nome)}</div><div className="record-main"><strong>{person.nome}</strong><small>{person.email || person.telefone || 'Sem contato cadastrado'}</small></div><div className="record-detail"><span>Campus</span><strong>{person.campus.nome}</strong></div><div className="record-detail"><span>Telefone</span><strong>{person.telefone || 'Não informado'}</strong></div><span className={`record-status ${person.ativo ? 'record-status--active' : ''}`}>{person.ativo ? 'Ativa' : 'Inativa'}</span><span className="record-arrow" aria-hidden="true">›</span></button>) : <EmptyRecords isLoading={isLoading} label="Ainda não há pessoas cadastradas." />}
+        {data?.data.length ? data.data.map((person) => <button className="record-row" type="button" key={person.id} onClick={() => onSelect(person.id)} aria-label={`Ver cadastro de ${person.nome}`}><ProfileAvatar accessToken={accessToken} personId={person.id} personName={person.nome} photoUpdatedAt={person.fotoPerfilAtualizadaEm} className="record-symbol record-symbol--person profile-avatar" /><div className="record-main"><strong>{person.nome}</strong><small>{person.email || person.telefone || 'Sem contato cadastrado'}</small></div><div className="record-detail"><span>Campus</span><strong>{person.campus.nome}</strong></div><div className="record-detail"><span>Telefone</span><strong>{person.telefone || 'Não informado'}</strong></div><span className={`record-status ${person.ativo ? 'record-status--active' : ''}`}>{person.ativo ? 'Ativa' : 'Inativa'}</span><span className="record-arrow" aria-hidden="true">›</span></button>) : <EmptyRecords isLoading={isLoading} label="Ainda não há pessoas cadastradas." />}
       </div>
     </section>
   )
@@ -2308,17 +2323,22 @@ function formatShortDate(value: string) {
   return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value)).replace('.', '')
 }
 
-function PersonDetailForm({ data, campuses, isLoadingCampuses, canEdit, isSaving, error, onCancel, onSubmit }: DetailFormProps & { data: PersonListItem }) {
+function PersonDetailForm({ data, campuses, isLoadingCampuses, canEdit, canEditPhoto, accessToken, isSaving, error, onCancel, onSubmit, onPersonChange, onPhotoChanged }: DetailFormProps & { data: PersonListItem; canEditPhoto: boolean; accessToken: string; onPersonChange: (person: PersonListItem) => void; onPhotoChanged: () => void }) {
+  const [membershipDayUnknown, setMembershipDayUnknown] = useState(data.dataMembresiaSemDia)
   return (
     <form className="event-form" onSubmit={canEdit ? onSubmit : undefined}>
       <p className="eyebrow">Pessoas</p>
       <h2 id="record-dialog-title">Cadastro da pessoa</h2>
       <p className="dialog-description">Mantenha os dados de contato, o campus principal e os demais vínculos sempre atualizados.</p>
+      <ProfilePhotoField accessToken={accessToken} person={data} canEdit={canEditPhoto} onPersonChange={onPersonChange} onPhotoChanged={onPhotoChanged} />
       <label>Nome completo<input name="name" required defaultValue={data.nome} disabled={!canEdit} /></label>
       <div className="form-grid"><label>Telefone <span className="field-optional">(opcional)</span><input name="phone" type="tel" defaultValue={data.telefone ?? ''} disabled={!canEdit} /></label><label>E-mail <span className="field-optional">(opcional)</span><input name="email" type="email" defaultValue={data.email ?? ''} disabled={!canEdit} /></label></div>
+      <label>Data de ingresso na IBAG <span className="field-optional">(opcional)</span><input key={membershipDayUnknown ? 'month' : 'day'} name="dataMembresia" type={membershipDayUnknown ? 'month' : 'date'} defaultValue={membershipDayUnknown ? data.dataMembresia?.slice(0, 7) ?? '' : data.dataMembresia?.slice(0, 10) ?? ''} disabled={!canEdit} /></label>
+      <label className="checkbox-label checkbox-label--form"><input name="dataMembresiaSemDia" type="checkbox" checked={membershipDayUnknown} onChange={(event) => setMembershipDayUnknown(event.target.checked)} disabled={!canEdit} /> Não sabe o dia de ingresso: registrar apenas mês e ano.</label>
       <label>Campus principal<select name="campusId" defaultValue={data.campus.id} required disabled={!canEdit || isLoadingCampuses || campuses.length === 0}><option value={data.campus.id}>{isLoadingCampuses ? 'Carregando campi...' : data.campus.nome}</option>{campuses.filter((campus) => campus.id !== data.campus.id).map((campus) => <option key={campus.id} value={campus.id}>{campus.nome}</option>)}</select></label>
       <CampusMembershipField campuses={campuses} selectedCampusIds={data.campusMemberships?.map((membership) => membership.campusId) ?? [data.campus.id]} disabled={!canEdit || isLoadingCampuses} />
-      <p className="record-detail-note">Status atual: <strong>{data.ativo ? 'Ativa' : 'Inativa'}</strong></p>
+      <label>Situação do cadastro<select name="ativo" defaultValue={data.ativo ? 'true' : 'false'} disabled={!canEdit}><option value="true">Ativo</option><option value="false">Inativo</option></select></label>
+      <p className="record-detail-note">Um cadastro inativo é preservado no histórico, deixa de aparecer nas listagens operacionais e não poderá acessar o sistema.</p>
       {!canEdit && <p className="dialog-description">Seu perfil pode consultar este cadastro, mas não alterá-lo.</p>}
       {error && <p className="form-error" role="alert">{error}</p>}
       <DetailActions canEdit={canEdit} isSaving={isSaving} onCancel={onCancel} saveLabel="Salvar alterações" />
@@ -2328,7 +2348,7 @@ function PersonDetailForm({ data, campuses, isLoadingCampuses, canEdit, isSaving
 
 function CampusMembershipField({ campuses, selectedCampusIds, disabled }: { campuses: CampusListItem[]; selectedCampusIds: string[]; disabled: boolean }) {
   if (campuses.length < 2) return null
-  return <fieldset className="campus-membership-field" disabled={disabled}><legend>Campi vinculados</legend><p>Marque todos os campi em que esta pessoa pode atuar. O login continua único para toda a organização.</p><div>{campuses.map((campus) => <label key={campus.id}><input type="checkbox" name="campusIds" value={campus.id} defaultChecked={selectedCampusIds.includes(campus.id)} /><span>{campus.nome}</span></label>)}</div></fieldset>
+  return <fieldset className="campus-membership-field" disabled={disabled}><legend>Campus vinculados</legend><p>Marque todos os campus em que esta pessoa pode atuar. O login continua único para toda a organização.</p><div>{campuses.map((campus) => <label key={campus.id}><input type="checkbox" name="campusIds" value={campus.id} defaultChecked={selectedCampusIds.includes(campus.id)} /><span>{campus.nome}</span></label>)}</div></fieldset>
 }
 
 function DetailActions({ canEdit, isSaving, onCancel, saveLabel }: { canEdit: boolean; isSaving: boolean; onCancel: () => void; saveLabel: string }) {
@@ -2371,55 +2391,155 @@ function Agenda({
   events,
   error,
   isLoading,
-  weekStart,
+  view,
+  focusDate,
   onRetry,
-  onPreviousWeek,
-  onNextWeek,
-  onToday,
+  onViewChange,
+  onPrevious,
+  onNext,
   onCreateEvent,
   onSelectEvent,
 }: {
   events: AgendaEvent[]
   error: string
   isLoading: boolean
-  weekStart: Date
+  view: AgendaView
+  focusDate: Date
   onRetry: () => void
-  onPreviousWeek: () => void
-  onNextWeek: () => void
-  onToday: () => void
+  onViewChange: (view: AgendaView) => void
+  onPrevious: () => void
+  onNext: () => void
   onCreateEvent: () => void
   onSelectEvent: (event: AgendaEvent) => void
 }) {
+  const weekStart = startOfWeek(focusDate)
   const days = Array.from({ length: 7 }, (_, index) => addDays(weekStart, index))
+  const monthDays = monthCalendarDays(focusDate)
   const today = new Date()
+  const viewLabels: Record<AgendaView, string> = {
+    day: 'Hoje',
+    week: 'Esta semana',
+    month: 'Este mês',
+  }
 
   return (
     <div className="agenda-page">
-      <section className="agenda-toolbar"><div className="agenda-navigation"><button type="button" onClick={onPreviousWeek} aria-label="Semana anterior">←</button><strong>{weekLabel(weekStart)}</strong><button type="button" onClick={onNextWeek} aria-label="Próxima semana">→</button></div><div><button type="button" className="secondary-button" onClick={onToday}>Hoje</button><button type="button" className="primary-button" onClick={onCreateEvent}>+ Novo evento</button></div></section>
+      <section className="agenda-toolbar">
+        <div className="agenda-navigation">
+          <button type="button" onClick={onPrevious} aria-label={`Período anterior: ${viewLabels[view]}`}>←</button>
+          <strong>{agendaLabel(view, focusDate)}</strong>
+          <button type="button" onClick={onNext} aria-label={`Próximo período: ${viewLabels[view]}`}>→</button>
+        </div>
+        <div className="agenda-toolbar-actions">
+          <div className="agenda-view-switcher" aria-label="Visualização da agenda">
+            <button type="button" className={view === 'day' ? 'agenda-view-button agenda-view-button--active' : 'agenda-view-button'} onClick={() => onViewChange('day')}>Hoje</button>
+            <button type="button" className={view === 'week' ? 'agenda-view-button agenda-view-button--active' : 'agenda-view-button'} onClick={() => onViewChange('week')}>Esta semana</button>
+            <button type="button" className={view === 'month' ? 'agenda-view-button agenda-view-button--active' : 'agenda-view-button'} onClick={() => onViewChange('month')}>Este mês</button>
+          </div>
+          <button type="button" className="primary-button" onClick={onCreateEvent}>+ Novo evento</button>
+        </div>
+      </section>
       {error && <PageFeedback message={error} onRetry={onRetry} />}
-      <section className="agenda-board"><div className="agenda-weekdays">{days.map((day) => <span className={isSameDay(day, today) ? 'agenda-today' : ''} key={day.toISOString()}>{new Intl.DateTimeFormat('pt-BR', { weekday: 'short' }).format(day).replace('.', '').toUpperCase()} <b>{day.getDate()}</b></span>)}</div><div className="agenda-grid"><div className="time-column"><span>08:00</span><span>10:00</span><span>12:00</span><span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span></div><div className="agenda-events">{events.map((event, index) => <AgendaEventCard event={event} index={index} weekStart={weekStart} onSelect={onSelectEvent} key={event.id} />)}{events.length === 0 && <p className="agenda-empty">{isLoading ? 'Carregando eventos...' : 'Não há eventos nesta semana.'}</p>}</div></div></section>
+      {view === 'month' ? (
+        <AgendaMonthView events={events} days={monthDays} focusDate={focusDate} isLoading={isLoading} onSelectEvent={onSelectEvent} />
+      ) : (
+        <section className="agenda-board">
+          <div className={`agenda-weekdays ${view === 'day' ? 'agenda-weekdays--day' : ''}`}>
+            {(view === 'day' ? [focusDate] : days).map((day) => <span className={isSameDay(day, today) ? 'agenda-today' : ''} key={day.toISOString()}>{new Intl.DateTimeFormat('pt-BR', { weekday: 'short' }).format(day).replace('.', '').toUpperCase()} <b>{day.getDate()}</b></span>)}
+          </div>
+          <div className="agenda-grid"><div className="time-column"><span>08:00</span><span>10:00</span><span>12:00</span><span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span></div><div className={view === 'day' ? 'agenda-events agenda-events--day' : 'agenda-events'}>{events.map((event, index) => <AgendaEventCard event={event} index={index} view={view} onSelect={onSelectEvent} key={event.id} />)}{events.length === 0 && <p className="agenda-empty">{isLoading ? 'Carregando eventos...' : view === 'day' ? 'Não há eventos para hoje.' : 'Não há eventos nesta semana.'}</p>}</div></div>
+        </section>
+      )}
       <section className="agenda-note"><span>◈</span><p><strong>Calendário institucional compartilhado.</strong> Eventos aprovados são sincronizados automaticamente com o Google Calendar quando a integração estiver ativa.</p></section>
     </div>
   )
 }
 
-function AgendaEventCard({ event, index, weekStart, onSelect }: { event: AgendaEvent; index: number; weekStart: Date; onSelect: (event: AgendaEvent) => void }) {
+function AgendaMonthView({ events, days, focusDate, isLoading, onSelectEvent }: { events: AgendaEvent[]; days: Date[]; focusDate: Date; isLoading: boolean; onSelectEvent: (event: AgendaEvent) => void }) {
+  const weekdays = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB', 'DOM']
+
+  return <section className="agenda-month-board">
+    <div className="agenda-month-weekdays">{weekdays.map((day) => <span key={day}>{day}</span>)}</div>
+    <div className="agenda-month-grid">{days.map((day) => {
+      const dayEvents = events.filter((event) => isSameDay(new Date(event.inicio), day))
+      const isOutsideMonth = day.getMonth() !== focusDate.getMonth()
+      return <article className={`agenda-month-day${isOutsideMonth ? ' agenda-month-day--outside' : ''}${isSameDay(day, new Date()) ? ' agenda-month-day--today' : ''}`} key={day.toISOString()}><b>{day.getDate()}</b><div>{dayEvents.map((event, index) => <AgendaMonthEvent event={event} index={index} onSelect={onSelectEvent} key={event.id} />)}</div></article>
+    })}</div>
+    {events.length === 0 && <p className="agenda-month-empty">{isLoading ? 'Carregando eventos...' : 'Não há eventos neste mês.'}</p>}
+  </section>
+}
+
+function AgendaMonthEvent({ event, index, onSelect }: { event: AgendaEvent; index: number; onSelect: (event: AgendaEvent) => void }) {
+  const start = new Date(event.inicio)
+  const tone = ['blue', 'orange', 'green', 'purple'][index % 4]
+  const time = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(start)
+  return <button className={`agenda-month-event agenda-month-event--${tone}`} type="button" onClick={() => onSelect(event)}><span>{time}</span>{event.titulo}</button>
+}
+
+function AgendaEventCard({ event, index, view, onSelect }: { event: AgendaEvent; index: number; view: Exclude<AgendaView, 'month'>; onSelect: (event: AgendaEvent) => void }) {
   const start = new Date(event.inicio)
   const end = new Date(event.fim)
   const tone = ['blue', 'orange', 'green', 'purple'][index % 4]
   const top = Math.max(0, Math.min(450, ((start.getHours() * 60 + start.getMinutes() - 8 * 60) / 60) * 34.5))
   const duration = Math.max(38, Math.min(118, ((end.getTime() - start.getTime()) / 3_600_000) * 34.5))
-  const dayIndex = Math.max(0, Math.min(6, Math.round((startOfWeek(start).getTime() - weekStart.getTime()) / 86_400_000)))
+  const dayIndex = (start.getDay() + 6) % 7
   const time = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(start)
   const endTime = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(end)
 
-  return <button className={`calendar-event calendar-event--${tone}`} type="button" aria-label={`Consultar escalas de ${event.titulo}`} onClick={() => onSelect(event)} style={{ left: `calc(${(dayIndex * 100) / 7}% + 3px)`, top, height: duration, width: 'calc(14.285% - 6px)' }}><small>{time} — {endTime}</small><strong>{event.titulo}</strong><span>{event.cell?.nome ?? event.campus.nome}</span></button>
+  const layout = view === 'day'
+    ? { left: '8px', top, minHeight: duration, width: 'calc(100% - 16px)' }
+    : { left: `calc(${(dayIndex * 100) / 7}% + 3px)`, top, minHeight: duration, width: 'calc(14.285% - 6px)' }
+
+  return <button className={`calendar-event calendar-event--${tone}`} type="button" aria-label={`Consultar escalas de ${event.titulo}`} onClick={() => onSelect(event)} style={layout}><small>{time} — {endTime}</small><strong>{event.titulo}</strong><span>{event.cell?.nome ?? event.campus.nome}</span></button>
 }
 
 function weekLabel(weekStart: Date) {
   const end = addDays(weekStart, 6)
   const formatter = new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long' })
   return `${formatter.format(weekStart)} — ${formatter.format(end)}`
+}
+
+function agendaLabel(view: AgendaView, focusDate: Date) {
+  if (view === 'week') return weekLabel(startOfWeek(focusDate))
+  if (view === 'day') return new Intl.DateTimeFormat('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(focusDate)
+  return new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(focusDate)
+}
+
+function agendaRange(view: AgendaView, focusDate: Date) {
+  if (view === 'day') {
+    const start = startOfDay(focusDate)
+    return { start, end: addDays(start, 1) }
+  }
+  if (view === 'week') {
+    const start = startOfWeek(focusDate)
+    return { start, end: addDays(start, 7) }
+  }
+  const start = startOfMonth(focusDate)
+  return { start, end: addMonths(start, 1) }
+}
+
+function shiftAgendaFocus(date: Date, view: AgendaView, direction: -1 | 1) {
+  if (view === 'day') return addDays(date, direction)
+  if (view === 'week') return addDays(date, direction * 7)
+  return addMonths(date, direction)
+}
+
+function startOfDay(date: Date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate())
+}
+
+function startOfMonth(date: Date) {
+  return new Date(date.getFullYear(), date.getMonth(), 1)
+}
+
+function addMonths(date: Date, amount: number) {
+  return new Date(date.getFullYear(), date.getMonth() + amount, 1)
+}
+
+function monthCalendarDays(focusDate: Date) {
+  const firstDay = startOfMonth(focusDate)
+  const gridStart = startOfWeek(firstDay)
+  return Array.from({ length: 42 }, (_, index) => addDays(gridStart, index))
 }
 
 function isSameDay(first: Date, second: Date) {

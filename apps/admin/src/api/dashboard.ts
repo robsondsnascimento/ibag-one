@@ -35,6 +35,8 @@ export type AgendaEvent = {
   } | null
   alertEnabled: boolean
   blocksCampusAgenda: boolean
+  recurrence: 'NONE' | 'WEEKLY' | 'MONTHLY' | string
+  recurrenceUntil: string | null
   createdByUserId: string
   spaces: Array<{
     spaceId: string
@@ -120,10 +122,8 @@ export async function loadDashboard(accessToken: string): Promise<DashboardSumma
   }
 }
 
-export function loadAgenda(accessToken: string, weekStart: Date) {
-  const end = new Date(weekStart)
-  end.setDate(end.getDate() + 7)
-  return apiRequest<AgendaEvent[]>(`/events?start=${encodeURIComponent(weekStart.toISOString())}&end=${encodeURIComponent(end.toISOString())}`, { accessToken })
+export function loadAgenda(accessToken: string, start: Date, end: Date) {
+  return apiRequest<AgendaEvent[]>(`/events?start=${encodeURIComponent(start.toISOString())}&end=${encodeURIComponent(end.toISOString())}`, { accessToken })
 }
 
 export type CreateAgendaEventInput = {
@@ -136,6 +136,8 @@ export type CreateAgendaEventInput = {
   cellId?: string
   alertEnabled?: boolean
   blocksCampusAgenda?: boolean
+  recurrence?: 'NONE' | 'WEEKLY' | 'MONTHLY'
+  recurrenceUntil?: string
   spaceIds?: string[]
   serviceAreaIds?: string[]
   teamIds?: string[]

@@ -101,7 +101,7 @@ export class KidsService {
     const event = await this.prisma.event.findFirst({ where: { id: eventId, organizationId: c.organizationId, campusId: { not: undefined }, type: 'WORSHIP', status: 'APPROVED' } });
     if (!event) throw new NotFoundException('Culto aprovado não encontrado');
     const role = await this.prisma.kidsOperationalRoleAssignment.findFirst({ where: { personId: c.personId, campusId: event.campusId, role: 'WORSHIP_LEADER', ativo: true } });
-    const scheduled = await this.prisma.serviceSchedule.findFirst({ where: { personId: c.personId, eventId } });
+    const scheduled = await this.prisma.serviceSchedule.findFirst({ where: { personId: c.personId, eventId, status: { not: 'REMOVED' } } });
     if (!role || !scheduled) throw new ForbiddenException('A visão Kids exige função de Líder de Culto e escala neste culto');
     const classes = await this.prisma.kidsClass.findMany({ where: { organizationId: c.organizationId, campusId: event.campusId, ativo: true }, select: { id: true, nome: true, capacidade: true, _count: { select: { enrollments: { where: { ativo: true } } } } } });
     return Promise.all(classes.map(async klass => ({ ...klass, currentOccupancy: await this.prisma.kidsCheckIn.count({ where: { status: 'CHECKED_IN', enrollment: { classId: klass.id } } }) })));

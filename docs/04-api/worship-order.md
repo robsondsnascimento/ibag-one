@@ -24,7 +24,7 @@ Cada ordem de culto pertence a um único evento do tipo `WORSHIP`. Ela estrutura
 - Ao direcionar um item para outra Área de Serviço, a liderança da nova área é avisada; ao remover um item ligado a uma área, a liderança recebe o aviso para desconsiderar os preparativos e as demandas relacionadas são removidas.
 - Depois de publicada, a ordem não recebe alterações; demandas pendentes ainda podem ser concluídas ou canceladas.
 - A área indicada em item ou demanda deve estar ativa, disponível no campus e vinculada ao evento de culto.
-- O responsável de uma demanda deve ser uma pessoa ativa com vínculo ativo na área indicada.
+- O responsável de uma demanda deve ser uma pessoa ativa com vínculo ativo na área indicada. Um item também pode ter pessoa responsável, validada dentro da organização.
 - Todos os acessos verificam o `organizationId` do usuário autenticado.
 
 ## Permissões
@@ -52,7 +52,7 @@ Cada ordem de culto pertence a um único evento do tipo `WORSHIP`. Ela estrutura
 | `PATCH` | `/worship-orders/demands/:id/complete` | Conclui uma demanda pendente. |
 | `PATCH` | `/worship-orders/demands/:id/cancel` | Cancela uma demanda pendente. |
 
-As escalas do evento são retornadas em uma seção própria da consulta da ordem, apenas para visualização. A edição continua sendo feita exclusivamente no módulo de Escalas de Serviço.
+As escalas do evento são retornadas em uma seção própria da consulta da ordem, apenas para visualização. O painel mostra pessoa, área, equipe, função e status, mas a edição continua sendo feita exclusivamente no módulo de Escalas de Serviço. As demandas mostram área, responsável, prazo e status; uma demanda pendente pode ser concluída pelo responsável, integrante ativo da área ou liderança autorizada, enquanto seu cancelamento é restrito à liderança que gerencia a ordem.
 
 ### Criar ordem
 
@@ -117,13 +117,13 @@ POST /worship-orders/items/:id/demands
 
 ## Itens e músicas na sequência
 
-O editor possui um campo **Criar novo item** para acrescentar qualquer momento do culto, como avisos, mensagem, teatro ou testemunho. O item entra na sequência em rascunho e pode ser movido, editado ou removido antes da publicação.
+O editor possui um formulário **Adicionar à sequência** para acrescentar qualquer momento do culto, como avisos, mensagem, teatro ou testemunho, ou para escolher uma das cinco posições padrão de música. A sequência é exibida em um checklist visual ampliado. O item entra na sequência em rascunho e pode ser movido, editado ou removido antes da publicação.
 
 A área **Itens adicionados e músicas enviadas** é a sequência final que será usada pela equipe. Além dos itens criados manualmente, ela mostra as músicas encaminhadas pelo Ministro de Louvor.
 
 Quando o repertório aprovado é encaminhado usando o modelo Cachoeirinha, cada posição musical passa a ser formatada como `Música 1 · Nome da música`, `Música 2 · Nome da música` e assim por diante. Na sequência visível da Ordem de Culto aparece somente esse texto; momento, tom, versão e link do YouTube permanecem no módulo de Repertório.
 
-No modelo padrão Cachoeirinha, somente **Celebração · início do culto**, **Celebração ou POP** e **Celebração · final do culto** são posições de Música. **Oração** e **Dízimos e ofertas** são itens neutros, sem demanda automática para a área de Música.
+No modelo padrão Cachoeirinha, os cinco momentos são musicais e vinculados à Área de Música: **Música celebração**, **Música celebração ou POP**, **Música oração**, **Música dízimos e ofertas** e **Música final**. Ao escolher uma posição musical manualmente no painel, apenas o lugar no roteiro é criado; o nome da canção continua vindo exclusivamente do repertório aprovado. Nesta fase, cada posição automática recebe apenas uma música.
 
 ## Notificações
 

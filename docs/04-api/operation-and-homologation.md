@@ -25,6 +25,39 @@ O limite de requisições é local ao processo. Antes de executar múltiplas ins
 
 Use `backend/api/.env.example` como referência. `JWT_SECRET` é obrigatório e precisa ter ao menos 32 caracteres. Nunca versionar o arquivo `.env` nem tokens de integração.
 
+## Execução local como serviços do Windows
+
+O computador de desenvolvimento executa os componentes publicados como serviços automáticos do Windows, registrados com NSSM:
+
+- `IBAGOneAPI` (`IBAG One - API`): executa `backend/api/dist/src/main.js` na porta `3000`;
+- `IBAGOnePanel` (`IBAG One - Painel`): serve o build de `apps/admin/dist` em `127.0.0.1:5173`;
+- `Cloudflared`: publica os endereços externos configurados no túnel institucional.
+
+Os três serviços usam inicialização automática, não dependem do login do usuário e reiniciam os processos da aplicação após falhas. As antigas tarefas agendadas `IBAG One API` e `IBAG One Painel` permanecem cadastradas, porém desativadas, para impedir duplicidade nas portas.
+
+Para consultar ou reiniciar os serviços, abra o PowerShell como administrador:
+
+```powershell
+Get-Service IBAGOneAPI,IBAGOnePanel,Cloudflared
+Restart-Service IBAGOneAPI
+Restart-Service IBAGOnePanel
+Restart-Service Cloudflared
+```
+
+Após alterações no backend ou no painel, compile o componente correspondente e reinicie seu serviço:
+
+```powershell
+cd E:\DEV\Projects\ibag-one\backend\api
+npm run build
+Restart-Service IBAGOneAPI
+
+cd E:\DEV\Projects\ibag-one\apps\admin
+npm run build
+Restart-Service IBAGOnePanel
+```
+
+Os logs ficam em `C:\ProgramData\IBAG One\logs`. A verificação local usa `http://127.0.0.1:3000/health` e `http://127.0.0.1:5173`; a validação externa usa os domínios institucionais do painel e da API.
+
 ## Publicação da API
 
 O repositório possui `render.yaml` para publicar a API no Render com PostgreSQL gerenciado, HTTPS, migrações automáticas e disco persistente para anexos de estudos.

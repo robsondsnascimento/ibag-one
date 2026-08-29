@@ -21,11 +21,20 @@ function initials(name: string) {
 }
 
 function formatShortDate(value: string) {
+  const localDate = new Date(`${value.slice(0, 10)}T12:00:00`)
   return new Intl.DateTimeFormat('pt-BR', {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
-  }).format(new Date(value)).replace('.', '')
+  }).format(localDate).replace('.', '')
+}
+
+function formatIbagEntryDate(value: string, monthOnly: boolean) {
+  if (!monthOnly) return formatShortDate(value)
+  return new Intl.DateTimeFormat('pt-BR', {
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(`${value.slice(0, 7)}-15T12:00:00`))
 }
 
 export function ServiceAreaWorkspace({
@@ -146,7 +155,7 @@ export function ServiceAreaWorkspace({
 
       <section className="service-area-panel service-area-panel--members">
         <header><div><p className="eyebrow">Integrantes</p><h2>Pessoas em serviço</h2></div><span>{teamMembers.length}</span></header>
-        {teamMembers.length ? <div className="service-membership-list">{teamMembers.map((membership) => <article className="service-membership-row" key={membership.id}><span className="service-person-symbol">{initials(membership.person.nome)}</span><div><strong>{membership.person.nome}</strong><small>{membership.team?.nome ?? 'Equipe não definida'} · desde {formatShortDate(membership.inicio)}{membership.funcoes.length ? ` · ${membership.funcoes.join(', ')}` : ''}</small></div>{canManageMembers && membership.team && activeTeams.some((team) => team.id === membership.team?.id) && <button className="schedule-action" type="button" onClick={() => { setFunctionsError(''); setEditingFunctions(membership) }}>Funções</button>}</article>)}</div> : <p className="service-area-empty">Ainda não há integrantes ativos nas equipes desta área.</p>}
+        {teamMembers.length ? <div className="service-membership-list">{teamMembers.map((membership) => <article className="service-membership-row" key={membership.id}><span className="service-person-symbol">{initials(membership.person.nome)}</span><div><strong>{membership.person.nome}</strong><small>{membership.team?.nome ?? 'Equipe não definida'} · {membership.person.dataMembresia ? `ingressou na IBAG em ${formatIbagEntryDate(membership.person.dataMembresia, membership.person.dataMembresiaSemDia)}` : 'ingresso na IBAG não informado'}{membership.funcoes.length ? ` · ${membership.funcoes.join(', ')}` : ''}</small></div>{canManageMembers && membership.team && activeTeams.some((team) => team.id === membership.team?.id) && <button className="schedule-action" type="button" onClick={() => { setFunctionsError(''); setEditingFunctions(membership) }}>Funções</button>}</article>)}</div> : <p className="service-area-empty">Ainda não há integrantes ativos nas equipes desta área.</p>}
       </section>
 
       {editingFunctions && <div className="dialog-backdrop" role="presentation" onMouseDown={() => setEditingFunctions(null)}><section className="event-dialog" role="dialog" aria-modal="true" aria-labelledby="service-member-functions-title" onMouseDown={(event) => event.stopPropagation()}><button className="dialog-close" type="button" aria-label="Fechar" onClick={() => setEditingFunctions(null)}>×</button><p className="eyebrow">{editingFunctions.team?.nome}</p><h2 id="service-member-functions-title">Funções de serviço</h2><p className="dialog-description">Cadastre as funções que {editingFunctions.person.nome} pode exercer. Elas serão usadas nas solicitações de troca.</p><form className="event-form" onSubmit={saveFunctions}><ServiceFunctionsField areaName={area.nome} availableFunctions={area.funcoes} value={editingFunctions.funcoes} onChange={(funcoes) => setEditingFunctions((membership) => membership ? { ...membership, funcoes } : null)} disabled={isSavingFunctions} />{functionsError && <p className="form-error" role="alert">{functionsError}</p>}<div className="dialog-actions"><button className="secondary-button" type="button" onClick={() => setEditingFunctions(null)}>Cancelar</button><button className="primary-button" type="submit" disabled={isSavingFunctions}>{isSavingFunctions ? 'Salvando...' : 'Salvar funções'}</button></div></form></section></div>}

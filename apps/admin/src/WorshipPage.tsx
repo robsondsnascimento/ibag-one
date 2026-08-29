@@ -12,7 +12,10 @@ import {
 } from "./api/worship";
 import type { WorshipOrder, WorshipOrderTemplate } from "./api/worship";
 import type { AgendaEvent } from "./api/dashboard";
+import { listPeople } from "./api/directory";
+import type { PersonListItem } from "./api/directory";
 import { WorshipOrderOperations } from "./WorshipOrderOperations";
+import { WorshipPersonAutocomplete } from "./WorshipPersonAutocomplete";
 import { WorshipRepertoirePanel } from "./WorshipRepertoirePanel";
 import { WorshipTemplatePanel } from "./WorshipTemplatePanel";
 
@@ -23,6 +26,14 @@ type Props = {
   canManageTemplates: boolean;
   onNotice: (message: string) => void;
 };
+
+const cachoeirinhaMusicItems = [
+  "Música celebração",
+  "Música celebração ou POP",
+  "Música oração",
+  "Música dízimos e ofertas",
+  "Música final",
+];
 
 function formatEventDate(value: string) {
   return new Intl.DateTimeFormat("pt-BR", {
@@ -49,10 +60,19 @@ export function WorshipPage({
   const [eventId, setEventId] = useState("");
   const [templateId, setTemplateId] = useState("");
   const [order, setOrder] = useState<WorshipOrder | null>(null);
+  const [people, setPeople] = useState<PersonListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingPeople, setIsLoadingPeople] = useState(true);
   const [isLoadingOrder, setIsLoadingOrder] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
+  const [newItemKind, setNewItemKind] = useState<"custom" | "music">(
+    "custom",
+  );
+  const [newItemResponsiblePersonId, setNewItemResponsiblePersonId] =
+    useState("");
+  const [newItemResponsiblePersonSearch, setNewItemResponsiblePersonSearch] =
+    useState("");
 
   const event = useMemo(
     () => events.find((item) => item.id === eventId) ?? null,
@@ -60,6 +80,13 @@ export function WorshipPage({
   );
   const canManage =
     canManageAnyOrder || event?.createdByUserId === currentUserId;
+  const musicServiceArea = order?.event.serviceAreas.find((item) =>
+    item.serviceArea.nome
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLocaleLowerCase("pt-BR")
+      .includes("musica"),
+  );
 
   useEffect(() => {
     let active = true;
@@ -92,6 +119,23 @@ export function WorshipPage({
       })
       .finally(() => {
         if (active) setIsLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [accessToken]);
+
+  useEffect(() => {
+    let active = true;
+    void listPeople(accessToken)
+      .then((result) => {
+        if (active) setPeople(result.data.filter((person) => person.ativo));
+      })
+      .catch(() => {
+        if (active) setPeople([]);
+      })
+      .finally(() => {
+        if (active) setIsLoadingPeople(false);
       });
     return () => {
       active = false;
@@ -165,13 +209,29 @@ export function WorshipPage({
     if (!order) return;
     const form = formEvent.currentTarget;
     const data = new FormData(form);
-    const serviceAreaId = String(data.get("serviceAreaId") ?? "") || undefined;
+    const title =
+      newItemKind === "music"
+        ? String(data.get("musicMoment") ?? "").trim()
+        : String(data.get("title") ?? "").trim();
+    const serviceAreaId =
+      (newItemKind === "music"
+        ? musicServiceArea?.serviceAreaId
+        : String(data.get("serviceAreaId") ?? "")) || undefined;
+    if (!title) {
+      setError("Informe o título ou selecione um momento de música.");
+      return;
+    }
+    if (newItemKind === "music" && !serviceAreaId) {
+      setError("Inclua a Área de Música no culto antes de adicionar um momento de música.");
+      return;
+    }
     setError("");
     setIsSaving(true);
     void addWorshipOrderItem(accessToken, order.id, {
       sequencia: Math.max(0, ...order.items.map((item) => item.sequencia)) + 1,
-      titulo: String(data.get("title") ?? "").trim(),
+      titulo: title,
       horario: String(data.get("time") ?? "") || undefined,
+      responsiblePersonId: newItemResponsiblePersonId || undefined,
       serviceAreaId,
       observacoes: String(data.get("notes") ?? "").trim() || undefined,
     })
@@ -182,8 +242,13 @@ export function WorshipPage({
             : current,
         );
         form.reset();
+        setNewItemKind("custom");
+        setNewItemResponsiblePersonId("");
+        setNewItemResponsiblePersonSearch("");
         onNotice(
-          serviceAreaId
+          newItemKind === "music"
+            ? "Momento de música adicionado à sequência do culto."
+            : serviceAreaId
             ? "Item adicionado e solicitação enviada à liderança da área."
             : "Item adicionado à ordem de culto.",
         );
@@ -350,8 +415,8 @@ export function WorshipPage({
                     </header>
                     <div className="worship-order-sequence-header">
                       <div>
-                        <p className="eyebrow">Sequência do culto</p>
-                        <h4>Itens adicionados e músicas enviadas</h4>
+                        <p className="eyebrow">Checklist do culto</p>
+                        <h4>Sequência, itens e músicas</h4>
                       </div>
                       <small>
                         Os itens criados abaixo e as músicas aprovadas pelo
@@ -359,69 +424,156 @@ export function WorshipPage({
                       </small>
                     </div>
                     <ol className="worship-item-list">
-                      {order.items.map((item) => (
-                        <li key={item.id}>
-                          <span>{item.sequencia}</span>
-                          <div>
-                            <strong>{item.titulo}</strong>
-                            {!item.materials.some(
-                              (material) => material.type === "MUSIC",
-                            ) && (
-                              <small>
-                                {[
+                      {order.items.map((item) => {
+                        const isMusicItem = Boolean(
+                          item.serviceArea?.nome
+                          .normalize("NFD")
+                          .replace(/[\u0300-\u036f]/g, "")
+                          .toLocaleLowerCase("pt-BR")
+                          .includes("musica"),
+                        );
+                        return (
+                          <li
+                            className={
+                              isMusicItem
+                                ? "worship-item-list__item worship-item-list__item--music"
+                                : "worship-item-list__item"
+                            }
+                            key={item.id}
+                          >
+                            <span>{item.sequencia}</span>
+                            <div>
+                              <strong>{item.titulo}</strong>
+                              {!item.materials.some(
+                                (material) => material.type === "MUSIC",
+                              ) && (
+                                <small>
+                                  {[
                                   item.horario,
                                   item.serviceArea?.nome,
+                                  item.responsiblePerson?.nome
+                                    ? `Responsável: ${item.responsiblePerson.nome}`
+                                    : null,
                                   item.observacoes,
-                                ]
-                                  .filter(Boolean)
-                                  .join(" · ") || "Sem detalhes adicionais"}
-                              </small>
-                            )}
-                          </div>
-                        </li>
-                      ))}
+                                  ]
+                                    .filter(Boolean)
+                                    .join(" · ") || "Sem detalhes adicionais"}
+                                </small>
+                              )}
+                            </div>
+                          </li>
+                        );
+                      })}
                     </ol>
                     {order.status === "DRAFT" && canManage && (
                       <form className="worship-item-form" onSubmit={addItem}>
-                        <h4>Criar novo item</h4>
+                        <h4>Adicionar à sequência</h4>
                         <p>
-                          Inclua qualquer momento do culto, como avisos,
-                          mensagem, teatro ou testemunho.
+                          Inclua um item personalizado ou escolha um momento de
+                          música para o roteiro do culto.
                         </p>
+                        <div
+                          className="worship-item-kind"
+                          role="group"
+                          aria-label="Tipo de item"
+                        >
+                          <button
+                            className={
+                              newItemKind === "custom"
+                                ? "worship-item-kind__button worship-item-kind__button--active"
+                                : "worship-item-kind__button"
+                            }
+                            type="button"
+                            onClick={() => setNewItemKind("custom")}
+                          >
+                            Novo item
+                          </button>
+                          <button
+                            className={
+                              newItemKind === "music"
+                                ? "worship-item-kind__button worship-item-kind__button--active"
+                                : "worship-item-kind__button"
+                            }
+                            type="button"
+                            disabled={!musicServiceArea}
+                            onClick={() => setNewItemKind("music")}
+                          >
+                            Selecionar item de música
+                          </button>
+                        </div>
                         <div className="form-grid">
-                          <label>
-                            Título
-                            <input
-                              name="title"
-                              required
-                              minLength={2}
-                              placeholder="Ex.: Teatro Minuto"
-                            />
-                          </label>
+                          {newItemKind === "music" ? (
+                            <label>
+                              Item de música
+                              <select name="musicMoment" required defaultValue="">
+                                <option value="" disabled>
+                                  Selecione o momento
+                                </option>
+                                {cachoeirinhaMusicItems.map((item) => (
+                                  <option key={item} value={item}>
+                                    {item}
+                                  </option>
+                                ))}
+                              </select>
+                              <small className="worship-routing-note">
+                                Será vinculado automaticamente à Área de Música.
+                              </small>
+                            </label>
+                          ) : (
+                            <label>
+                              Título
+                              <input
+                                name="title"
+                                required
+                                minLength={2}
+                                placeholder="Ex.: Teatro Minuto"
+                              />
+                            </label>
+                          )}
                           <label>
                             Horário{" "}
                             <span className="field-optional">(opcional)</span>
                             <input name="time" type="time" />
                           </label>
                         </div>
+                        {newItemKind === "custom" && (
+                          <label>
+                            Área de Serviço{" "}
+                            <span className="field-optional">(opcional)</span>
+                            <select name="serviceAreaId" defaultValue="">
+                              <option value="">Nenhuma área específica</option>
+                              {order.event.serviceAreas.map((item) => (
+                                <option
+                                  value={item.serviceAreaId}
+                                  key={item.serviceAreaId}
+                                >
+                                  {item.serviceArea.nome}
+                                </option>
+                              ))}
+                            </select>
+                            <small className="worship-routing-note">
+                              Ao escolher uma área, será criada uma solicitação e
+                              a liderança responsável será avisada.
+                            </small>
+                          </label>
+                        )}
                         <label>
-                          Área de Serviço{" "}
+                          Pessoa responsável{" "}
                           <span className="field-optional">(opcional)</span>
-                          <select name="serviceAreaId" defaultValue="">
-                            <option value="">Nenhuma área específica</option>
-                            {order.event.serviceAreas.map((item) => (
-                              <option
-                                value={item.serviceAreaId}
-                                key={item.serviceAreaId}
-                              >
-                                {item.serviceArea.nome}
-                              </option>
-                            ))}
-                          </select>
-                          <small className="worship-routing-note">
-                            Ao escolher uma área, será criada uma solicitação e
-                            a liderança responsável será avisada.
-                          </small>
+                          <WorshipPersonAutocomplete
+                            people={people}
+                            selectedPersonId={newItemResponsiblePersonId}
+                            search={newItemResponsiblePersonSearch}
+                            disabled={isLoadingPeople}
+                            onSearchChange={(value) => {
+                              setNewItemResponsiblePersonId("");
+                              setNewItemResponsiblePersonSearch(value);
+                            }}
+                            onSelect={(person) => {
+                              setNewItemResponsiblePersonId(person.id);
+                              setNewItemResponsiblePersonSearch(person.nome);
+                            }}
+                          />
                         </label>
                         <label>
                           Observações{" "}
@@ -452,10 +604,12 @@ export function WorshipPage({
                     )}
                     {error && <p className="form-error">{error}</p>}
                   </section>
-                  <WorshipOrderOperations
-                    order={order}
-                    accessToken={accessToken}
-                    canManage={canManage}
+                    <WorshipOrderOperations
+                      order={order}
+                      accessToken={accessToken}
+                      canManage={canManage}
+                      people={people}
+                      isLoadingPeople={isLoadingPeople}
                     onOrderChange={setOrder}
                     onNotice={onNotice}
                   />

@@ -274,6 +274,9 @@ O sistema suporta múltiplos tipos:
 ```
 Foto de perfil
 
+- metadados locais opcionais: caminho interno, tipo MIME e data de atualização;
+- o arquivo não é exposto pelo banco: a API entrega a imagem somente a usuários autenticados da mesma organização.
+
 Fotos de família
 
 Fotos de eventos

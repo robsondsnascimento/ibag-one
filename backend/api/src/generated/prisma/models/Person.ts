@@ -36,6 +36,10 @@ export type PersonMinAggregateOutputType = {
   dataDecisao: Date | null
   dataBatismo: Date | null
   dataMembresia: Date | null
+  dataMembresiaSemDia: boolean | null
+  fotoPerfilPath: string | null
+  fotoPerfilMimeType: string | null
+  fotoPerfilAtualizadaEm: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   campusId: string | null
@@ -54,6 +58,10 @@ export type PersonMaxAggregateOutputType = {
   dataDecisao: Date | null
   dataBatismo: Date | null
   dataMembresia: Date | null
+  dataMembresiaSemDia: boolean | null
+  fotoPerfilPath: string | null
+  fotoPerfilMimeType: string | null
+  fotoPerfilAtualizadaEm: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   campusId: string | null
@@ -72,7 +80,11 @@ export type PersonCountAggregateOutputType = {
   dataDecisao: number
   dataBatismo: number
   dataMembresia: number
+  dataMembresiaSemDia: number
   titulosMinisteriais: number
+  fotoPerfilPath: number
+  fotoPerfilMimeType: number
+  fotoPerfilAtualizadaEm: number
   createdAt: number
   updatedAt: number
   campusId: number
@@ -93,6 +105,10 @@ export type PersonMinAggregateInputType = {
   dataDecisao?: true
   dataBatismo?: true
   dataMembresia?: true
+  dataMembresiaSemDia?: true
+  fotoPerfilPath?: true
+  fotoPerfilMimeType?: true
+  fotoPerfilAtualizadaEm?: true
   createdAt?: true
   updatedAt?: true
   campusId?: true
@@ -111,6 +127,10 @@ export type PersonMaxAggregateInputType = {
   dataDecisao?: true
   dataBatismo?: true
   dataMembresia?: true
+  dataMembresiaSemDia?: true
+  fotoPerfilPath?: true
+  fotoPerfilMimeType?: true
+  fotoPerfilAtualizadaEm?: true
   createdAt?: true
   updatedAt?: true
   campusId?: true
@@ -129,7 +149,11 @@ export type PersonCountAggregateInputType = {
   dataDecisao?: true
   dataBatismo?: true
   dataMembresia?: true
+  dataMembresiaSemDia?: true
   titulosMinisteriais?: true
+  fotoPerfilPath?: true
+  fotoPerfilMimeType?: true
+  fotoPerfilAtualizadaEm?: true
   createdAt?: true
   updatedAt?: true
   campusId?: true
@@ -221,7 +245,11 @@ export type PersonGroupByOutputType = {
   dataDecisao: Date | null
   dataBatismo: Date | null
   dataMembresia: Date | null
+  dataMembresiaSemDia: boolean
   titulosMinisteriais: string[]
+  fotoPerfilPath: string | null
+  fotoPerfilMimeType: string | null
+  fotoPerfilAtualizadaEm: Date | null
   createdAt: Date
   updatedAt: Date
   campusId: string
@@ -261,7 +289,11 @@ export type PersonWhereInput = {
   dataDecisao?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataBatismo?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataMembresia?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFilter<"Person"> | boolean
   titulosMinisteriais?: Prisma.StringNullableListFilter<"Person">
+  fotoPerfilPath?: Prisma.StringNullableFilter<"Person"> | string | null
+  fotoPerfilMimeType?: Prisma.StringNullableFilter<"Person"> | string | null
+  fotoPerfilAtualizadaEm?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   campusId?: Prisma.StringFilter<"Person"> | string
@@ -282,6 +314,7 @@ export type PersonWhereInput = {
   familyMemberships?: Prisma.FamilyMembershipListRelationFilter
   serviceMemberships?: Prisma.ServiceMembershipListRelationFilter
   serviceSchedules?: Prisma.ServiceScheduleListRelationFilter
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityListRelationFilter
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestListRelationFilter
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestListRelationFilter
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentListRelationFilter
@@ -316,7 +349,11 @@ export type PersonOrderByWithRelationInput = {
   dataDecisao?: Prisma.SortOrderInput | Prisma.SortOrder
   dataBatismo?: Prisma.SortOrderInput | Prisma.SortOrder
   dataMembresia?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataMembresiaSemDia?: Prisma.SortOrder
   titulosMinisteriais?: Prisma.SortOrder
+  fotoPerfilPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  fotoPerfilMimeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  fotoPerfilAtualizadaEm?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campusId?: Prisma.SortOrder
@@ -337,6 +374,7 @@ export type PersonOrderByWithRelationInput = {
   familyMemberships?: Prisma.FamilyMembershipOrderByRelationAggregateInput
   serviceMemberships?: Prisma.ServiceMembershipOrderByRelationAggregateInput
   serviceSchedules?: Prisma.ServiceScheduleOrderByRelationAggregateInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityOrderByRelationAggregateInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestOrderByRelationAggregateInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestOrderByRelationAggregateInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentOrderByRelationAggregateInput
@@ -374,7 +412,11 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   dataDecisao?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataBatismo?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataMembresia?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFilter<"Person"> | boolean
   titulosMinisteriais?: Prisma.StringNullableListFilter<"Person">
+  fotoPerfilPath?: Prisma.StringNullableFilter<"Person"> | string | null
+  fotoPerfilMimeType?: Prisma.StringNullableFilter<"Person"> | string | null
+  fotoPerfilAtualizadaEm?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   campusId?: Prisma.StringFilter<"Person"> | string
@@ -395,6 +437,7 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   familyMemberships?: Prisma.FamilyMembershipListRelationFilter
   serviceMemberships?: Prisma.ServiceMembershipListRelationFilter
   serviceSchedules?: Prisma.ServiceScheduleListRelationFilter
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityListRelationFilter
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestListRelationFilter
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestListRelationFilter
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentListRelationFilter
@@ -429,7 +472,11 @@ export type PersonOrderByWithAggregationInput = {
   dataDecisao?: Prisma.SortOrderInput | Prisma.SortOrder
   dataBatismo?: Prisma.SortOrderInput | Prisma.SortOrder
   dataMembresia?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataMembresiaSemDia?: Prisma.SortOrder
   titulosMinisteriais?: Prisma.SortOrder
+  fotoPerfilPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  fotoPerfilMimeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  fotoPerfilAtualizadaEm?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campusId?: Prisma.SortOrder
@@ -454,7 +501,11 @@ export type PersonScalarWhereWithAggregatesInput = {
   dataDecisao?: Prisma.DateTimeNullableWithAggregatesFilter<"Person"> | Date | string | null
   dataBatismo?: Prisma.DateTimeNullableWithAggregatesFilter<"Person"> | Date | string | null
   dataMembresia?: Prisma.DateTimeNullableWithAggregatesFilter<"Person"> | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolWithAggregatesFilter<"Person"> | boolean
   titulosMinisteriais?: Prisma.StringNullableListFilter<"Person">
+  fotoPerfilPath?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
+  fotoPerfilMimeType?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
+  fotoPerfilAtualizadaEm?: Prisma.DateTimeNullableWithAggregatesFilter<"Person"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
   campusId?: Prisma.StringWithAggregatesFilter<"Person"> | string
@@ -473,7 +524,11 @@ export type PersonCreateInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -492,6 +547,7 @@ export type PersonCreateInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -526,7 +582,11 @@ export type PersonUncheckedCreateInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -545,6 +605,7 @@ export type PersonUncheckedCreateInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -579,7 +640,11 @@ export type PersonUpdateInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -598,6 +663,7 @@ export type PersonUpdateInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -632,7 +698,11 @@ export type PersonUncheckedUpdateInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -651,6 +721,7 @@ export type PersonUncheckedUpdateInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -685,7 +756,11 @@ export type PersonCreateManyInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -704,7 +779,11 @@ export type PersonUpdateManyMutationInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -721,7 +800,11 @@ export type PersonUncheckedUpdateManyInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -758,7 +841,11 @@ export type PersonCountOrderByAggregateInput = {
   dataDecisao?: Prisma.SortOrder
   dataBatismo?: Prisma.SortOrder
   dataMembresia?: Prisma.SortOrder
+  dataMembresiaSemDia?: Prisma.SortOrder
   titulosMinisteriais?: Prisma.SortOrder
+  fotoPerfilPath?: Prisma.SortOrder
+  fotoPerfilMimeType?: Prisma.SortOrder
+  fotoPerfilAtualizadaEm?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campusId?: Prisma.SortOrder
@@ -777,6 +864,10 @@ export type PersonMaxOrderByAggregateInput = {
   dataDecisao?: Prisma.SortOrder
   dataBatismo?: Prisma.SortOrder
   dataMembresia?: Prisma.SortOrder
+  dataMembresiaSemDia?: Prisma.SortOrder
+  fotoPerfilPath?: Prisma.SortOrder
+  fotoPerfilMimeType?: Prisma.SortOrder
+  fotoPerfilAtualizadaEm?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campusId?: Prisma.SortOrder
@@ -795,6 +886,10 @@ export type PersonMinOrderByAggregateInput = {
   dataDecisao?: Prisma.SortOrder
   dataBatismo?: Prisma.SortOrder
   dataMembresia?: Prisma.SortOrder
+  dataMembresiaSemDia?: Prisma.SortOrder
+  fotoPerfilPath?: Prisma.SortOrder
+  fotoPerfilMimeType?: Prisma.SortOrder
+  fotoPerfilAtualizadaEm?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   campusId?: Prisma.SortOrder
@@ -1018,6 +1113,20 @@ export type PersonUpdateOneRequiredWithoutServiceSchedulesNestedInput = {
   upsert?: Prisma.PersonUpsertWithoutServiceSchedulesInput
   connect?: Prisma.PersonWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutServiceSchedulesInput, Prisma.PersonUpdateWithoutServiceSchedulesInput>, Prisma.PersonUncheckedUpdateWithoutServiceSchedulesInput>
+}
+
+export type PersonCreateNestedOneWithoutServiceScheduleUnavailabilitiesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleUnavailabilitiesInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleUnavailabilitiesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceScheduleUnavailabilitiesInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutServiceScheduleUnavailabilitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleUnavailabilitiesInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleUnavailabilitiesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutServiceScheduleUnavailabilitiesInput
+  upsert?: Prisma.PersonUpsertWithoutServiceScheduleUnavailabilitiesInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutServiceScheduleUnavailabilitiesInput, Prisma.PersonUpdateWithoutServiceScheduleUnavailabilitiesInput>, Prisma.PersonUncheckedUpdateWithoutServiceScheduleUnavailabilitiesInput>
 }
 
 export type PersonCreateNestedOneWithoutServiceScheduleSwapRequestsMadeInput = {
@@ -1406,7 +1515,11 @@ export type PersonCreateWithoutCampusInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPersonInput
@@ -1424,6 +1537,7 @@ export type PersonCreateWithoutCampusInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -1458,7 +1572,11 @@ export type PersonUncheckedCreateWithoutCampusInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organizationId?: string | null
@@ -1476,6 +1594,7 @@ export type PersonUncheckedCreateWithoutCampusInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1539,7 +1658,11 @@ export type PersonScalarWhereInput = {
   dataDecisao?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataBatismo?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   dataMembresia?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFilter<"Person"> | boolean
   titulosMinisteriais?: Prisma.StringNullableListFilter<"Person">
+  fotoPerfilPath?: Prisma.StringNullableFilter<"Person"> | string | null
+  fotoPerfilMimeType?: Prisma.StringNullableFilter<"Person"> | string | null
+  fotoPerfilAtualizadaEm?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   campusId?: Prisma.StringFilter<"Person"> | string
@@ -1558,7 +1681,11 @@ export type PersonCreateWithoutCampusMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -1577,6 +1704,7 @@ export type PersonCreateWithoutCampusMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -1610,7 +1738,11 @@ export type PersonUncheckedCreateWithoutCampusMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -1629,6 +1761,7 @@ export type PersonUncheckedCreateWithoutCampusMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1678,7 +1811,11 @@ export type PersonUpdateWithoutCampusMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -1697,6 +1834,7 @@ export type PersonUpdateWithoutCampusMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1730,7 +1868,11 @@ export type PersonUncheckedUpdateWithoutCampusMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1749,6 +1891,7 @@ export type PersonUncheckedUpdateWithoutCampusMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -1782,7 +1925,11 @@ export type PersonCreateWithoutUserInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -1800,6 +1947,7 @@ export type PersonCreateWithoutUserInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -1834,7 +1982,11 @@ export type PersonUncheckedCreateWithoutUserInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -1852,6 +2004,7 @@ export type PersonUncheckedCreateWithoutUserInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -1902,7 +2055,11 @@ export type PersonUpdateWithoutUserInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -1920,6 +2077,7 @@ export type PersonUpdateWithoutUserInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -1954,7 +2112,11 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1972,6 +2134,7 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -2006,7 +2169,11 @@ export type PersonCreateWithoutOrganizationInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2024,6 +2191,7 @@ export type PersonCreateWithoutOrganizationInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -2058,7 +2226,11 @@ export type PersonUncheckedCreateWithoutOrganizationInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2076,6 +2248,7 @@ export type PersonUncheckedCreateWithoutOrganizationInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -2136,7 +2309,11 @@ export type PersonCreateWithoutCellSupportRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2154,6 +2331,7 @@ export type PersonCreateWithoutCellSupportRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -2188,7 +2366,11 @@ export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2206,6 +2388,7 @@ export type PersonUncheckedCreateWithoutCellSupportRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -2256,7 +2439,11 @@ export type PersonUpdateWithoutCellSupportRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -2274,6 +2461,7 @@ export type PersonUpdateWithoutCellSupportRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -2308,7 +2496,11 @@ export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2326,6 +2518,7 @@ export type PersonUncheckedUpdateWithoutCellSupportRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -2360,7 +2553,11 @@ export type PersonCreateWithoutJourneyEventsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2378,6 +2575,7 @@ export type PersonCreateWithoutJourneyEventsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -2412,7 +2610,11 @@ export type PersonUncheckedCreateWithoutJourneyEventsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2430,6 +2632,7 @@ export type PersonUncheckedCreateWithoutJourneyEventsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -2480,7 +2683,11 @@ export type PersonUpdateWithoutJourneyEventsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -2498,6 +2705,7 @@ export type PersonUpdateWithoutJourneyEventsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -2532,7 +2740,11 @@ export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2550,6 +2762,7 @@ export type PersonUncheckedUpdateWithoutJourneyEventsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -2584,7 +2797,11 @@ export type PersonCreateWithoutFamilyMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2602,6 +2819,7 @@ export type PersonCreateWithoutFamilyMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -2636,7 +2854,11 @@ export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2654,6 +2876,7 @@ export type PersonUncheckedCreateWithoutFamilyMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -2704,7 +2927,11 @@ export type PersonUpdateWithoutFamilyMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -2722,6 +2949,7 @@ export type PersonUpdateWithoutFamilyMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -2756,7 +2984,11 @@ export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2774,6 +3006,7 @@ export type PersonUncheckedUpdateWithoutFamilyMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -2808,7 +3041,11 @@ export type PersonCreateWithoutServiceMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -2826,6 +3063,7 @@ export type PersonCreateWithoutServiceMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -2860,7 +3098,11 @@ export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -2878,6 +3120,7 @@ export type PersonUncheckedCreateWithoutServiceMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -2928,7 +3171,11 @@ export type PersonUpdateWithoutServiceMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -2946,6 +3193,7 @@ export type PersonUpdateWithoutServiceMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -2980,7 +3228,11 @@ export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2998,6 +3250,7 @@ export type PersonUncheckedUpdateWithoutServiceMembershipsInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -3032,7 +3285,11 @@ export type PersonCreateWithoutServiceOperationalRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3051,6 +3308,7 @@ export type PersonCreateWithoutServiceOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
@@ -3084,7 +3342,11 @@ export type PersonUncheckedCreateWithoutServiceOperationalRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3103,6 +3365,7 @@ export type PersonUncheckedCreateWithoutServiceOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -3152,7 +3415,11 @@ export type PersonUpdateWithoutServiceOperationalRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -3171,6 +3438,7 @@ export type PersonUpdateWithoutServiceOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
@@ -3204,7 +3472,11 @@ export type PersonUncheckedUpdateWithoutServiceOperationalRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3223,6 +3495,7 @@ export type PersonUncheckedUpdateWithoutServiceOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -3256,7 +3529,11 @@ export type PersonCreateWithoutServiceSchedulesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3274,6 +3551,7 @@ export type PersonCreateWithoutServiceSchedulesInput = {
   journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -3308,7 +3586,11 @@ export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3326,6 +3608,7 @@ export type PersonUncheckedCreateWithoutServiceSchedulesInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -3376,7 +3659,11 @@ export type PersonUpdateWithoutServiceSchedulesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -3394,6 +3681,7 @@ export type PersonUpdateWithoutServiceSchedulesInput = {
   journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -3428,7 +3716,11 @@ export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3446,6 +3738,251 @@ export type PersonUncheckedUpdateWithoutServiceSchedulesInput = {
   journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutServiceScheduleUnavailabilitiesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
+  user?: Prisma.UserCreateNestedOneWithoutPersonInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPersonsInput
+  cellMemberships?: Prisma.CellMembershipCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutServiceScheduleUnavailabilitiesInput = {
+  id?: string
+  nome: string
+  sexo?: string | null
+  dataNascimento?: Date | string | null
+  cpf?: string | null
+  telefone?: string | null
+  email?: string | null
+  ativo?: boolean
+  dataDecisao?: Date | string | null
+  dataBatismo?: Date | string | null
+  dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
+  titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  campusId: string
+  organizationId?: string | null
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutPersonInput
+  cellMemberships?: Prisma.CellMembershipUncheckedCreateNestedManyWithoutPersonInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedCreateNestedManyWithoutPersonInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedCreateNestedManyWithoutPersonInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedCreateNestedManyWithoutPersonInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedCreateNestedManyWithoutPersonInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedCreateNestedManyWithoutPersonInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutSubjectPersonInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedCreateNestedOneWithoutPersonInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedCreateNestedManyWithoutPersonInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  notificationRecipients?: Prisma.NotificationRecipientUncheckedCreateNestedManyWithoutPersonInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutChildInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  kidsCheckIns?: Prisma.KidsCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUncheckedCreateNestedManyWithoutChildInput
+  kidsCareProfile?: Prisma.KidsCareProfileUncheckedCreateNestedOneWithoutChildInput
+  kidsIdentity?: Prisma.KidsIdentityUncheckedCreateNestedOneWithoutChildInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUncheckedCreateNestedManyWithoutResponsiblePersonInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutSubmittedByPersonInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUncheckedCreateNestedManyWithoutApprovedByPersonInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUncheckedCreateNestedManyWithoutPersonInput
+  campusMemberships?: Prisma.PersonCampusMembershipUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutServiceScheduleUnavailabilitiesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleUnavailabilitiesInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleUnavailabilitiesInput>
+}
+
+export type PersonUpsertWithoutServiceScheduleUnavailabilitiesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutServiceScheduleUnavailabilitiesInput, Prisma.PersonUncheckedUpdateWithoutServiceScheduleUnavailabilitiesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutServiceScheduleUnavailabilitiesInput, Prisma.PersonUncheckedCreateWithoutServiceScheduleUnavailabilitiesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutServiceScheduleUnavailabilitiesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutServiceScheduleUnavailabilitiesInput, Prisma.PersonUncheckedUpdateWithoutServiceScheduleUnavailabilitiesInput>
+}
+
+export type PersonUpdateWithoutServiceScheduleUnavailabilitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPersonNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPersonsNestedInput
+  cellMemberships?: Prisma.CellMembershipUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
+  serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
+  serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
+  notificationRecipients?: Prisma.NotificationRecipientUpdateManyWithoutPersonNestedInput
+  kidsEnrollments?: Prisma.KidsEnrollmentUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsChild?: Prisma.KidsAuthorizedPickupUpdateManyWithoutChildNestedInput
+  kidsPickupAuthorizationsAsResponsible?: Prisma.KidsAuthorizedPickupUpdateManyWithoutResponsiblePersonNestedInput
+  kidsCheckIns?: Prisma.KidsCheckInUpdateManyWithoutChildNestedInput
+  kidsPreCheckIns?: Prisma.KidsPreCheckInUpdateManyWithoutChildNestedInput
+  kidsCareProfile?: Prisma.KidsCareProfileUpdateOneWithoutChildNestedInput
+  kidsIdentity?: Prisma.KidsIdentityUpdateOneWithoutChildNestedInput
+  kidsOperationalRoles?: Prisma.KidsOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
+  kidsResourceRequests?: Prisma.KidsResourceRequestUpdateManyWithoutRequestedByNestedInput
+  worshipOrderItemsResponsible?: Prisma.WorshipOrderItemUpdateManyWithoutResponsiblePersonNestedInput
+  worshipDemandsResponsible?: Prisma.WorshipServiceDemandUpdateManyWithoutResponsiblePersonNestedInput
+  worshipRepertoiresSubmitted?: Prisma.WorshipRepertoireUpdateManyWithoutSubmittedByPersonNestedInput
+  worshipRepertoiresApproved?: Prisma.WorshipRepertoireUpdateManyWithoutApprovedByPersonNestedInput
+  serviceAreaApplications?: Prisma.ServiceAreaApplicationUpdateManyWithoutPersonNestedInput
+  campusMemberships?: Prisma.PersonCampusMembershipUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutServiceScheduleUnavailabilitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nome?: Prisma.StringFieldUpdateOperationsInput | string
+  sexo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataNascimento?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cpf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ativo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campusId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  user?: Prisma.UserUncheckedUpdateOneWithoutPersonNestedInput
+  cellMemberships?: Prisma.CellMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellLeaderships?: Prisma.CellLeadershipUncheckedUpdateManyWithoutPersonNestedInput
+  cellSupportRoles?: Prisma.CellSupportRoleUncheckedUpdateManyWithoutPersonNestedInput
+  cellNetworkSupervisions?: Prisma.CellNetworkSupervisionUncheckedUpdateManyWithoutPersonNestedInput
+  cellCampusCoordinations?: Prisma.CellCampusCoordinationUncheckedUpdateManyWithoutPersonNestedInput
+  meetingAttendances?: Prisma.CellMeetingAttendanceUncheckedUpdateManyWithoutPersonNestedInput
+  pastoralCaresAsSubject?: Prisma.PastoralCareUncheckedUpdateManyWithoutSubjectPersonNestedInput
+  pastoralCaresAsResponsible?: Prisma.PastoralCareUncheckedUpdateManyWithoutResponsiblePersonNestedInput
+  meetingVisitor?: Prisma.CellMeetingVisitorUncheckedUpdateOneWithoutPersonNestedInput
+  journeyEvents?: Prisma.PersonJourneyEventUncheckedUpdateManyWithoutPersonNestedInput
+  familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
+  serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -3480,7 +4017,11 @@ export type PersonCreateWithoutServiceScheduleSwapRequestsMadeInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3499,6 +4040,7 @@ export type PersonCreateWithoutServiceScheduleSwapRequestsMadeInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
@@ -3532,7 +4074,11 @@ export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3551,6 +4097,7 @@ export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsMadeInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -3589,7 +4136,11 @@ export type PersonCreateWithoutServiceScheduleSwapRequestsReceivedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3608,6 +4159,7 @@ export type PersonCreateWithoutServiceScheduleSwapRequestsReceivedInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventCreateNestedManyWithoutResponsiblePersonInput
@@ -3641,7 +4193,11 @@ export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3660,6 +4216,7 @@ export type PersonUncheckedCreateWithoutServiceScheduleSwapRequestsReceivedInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
   eventsResponsible?: Prisma.EventUncheckedCreateNestedManyWithoutResponsiblePersonInput
@@ -3709,7 +4266,11 @@ export type PersonUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -3728,6 +4289,7 @@ export type PersonUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
@@ -3761,7 +4323,11 @@ export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3780,6 +4346,7 @@ export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsMadeInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -3824,7 +4391,11 @@ export type PersonUpdateWithoutServiceScheduleSwapRequestsReceivedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -3843,6 +4414,7 @@ export type PersonUpdateWithoutServiceScheduleSwapRequestsReceivedInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUpdateManyWithoutResponsiblePersonNestedInput
@@ -3876,7 +4448,11 @@ export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsReceivedInput
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -3895,6 +4471,7 @@ export type PersonUncheckedUpdateWithoutServiceScheduleSwapRequestsReceivedInput
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
   eventsResponsible?: Prisma.EventUncheckedUpdateManyWithoutResponsiblePersonNestedInput
@@ -3928,7 +4505,11 @@ export type PersonCreateWithoutServiceAreaApplicationsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -3947,6 +4528,7 @@ export type PersonCreateWithoutServiceAreaApplicationsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -3980,7 +4562,11 @@ export type PersonUncheckedCreateWithoutServiceAreaApplicationsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -3999,6 +4585,7 @@ export type PersonUncheckedCreateWithoutServiceAreaApplicationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -4048,7 +4635,11 @@ export type PersonUpdateWithoutServiceAreaApplicationsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -4067,6 +4658,7 @@ export type PersonUpdateWithoutServiceAreaApplicationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -4100,7 +4692,11 @@ export type PersonUncheckedUpdateWithoutServiceAreaApplicationsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4119,6 +4715,7 @@ export type PersonUncheckedUpdateWithoutServiceAreaApplicationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -4152,7 +4749,11 @@ export type PersonCreateWithoutEventsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4171,6 +4772,7 @@ export type PersonCreateWithoutEventsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -4204,7 +4806,11 @@ export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -4223,6 +4829,7 @@ export type PersonUncheckedCreateWithoutEventsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -4272,7 +4879,11 @@ export type PersonUpdateWithoutEventsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -4291,6 +4902,7 @@ export type PersonUpdateWithoutEventsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -4324,7 +4936,11 @@ export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4343,6 +4959,7 @@ export type PersonUncheckedUpdateWithoutEventsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -4376,7 +4993,11 @@ export type PersonCreateWithoutWorshipOrderItemsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4395,6 +5016,7 @@ export type PersonCreateWithoutWorshipOrderItemsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -4428,7 +5050,11 @@ export type PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -4447,6 +5073,7 @@ export type PersonUncheckedCreateWithoutWorshipOrderItemsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -4496,7 +5123,11 @@ export type PersonUpdateWithoutWorshipOrderItemsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -4515,6 +5146,7 @@ export type PersonUpdateWithoutWorshipOrderItemsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -4548,7 +5180,11 @@ export type PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4567,6 +5203,7 @@ export type PersonUncheckedUpdateWithoutWorshipOrderItemsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -4600,7 +5237,11 @@ export type PersonCreateWithoutWorshipDemandsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4619,6 +5260,7 @@ export type PersonCreateWithoutWorshipDemandsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -4652,7 +5294,11 @@ export type PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -4671,6 +5317,7 @@ export type PersonUncheckedCreateWithoutWorshipDemandsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -4720,7 +5367,11 @@ export type PersonUpdateWithoutWorshipDemandsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -4739,6 +5390,7 @@ export type PersonUpdateWithoutWorshipDemandsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -4772,7 +5424,11 @@ export type PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4791,6 +5447,7 @@ export type PersonUncheckedUpdateWithoutWorshipDemandsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -4824,7 +5481,11 @@ export type PersonCreateWithoutWorshipRepertoiresSubmittedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4843,6 +5504,7 @@ export type PersonCreateWithoutWorshipRepertoiresSubmittedInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -4876,7 +5538,11 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresSubmittedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -4895,6 +5561,7 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresSubmittedInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -4933,7 +5600,11 @@ export type PersonCreateWithoutWorshipRepertoiresApprovedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -4952,6 +5623,7 @@ export type PersonCreateWithoutWorshipRepertoiresApprovedInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -4985,7 +5657,11 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresApprovedInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -5004,6 +5680,7 @@ export type PersonUncheckedCreateWithoutWorshipRepertoiresApprovedInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -5053,7 +5730,11 @@ export type PersonUpdateWithoutWorshipRepertoiresSubmittedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5072,6 +5753,7 @@ export type PersonUpdateWithoutWorshipRepertoiresSubmittedInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -5105,7 +5787,11 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresSubmittedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5124,6 +5810,7 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresSubmittedInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -5168,7 +5855,11 @@ export type PersonUpdateWithoutWorshipRepertoiresApprovedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5187,6 +5878,7 @@ export type PersonUpdateWithoutWorshipRepertoiresApprovedInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -5220,7 +5912,11 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresApprovedInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5239,6 +5935,7 @@ export type PersonUncheckedUpdateWithoutWorshipRepertoiresApprovedInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -5272,7 +5969,11 @@ export type PersonCreateWithoutNotificationRecipientsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -5291,6 +5992,7 @@ export type PersonCreateWithoutNotificationRecipientsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -5324,7 +6026,11 @@ export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -5343,6 +6049,7 @@ export type PersonUncheckedCreateWithoutNotificationRecipientsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -5392,7 +6099,11 @@ export type PersonUpdateWithoutNotificationRecipientsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5411,6 +6122,7 @@ export type PersonUpdateWithoutNotificationRecipientsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -5444,7 +6156,11 @@ export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5463,6 +6179,7 @@ export type PersonUncheckedUpdateWithoutNotificationRecipientsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -5496,7 +6213,11 @@ export type PersonCreateWithoutKidsEnrollmentsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -5515,6 +6236,7 @@ export type PersonCreateWithoutKidsEnrollmentsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -5548,7 +6270,11 @@ export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -5567,6 +6293,7 @@ export type PersonUncheckedCreateWithoutKidsEnrollmentsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -5616,7 +6343,11 @@ export type PersonUpdateWithoutKidsEnrollmentsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5635,6 +6366,7 @@ export type PersonUpdateWithoutKidsEnrollmentsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -5668,7 +6400,11 @@ export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5687,6 +6423,7 @@ export type PersonUncheckedUpdateWithoutKidsEnrollmentsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -5720,7 +6457,11 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -5739,6 +6480,7 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -5772,7 +6514,11 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -5791,6 +6537,7 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsChildInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -5829,7 +6576,11 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -5848,6 +6599,7 @@ export type PersonCreateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -5881,7 +6633,11 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInp
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -5900,6 +6656,7 @@ export type PersonUncheckedCreateWithoutKidsPickupAuthorizationsAsResponsibleInp
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -5949,7 +6706,11 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -5968,6 +6729,7 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -6001,7 +6763,11 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6020,6 +6786,7 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsChildInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -6064,7 +6831,11 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -6083,6 +6854,7 @@ export type PersonUpdateWithoutKidsPickupAuthorizationsAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -6116,7 +6888,11 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInp
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6135,6 +6911,7 @@ export type PersonUncheckedUpdateWithoutKidsPickupAuthorizationsAsResponsibleInp
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -6168,7 +6945,11 @@ export type PersonCreateWithoutKidsCheckInsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -6187,6 +6968,7 @@ export type PersonCreateWithoutKidsCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -6220,7 +7002,11 @@ export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -6239,6 +7025,7 @@ export type PersonUncheckedCreateWithoutKidsCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -6288,7 +7075,11 @@ export type PersonUpdateWithoutKidsCheckInsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -6307,6 +7098,7 @@ export type PersonUpdateWithoutKidsCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -6340,7 +7132,11 @@ export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6359,6 +7155,7 @@ export type PersonUncheckedUpdateWithoutKidsCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -6392,7 +7189,11 @@ export type PersonCreateWithoutKidsPreCheckInsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -6411,6 +7212,7 @@ export type PersonCreateWithoutKidsPreCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -6444,7 +7246,11 @@ export type PersonUncheckedCreateWithoutKidsPreCheckInsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -6463,6 +7269,7 @@ export type PersonUncheckedCreateWithoutKidsPreCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -6512,7 +7319,11 @@ export type PersonUpdateWithoutKidsPreCheckInsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -6531,6 +7342,7 @@ export type PersonUpdateWithoutKidsPreCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -6564,7 +7376,11 @@ export type PersonUncheckedUpdateWithoutKidsPreCheckInsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6583,6 +7399,7 @@ export type PersonUncheckedUpdateWithoutKidsPreCheckInsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -6616,7 +7433,11 @@ export type PersonCreateWithoutKidsIdentityInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -6635,6 +7456,7 @@ export type PersonCreateWithoutKidsIdentityInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -6668,7 +7490,11 @@ export type PersonUncheckedCreateWithoutKidsIdentityInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -6687,6 +7513,7 @@ export type PersonUncheckedCreateWithoutKidsIdentityInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -6736,7 +7563,11 @@ export type PersonUpdateWithoutKidsIdentityInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -6755,6 +7586,7 @@ export type PersonUpdateWithoutKidsIdentityInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -6788,7 +7620,11 @@ export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6807,6 +7643,7 @@ export type PersonUncheckedUpdateWithoutKidsIdentityInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -6840,7 +7677,11 @@ export type PersonCreateWithoutKidsOperationalRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -6859,6 +7700,7 @@ export type PersonCreateWithoutKidsOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -6892,7 +7734,11 @@ export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -6911,6 +7757,7 @@ export type PersonUncheckedCreateWithoutKidsOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -6960,7 +7807,11 @@ export type PersonUpdateWithoutKidsOperationalRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -6979,6 +7830,7 @@ export type PersonUpdateWithoutKidsOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -7012,7 +7864,11 @@ export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7031,6 +7887,7 @@ export type PersonUncheckedUpdateWithoutKidsOperationalRolesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -7064,7 +7921,11 @@ export type PersonCreateWithoutKidsResourceRequestsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -7083,6 +7944,7 @@ export type PersonCreateWithoutKidsResourceRequestsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -7116,7 +7978,11 @@ export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7135,6 +8001,7 @@ export type PersonUncheckedCreateWithoutKidsResourceRequestsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -7184,7 +8051,11 @@ export type PersonUpdateWithoutKidsResourceRequestsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -7203,6 +8074,7 @@ export type PersonUpdateWithoutKidsResourceRequestsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -7236,7 +8108,11 @@ export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7255,6 +8131,7 @@ export type PersonUncheckedUpdateWithoutKidsResourceRequestsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -7288,7 +8165,11 @@ export type PersonCreateWithoutKidsCareProfileInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -7307,6 +8188,7 @@ export type PersonCreateWithoutKidsCareProfileInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -7340,7 +8222,11 @@ export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7359,6 +8245,7 @@ export type PersonUncheckedCreateWithoutKidsCareProfileInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -7408,7 +8295,11 @@ export type PersonUpdateWithoutKidsCareProfileInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -7427,6 +8318,7 @@ export type PersonUpdateWithoutKidsCareProfileInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -7460,7 +8352,11 @@ export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7479,6 +8375,7 @@ export type PersonUncheckedUpdateWithoutKidsCareProfileInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -7512,7 +8409,11 @@ export type PersonCreateWithoutMeetingVisitorInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -7530,6 +8431,7 @@ export type PersonCreateWithoutMeetingVisitorInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -7564,7 +8466,11 @@ export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7582,6 +8488,7 @@ export type PersonUncheckedCreateWithoutMeetingVisitorInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -7632,7 +8539,11 @@ export type PersonUpdateWithoutMeetingVisitorInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -7650,6 +8561,7 @@ export type PersonUpdateWithoutMeetingVisitorInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -7684,7 +8596,11 @@ export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7702,6 +8618,7 @@ export type PersonUncheckedUpdateWithoutMeetingVisitorInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -7736,7 +8653,11 @@ export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -7754,6 +8675,7 @@ export type PersonCreateWithoutPastoralCaresAsSubjectInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -7788,7 +8710,11 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7806,6 +8732,7 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsSubjectInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -7845,7 +8772,11 @@ export type PersonCreateWithoutPastoralCaresAsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -7863,6 +8794,7 @@ export type PersonCreateWithoutPastoralCaresAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -7897,7 +8829,11 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -7915,6 +8851,7 @@ export type PersonUncheckedCreateWithoutPastoralCaresAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -7965,7 +8902,11 @@ export type PersonUpdateWithoutPastoralCaresAsSubjectInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -7983,6 +8924,7 @@ export type PersonUpdateWithoutPastoralCaresAsSubjectInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -8017,7 +8959,11 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8035,6 +8981,7 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsSubjectInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -8080,7 +9027,11 @@ export type PersonUpdateWithoutPastoralCaresAsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -8098,6 +9049,7 @@ export type PersonUpdateWithoutPastoralCaresAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -8132,7 +9084,11 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8150,6 +9106,7 @@ export type PersonUncheckedUpdateWithoutPastoralCaresAsResponsibleInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -8184,7 +9141,11 @@ export type PersonCreateWithoutMeetingAttendancesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -8202,6 +9163,7 @@ export type PersonCreateWithoutMeetingAttendancesInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -8236,7 +9198,11 @@ export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -8254,6 +9220,7 @@ export type PersonUncheckedCreateWithoutMeetingAttendancesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -8304,7 +9271,11 @@ export type PersonUpdateWithoutMeetingAttendancesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -8322,6 +9293,7 @@ export type PersonUpdateWithoutMeetingAttendancesInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -8356,7 +9328,11 @@ export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8374,6 +9350,7 @@ export type PersonUncheckedUpdateWithoutMeetingAttendancesInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -8408,7 +9385,11 @@ export type PersonCreateWithoutCellNetworkSupervisionsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -8426,6 +9407,7 @@ export type PersonCreateWithoutCellNetworkSupervisionsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -8460,7 +9442,11 @@ export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -8478,6 +9464,7 @@ export type PersonUncheckedCreateWithoutCellNetworkSupervisionsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -8528,7 +9515,11 @@ export type PersonUpdateWithoutCellNetworkSupervisionsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -8546,6 +9537,7 @@ export type PersonUpdateWithoutCellNetworkSupervisionsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -8580,7 +9572,11 @@ export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8598,6 +9594,7 @@ export type PersonUncheckedUpdateWithoutCellNetworkSupervisionsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -8632,7 +9629,11 @@ export type PersonCreateWithoutCellCampusCoordinationsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -8650,6 +9651,7 @@ export type PersonCreateWithoutCellCampusCoordinationsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -8684,7 +9686,11 @@ export type PersonUncheckedCreateWithoutCellCampusCoordinationsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -8702,6 +9708,7 @@ export type PersonUncheckedCreateWithoutCellCampusCoordinationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -8752,7 +9759,11 @@ export type PersonUpdateWithoutCellCampusCoordinationsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -8770,6 +9781,7 @@ export type PersonUpdateWithoutCellCampusCoordinationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -8804,7 +9816,11 @@ export type PersonUncheckedUpdateWithoutCellCampusCoordinationsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8822,6 +9838,7 @@ export type PersonUncheckedUpdateWithoutCellCampusCoordinationsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -8856,7 +9873,11 @@ export type PersonCreateWithoutCellMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -8874,6 +9895,7 @@ export type PersonCreateWithoutCellMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -8908,7 +9930,11 @@ export type PersonUncheckedCreateWithoutCellMembershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -8926,6 +9952,7 @@ export type PersonUncheckedCreateWithoutCellMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -8976,7 +10003,11 @@ export type PersonUpdateWithoutCellMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -8994,6 +10025,7 @@ export type PersonUpdateWithoutCellMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -9028,7 +10060,11 @@ export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -9046,6 +10082,7 @@ export type PersonUncheckedUpdateWithoutCellMembershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -9080,7 +10117,11 @@ export type PersonCreateWithoutCellLeadershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campus: Prisma.CampusCreateNestedOneWithoutPersonsInput
@@ -9098,6 +10139,7 @@ export type PersonCreateWithoutCellLeadershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentCreateNestedManyWithoutPersonInput
@@ -9132,7 +10174,11 @@ export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -9150,6 +10196,7 @@ export type PersonUncheckedCreateWithoutCellLeadershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedCreateNestedManyWithoutPersonInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedCreateNestedManyWithoutPersonInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedCreateNestedManyWithoutPersonInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutRequesterPersonInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedCreateNestedManyWithoutReplacementPersonInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedCreateNestedManyWithoutPersonInput
@@ -9200,7 +10247,11 @@ export type PersonUpdateWithoutCellLeadershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -9218,6 +10269,7 @@ export type PersonUpdateWithoutCellLeadershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -9252,7 +10304,11 @@ export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -9270,6 +10326,7 @@ export type PersonUncheckedUpdateWithoutCellLeadershipsInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -9304,7 +10361,11 @@ export type PersonCreateManyCampusInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organizationId?: string | null
@@ -9322,7 +10383,11 @@ export type PersonUpdateWithoutCampusInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPersonNestedInput
@@ -9340,6 +10405,7 @@ export type PersonUpdateWithoutCampusInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -9374,7 +10440,11 @@ export type PersonUncheckedUpdateWithoutCampusInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9392,6 +10462,7 @@ export type PersonUncheckedUpdateWithoutCampusInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -9426,7 +10497,11 @@ export type PersonUncheckedUpdateManyWithoutCampusInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9444,7 +10519,11 @@ export type PersonCreateManyOrganizationInput = {
   dataDecisao?: Date | string | null
   dataBatismo?: Date | string | null
   dataMembresia?: Date | string | null
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: Prisma.PersonCreatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: string | null
+  fotoPerfilMimeType?: string | null
+  fotoPerfilAtualizadaEm?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   campusId: string
@@ -9462,7 +10541,11 @@ export type PersonUpdateWithoutOrganizationInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campus?: Prisma.CampusUpdateOneRequiredWithoutPersonsNestedInput
@@ -9480,6 +10563,7 @@ export type PersonUpdateWithoutOrganizationInput = {
   familyMemberships?: Prisma.FamilyMembershipUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUpdateManyWithoutPersonNestedInput
@@ -9514,7 +10598,11 @@ export type PersonUncheckedUpdateWithoutOrganizationInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -9532,6 +10620,7 @@ export type PersonUncheckedUpdateWithoutOrganizationInput = {
   familyMemberships?: Prisma.FamilyMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceMemberships?: Prisma.ServiceMembershipUncheckedUpdateManyWithoutPersonNestedInput
   serviceSchedules?: Prisma.ServiceScheduleUncheckedUpdateManyWithoutPersonNestedInput
+  serviceScheduleUnavailabilities?: Prisma.ServiceScheduleUnavailabilityUncheckedUpdateManyWithoutPersonNestedInput
   serviceScheduleSwapRequestsMade?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutRequesterPersonNestedInput
   serviceScheduleSwapRequestsReceived?: Prisma.ServiceScheduleSwapRequestUncheckedUpdateManyWithoutReplacementPersonNestedInput
   serviceOperationalRoles?: Prisma.ServiceOperationalRoleAssignmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -9566,7 +10655,11 @@ export type PersonUncheckedUpdateManyWithoutOrganizationInput = {
   dataDecisao?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataBatismo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dataMembresia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dataMembresiaSemDia?: Prisma.BoolFieldUpdateOperationsInput | boolean
   titulosMinisteriais?: Prisma.PersonUpdatetitulosMinisteriaisInput | string[]
+  fotoPerfilPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fotoPerfilAtualizadaEm?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   campusId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -9590,6 +10683,7 @@ export type PersonCountOutputType = {
   familyMemberships: number
   serviceMemberships: number
   serviceSchedules: number
+  serviceScheduleUnavailabilities: number
   serviceScheduleSwapRequestsMade: number
   serviceScheduleSwapRequestsReceived: number
   serviceOperationalRoles: number
@@ -9623,6 +10717,7 @@ export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   familyMemberships?: boolean | PersonCountOutputTypeCountFamilyMembershipsArgs
   serviceMemberships?: boolean | PersonCountOutputTypeCountServiceMembershipsArgs
   serviceSchedules?: boolean | PersonCountOutputTypeCountServiceSchedulesArgs
+  serviceScheduleUnavailabilities?: boolean | PersonCountOutputTypeCountServiceScheduleUnavailabilitiesArgs
   serviceScheduleSwapRequestsMade?: boolean | PersonCountOutputTypeCountServiceScheduleSwapRequestsMadeArgs
   serviceScheduleSwapRequestsReceived?: boolean | PersonCountOutputTypeCountServiceScheduleSwapRequestsReceivedArgs
   serviceOperationalRoles?: boolean | PersonCountOutputTypeCountServiceOperationalRolesArgs
@@ -9735,6 +10830,13 @@ export type PersonCountOutputTypeCountServiceMembershipsArgs<ExtArgs extends run
  */
 export type PersonCountOutputTypeCountServiceSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ServiceScheduleWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountServiceScheduleUnavailabilitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceScheduleUnavailabilityWhereInput
 }
 
 /**
@@ -9876,7 +10978,11 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   dataDecisao?: boolean
   dataBatismo?: boolean
   dataMembresia?: boolean
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: boolean
+  fotoPerfilPath?: boolean
+  fotoPerfilMimeType?: boolean
+  fotoPerfilAtualizadaEm?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campusId?: boolean
@@ -9897,6 +11003,7 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   familyMemberships?: boolean | Prisma.Person$familyMembershipsArgs<ExtArgs>
   serviceMemberships?: boolean | Prisma.Person$serviceMembershipsArgs<ExtArgs>
   serviceSchedules?: boolean | Prisma.Person$serviceSchedulesArgs<ExtArgs>
+  serviceScheduleUnavailabilities?: boolean | Prisma.Person$serviceScheduleUnavailabilitiesArgs<ExtArgs>
   serviceScheduleSwapRequestsMade?: boolean | Prisma.Person$serviceScheduleSwapRequestsMadeArgs<ExtArgs>
   serviceScheduleSwapRequestsReceived?: boolean | Prisma.Person$serviceScheduleSwapRequestsReceivedArgs<ExtArgs>
   serviceOperationalRoles?: boolean | Prisma.Person$serviceOperationalRolesArgs<ExtArgs>
@@ -9932,7 +11039,11 @@ export type PersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   dataDecisao?: boolean
   dataBatismo?: boolean
   dataMembresia?: boolean
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: boolean
+  fotoPerfilPath?: boolean
+  fotoPerfilMimeType?: boolean
+  fotoPerfilAtualizadaEm?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campusId?: boolean
@@ -9953,7 +11064,11 @@ export type PersonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   dataDecisao?: boolean
   dataBatismo?: boolean
   dataMembresia?: boolean
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: boolean
+  fotoPerfilPath?: boolean
+  fotoPerfilMimeType?: boolean
+  fotoPerfilAtualizadaEm?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campusId?: boolean
@@ -9974,14 +11089,18 @@ export type PersonSelectScalar = {
   dataDecisao?: boolean
   dataBatismo?: boolean
   dataMembresia?: boolean
+  dataMembresiaSemDia?: boolean
   titulosMinisteriais?: boolean
+  fotoPerfilPath?: boolean
+  fotoPerfilMimeType?: boolean
+  fotoPerfilAtualizadaEm?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   campusId?: boolean
   organizationId?: boolean
 }
 
-export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "sexo" | "dataNascimento" | "cpf" | "telefone" | "email" | "ativo" | "dataDecisao" | "dataBatismo" | "dataMembresia" | "titulosMinisteriais" | "createdAt" | "updatedAt" | "campusId" | "organizationId", ExtArgs["result"]["person"]>
+export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nome" | "sexo" | "dataNascimento" | "cpf" | "telefone" | "email" | "ativo" | "dataDecisao" | "dataBatismo" | "dataMembresia" | "dataMembresiaSemDia" | "titulosMinisteriais" | "fotoPerfilPath" | "fotoPerfilMimeType" | "fotoPerfilAtualizadaEm" | "createdAt" | "updatedAt" | "campusId" | "organizationId", ExtArgs["result"]["person"]>
 export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   campus?: boolean | Prisma.CampusDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Person$userArgs<ExtArgs>
@@ -9999,6 +11118,7 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   familyMemberships?: boolean | Prisma.Person$familyMembershipsArgs<ExtArgs>
   serviceMemberships?: boolean | Prisma.Person$serviceMembershipsArgs<ExtArgs>
   serviceSchedules?: boolean | Prisma.Person$serviceSchedulesArgs<ExtArgs>
+  serviceScheduleUnavailabilities?: boolean | Prisma.Person$serviceScheduleUnavailabilitiesArgs<ExtArgs>
   serviceScheduleSwapRequestsMade?: boolean | Prisma.Person$serviceScheduleSwapRequestsMadeArgs<ExtArgs>
   serviceScheduleSwapRequestsReceived?: boolean | Prisma.Person$serviceScheduleSwapRequestsReceivedArgs<ExtArgs>
   serviceOperationalRoles?: boolean | Prisma.Person$serviceOperationalRolesArgs<ExtArgs>
@@ -10049,6 +11169,7 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     familyMemberships: Prisma.$FamilyMembershipPayload<ExtArgs>[]
     serviceMemberships: Prisma.$ServiceMembershipPayload<ExtArgs>[]
     serviceSchedules: Prisma.$ServiceSchedulePayload<ExtArgs>[]
+    serviceScheduleUnavailabilities: Prisma.$ServiceScheduleUnavailabilityPayload<ExtArgs>[]
     serviceScheduleSwapRequestsMade: Prisma.$ServiceScheduleSwapRequestPayload<ExtArgs>[]
     serviceScheduleSwapRequestsReceived: Prisma.$ServiceScheduleSwapRequestPayload<ExtArgs>[]
     serviceOperationalRoles: Prisma.$ServiceOperationalRoleAssignmentPayload<ExtArgs>[]
@@ -10082,7 +11203,11 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     dataDecisao: Date | null
     dataBatismo: Date | null
     dataMembresia: Date | null
+    dataMembresiaSemDia: boolean
     titulosMinisteriais: string[]
+    fotoPerfilPath: string | null
+    fotoPerfilMimeType: string | null
+    fotoPerfilAtualizadaEm: Date | null
     createdAt: Date
     updatedAt: Date
     campusId: string
@@ -10497,6 +11622,7 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   familyMemberships<T extends Prisma.Person$familyMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$familyMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FamilyMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceMemberships<T extends Prisma.Person$serviceMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceSchedules<T extends Prisma.Person$serviceSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceScheduleUnavailabilities<T extends Prisma.Person$serviceScheduleUnavailabilitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceScheduleUnavailabilitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceScheduleUnavailabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceScheduleSwapRequestsMade<T extends Prisma.Person$serviceScheduleSwapRequestsMadeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceScheduleSwapRequestsMadeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceScheduleSwapRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceScheduleSwapRequestsReceived<T extends Prisma.Person$serviceScheduleSwapRequestsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceScheduleSwapRequestsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceScheduleSwapRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceOperationalRoles<T extends Prisma.Person$serviceOperationalRolesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$serviceOperationalRolesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceOperationalRoleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -10557,7 +11683,11 @@ export interface PersonFieldRefs {
   readonly dataDecisao: Prisma.FieldRef<"Person", 'DateTime'>
   readonly dataBatismo: Prisma.FieldRef<"Person", 'DateTime'>
   readonly dataMembresia: Prisma.FieldRef<"Person", 'DateTime'>
+  readonly dataMembresiaSemDia: Prisma.FieldRef<"Person", 'Boolean'>
   readonly titulosMinisteriais: Prisma.FieldRef<"Person", 'String[]'>
+  readonly fotoPerfilPath: Prisma.FieldRef<"Person", 'String'>
+  readonly fotoPerfilMimeType: Prisma.FieldRef<"Person", 'String'>
+  readonly fotoPerfilAtualizadaEm: Prisma.FieldRef<"Person", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Person", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Person", 'DateTime'>
   readonly campusId: Prisma.FieldRef<"Person", 'String'>
@@ -11305,6 +12435,30 @@ export type Person$serviceSchedulesArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.ServiceScheduleScalarFieldEnum | Prisma.ServiceScheduleScalarFieldEnum[]
+}
+
+/**
+ * Person.serviceScheduleUnavailabilities
+ */
+export type Person$serviceScheduleUnavailabilitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceScheduleUnavailability
+   */
+  select?: Prisma.ServiceScheduleUnavailabilitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceScheduleUnavailability
+   */
+  omit?: Prisma.ServiceScheduleUnavailabilityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceScheduleUnavailabilityInclude<ExtArgs> | null
+  where?: Prisma.ServiceScheduleUnavailabilityWhereInput
+  orderBy?: Prisma.ServiceScheduleUnavailabilityOrderByWithRelationInput | Prisma.ServiceScheduleUnavailabilityOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceScheduleUnavailabilityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceScheduleUnavailabilityScalarFieldEnum | Prisma.ServiceScheduleUnavailabilityScalarFieldEnum[]
 }
 
 /**

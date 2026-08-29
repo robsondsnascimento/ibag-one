@@ -1,4 +1,4 @@
-import { apiRequest } from './client'
+import { apiBlobRequest, apiFormRequest, apiRequest } from './client'
 
 export type Paginated<T> = {
   data: T[]
@@ -37,8 +37,11 @@ export type PersonListItem = {
   nome: string
   telefone: string | null
   email: string | null
+  dataMembresia: string | null
+  dataMembresiaSemDia: boolean
   ativo: boolean
   titulosMinisteriais: string[]
+  fotoPerfilAtualizadaEm?: string | null
   campus: {
     id: string
     nome: string
@@ -116,6 +119,8 @@ export type CreatePersonInput = {
   nome: string
   telefone?: string
   email?: string
+  dataMembresia?: string
+  dataMembresiaSemDia?: boolean
   campusId: string
   campusIds?: string[]
   organizationId: string
@@ -134,8 +139,11 @@ export type UpdatePersonInput = {
   nome?: string
   telefone?: string | null
   email?: string | null
+  dataMembresia?: string | null
+  dataMembresiaSemDia?: boolean
   campusId?: string
   campusIds?: string[]
+  ativo?: boolean
 }
 
 export type CellPersonReference = {
@@ -338,6 +346,16 @@ export function updatePersonMinisterialTitles(accessToken: string, id: string, t
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ titulosMinisteriais }),
   })
+}
+
+export function uploadPersonProfilePhoto(accessToken: string, id: string, file: File) {
+  const form = new FormData()
+  form.append('file', file)
+  return apiFormRequest<PersonListItem>(`/persons/${id}/profile-photo`, accessToken, form)
+}
+
+export function loadPersonProfilePhoto(accessToken: string, id: string) {
+  return apiBlobRequest(`/persons/${id}/profile-photo`, accessToken)
 }
 
 export function createCellMembership(accessToken: string, input: { cellId: string; personId: string; confirmTransfer?: boolean }) {

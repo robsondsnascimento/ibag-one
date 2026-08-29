@@ -151,7 +151,7 @@ Preparar vídeos
 
 Ao incluir um item e informar a área responsável, a Ordem de Culto cria uma demanda pendente e encaminha o aviso à liderança compatível com o campus. A remoção do item encerra suas demandas e materiais e avisa a mesma liderança para que os preparativos sejam interrompidos.
 
-O modelo do Culto Cachoeirinha organiza o repertório em cinco momentos: celebração de início, celebração ou POP, oração, dízimos e ofertas e celebração final. Cada música aprovada pode carregar o link de sua versão no YouTube e é distribuída automaticamente para o momento correspondente.
+O modelo do Culto Cachoeirinha organiza o repertório em cinco momentos de música: Música celebração, Música celebração ou POP, Música oração, Música dízimos e ofertas e Música final. Cada música aprovada pode carregar o link de sua versão no YouTube e é distribuída automaticamente para o momento musical correspondente.
 
 ---
 
